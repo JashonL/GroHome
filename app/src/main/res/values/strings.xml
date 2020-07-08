@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">GroHome</string>
+
+    <string name="m1_exit">再按一次退出程序</string>
+    <string name="m2_parse_error_msg">解析数据失败</string>
+    <string name="m3_bad_network_msg">网络问题</string>
+    <string name="m4_connect_error_msg">连接错误</string>
+    <string name="m5_connect_timeout_msg">连接超时</string>
+    <string name="m6_other_msg">未知错误</string>
+    <string name="m7_用户名">用户名</string>
+    <string name="m8_密码">密码</string>
+    <string name="m9_注册">注册</string>
+    <string name="m10_场景">场景</string>
+    <string name="m11_服务">服务</string>
+    <string name="m12_我的">我的</string>
+    <string name="m13_grohome">grohome</string>
+    <string name="m14_登录">登录</string>
+    <string name="m15_邮箱">邮箱</string>
+    <string name="m16_请选择国家">请选择国家</string>
+    <string name="m17_选择时区">选择时区</string>
+    <string name="m18_设置">设置</string>
+    <string name="m19_关于">关于</string>
+    <string name="m20_个人头像">个人头像</string>
+    <string name="m21_修改密码">修改密码</string>
+    <string name="m22_手机号">手机号</string>
+    <string name="m23_安装商编码">安装商编码</string>
+    <string name="m24_退出账户">退出账户</string>
+    <string name="m25_用户协议">用户协议</string>
+    <string name="m26_客服电话">客服电话</string>
+    <string name="m27_公司官网">公司官网</string>
+    <string name="m28_忘记密码">忘记密码</string>
+    <string name="m29_同意用户协议">同意用户协议</string>
+    <string name="m30_验证码">验证码</string>
+    <string name="m31_房间">房间</string>
+    <string name="m32_全部">全部</string>
+    <string name="m33_设备">设备</string>
+
+</resources>

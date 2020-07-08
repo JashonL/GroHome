@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".module.personal.AboutActivity">
+
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+
+
+    <RelativeLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_160"
+        android:background="@color/silver_grey"
+        app:layout_constraintTop_toBottomOf="@+id/headerView">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dp_20" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:textSize="@dimen/size_title_sp_16" />
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/silver_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_about_agreement"
+                style="@style/style_about_linearlayout_item">
+
+
+                <TextView
+                    style="@style/style_about_tittle_item"
+                    android:text="@string/m25_用户协议" />
+
+                <TextView
+                    android:id="@+id/tv_about_agreement"
+                    style="@style/style_about_text_item" />
+
+                <ImageView
+                    android:id="@+id/iv_protocal_more"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/v_phone_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1" />
+
+            <LinearLayout
+                android:id="@+id/ll_about_phone"
+                style="@style/style_about_linearlayout_item">
+
+                <TextView
+                    style="@style/style_about_tittle_item"
+                    android:text="@string/m26_客服电话" />
+
+                <TextView
+                    android:id="@+id/tv_about_phone"
+                    style="@style/style_about_text_item" />
+
+                <ImageView
+                    android:id="@+id/iv_hotline_more"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+
+            <View
+                android:id="@+id/v_email_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1" />
+
+            <LinearLayout
+                android:id="@+id/ll_about_email"
+                style="@style/style_about_linearlayout_item">
+
+                <TextView
+                    style="@style/style_about_tittle_item"
+                    android:text="@string/m27_公司官网" />
+
+                <TextView
+                    android:id="@+id/tv_about_email"
+                    style="@style/style_about_text_item" />
+
+                <ImageView
+                    android:id="@+id/iv_official_more"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

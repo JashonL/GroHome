@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include android:id="@+id/headerView"  layout="@layout/toobar_title"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/silver_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_15" />
+
+            <RelativeLayout
+                android:id="@+id/rl_user_center"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_110"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/dp_9"
+                android:paddingRight="@dimen/dp_9">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivPhoto"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_centerVertical="true" />
+
+                <View
+                    android:id="@+id/vDivider1"
+                    android:layout_width="@dimen/dp_9"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/ivPhoto"
+                    android:layout_toRightOf="@+id/ivPhoto" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/vDivider1"
+                    android:layout_toLeftOf="@+id/vDivider2"
+                    android:layout_toRightOf="@+id/vDivider1"
+                    android:layout_toStartOf="@+id/vDivider2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/dp_7"
+                        android:paddingEnd="@dimen/dp_3"
+                        android:paddingLeft="@dimen/dp_3"
+                        android:paddingRight="@dimen/dp_3"
+                        android:paddingStart="@dimen/dp_3"
+                        android:text="LancelLot"
+                        android:textColor="@color/color_title_00"
+                        android:textSize="@dimen/size_title_sp_16"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/tv_company_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:visibility="gone"
+                        android:gravity="center_vertical|top"
+                        android:paddingEnd="@dimen/dp_3"
+                        android:paddingLeft="@dimen/dp_3"
+                        android:paddingRight="@dimen/dp_3"
+                        android:paddingStart="@dimen/dp_3"
+                        android:paddingTop="@dimen/dp_7"
+                        android:text="古瑞瓦特新能源股份有限公司"
+                        android:textColor="@color/color_title_00"
+                        android:textSize="@dimen/size_content_sp_14" />
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/vDivider2"
+                    android:layout_width="@dimen/dp_9"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/ivMore0"
+                    android:layout_toStartOf="@+id/ivMore0" />
+
+                <ImageView
+                    android:id="@+id/ivMore0"
+                    android:layout_width="@dimen/dp_6"
+                    android:layout_height="@dimen/dp_12"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_15" />
+
+            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_cofig_wifi">
+
+
+                <TextView
+                    style="@style/style_mine_tittle_item"
+                    android:text="@string/m18_设置" />
+
+                <TextView style="@style/style_mine_text_item" />
+
+                <ImageView
+                    android:id="@+id/ivMore1"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1" />
+
+            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_local_debug">
+
+                <TextView
+                    style="@style/style_mine_tittle_item"
+                    android:text="@string/m19_关于" />
+
+                <TextView
+                    android:id="@+id/tv_item_company"
+                    style="@style/style_mine_text_item" />
+
+                <ImageView
+                    android:id="@+id/ivMore2"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

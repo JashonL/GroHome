@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".module.personal.SetttingActivity">
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/silver_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_5" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_personal_photo"
+                style="@style/style_mine_linearlayout_item">
+
+
+                <TextView
+                    style="@style/style_mine_tittle_item"
+                    android:text="@string/m20_个人头像" />
+
+                <TextView style="@style/style_mine_text_item" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivPhoto"
+                    android:layout_width="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_45" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1" />
+
+            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_username">
+
+
+                <TextView
+                    style="@style/style_mine_tittle_item"
+                    android:text="@string/m7_用户名" />
+
+                <TextView style="@style/style_mine_text_item" />
+
+                <ImageView
+                    android:id="@+id/iv_user_more"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1" />
+
+            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_edit_password">
+
+
+                <TextView
+                    style="@style/style_mine_tittle_item"
+                    android:text="@string/m21_修改密码" />
+
+                <TextView style="@style/style_mine_text_item" />
+
+                <ImageView
+                    android:id="@+id/iv_passwor_more"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1" />
+
+            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_phone">
+
+
+                <TextView
+                    style="@style/style_mine_tittle_item"
+                    android:text="@string/m22_手机号" />
+
+                <TextView style="@style/style_mine_text_item" />
+
+                <ImageView
+                    android:id="@+id/iv_phone_more"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1" />
+
+            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_email">
+
+
+                <TextView
+                    style="@style/style_mine_tittle_item"
+                    android:text="@string/m15_邮箱" />
+
+                <TextView style="@style/style_mine_text_item" />
+
+                <ImageView
+                    android:id="@+id/iv_email_more"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1" />
+
+            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_code">
+
+
+                <TextView
+                    style="@style/style_mine_tittle_item"
+                    android:text="@string/m23_安装商编码" />
+
+                <TextView style="@style/style_mine_text_item" />
+
+                <ImageView
+                    android:id="@+id/iv_code_more"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="@dimen/dp_48"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_marginEnd="@dimen/dp_48"
+                android:layout_marginBottom="@dimen/dp_64"
+                android:background="@drawable/selector_button"
+                android:enabled="false"
+                android:minWidth="@dimen/dp_250"
+                android:padding="@dimen/dp_5"
+                android:text="@string/m24_退出账户"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_title_sp_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_password"
+                app:layout_constraintVertical_bias="0.2" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
