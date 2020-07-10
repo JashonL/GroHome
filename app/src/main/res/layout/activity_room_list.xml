@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/headerView"
+        app:tabIndicatorColor="@color/black"
+        app:tabTextAppearance="@style/style_tab_layout">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/m14_登录" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/m9_注册" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <ImageView
+        android:id="@+id/iv_room_pic"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_160"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toBottomOf="@+id/tab_title" />
+
+    <ImageView
+        android:id="@+id/iv_pic_edit"
+        android:layout_width="@dimen/dp_28"
+        android:layout_height="@dimen/dp_28"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:scaleType="fitXY"
+        app:layout_constraintRight_toRightOf="@+id/iv_room_pic"
+        app:layout_constraintTop_toTopOf="@+id/iv_room_pic" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rlv_device"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_room_pic" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

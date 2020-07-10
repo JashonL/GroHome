@@ -89,12 +89,7 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {

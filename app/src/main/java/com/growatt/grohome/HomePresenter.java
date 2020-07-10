@@ -1,10 +1,10 @@
 package com.growatt.grohome;
 
 
-import com.atess.enegy.bean.Article;
 import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.bean.Article;
 
 public class HomePresenter  extends BasePresenter<IMainActivityView> {
 

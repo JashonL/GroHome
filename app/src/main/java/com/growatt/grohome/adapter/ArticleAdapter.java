@@ -7,11 +7,11 @@ import android.widget.ImageView;
 import androidx.annotation.RequiresApi;
 
 
-import com.atess.enegy.bean.Article;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.growatt.grohome.R;
+import com.growatt.grohome.bean.Article;
 
 import java.util.List;
 

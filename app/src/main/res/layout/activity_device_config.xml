@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+
+
+    <TextView
+        android:id="@+id/tv_page_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15"
+        android:gravity="center"
+        android:padding="@dimen/dp_5"
+        android:text="@string/m53_正在添加设备"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+
+    <TextView
+        android:id="@+id/tv_sub_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15"
+        android:gravity="center"
+        android:padding="@dimen/dp_5"
+        android:text="@string/m54_确保wifi信号良好"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_page_title" />
+
+
+    <View
+        android:id="@+id/v_scan_background"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="@dimen/dp_300"
+        app:layout_constraintBottom_toTopOf="@+id/node_progress"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sub_title" />
+
+
+    <TextView
+        android:id="@+id/tv_current_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15"
+        android:gravity="center"
+        android:padding="@dimen/dp_5"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_scan_background" />
+
+
+    <com.growatt.grohome.customview.NodeProgressView
+        android:id="@+id/node_progress"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:paddingRight="@dimen/dp_40"
+        android:paddingLeft="@dimen/dp_40"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:node_current="0"
+        app:node_num="3"
+        app:node_radio="@dimen/dp_12"
+        app:node_progresscolor="#0a72da" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

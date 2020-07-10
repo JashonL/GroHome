@@ -1,14 +1,9 @@
 package com.growatt.grohome.base;
 
-import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,7 +40,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         ButterKnife.bind(this);
         App.getInstance().addActivityList(new WeakReference<>(this));
         presenter=createPresenter();
-        initToolbar();
         initViews();
         initData();
     }
@@ -63,7 +57,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             mToolBar = findViewById(R.id.toolbar);
             if (mToolBar == null) {
             } else {
-                mToolBar.setTitleTextColor(ContextCompat.getColor(this,R.color.color_title_00));
+                mToolBar.setTitleTextColor(ContextCompat.getColor(this,R.color.color_text_00));
             }
         }
     }

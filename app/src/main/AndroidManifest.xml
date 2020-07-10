@@ -22,6 +22,23 @@
         <activity android:name=".MainActivity">
 
         </activity>
+
+        <activity android:name=".module.home.RoomListActivity"/>
+
+        <activity android:name=".module.device.DeviceTypeActivity"/>
+
+        <activity android:name=".module.config.WiFiOptionsActivity"/>
+
+        <activity android:name=".module.config.DeviceLightStatusActivity"/>
+
+        <activity android:name=".module.config.DeviceConfigActivity"/>
+
+        <activity android:name=".module.config.ConnectHotsPotActivity"/>
+
+        <activity android:name=".module.config.DeviceEZLightActivity"/>
+
+        <activity android:name=".module.config.DeviceAPLightActivity"/>
+
     </application>
 
 </manifest>

@@ -90,4 +90,13 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     // fragment快速实现（可选）
     implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+
+    //涂鸦SDK
+    implementation 'com.alibaba:fastjson:1.1.67.android'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.12.3'
+    // Tuya Home 当前最新稳定版本：
+    implementation 'com.tuya.smart:tuyasmart:3.17.0'
+
+    //轮播图
+    implementation 'com.youth.banner:banner:2.0.12'
 }

@@ -113,8 +113,8 @@
                             android:gravity="center_vertical"
                             android:inputType="text"
                             android:nextFocusForward="@+id/et_password"
-                            android:textColor="@color/color_title_00"
-                            android:textColorHint="@color/color_note_99"
+                            android:textColor="@color/color_text_00"
+                            android:textColorHint="@color/color_text_99"
                             android:textSize="@dimen/size_title_sp_12" />
 
                         <LinearLayout
@@ -154,7 +154,7 @@
                         android:layout_marginTop="@dimen/dp_10"
                         android:layout_marginEnd="@dimen/dp_48"
                         android:layout_marginBottom="@dimen/dp_64"
-                        android:background="@drawable/selector_button"
+                        android:background="@drawable/selector_button_rect"
                         android:minWidth="@dimen/dp_250"
                         android:padding="@dimen/dp_5"
                         android:text="@string/m14_登录"
@@ -205,8 +205,8 @@
                             android:background="@null"
                             android:gravity="center_vertical"
                             android:nextFocusForward="@+id/et_password"
-                            android:textColor="@color/color_title_00"
-                            android:textColorHint="@color/color_note_99"
+                            android:textColor="@color/color_text_00"
+                            android:textColorHint="@color/color_text_99"
                             android:textSize="@dimen/size_title_sp_12" />
 
 
@@ -242,8 +242,8 @@
                             android:background="@null"
                             android:gravity="center_vertical"
                             android:nextFocusForward="@+id/et_password"
-                            android:textColor="@color/color_title_00"
-                            android:textColorHint="@color/color_note_99"
+                            android:textColor="@color/color_text_00"
+                            android:textColorHint="@color/color_text_99"
                             android:textSize="@dimen/size_title_sp_12" />
 
 
@@ -279,8 +279,8 @@
                             android:background="@null"
                             android:gravity="center_vertical"
                             android:nextFocusForward="@+id/et_password"
-                            android:textColor="@color/color_title_00"
-                            android:textColorHint="@color/color_note_99"
+                            android:textColor="@color/color_text_00"
+                            android:textColorHint="@color/color_text_99"
                             android:textSize="@dimen/size_title_sp_12" />
 
                     </LinearLayout>
@@ -307,8 +307,8 @@
                             android:background="@null"
                             android:gravity="center_vertical"
                             android:nextFocusForward="@+id/et_password"
-                            android:textColor="@color/color_title_00"
-                            android:textColorHint="@color/color_note_99"
+                            android:textColor="@color/color_text_00"
+                            android:textColorHint="@color/color_text_99"
                             android:textSize="@dimen/size_title_sp_12" />
 
                     </LinearLayout>
@@ -335,8 +335,8 @@
                             android:background="@null"
                             android:gravity="center_vertical"
                             android:nextFocusForward="@+id/et_password"
-                            android:textColor="@color/color_title_00"
-                            android:textColorHint="@color/color_note_99"
+                            android:textColor="@color/color_text_00"
+                            android:textColorHint="@color/color_text_99"
                             android:textSize="@dimen/size_title_sp_12" />
 
                     </LinearLayout>
@@ -363,8 +363,8 @@
                             android:background="@null"
                             android:gravity="center_vertical"
                             android:nextFocusForward="@+id/et_password"
-                            android:textColor="@color/color_title_00"
-                            android:textColorHint="@color/color_note_99"
+                            android:textColor="@color/color_text_00"
+                            android:textColorHint="@color/color_text_99"
                             android:textSize="@dimen/size_title_sp_12" />
 
 
@@ -410,7 +410,7 @@
                         android:padding="@dimen/dp_10"
                         android:scaleX="0.8"
                         android:scaleY="0.8"
-                        android:textColor="@color/color_title_33"
+                        android:textColor="@color/color_text_33"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_agreement"
                         app:layout_constraintRight_toLeftOf="@+id/tv_agreement"
                         app:layout_constraintTop_toTopOf="@+id/tv_agreement" />
@@ -424,7 +424,7 @@
                         android:layout_marginTop="@dimen/dp_10"
                         android:layout_marginEnd="@dimen/dp_48"
                         android:layout_marginBottom="@dimen/dp_64"
-                        android:background="@drawable/selector_button"
+                        android:background="@drawable/selector_button_rect"
                         android:minWidth="@dimen/dp_250"
                         android:padding="@dimen/dp_5"
                         android:text="@string/m9_注册"

@@ -2,8 +2,8 @@ package com.growatt.grohome.http;
 
 
 
-import com.atess.enegy.bean.Article;
 import com.growatt.grohome.base.BaseBean;
+import com.growatt.grohome.bean.Article;
 import com.growatt.grohome.bean.User;
 
 import io.reactivex.Observable;

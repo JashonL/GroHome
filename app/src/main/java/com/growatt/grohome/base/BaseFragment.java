@@ -85,7 +85,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
             mToolBar = (Toolbar) contentView.findViewById(R.id.toolbar);
             if (mToolBar == null) {
             } else {
-                mToolBar.setTitleTextColor(ContextCompat.getColor(getContext(),R.color.color_title_00));
+                mToolBar.setTitleTextColor(ContextCompat.getColor(getContext(),R.color.color_text_00));
             }
         }
     }

@@ -1,9 +1,9 @@
 package com.growatt.grohome;
 
 
-import com.atess.enegy.bean.Article;
 import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.base.BaseView;
+import com.growatt.grohome.bean.Article;
 
 public interface IMainActivityView extends BaseView {
     /**

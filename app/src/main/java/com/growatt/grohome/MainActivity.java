@@ -9,13 +9,13 @@ import android.widget.FrameLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.atess.enegy.bean.Article;
 import com.atess.enegy.constants.GlobalConstant;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.adapter.ArticleAdapter;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.base.BaseBean;
+import com.growatt.grohome.bean.Article;
 import com.growatt.grohome.module.home.GrohomeFragment;
 import com.growatt.grohome.module.personal.PersonalFragment;
 import com.growatt.grohome.module.scenes.ScenesFragment;
@@ -32,8 +32,7 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
     private long keydownTime;
 
 
-    /* @BindView(R.id.home_recycler_view)
-     RecyclerView mHomeRecyclerView;*/
+
     private ArticleAdapter mArticleAdapter;
     private List<Article.DataDetailBean> mArticles = new ArrayList<>();
     private int mPosition;
@@ -89,10 +88,10 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
          */
         bottomNavigationView.clearAll();
         bottomNavigationView
-                .addItem(new BottomNavigationItem(R.drawable.tab_home_selected, getString(R.string.m13_grohome)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_home_normal).setInActiveColorResource(R.color.color_title_00))
-                .addItem(new BottomNavigationItem(R.drawable.tab_scenes_selected, getString(R.string.m10_场景)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_scenes_normal).setInActiveColorResource(R.color.color_title_00))
-                .addItem(new BottomNavigationItem(R.drawable.tab_service_selected, getString(R.string.m11_服务)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_service_normal).setInActiveColorResource(R.color.color_title_00))
-                .addItem(new BottomNavigationItem(R.drawable.tab_me_selected, getString(R.string.m12_我的)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_me_normal).setInActiveColorResource(R.color.color_title_00))
+                .addItem(new BottomNavigationItem(R.drawable.tab_home_selected, getString(R.string.m13_grohome)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_home_normal).setInActiveColorResource(R.color.color_text_00))
+                .addItem(new BottomNavigationItem(R.drawable.tab_scenes_selected, getString(R.string.m10_场景)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_scenes_normal).setInActiveColorResource(R.color.color_text_00))
+                .addItem(new BottomNavigationItem(R.drawable.tab_service_selected, getString(R.string.m11_服务)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_service_normal).setInActiveColorResource(R.color.color_text_00))
+                .addItem(new BottomNavigationItem(R.drawable.tab_me_selected, getString(R.string.m12_我的)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_me_normal).setInActiveColorResource(R.color.color_text_00))
                 .initialise();
         bottomNavigationView.setTabSelectedListener(this);
         bottomNavigationView.selectTab(0);

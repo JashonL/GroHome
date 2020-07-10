@@ -59,9 +59,9 @@
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:lines">1</item>
-        <item name="android:textColor">@color/color_title_00</item>
+        <item name="android:textColor">@color/color_text_00</item>
         <item name="android:textSize">@dimen/size_title_sp_12</item>
-        <item name="android:textColorHint">@color/color_note_99</item>
+        <item name="android:textColorHint">@color/color_text_99</item>
     </style>
 
 
@@ -70,7 +70,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginLeft">@dimen/dp_5</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">@color/color_title_00</item>
+        <item name="android:textColor">@color/color_text_00</item>
         <item name="android:textSize">@dimen/size_title_sp_14</item>
     </style>
 
@@ -96,7 +96,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginLeft">@dimen/dp_5</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">@color/color_title_00</item>
+        <item name="android:textColor">@color/color_text_00</item>
         <item name="android:textSize">@dimen/size_title_sp_14</item>
     </style>
 
@@ -109,9 +109,9 @@
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:lines">1</item>
-        <item name="android:textColor">@color/color_title_00</item>
+        <item name="android:textColor">@color/color_text_00</item>
         <item name="android:textSize">@dimen/size_title_sp_12</item>
-        <item name="android:textColorHint">@color/color_note_99</item>
+        <item name="android:textColorHint">@color/color_text_99</item>
     </style>
 
 
@@ -130,7 +130,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginLeft">@dimen/dp_5</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">@color/color_title_00</item>
+        <item name="android:textColor">@color/color_text_00</item>
         <item name="android:textSize">@dimen/size_title_sp_14</item>
     </style>
 
@@ -142,9 +142,9 @@
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:lines">1</item>
-        <item name="android:textColor">@color/color_title_00</item>
+        <item name="android:textColor">@color/color_text_00</item>
         <item name="android:textSize">@dimen/size_title_sp_12</item>
-        <item name="android:textColorHint">@color/color_note_99</item>
+        <item name="android:textColorHint">@color/color_text_99</item>
     </style>
 
 
@@ -163,7 +163,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/size_title_sp_14</item>
-        <item name="android:textColor">@color/color_title_00</item>
+        <item name="android:textColor">@color/color_text_00</item>
     </style>
 
 
@@ -173,7 +173,7 @@
         <item name="android:gravity">center_vertical|end</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/size_content_sp_14</item>
-        <item name="android:textColor">@color/color_content_66</item>
+        <item name="android:textColor">@color/color_text_66</item>
         <item name="android:singleLine">true</item>
     </style>
 
@@ -202,7 +202,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/size_title_sp_14</item>
-        <item name="android:textColor">@color/color_title_00</item>
+        <item name="android:textColor">@color/color_text_00</item>
     </style>
 
 
@@ -212,7 +212,7 @@
         <item name="android:gravity">center_vertical|end</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/size_content_sp_14</item>
-        <item name="android:textColor">@color/color_content_66</item>
+        <item name="android:textColor">@color/color_text_66</item>
         <item name="android:singleLine">true</item>
     </style>
     
@@ -220,7 +220,7 @@
 
     <style name="style_tab_layout" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
         <item name="android:textSize">@dimen/size_title_sp_16</item>
-        <item name="android:textColor">@color/color_title_33</item>
+        <item name="android:textColor">@color/color_text_33</item>
         <item name="android:textAllCaps">false</item>
     </style>
     

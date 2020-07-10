@@ -166,7 +166,7 @@
                 android:layout_marginTop="@dimen/dp_30"
                 android:layout_marginEnd="@dimen/dp_48"
                 android:layout_marginBottom="@dimen/dp_64"
-                android:background="@drawable/selector_button"
+                android:background="@drawable/selector_button_rect"
                 android:enabled="false"
                 android:minWidth="@dimen/dp_250"
                 android:padding="@dimen/dp_5"

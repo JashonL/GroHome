@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+
+    <TextView
+        android:id="@+id/tv_page_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15"
+        android:gravity="center"
+        android:padding="@dimen/dp_5"
+        android:text="@string/m42_选择网络2_4频段"
+        android:textColor="@color/color_text_00"
+        android:textSize="@dimen/size_title_sp_14"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15"
+        android:gravity="center"
+        android:padding="@dimen/dp_5"
+        android:text="@string/m43_请先设置为频段2_4"
+        android:textColor="@color/color_text_66"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_page_title" />
+
+
+    <View
+        android:id="@+id/v_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_140"
+        android:layout_marginLeft="@dimen/dp_44"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginRight="@dimen/dp_44"
+        android:background="@drawable/net_image01"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content" />
+
+
+
+    <TextView
+        android:id="@+id/tv_setwifi_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_15"
+        android:gravity="center"
+        android:padding="@dimen/dp_3"
+        android:text="@string/m44_常见路由器的设置方法"
+        android:textColor="@color/color_theme_green"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_background" />
+
+
+    <ImageView
+        android:id="@+id/iv_toguide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/net_more"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_setwifi_guide"
+        app:layout_constraintLeft_toRightOf="@+id/tv_setwifi_guide"
+        app:layout_constraintTop_toTopOf="@+id/tv_setwifi_guide" />
+
+
+    <ImageView
+        android:id="@+id/iv_wifi"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_45"
+        android:src="@drawable/net_wifi"
+        app:layout_constraintLeft_toLeftOf="@+id/v_background"
+        app:layout_constraintTop_toBottomOf="@+id/tv_setwifi_guide" />
+
+
+    <TextView
+        android:id="@+id/tv_ssid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:padding="@dimen/dp_5"
+        android:hint="@string/m45_输入wifi名称"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_wifi"
+        app:layout_constraintLeft_toRightOf="@+id/iv_wifi"
+        app:layout_constraintRight_toLeftOf="@+id/iv_switch_wifi" />
+
+
+    <ImageView
+        android:id="@+id/iv_switch_wifi"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_18"
+        android:src="@drawable/net_switch"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_wifi"
+        app:layout_constraintRight_toRightOf="@+id/v_background" />
+
+    <View
+        android:id="@+id/v_line_ssid"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/color_item_divider"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_wifi"
+        app:layout_constraintRight_toRightOf="@+id/iv_switch_wifi"
+        app:layout_constraintTop_toBottomOf="@+id/iv_wifi" />
+
+
+    <ImageView
+        android:id="@+id/iv_password"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_45"
+        android:src="@drawable/net_password"
+        app:layout_constraintLeft_toLeftOf="@+id/v_background"
+        app:layout_constraintTop_toBottomOf="@+id/v_line_ssid" />
+
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:padding="@dimen/dp_5"
+        android:inputType="textPassword"
+        android:hint="@string/m46_输入wifi密码"
+        android:textColor="@color/color_text_66"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_password"
+        app:layout_constraintLeft_toRightOf="@+id/iv_password"
+        app:layout_constraintRight_toLeftOf="@+id/iv_switch_password" />
+
+
+    <ImageView
+        android:id="@+id/iv_switch_password"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_18"
+        android:src="@drawable/icon_signin_see"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_password"
+        app:layout_constraintRight_toRightOf="@+id/v_background" />
+
+    <View
+        android:id="@+id/v_line_password"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/color_item_divider"
+        app:layout_constraintLeft_toLeftOf="@+id/iv_password"
+        app:layout_constraintRight_toRightOf="@+id/iv_switch_password"
+        app:layout_constraintTop_toBottomOf="@+id/iv_password" />
+
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_40"
+        android:background="@drawable/selector_button_rect"
+        android:text="@string/m47_下一步"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintTop_toBottomOf="@+id/v_line_password" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

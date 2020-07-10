@@ -1,4 +1,4 @@
-package com.atess.enegy.bean;
+package com.growatt.grohome.bean;
 
 import java.util.List;
 
