@@ -106,6 +106,7 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
 
     @Override
     protected void initData() {
+        presenter.registerTuya(this);
     }
 
 

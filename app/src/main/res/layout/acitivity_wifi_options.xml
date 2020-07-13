@@ -115,7 +115,7 @@
         android:id="@+id/v_line_ssid"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_1"
-        android:background="@color/color_item_divider"
+        android:background="@color/color_item_divider_66"
         app:layout_constraintLeft_toLeftOf="@+id/iv_wifi"
         app:layout_constraintRight_toRightOf="@+id/iv_switch_wifi"
         app:layout_constraintTop_toBottomOf="@+id/iv_wifi" />
@@ -159,7 +159,7 @@
         android:id="@+id/v_line_password"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_1"
-        android:background="@color/color_item_divider"
+        android:background="@color/color_item_divider_66"
         app:layout_constraintLeft_toLeftOf="@+id/iv_password"
         app:layout_constraintRight_toRightOf="@+id/iv_switch_password"
         app:layout_constraintTop_toBottomOf="@+id/iv_password" />

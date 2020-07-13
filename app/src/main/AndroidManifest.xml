@@ -12,6 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="TUYA_SMART_APPKEY"
+            android:value="fheuyt49ajggpqqffy7f" />
+        <meta-data
+            android:name="TUYA_SMART_SECRET"
+            android:value="p5exhqm5maetnxgjrfry3h7xvgy74grj" />
+
         <activity android:name=".module.login.RegisterLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

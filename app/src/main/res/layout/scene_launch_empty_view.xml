@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_empty"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:paddingTop="@dimen/dp_40"
+        app:layout_constraintBottom_toTopOf="@+id/tv_recommend"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/iv_empty_image"
+            android:layout_width="@dimen/dp_250"
+            android:layout_height="@dimen/dp_140"
+            android:layout_marginTop="@dimen/dp_10"
+            android:src="@drawable/scene_image_launch"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_scene_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_2"
+            android:padding="@dimen/dp_10"
+            android:text="@string/m86_scene_des"
+            android:textColor="@color/color_text_99"
+            android:textSize="@dimen/size_content_sp_12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_empty_image" />
+
+        <LinearLayout
+            android:id="@+id/ll_add_background"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_38"
+            android:background="@drawable/selector_button_circle"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_scene_des">
+
+
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_home_add" />
+
+            <TextView
+                android:id="@+id/tv_add_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_2"
+                android:text="@string/m85_add_scenes"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_content_sp_16" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_recommend"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_11"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:maxLines="2"
+        android:padding="@dimen/dp_5"
+        android:text="@string/m84_recommend"
+        android:textColor="@color/color_text_00"
+        android:textSize="@dimen/size_content_sp_16"
+        android:textStyle="bold"
+        app:autoSizeMaxTextSize="@dimen/size_content_sp_14"
+        app:autoSizeMinTextSize="@dimen/size_content_sp_8"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/item_launch_tap_to_run"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+
+    <include
+        android:id="@+id/item_launch_tap_to_run"
+        layout="@layout/item_launch_tap_to_run"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_30"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

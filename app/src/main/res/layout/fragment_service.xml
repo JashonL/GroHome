@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.growatt.grohome.customview.ScaleConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <include
-        android:id="@+id/headerView"
-        layout="@layout/toobar_title" />
 
     <com.youth.banner.Banner
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_185"
         android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
-        app:layout_constraintTop_toBottomOf="@+id/headerView" />
+        android:background="@drawable/image_banner"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <!--手册-->
@@ -42,6 +41,8 @@
             android:id="@+id/tv_manual"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:text="@string/m77_manual"
             android:textColor="@color/color_text_00"
             android:textSize="@dimen/size_content_sp_16"
             app:autoSizeMaxTextSize="@dimen/size_content_sp_16"
@@ -80,6 +81,8 @@
             android:id="@+id/tv_faq"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:text="@string/m78_faq"
             android:textColor="@color/color_text_00"
             android:textSize="@dimen/size_content_sp_16"
             app:autoSizeMaxTextSize="@dimen/size_content_sp_16"
@@ -102,7 +105,9 @@
         app:autoSizeMaxTextSize="@dimen/size_content_sp_16"
         app:autoSizeMinTextSize="@dimen/size_content_sp_8"
         app:autoSizeTextType="uniform"
-        app:layout_constraintLeft_toRightOf="@+id/icon_faq"
+        android:layout_marginStart="@dimen/dp_16"
+        android:text="@string/m80_selection"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_manual" />
 
@@ -114,4 +119,4 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_selection" />
 
 
-</com.growatt.grohome.customview.ScaleConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

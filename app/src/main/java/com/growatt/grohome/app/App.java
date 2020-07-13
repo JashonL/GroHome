@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.hjq.toast.ToastUtils;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.yechaoa.yutils.ActivityUtil;
 import com.yechaoa.yutils.LogUtil;
 import com.yechaoa.yutils.YUtils;
@@ -37,6 +38,9 @@ public class App extends Application {
         LogUtil.setIsLog(true);
         //注册Activity生命周期
         registerActivityLifecycleCallbacks(ActivityUtil.getActivityLifecycleCallbacks());
+        //初始化涂鸦
+        TuyaHomeSdk.init(this);
+        TuyaHomeSdk.setDebugMode(true);
     }
 
 
@@ -66,6 +70,8 @@ public class App extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            //注销涂鸦
+            TuyaHomeSdk.onDestroy();
             System.exit(0);
         }
     }

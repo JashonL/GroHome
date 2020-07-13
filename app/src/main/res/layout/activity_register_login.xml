@@ -67,6 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_50"
+                    android:visibility="visible"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tab_title">
@@ -271,13 +272,14 @@
                             style="@style/style_imageview_register_icon"
                             android:src="@drawable/icon_sign_password" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_pwd"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@null"
                             android:gravity="center_vertical"
+                            android:inputType="textPassword"
                             android:nextFocusForward="@+id/et_password"
                             android:textColor="@color/color_text_00"
                             android:textColorHint="@color/color_text_99"
@@ -299,12 +301,13 @@
                             style="@style/style_imageview_register_icon"
                             android:src="@drawable/icon_sign_password" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_repeat_pwd"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@null"
+                            android:inputType="textPassword"
                             android:gravity="center_vertical"
                             android:nextFocusForward="@+id/et_password"
                             android:textColor="@color/color_text_00"
@@ -327,7 +330,7 @@
                             style="@style/style_imageview_register_icon"
                             android:src="@drawable/icon_sign_email" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_email"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -355,7 +358,7 @@
                             style="@style/style_imageview_register_icon"
                             android:src="@drawable/icon_sign_code" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_verification_code"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"

@@ -3,6 +3,8 @@ package com.growatt.grohome.base;
 
 
 
+import com.growatt.grohome.handler.IcallbackHandler;
+import com.growatt.grohome.handler.NoleakHandler;
 import com.growatt.grohome.http.API;
 import com.growatt.grohome.http.RetrofitService;
 
@@ -19,10 +21,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 
-public class BasePresenter<V extends BaseView> {
+public class BasePresenter<V extends BaseView> implements IcallbackHandler {
 
     private CompositeDisposable compositeDisposable;
     public V baseView;
+    public NoleakHandler handler;
 
     /**
      * 这个后面可以直接用   Example：apiServer.login(username, password)；
@@ -31,6 +34,10 @@ public class BasePresenter<V extends BaseView> {
 
     public BasePresenter(V baseView) {
         this.baseView = baseView;
+    }
+
+    public void initHandler(){
+        handler=new NoleakHandler<>(this);
     }
 
     /**
@@ -64,4 +71,8 @@ public class BasePresenter<V extends BaseView> {
         }
     }
 
+    @Override
+    public void callback() {
+
+    }
 }

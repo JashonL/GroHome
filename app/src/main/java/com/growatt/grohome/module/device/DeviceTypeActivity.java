@@ -52,7 +52,6 @@ public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implem
     @Override
     protected void initViews() {
         //头部toolBar
-        tvTitle.setVisibility(View.GONE);
 //        toolbar.setTitle(R.string.m35_添加设备);
         tvTitle.setText(R.string.m35_添加设备);
         toolbar.setNavigationIcon(R.drawable.icon_return);

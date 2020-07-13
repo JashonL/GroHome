@@ -69,5 +69,28 @@
     <string name="m66_长按复位键5秒">长按复位键5秒</string>
     <string name="m67_确认指示灯快闪后">确认指示灯快闪后，再进行下一步骤</string>
     <string name="m68_再次长按复位键5秒">再次长按复位键5秒，直至指示灯慢闪</string>
+    <string name="m69_消息中心">消息中心</string>
+    <string name="m70_分享设备">分享设备</string>
+    <string name="m71_caching">Caching</string>
+    <string name="m72_about">About</string>
+    <string name="m73_agreement">Agreement</string>
+    <string name="m74_third_party">Third-Party Access Device</string>
+    <string name="m75_alexa">Alexa</string>
+    <string name="m76_google_assistant">Google Assistant</string>
+    <string name="m77_manual">Manual</string>
+    <string name="m78_faq">FAQ</string>
+    <string name="m80_selection">Selection</string>
+    <string name="m81_launch_tap_to_run">Launch tap to run</string>
+    <string name="m82_linkage_details">Linkage details</string>
+    <string name="m83_logs">Logs</string>
+    <string name="m84_recommend">Recommend</string>
+    <string name="m85_add_scenes">Add Scenes</string>
+    <string name="m86_scene_des">Timing/batch setting device, intelligent life.</string>
+    <string name="m87_scenes">Scenes</string>
+    <string name="m88_white_mode">White Mode</string>
+    <string name="m89_cancel">Cancel</string>
+    <string name="m90_ok">OK</string>
+    <string name="m91_bright_ness">"Brightness"</string>
+    <string name="m92_colour_temp">Colour Temp"</string>
 
 </resources>

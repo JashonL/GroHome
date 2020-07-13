@@ -17,7 +17,8 @@
     <color name="color_app_main">#D5080A</color>
     <color name="color_app_main_pressed">#99080A</color>
     <!--分割线颜色-->
-    <color name="color_item_divider">#666666</color>
+    <color name="color_item_divider_66">#666666</color>
+    <color name="color_item_divider_99">#999999</color>
 
     <!--文字颜色-->
     <color name="color_text_00">#000000</color>
@@ -44,6 +45,16 @@
     <color name="color_add_bulb_background">#F6F6F9</color>
     <color name="color_add_strip_background">#1A708C73</color>
     <color name="color_add_air_background">#1A21435E</color>
+
+    <!--场景相关颜色-->
+    <color name="color_scene_launch_background">#d48166</color>
+
+
+    <!-- 设备相关颜色-->
+    <color name="color_white_mode_panel_title">#454752</color>
+    <color name="color_white_mode_panel_background">#363840</color>
+    <color name="color_white_mode_panel_cancel">#303135</color>
+    <color name="seek_progress">#3bffaa</color>
 
 
 </resources>
