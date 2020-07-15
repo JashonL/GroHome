@@ -55,6 +55,9 @@
     <color name="color_white_mode_panel_background">#363840</color>
     <color name="color_white_mode_panel_cancel">#303135</color>
     <color name="seek_progress">#3bffaa</color>
+    <color name="seek_gradient_start">#ffe47a</color>
+    <color name="seek_gradient_end">#3d7eaa</color>
+    <color name="seek_thumb_color">#8ea896</color>
 
 
 </resources>

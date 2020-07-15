@@ -96,7 +96,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.12.3'
     // Tuya Home 当前最新稳定版本：
     implementation 'com.tuya.smart:tuyasmart:3.17.0'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
 
-    //轮播图
-    implementation 'com.youth.banner:banner:2.0.12'
+    //权限请求
+    implementation 'pub.devrel:easypermissions:3.0.0'
 }

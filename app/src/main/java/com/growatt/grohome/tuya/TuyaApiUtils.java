@@ -35,6 +35,18 @@ public class TuyaApiUtils {
         TuyaHomeSdk.getUserInstance().loginWithUid("86", userName, password, iLoginCallback);
     }
 
+    /**
+     * 涂鸦注册登录一体，如果已经注册会自动登录
+     * @param context
+     * @param countryCode
+     * @param userName
+     * @param password
+     * @param callback
+     */
+
+    public static void autoLogin(Context context,String countryCode, String userName, String password,ILoginCallback callback){
+        TuyaHomeSdk.getUserInstance().loginOrRegisterWithUid(countryCode,  userName,  password,  callback);
+    }
 
     /**
      * 初始化一个家庭

@@ -89,9 +89,9 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
         bottomNavigationView.clearAll();
         bottomNavigationView
                 .addItem(new BottomNavigationItem(R.drawable.tab_home_selected, getString(R.string.m13_grohome)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_home_normal).setInActiveColorResource(R.color.color_text_00))
-                .addItem(new BottomNavigationItem(R.drawable.tab_scenes_selected, getString(R.string.m10_场景)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_scenes_normal).setInActiveColorResource(R.color.color_text_00))
-                .addItem(new BottomNavigationItem(R.drawable.tab_service_selected, getString(R.string.m11_服务)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_service_normal).setInActiveColorResource(R.color.color_text_00))
-                .addItem(new BottomNavigationItem(R.drawable.tab_me_selected, getString(R.string.m12_我的)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_me_normal).setInActiveColorResource(R.color.color_text_00))
+                .addItem(new BottomNavigationItem(R.drawable.tab_scenes_selected, getString(R.string.m10_scenes)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_scenes_normal).setInActiveColorResource(R.color.color_text_00))
+                .addItem(new BottomNavigationItem(R.drawable.tab_service_selected, getString(R.string.m11_service)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_service_normal).setInActiveColorResource(R.color.color_text_00))
+                .addItem(new BottomNavigationItem(R.drawable.tab_me_selected, getString(R.string.m12_mine)).setActiveColorResource(R.color.color_theme_green).setInactiveIconResource(R.drawable.tab_me_normal).setInActiveColorResource(R.color.color_text_00))
                 .initialise();
         bottomNavigationView.setTabSelectedListener(this);
         bottomNavigationView.selectTab(0);
@@ -106,7 +106,7 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
 
     @Override
     protected void initData() {
-        presenter.registerTuya(this);
+        presenter.loginTuya(this);
     }
 
 

@@ -52,12 +52,12 @@
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/m14_登录" />
+                        android:text="@string/m14_login" />
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/m9_注册" />
+                        android:text="@string/m9_registered" />
 
                 </com.google.android.material.tabs.TabLayout>
 
@@ -140,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_5"
-                        android:text="@string/m28_忘记密码"
+                        android:text="@string/m28_forget_password"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/size_title_sp_12"
                         app:layout_constraintRight_toRightOf="@+id/ll_pwd"
@@ -158,7 +158,7 @@
                         android:background="@drawable/selector_button_rect"
                         android:minWidth="@dimen/dp_250"
                         android:padding="@dimen/dp_5"
-                        android:text="@string/m14_登录"
+                        android:text="@string/m14_login"
                         android:textColor="@color/white"
                         android:textSize="@dimen/size_title_sp_14"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -395,7 +395,7 @@
                         android:gravity="center"
                         android:maxWidth="@dimen/dp_150"
                         android:padding="@dimen/dp_10"
-                        android:text="@string/m29_同意用户协议"
+                        android:text="@string/m29_user_agreement"
                         android:textColor="@color/color_theme_green"
                         android:textSize="@dimen/size_title_sp_14"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -430,7 +430,7 @@
                         android:background="@drawable/selector_button_rect"
                         android:minWidth="@dimen/dp_250"
                         android:padding="@dimen/dp_5"
-                        android:text="@string/m9_注册"
+                        android:text="@string/m9_registered"
                         android:textColor="@color/white"
                         android:textSize="@dimen/size_title_sp_14"
                         app:layout_constraintEnd_toEndOf="parent"

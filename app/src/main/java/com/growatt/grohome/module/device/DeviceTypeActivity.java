@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.device;
 
-import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -9,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.DeviceTypeAdapter;
 import com.growatt.grohome.base.BaseActivity;
@@ -28,7 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implements IDeviceTypeView {
+public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implements IDeviceTypeView , BaseQuickAdapter.OnItemChildClickListener {
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -41,7 +41,7 @@ public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implem
 
     @Override
     protected DeviceTypePresenter createPresenter() {
-        return new DeviceTypePresenter(this);
+        return new DeviceTypePresenter(this,this);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implem
     protected void initViews() {
         //头部toolBar
 //        toolbar.setTitle(R.string.m35_添加设备);
-        tvTitle.setText(R.string.m35_添加设备);
+        tvTitle.setText(R.string.m35_add_device);
         toolbar.setNavigationIcon(R.drawable.icon_return);
         //列表
         mDeviceTypeAdapter = new DeviceTypeAdapter(R.layout.item_device_type, new ArrayList<>());
@@ -79,4 +79,17 @@ public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implem
     }
 
 
+    @Override
+    protected void initListener() {
+        super.initListener();
+        mDeviceTypeAdapter.setOnItemChildClickListener(this);
+        toolbar.setNavigationOnClickListener(v -> finish());
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        DeviceTypeBean bean = mDeviceTypeAdapter.getData().get(position);
+        String type = bean.getType();
+        presenter.toConfigDeviceByType(type);
+    }
 }

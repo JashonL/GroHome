@@ -9,7 +9,7 @@ public class DeviceBulb extends BaseDevice {
     }
 
     public static int getNameRes(){
-        return R.string.m39_灯泡;
+        return R.string.m39_bulb;
     }
 
     public static int getOpenIcon(int resIndex) {

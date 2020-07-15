@@ -3,6 +3,8 @@ package com.growatt.grohome.base;
 
 
 
+import android.content.Context;
+
 import com.growatt.grohome.handler.IcallbackHandler;
 import com.growatt.grohome.handler.NoleakHandler;
 import com.growatt.grohome.http.API;
@@ -26,6 +28,7 @@ public class BasePresenter<V extends BaseView> implements IcallbackHandler {
     private CompositeDisposable compositeDisposable;
     public V baseView;
     public NoleakHandler handler;
+    public Context context;
 
     /**
      * 这个后面可以直接用   Example：apiServer.login(username, password)；
@@ -34,6 +37,10 @@ public class BasePresenter<V extends BaseView> implements IcallbackHandler {
 
     public BasePresenter(V baseView) {
         this.baseView = baseView;
+    }
+    public BasePresenter(Context context,V baseView) {
+        this.baseView = baseView;
+        this.context=context;
     }
 
     public void initHandler(){

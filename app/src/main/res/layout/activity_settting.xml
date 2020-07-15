@@ -35,7 +35,7 @@
 
                 <TextView
                     style="@style/style_mine_tittle_item"
-                    android:text="@string/m20_个人头像" />
+                    android:text="@string/m20_avatar" />
 
                 <TextView style="@style/style_mine_text_item" />
 
@@ -55,7 +55,7 @@
 
                 <TextView
                     style="@style/style_mine_tittle_item"
-                    android:text="@string/m7_用户名" />
+                    android:text="@string/m7_username" />
 
                 <TextView style="@style/style_mine_text_item" />
 
@@ -78,7 +78,7 @@
 
                 <TextView
                     style="@style/style_mine_tittle_item"
-                    android:text="@string/m21_修改密码" />
+                    android:text="@string/m21_change_password" />
 
                 <TextView style="@style/style_mine_text_item" />
 
@@ -100,7 +100,7 @@
 
                 <TextView
                     style="@style/style_mine_tittle_item"
-                    android:text="@string/m22_手机号" />
+                    android:text="@string/m22_phone_number" />
 
                 <TextView style="@style/style_mine_text_item" />
 
@@ -122,7 +122,7 @@
 
                 <TextView
                     style="@style/style_mine_tittle_item"
-                    android:text="@string/m15_邮箱" />
+                    android:text="@string/m15_email" />
 
                 <TextView style="@style/style_mine_text_item" />
 
@@ -144,7 +144,7 @@
 
                 <TextView
                     style="@style/style_mine_tittle_item"
-                    android:text="@string/m23_安装商编码" />
+                    android:text="@string/m23_installer_code" />
 
                 <TextView style="@style/style_mine_text_item" />
 
@@ -170,7 +170,7 @@
                 android:enabled="false"
                 android:minWidth="@dimen/dp_250"
                 android:padding="@dimen/dp_5"
-                android:text="@string/m24_退出账户"
+                android:text="@string/m24_log_out"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_title_sp_14"
                 app:layout_constraintEnd_toEndOf="parent"

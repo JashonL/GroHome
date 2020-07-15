@@ -9,7 +9,7 @@ public class DeviceStripLights extends BaseDevice {
     }
 
     public static int getNameRes(){
-        return R.string.m40_灯带;
+        return R.string.m40_light_strip;
     }
 
     public static int getOpenIcon(int resIndex) {

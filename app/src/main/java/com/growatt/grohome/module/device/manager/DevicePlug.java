@@ -9,7 +9,7 @@ public class DevicePlug extends BaseDevice {
     }
 
     public static int getNameRes(){
-        return R.string.m36_插座;
+        return R.string.m36_socket;
     }
 
     public static int getOpenIcon(int resIndex) {

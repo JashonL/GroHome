@@ -8,4 +8,8 @@ public class MyToastUtils {
         ToastUtils.show(object);
     }
 
+    public static void toast(int stringId){
+        ToastUtils.show(stringId);
+    }
+
 }

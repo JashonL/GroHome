@@ -1,7 +1,6 @@
 package com.growatt.grohome.module.login;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,7 +16,6 @@ import com.growatt.grohome.module.login.presenter.RegisterLoginPresenter;
 import com.growatt.grohome.module.login.view.IRegisterLoginView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> implements IRegisterLoginView, TabLayout.OnTabSelectedListener {
@@ -61,7 +59,7 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     @Override
     protected void initViews() {
         //初始化tablayout
-        String[] titles = new String[]{getString(R.string.m14_登录), getString(R.string.m9_注册)};
+        String[] titles = new String[]{getString(R.string.m14_login), getString(R.string.m9_registered)};
         tabTitle.removeAllTabs();
         for (String title : titles) {
             TabLayout.Tab tab = tabTitle.newTab();
@@ -71,17 +69,17 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
         tabTitle.addOnTabSelectedListener(this);
 
         //初始化登录
-        String logHing = getString(R.string.m7_用户名) + "/" + getString(R.string.m15_邮箱);
+        String logHing = getString(R.string.m7_username) + "/" + getString(R.string.m15_email);
         etUsername.setHint(logHing);
-        etPassword.setHint(R.string.m8_密码);
+        etPassword.setHint(R.string.m8_password);
 
         //初始化注册
-        tvCountry.setHint(R.string.m16_请选择国家);
-        tvZone.setHint(R.string.m17_选择时区);
-        tvPwd.setHint(R.string.m8_密码);
-        tvRepeatPwd.setHint(R.string.m8_密码);
-        tvEmail.setHint(R.string.m15_邮箱);
-        tvVerificationCode.setHint(R.string.m30_验证码);
+        tvCountry.setHint(R.string.m16_select_country);
+        tvZone.setHint(R.string.m17_select_time_zone);
+        tvPwd.setHint(R.string.m8_password);
+        tvRepeatPwd.setHint(R.string.m8_password);
+        tvEmail.setHint(R.string.m15_email);
+        tvVerificationCode.setHint(R.string.m30_verification_code);
     }
 
     @Override

@@ -9,7 +9,7 @@ public class DeviceAirCon extends BaseDevice {
     }
 
     public static int getNameRes(){
-        return R.string.m41_空调;
+        return R.string.m41_air_con;
     }
 
     public static int getCloseIcon(int resIndex) {

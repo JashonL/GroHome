@@ -159,7 +159,7 @@ public class NodeProgressView extends View {
 
     private void initData(Context context) {
         nodes = new ArrayList<>();
-        nodeDes = new String[]{context.getString(R.string.m55_寻找设备), context.getString(R.string.m56_注册到云), context.getString(R.string.m57_设备初始化)};
+        nodeDes = new String[]{context.getString(R.string.m55_find_device), context.getString(R.string.m56_register_cloud), context.getString(R.string.m57_device_initialization)};
         for (int i = 0; i < mNumber; i++) {
             //进度点
             Node node = new Node();

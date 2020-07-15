@@ -79,29 +79,7 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
     }
 
 
-    /**
-     * 注册涂鸦
-     *
-     */
-    public void registerTuya(Context context){
-        TuyaApiUtils.registerTuya(context,"APP开发者1","app12345678",registerCallback);
-    }
 
-
-    private IRegisterCallback registerCallback=new IRegisterCallback() {
-        @Override
-        public void onSuccess(User user) {
-            //注册成功处理
-           Log.i("liaojinsha","注册成功");
-        }
-
-        @Override
-        public void onError(String code, String error) {
-            //注册失败处理
-            //注册成功处理
-            Log.i("liaojinsha","注册失败");
-        }
-    };
 
 
 
@@ -109,7 +87,7 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
      * 登录涂鸦
      */
     public void loginTuya(Context context){
-        TuyaApiUtils.loginTuya(context,"ceshi007","",loginCallback);
+        TuyaApiUtils.autoLogin(context,"86","APP开发者","app12345678",loginCallback);
     }
 
     private ILoginCallback loginCallback=new ILoginCallback() {

@@ -57,7 +57,7 @@
 
                 <TextView
                     style="@style/style_about_tittle_item"
-                    android:text="@string/m25_用户协议" />
+                    android:text="@string/m25_user_agreement" />
 
                 <TextView
                     android:id="@+id/tv_about_agreement"
@@ -82,7 +82,7 @@
 
                 <TextView
                     style="@style/style_about_tittle_item"
-                    android:text="@string/m26_客服电话" />
+                    android:text="@string/m26_consumer_hotline" />
 
                 <TextView
                     android:id="@+id/tv_about_phone"
@@ -108,7 +108,7 @@
 
                 <TextView
                     style="@style/style_about_tittle_item"
-                    android:text="@string/m27_公司官网" />
+                    android:text="@string/m27_company_website" />
 
                 <TextView
                     android:id="@+id/tv_about_email"

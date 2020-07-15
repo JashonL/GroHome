@@ -16,19 +16,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.growatt.grohome.R;
-import com.growatt.grohome.adapter.ArticleAdapter;
 import com.growatt.grohome.adapter.GroHomeDevAdapter;
 import com.growatt.grohome.adapter.RoomAdapter;
 import com.growatt.grohome.base.BaseFragment;
-import com.growatt.grohome.bean.HomeDeviceBean;
-import com.growatt.grohome.bean.RoomBean;
 import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.module.device.DeviceTypeActivity;
 import com.growatt.grohome.module.home.presenter.GrohomePresenter;
 import com.growatt.grohome.module.home.view.IGrohomeView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -85,7 +81,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     protected void initView() {
          //头部toolBar
         tvTitle.setVisibility(View.GONE);
-        toolbar.setTitle(R.string.m34_欢迎);
+        toolbar.setTitle(R.string.m34_welcome_groHome);
         toolbar.inflateMenu(R.menu.menu_grohome);
         toolbar.setOnMenuItemClickListener(this);
         //房间列表初始化
@@ -113,6 +109,10 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         switch (item.getItemId()) {
             case R.id.action_add:
                 startActivity(new Intent(getContext(), DeviceTypeActivity.class));
+           /*     View bodyView=LayoutInflater.from(getActivity()).inflate(R.layout.bulb_dialog_white_mode,null,false);
+                CircleDialogUtils.showBulbWhiteMode(bodyView, GrohomeFragment.this.getFragmentManager(), view -> {
+
+                });*/
                 break;
         }
         return true;

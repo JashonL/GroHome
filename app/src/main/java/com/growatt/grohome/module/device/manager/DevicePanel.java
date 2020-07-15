@@ -9,7 +9,7 @@ public class DevicePanel extends BaseDevice {
     }
 
     public static int getNameRes(){
-        return R.string.m37_面板开关;
+        return R.string.m37_panel_switch;
     }
 
 

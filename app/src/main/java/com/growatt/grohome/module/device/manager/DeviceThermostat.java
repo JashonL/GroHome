@@ -9,7 +9,7 @@ public class DeviceThermostat extends BaseDevice {
     }
 
     public static int getNameRes(){
-        return R.string.m38_温控器;
+        return R.string.m38_thermostat;
     }
 
     public static int getCloseIcon(int resIndex) {

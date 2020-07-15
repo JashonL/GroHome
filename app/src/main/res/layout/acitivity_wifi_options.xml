@@ -17,7 +17,7 @@
         android:layout_marginTop="@dimen/dp_15"
         android:gravity="center"
         android:padding="@dimen/dp_5"
-        android:text="@string/m42_选择网络2_4频段"
+        android:text="@string/m42_select_frequency"
         android:textColor="@color/color_text_00"
         android:textSize="@dimen/size_title_sp_14"
         android:textStyle="bold"
@@ -32,7 +32,7 @@
         android:layout_marginTop="@dimen/dp_15"
         android:gravity="center"
         android:padding="@dimen/dp_5"
-        android:text="@string/m43_请先设置为频段2_4"
+        android:text="@string/m43_set_frequency"
         android:textColor="@color/color_text_66"
         android:textSize="@dimen/size_content_sp_14"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -60,7 +60,7 @@
         android:layout_marginTop="@dimen/dp_15"
         android:gravity="center"
         android:padding="@dimen/dp_3"
-        android:text="@string/m44_常见路由器的设置方法"
+        android:text="@string/m44_router_setting_methods"
         android:textColor="@color/color_theme_green"
         android:textSize="@dimen/size_content_sp_14"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -88,13 +88,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_setwifi_guide" />
 
 
-    <TextView
-        android:id="@+id/tv_ssid"
+    <EditText
+        android:id="@+id/edt_ssid"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@null"
         android:padding="@dimen/dp_5"
-        android:hint="@string/m45_输入wifi名称"
+        android:textCursorDrawable="@null"
+        android:hint="@string/m45_enter_wifi_name"
         android:textColor="@color/color_text_33"
         android:textSize="@dimen/size_content_sp_14"
         app:layout_constraintBottom_toBottomOf="@+id/iv_wifi"
@@ -138,7 +139,8 @@
         android:background="@null"
         android:padding="@dimen/dp_5"
         android:inputType="textPassword"
-        android:hint="@string/m46_输入wifi密码"
+        android:hint="@string/m46_enter_wifi_password"
+        android:textCursorDrawable="@null"
         android:textColor="@color/color_text_66"
         android:textSize="@dimen/size_content_sp_14"
         app:layout_constraintBottom_toBottomOf="@+id/iv_password"
@@ -173,7 +175,7 @@
         android:layout_marginTop="@dimen/dp_40"
         android:layout_marginRight="@dimen/dp_40"
         android:background="@drawable/selector_button_rect"
-        android:text="@string/m47_下一步"
+        android:text="@string/m47_next"
         android:textColor="@color/white"
         android:textSize="@dimen/size_content_sp_14"
         app:layout_constraintTop_toBottomOf="@+id/v_line_password" />
