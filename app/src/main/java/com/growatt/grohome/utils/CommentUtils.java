@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.text.TextUtils;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -87,4 +88,28 @@ public class CommentUtils {
             return false;
         }
     }
+
+
+    /**
+     * 判断集合是否为空
+     */
+    public static boolean isEmpty(Collection collection) {
+        return null == collection || collection.isEmpty();
+    }
+
+
+    /**
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+     */
+    public static int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    //dp转像素
+    public static int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
 }

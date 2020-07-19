@@ -3,7 +3,6 @@ package com.growatt.grohome.base;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -16,8 +15,9 @@ import androidx.core.content.ContextCompat;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
-import com.growatt.grohome.constants.AllRequestCodeConstant;
-import com.mylhyl.circledialog.CircleDialog;
+import com.growatt.grohome.constants.AllPermissionRequestCode;
+import com.yechaoa.yutils.LogUtil;
+import com.yechaoa.yutils.YUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -164,17 +164,17 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     public void showLoading() {
-
+        YUtils.showLoading("");
     }
 
     @Override
     public void hideLoading() {
-
+        YUtils.dismissLoading();
     }
 
     @Override
     public void onErrorCode(BaseBean bean) {
-
+        YUtils.dismissLoading();
     }
 
 
@@ -215,6 +215,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        this.onPermissionsGranted(requestCode, null);
+        if (requestCode>= AllPermissionRequestCode.ALL_PERMISSION_CODE&&requestCode<=AllPermissionRequestCode.PERMISSION_LOCATION_CODE){
+            this.onPermissionsGranted(requestCode, null);
+        }
     }
 }

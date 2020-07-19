@@ -3,7 +3,10 @@ package com.growatt.grohome.app;
 import android.app.Activity;
 import android.app.Application;
 
+import com.growatt.grohome.bean.User;
 import com.hjq.toast.ToastUtils;
+import com.mylhyl.circledialog.res.values.CircleColor;
+import com.mylhyl.circledialog.res.values.CircleDimen;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.yechaoa.yutils.ActivityUtil;
 import com.yechaoa.yutils.LogUtil;
@@ -41,6 +44,8 @@ public class App extends Application {
         //初始化涂鸦
         TuyaHomeSdk.init(this);
         TuyaHomeSdk.setDebugMode(true);
+        //全局初始化弹框
+        initCirclerDialog();
     }
 
 
@@ -76,4 +81,26 @@ public class App extends Application {
         }
     }
 
+    /**
+     * 设置弹框按钮颜色等
+     */
+    private void initCirclerDialog() {
+        CircleColor.ITEM_CONTENT_TEXT = 0xFF007AFF;
+        CircleColor.FOOTER_BUTTON_TEXT_POSITIVE = 0xFF4B814B;
+        CircleColor.FOOTER_BUTTON_TEXT_NEGATIVE = 0xFF4B814B;
+    }
+
+
+    /**
+     * 保存全局用户
+     */
+    public static User userBean;
+
+    public static User getUserBean() {
+        return userBean;
+    }
+
+    public static void setUserBean(User userBean) {
+        App.userBean = userBean;
+    }
 }

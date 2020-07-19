@@ -9,13 +9,14 @@ import android.widget.FrameLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.atess.enegy.constants.GlobalConstant;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.growatt.grohome.adapter.ArticleAdapter;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.bean.Article;
+import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.home.GrohomeFragment;
 import com.growatt.grohome.module.personal.PersonalFragment;
 import com.growatt.grohome.module.scenes.ScenesFragment;
@@ -58,7 +59,7 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
 
     @Override
     protected HomePresenter createPresenter() {
-        return new HomePresenter(this);
+        return new HomePresenter(this,this);
     }
 
 
@@ -101,7 +102,7 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.getArticleList();
+//        presenter.getArticleList();
     }
 
     @Override
@@ -111,9 +112,10 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
 
 
     @Override
-    public void setArticleData(BaseBean<Article> list) {
-        mArticles = list.data.datas;
-        mArticleAdapter = new ArticleAdapter(R.layout.item_article_list, list.data.datas);
+    public void setArticleData(String list) {
+        Article article = new Gson().fromJson(list, Article.class);
+        mArticles = article.datas;
+        mArticleAdapter = new ArticleAdapter(R.layout.item_article_list, article.datas);
 //        mHomeRecyclerView.setAdapter(mArticleAdapter);
         mArticleAdapter.setOnItemChildClickListener(this);
     }

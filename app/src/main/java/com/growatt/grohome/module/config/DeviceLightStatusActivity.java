@@ -16,11 +16,12 @@ import androidx.core.content.ContextCompat;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
-import com.growatt.grohome.constants.AllRequestCodeConstant;
+import com.growatt.grohome.constants.AllPermissionRequestCode;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.module.config.Presenter.DeviceLightStatusPresenter;
 import com.growatt.grohome.module.config.view.IDeviceLightStatusView;
 import com.growatt.grohome.utils.ActivityUtils;
+import com.yechaoa.yutils.YUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -57,7 +58,12 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
     private AnimationDrawable mFastLightAnimation;
     private AnimationDrawable mSlowLightAnimation;
 
+    //跳转选择配网模式
+    public static final int START_FOR_RESULT_CONFIG = 100;
+
     private int ecMode;
+    private MenuItem switchItem;
+    private TextView tvSwitchItem;
 
     @Override
     protected DeviceLightStatusPresenter createPresenter() {
@@ -75,6 +81,9 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
         tvTitle.setVisibility(View.GONE);
         toolbar.setNavigationIcon(R.drawable.icon_return);
         toolbar.inflateMenu(R.menu.menu_device_light_status);
+        switchItem = toolbar.getMenu().findItem(R.id.action_switch_text);
+        switchItem.setActionView(R.layout.menu_config_switch);
+        tvSwitchItem=switchItem.getActionView().findViewById(R.id.tv_config_mode);
         toolbar.setOnMenuItemClickListener(this);
         //默认不勾选
         cbFlashStatus.setChecked(false);
@@ -103,6 +112,12 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
         super.initListener();
         toolbar.setNavigationOnClickListener(v -> finish());
         cbFlashStatus.setOnCheckedChangeListener(this);
+        tvSwitchItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.toSwitchMode();
+            }
+        });
     }
 
 
@@ -111,8 +126,7 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
         switch (item.getItemId()) {
             case R.id.action_switch_pic:
             case R.id.action_switch_text:
-                Intent intent = new Intent(this, SelectConfigTypeActivity.class);
-                ActivityUtils.startActivityForResult(this, intent, ActivityUtils.ANIMATE_FORWARD, AllRequestCodeConstant.START_FOR_RESULT_CONFIG, false);
+                presenter.toSwitchMode();
                 break;
         }
         return true;
@@ -125,17 +139,17 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
         switch (view.getId()) {
             case R.id.btn_next:
                 if (ecMode == SelectConfigTypeActivity.EC_MODE) {
-//                    presenter.toEcbindConfig();
+                    presenter.toEcbindConfig();
                 } else {
-//                    presenter.getTokenForConfigDevice();
+                    presenter.getTokenForConfigDevice();
                 }
                 break;
             case R.id.iv_toguide:
             case R.id.tv_device_reset:
                 if (ecMode == SelectConfigTypeActivity.EC_MODE) {
-//                    presenter.toLightReset();
+                    presenter.toLightReset();
                 } else {
-//                    presenter.toHostGuide();
+                    presenter.toHostGuide();
                 }
                 break;
         }
@@ -148,7 +162,8 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
         if (ecMode == SelectConfigTypeActivity.EC_MODE) {
             tvSubTitle.setText(R.string.m49_flash_fast_set);
             tvLightFlash.setText(R.string.m52_make_sure_flashing_fast);
-            toolbar.getMenu().findItem(R.id.action_switch_text).setTitle(R.string.m105_ez_mode);
+            switchItem.setTitle(R.string.m105_ez_mode);
+            tvSwitchItem.setText(R.string.m105_ez_mode);
             mFastLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_on), 500);
             mFastLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_off), 500);
             mFastLightAnimation.setOneShot(false);
@@ -157,7 +172,8 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
         } else {
             tvSubTitle.setText(R.string.m120_flashing_slowly_set);
             tvLightFlash.setText(R.string.m121_make_sure_flashing_slowly);
-            toolbar.getMenu().findItem(R.id.action_switch_text).setTitle(R.string.m102_ap_mode);
+            switchItem.setTitle(R.string.m102_ap_mode);
+            tvSwitchItem.setText(R.string.m102_ap_mode);
             mSlowLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_on), 1500);
             mSlowLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_off), 1500);
             mSlowLightAnimation.setOneShot(false);
@@ -168,11 +184,32 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
 
 
     @Override
+    public void showDialog() {
+        YUtils.showLoading("");
+    }
+
+    @Override
+    public void dissmissDialog() {
+        YUtils.dismissLoading();
+    }
+
+    @Override
+    public void getTuyaTokenSuccess() {
+
+    }
+
+
+    @Override
+    public void getTuyaTokenFails(String errorCode, String errorMsg) {
+
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == AllRequestCodeConstant.START_FOR_RESULT_CONFIG) {
-                ecMode = data.getIntExtra("mode", SelectConfigTypeActivity.EC_MODE);
+            if (requestCode == START_FOR_RESULT_CONFIG) {
+                if (resultCode == RESULT_OK) {
+                ecMode = data.getIntExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.EC_MODE);
                 showAnim();
             }
         }

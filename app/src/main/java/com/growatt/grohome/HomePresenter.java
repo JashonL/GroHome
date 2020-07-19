@@ -4,15 +4,22 @@ package com.growatt.grohome;
 import android.content.Context;
 import android.util.Log;
 
+import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
-import com.growatt.grohome.bean.Article;
+import com.growatt.grohome.tuya.FamilyManager;
 import com.growatt.grohome.tuya.TuyaApiUtils;
+import com.growatt.grohome.utils.CommentUtils;
+import com.growatt.grohome.utils.MD5andKL;
 import com.tuya.smart.android.user.api.ILoginCallback;
-import com.tuya.smart.android.user.api.IRegisterCallback;
 import com.tuya.smart.android.user.bean.User;
-import com.yechaoa.yutils.YUtils;
+import com.tuya.smart.home.sdk.bean.HomeBean;
+import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
+import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomePresenter  extends BasePresenter<IMainActivityView> {
@@ -21,13 +28,18 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
         super(baseView);
     }
 
+
+    public HomePresenter(Context context,IMainActivityView baseView) {
+        super(context, baseView);
+    }
+
     /**
      * 第一次加载文章列表
      */
     public void getArticleList() {
-        addDisposable(apiServer.getArticleList(0), new BaseObserver<BaseBean<Article>>(baseView,true) {
+        addDisposable(apiServer.getArticleList(0), new BaseObserver<String>(baseView,true) {
             @Override
-            public void onSuccess(BaseBean<Article> bean) {
+            public void onSuccess(String bean) {
                 baseView.setArticleData(bean);
             }
 
@@ -80,26 +92,93 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
 
 
 
-
-
-
     /**
      * 登录涂鸦
      */
     public void loginTuya(Context context){
-        TuyaApiUtils.autoLogin(context,"86","APP开发者","app12345678",loginCallback);
+        String accountName = App.getUserBean().getAccountName();
+        TuyaApiUtils.autoLogin(context,"86", App.getUserBean().getAccountName(), MD5andKL.encryptPassword(accountName),loginCallback);
     }
 
     private ILoginCallback loginCallback=new ILoginCallback() {
         @Override
         public void onSuccess(User user) {
             //登录成功处理
+            Log.i(TuyaApiUtils.TUYA_TAG,"涂鸦登录成功");
+            isNeedCreateHome();
         }
 
         @Override
         public void onError(String code, String error) {
             //登录失败处理
+            Log.i(TuyaApiUtils.TUYA_TAG,"涂鸦登录失败----"+code+"------------"+error);
+
         }
     };
+
+
+
+    /**
+     * 判断是否需要创建一个家庭
+     */
+    private void isNeedCreateHome() {
+        //登录涂鸦成功,获取家庭，如果没有创建家庭那么就创建一个
+        TuyaApiUtils.getHomeList(homelistCallBack);
+    }
+
+
+    private ITuyaGetHomeListCallback homelistCallBack=new ITuyaGetHomeListCallback() {
+
+        @Override
+        public void onSuccess(List<HomeBean> homeBeans) {
+            if (CommentUtils.isEmpty(homeBeans)) {
+                createHome();
+            } else {
+                initHome();
+            }
+        }
+
+        @Override
+        public void onError(String errorCode, String error) {
+
+        }
+    };
+
+
+    /**
+     * 创建一个默认的涂鸦家庭
+     */
+    private void createHome() {
+        ArrayList<String> rooms = new ArrayList<>();
+        rooms.add("bedroom");
+        TuyaApiUtils.createHome("MyHome", rooms, new ITuyaHomeResultCallback() {
+            @Override
+            public void onSuccess(HomeBean homeBean) {
+                initHome();
+            }
+
+            @Override
+            public void onError(String s, String s1) {
+            }
+        });
+    }
+
+
+
+    private void initHome() {
+        TuyaApiUtils.getHomeDetail(TuyaApiUtils.getHomeId(), new ITuyaHomeResultCallback() {
+            @Override
+            public void onSuccess(HomeBean homeBean) {
+                TuyaApiUtils.setIsHomeInit(true);
+                Log.i(TuyaApiUtils.TUYA_TAG,"房间初始化成功");
+            }
+
+            @Override
+            public void onError(String s, String s1) {
+                Log.i(TuyaApiUtils.TUYA_TAG,"房间初始化失败----"+s+"------------"+s1);
+            }
+        });
+    }
+
 
 }

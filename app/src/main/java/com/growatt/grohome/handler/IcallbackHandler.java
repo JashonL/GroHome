@@ -1,5 +1,7 @@
 package com.growatt.grohome.handler;
 
+import android.os.Message;
+
 public interface IcallbackHandler {
-    void callback();
+    void handleMessage(Message msg);
 }

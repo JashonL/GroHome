@@ -17,8 +17,9 @@ import androidx.fragment.app.FragmentManager;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BasePresenter;
-import com.growatt.grohome.constants.AllRequestCodeConstant;
+import com.growatt.grohome.constants.AllPermissionRequestCode;
 import com.growatt.grohome.module.config.DeviceLightStatusActivity;
+import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.view.IWiFiOptionsView;
 import com.growatt.grohome.module.device.presenter.DeviceTypePresenter;
 import com.growatt.grohome.utils.ActivityUtils;
@@ -82,7 +83,7 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
                     if (EasyPermissions.hasPermissions(context, Manifest.permission.ACCESS_FINE_LOCATION)) {
                         ssid = CommentUtils.getWiFiSsid((Activity) context);
                     } else {
-                        EasyPermissions.requestPermissions((Activity) context, String.format("%s:%s", context.getString(R.string.m93_request_permission), context.getString(R.string.m94_location)), AllRequestCodeConstant.PERMISSION_LOCATION_CODE, Manifest.permission.ACCESS_FINE_LOCATION);
+                        EasyPermissions.requestPermissions((Activity) context, String.format("%s:%s", context.getString(R.string.m93_request_permission), context.getString(R.string.m94_location)), AllPermissionRequestCode.PERMISSION_LOCATION_CODE, Manifest.permission.ACCESS_FINE_LOCATION);
                     }
                 } else {
                     ssid = CommentUtils.getWiFiSsid((Activity) context);
@@ -153,8 +154,9 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
 
     public void toConfig() {
         Intent intent = new Intent(context, DeviceLightStatusActivity.class);
-        intent.putExtra("ssid", baseView.getWifissid());
-        intent.putExtra("password", baseView.getWifiPassWord());
+        intent.putExtra(WiFiOptionsActivity.CONFIG_SSID, baseView.getWifissid());
+        intent.putExtra(WiFiOptionsActivity.CONFIG_PASSWORD, baseView.getWifiPassWord());
+        intent.putExtra(DeviceTypePresenter.DEVICE_TYPE,deviceType);
         ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
     }
 

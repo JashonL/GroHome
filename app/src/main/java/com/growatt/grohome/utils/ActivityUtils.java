@@ -65,6 +65,8 @@ public class ActivityUtils {
         overridePendingTransition(activity, direction);
     }
 
+
+
     public static void overridePendingTransition(Activity activity, int direction) {
         if (direction == ANIMATE_FORWARD) {
             activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

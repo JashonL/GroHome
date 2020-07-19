@@ -1,6 +1,7 @@
 package com.growatt.grohome.module.login;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,8 +13,11 @@ import com.google.android.material.tabs.TabLayout;
 import com.growatt.grohome.MainActivity;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
+import com.growatt.grohome.base.BaseBean;
+import com.growatt.grohome.bean.User;
 import com.growatt.grohome.module.login.presenter.RegisterLoginPresenter;
 import com.growatt.grohome.module.login.view.IRegisterLoginView;
+import com.hjq.toast.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -88,7 +92,6 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     }
 
 
-
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         int position = tab.getPosition();
@@ -118,11 +121,43 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                startActivity(new Intent(this, MainActivity.class));
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+                if (TextUtils.isEmpty(username)) {
+                    ToastUtils.show(R.string.m143_username_empty);
+                    return;
+                }
+                if (TextUtils.isEmpty(password)) {
+                    ToastUtils.show(R.string.m144_password_empty);
+                    return;
+                }
+//                startActivity(new Intent(this, MainActivity.class));
+//                presenter.userLogin(username,password);
+                presenter.getUserType();
                 break;
             case R.id.btn_register:
 
                 break;
         }
+    }
+
+    @Override
+    public String getUserName() {
+        return etUsername.getText().toString();
+    }
+
+    @Override
+    public String getPassword() {
+        return etPassword.getText().toString();
+    }
+
+    @Override
+    public void loginSuccess(String user) {
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    public void loginError(String errorMessage) {
+        ToastUtils.show(errorMessage);
     }
 }

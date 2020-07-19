@@ -4,8 +4,11 @@ package com.growatt.grohome.base;
 
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 
-import com.growatt.grohome.handler.IcallbackHandler;
+import androidx.annotation.NonNull;
+
 import com.growatt.grohome.handler.NoleakHandler;
 import com.growatt.grohome.http.API;
 import com.growatt.grohome.http.RetrofitService;
@@ -23,7 +26,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 
-public class BasePresenter<V extends BaseView> implements IcallbackHandler {
+public class BasePresenter<V extends BaseView> implements Handler.Callback {
 
     private CompositeDisposable compositeDisposable;
     public V baseView;
@@ -43,8 +46,8 @@ public class BasePresenter<V extends BaseView> implements IcallbackHandler {
         this.context=context;
     }
 
-    public void initHandler(){
-        handler=new NoleakHandler<>(this);
+    public void initHandler(Context context){
+        handler=new NoleakHandler(context,this);
     }
 
     /**
@@ -78,8 +81,13 @@ public class BasePresenter<V extends BaseView> implements IcallbackHandler {
         }
     }
 
-    @Override
-    public void callback() {
 
+    @Override
+    public boolean handleMessage(@NonNull Message msg) {
+        return false;
+    }
+
+    public void onDestroy() {
+        this.handler.destroy();
     }
 }

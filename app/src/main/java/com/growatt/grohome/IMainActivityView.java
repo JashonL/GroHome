@@ -1,9 +1,7 @@
 package com.growatt.grohome;
 
 
-import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.base.BaseView;
-import com.growatt.grohome.bean.Article;
 
 public interface IMainActivityView extends BaseView {
     /**
@@ -11,7 +9,7 @@ public interface IMainActivityView extends BaseView {
      *
      * @param list 文章list
      */
-    void setArticleData(BaseBean<Article> list);
+    void setArticleData(String list);
 
     /**
      * 显示文章失败
@@ -47,4 +45,7 @@ public interface IMainActivityView extends BaseView {
      * @param errorMessage 失败信息
      */
     void showUncollectError(String errorMessage);
+
+
+
 }

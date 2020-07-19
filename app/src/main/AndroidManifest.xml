@@ -59,6 +59,10 @@
 
         <activity android:name=".module.config.SelectConfigTypeActivity"/>
 
+        <activity android:name=".module.config.ConfigErrorActivity"/>
+
+        <activity android:name=".module.config.ConfigSuccessActivity"/>
+
     </application>
 
 </manifest>

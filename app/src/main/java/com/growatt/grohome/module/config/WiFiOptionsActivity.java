@@ -44,6 +44,9 @@ public class WiFiOptionsActivity extends BaseActivity<WiFiOptionsPresenter> impl
 
     private boolean passwordOn = false;
 
+    public static final String  CONFIG_PASSWORD="wifi_password";
+    public static final String  CONFIG_SSID="wifi_ssid";
+
 
     @Override
     protected WiFiOptionsPresenter createPresenter() {

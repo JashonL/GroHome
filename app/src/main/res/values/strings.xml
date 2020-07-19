@@ -117,5 +117,46 @@
     <string name="m120_flashing_slowly_set">Turn on the power and make sure the indicator is flashing slowly (3 seconds / 1 time)</string>
     <!--确认指示灯在慢闪-->
     <string name="m121_make_sure_flashing_slowly">Confirm that the indicator is flashing slowly</string>
+    <!--默认模式配网-->
+    <string name="m122_ez_config_detail">Use EZ mode to configure the network, you need to set the indicator to a flashing state, please complete the setting according to the following 3 steps</string>
+    <string name="m123_fail_to_add_device">Fail to add device,please retry or check Help</string>
+    <string name="m124_help">help</string>
+    <string name="m125_got_it">Got it</string>
+    <!--将停止添加设备是否确认退出-->
+    <string name="m126_confirm_exit">Will stop adding devices, confirm exit?</string>
+    <string name="m127_no">No</string>
+    <!--    设备无响应-->
+    <string name="m128_device_not_responding">Device not responding Check demerit points and retry</string>
+    <!--确认设备已重置灯在慢闪-->
+    <string name="m129_confirm_device_reset_slowly">Confirm that the device has been reset and the light is flashing slowly</string>
+    <!--确认设备已重置灯在快闪-->
+    <string name="m130_confirm_device_reset_fast">Check if the device has been reset and the indicator is blinking quickly</string>
+    <!--是否连接到设备热点-->
+    <string name="m131_whether_connect_hotspot">Whether to connect to the device hotspot</string>
+    <!--核对WiFi密码是否正确-->
+    <string name="m132_verify_the_password">Verify the Wi-Fi password</string>
+    <!--按步骤重试-->
+    <string name="m133_retry">Retry</string>
+    <!--切换配网模式-->
+    <string name="m134_switch_pairing_mode">Switch Pairing Mode</string>
+    <!--检查是否为2_4GHz-->
+    <string name="m135_check_is_2_4GHz">Check if it is 2.4 GHZ Wi-Fi</string>
+    <!--请排查以下问题后重试-->
+    <string name="m136_check_try_again">The device is not responding, please check the following issues and try again</string>
 
+    <string name="m137_ap_config_detail">the light needs to be set to flash rapidly. Please follow the 4 steps below to flnish setting.</string>
+    <!--重新连接-->
+    <string name="m138_reconnect">reconnect</string>
+    <!--设备添加成功-->
+    <string name="m139_device_add_success">Device Successfully Added </string>
+    <!--设备名称-->
+    <string name="m140_device_name">Device Name</string>
+    <!--选择房间-->
+    <string name="m141_select_room">Select Room</string>
+    <!--完成-->
+    <string name="m142_done">Done</string>
+    <!--用户名为空-->
+    <string name="m143_username_empty">Username is Empty!</string>
+    <!--密码为空-->
+    <string name="m144_password_empty">PassWord is Empty!</string>
 </resources>

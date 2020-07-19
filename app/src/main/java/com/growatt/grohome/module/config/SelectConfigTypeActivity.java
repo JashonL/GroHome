@@ -43,6 +43,8 @@ public class SelectConfigTypeActivity extends BaseActivity<SelectConfigPresenter
 
     public static final int AP_MODE = 0;
     public static final int EC_MODE = 1;
+    public static final String CONFIG_MODE = "mode";
+
 
     @Override
     protected SelectConfigPresenter createPresenter() {

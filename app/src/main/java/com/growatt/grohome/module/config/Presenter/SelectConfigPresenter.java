@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.config.view.ISelectConfigView;
 
 import static android.app.Activity.RESULT_OK;
@@ -21,7 +22,7 @@ public class SelectConfigPresenter extends BasePresenter<ISelectConfigView> {
 
     public void selectMode(int mode) {
         Intent intent = new Intent();
-        intent.putExtra("mode", mode);
+        intent.putExtra(SelectConfigTypeActivity.CONFIG_MODE, mode);
         ((Activity)context).setResult(RESULT_OK, intent);
         baseView.resultSelectMode();
     }
