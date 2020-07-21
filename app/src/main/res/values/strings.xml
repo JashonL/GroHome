@@ -159,4 +159,13 @@
     <string name="m143_username_empty">Username is Empty!</string>
     <!--密码为空-->
     <string name="m144_password_empty">PassWord is Empty!</string>
+    <!---->
+    <string name="m145_left_time">Left time</string>
+    <string name="m146_timer">Timer</string>
+
+    <string name="m147_scene">Scene</string>
+    <string name="m148_edit">Edit</string>
+    <string name="m149_device_does_not_exist">Device does not exist</string>
+    <string name="m150_device_is_offline">Device is offline</string>
+    <string name="m151_send_dps_failed">Failed to send instruction</string>
 </resources>

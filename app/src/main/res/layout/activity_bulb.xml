@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_text_33"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+
+
+    <ImageView
+        android:id="@+id/iv_white_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/selector_bulb_radio_white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/iv_colour_light"
+        app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+
+    <ImageView
+        android:id="@+id/iv_colour_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/selector_bulb_radio_colour"
+        app:layout_constraintLeft_toRightOf="@+id/iv_white_light"
+        app:layout_constraintRight_toLeftOf="@+id/iv_scenec_light"
+        app:layout_constraintTop_toTopOf="@+id/iv_white_light" />
+
+
+    <ImageView
+        android:id="@+id/iv_scenec_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/selector_bulb_radio_scene"
+        app:layout_constraintLeft_toRightOf="@+id/iv_colour_light"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_white_light" />
+
+
+    <FrameLayout
+        android:id="@+id/rl_device_menu"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintBottom_toTopOf="@+id/v_bottom_background"
+        app:layout_constraintTop_toBottomOf="@+id/iv_white_light">
+
+        <include
+            android:id="@+id/layout_white"
+            layout="@layout/bulb_white_set"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/layout_colour"
+            layout="@layout/bulb_colour_set"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/layout_scene"
+            layout="@layout/bulb_scene_set" android:visibility="gone"/>
+
+    </FrameLayout>
+
+
+    <View
+        android:id="@+id/v_bottom_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/shape_device_bottom_menu"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_leftdown"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/icon_lefttime"
+        android:drawablePadding="@dimen/dp_10"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="@string/m145_left_time"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/v_bottom_background"
+        app:layout_constraintLeft_toLeftOf="@+id/v_bottom_background"
+        app:layout_constraintRight_toLeftOf="@+id/imb_switch"
+        app:layout_constraintTop_toTopOf="@+id/v_bottom_background" />
+
+    <ImageButton
+        android:id="@+id/imb_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_on"
+        app:layout_constraintBottom_toBottomOf="@+id/v_bottom_background"
+        app:layout_constraintLeft_toLeftOf="@+id/v_bottom_background"
+        app:layout_constraintRight_toRightOf="@+id/v_bottom_background"
+        app:layout_constraintTop_toTopOf="@+id/v_bottom_background" />
+
+
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/icon_timer"
+        android:drawablePadding="@dimen/dp_10"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="@string/m146_timer"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/v_bottom_background"
+        app:layout_constraintLeft_toRightOf="@+id/imb_switch"
+        app:layout_constraintRight_toRightOf="@+id/v_bottom_background"
+        app:layout_constraintTop_toTopOf="@+id/v_bottom_background" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

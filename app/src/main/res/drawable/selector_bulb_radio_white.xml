@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 被checked的时候并且没有按下 -->
+    <item android:drawable="@drawable/tab_white_selected" android:state_selected="true"/>
+    <item android:drawable="@drawable/tab_white_normal"/>
+
+</selector>

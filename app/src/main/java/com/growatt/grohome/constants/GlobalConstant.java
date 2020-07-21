@@ -9,4 +9,8 @@ public class GlobalConstant {
     public static final String TY_ROUTER = "TY_ROUTER";
     public static final String DEFAULT_KEY_AP_SSID = "-TLinkAP-";
 
+    //Activity跳转传值
+    public static final String DEVICE_ID="device_id";
+    public static final String DEVICE_NAME="device_name";
+
 }

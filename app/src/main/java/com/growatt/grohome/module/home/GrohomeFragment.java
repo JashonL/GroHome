@@ -173,7 +173,8 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+        HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean)adapter.getData().get(position);
+        presenter.jumpTodevice(bean);
     }
 
     @OnClick(R.id.rl_switch_click)

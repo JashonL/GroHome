@@ -4,13 +4,20 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.tuya.smart.android.user.api.ILoginCallback;
 import com.tuya.smart.android.user.api.IRegisterCallback;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
+import com.tuya.smart.sdk.api.IResultCallback;
+import com.tuya.smart.sdk.api.ITuyaDevice;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TuyaApiUtils {
 
@@ -101,6 +108,61 @@ public class TuyaApiUtils {
 
     public static void setIsHomeInit(boolean isHomeInit) {
         TuyaApiUtils.isHomeInit = isHomeInit;
+    }
+
+
+
+    /**
+     * 指令下发
+     */
+    public static void sendCommand(String dpId, Object value, ITuyaDevice mTuyaDevice, SendDpListener listener) {
+        JSONObject object=new JSONObject();
+        object.put(dpId,value);
+        String s = object.toString();
+        mTuyaDevice.publishDps(s, new IResultCallback() {
+            @Override
+            public void onError(String s, String s1) {
+                listener.sendCommandError(s, s1);
+            }
+
+            @Override
+            public void onSuccess() {
+                //通知后台
+                listener.sendCommandSucces();
+            }
+        });
+    }
+
+    /**
+     * 指令集下发
+     */
+    public static void sendCommand(LinkedHashMap<String, Object> commandMap, ITuyaDevice mTuyaDevice, SendDpListener listener) {
+        String commandStr = mapToJsonString(commandMap);
+        mTuyaDevice.publishDps(commandStr, new IResultCallback() {
+            @Override
+            public void onError(String s, String s1) {
+                listener.sendCommandError(s, s1);
+            }
+
+            @Override
+            public void onSuccess() {
+                listener.sendCommandSucces();
+            }
+        });
+
+
+    }
+
+
+    /**
+     * map数组转成String
+     *
+     * @param map
+     * @return
+     */
+    public static String mapToJsonString(Map<String, Object> map) {
+        org.json.JSONObject jsonObject = new org.json.JSONObject(map);
+        return jsonObject.toString();
     }
 
 }

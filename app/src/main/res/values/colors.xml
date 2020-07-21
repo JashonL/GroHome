@@ -59,6 +59,7 @@
     <color name="seek_gradient_start">#ffe47a</color>
     <color name="seek_gradient_end">#3d7eaa</color>
     <color name="seek_thumb_color">#8ea896</color>
+    <color name="color_bottom_menu">#33ffffff</color>
 
 
 </resources>

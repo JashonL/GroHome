@@ -1,6 +1,10 @@
 package com.growatt.grohome.module.home.presenter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -8,10 +12,17 @@ import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.HomeDeviceBean;
+import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.module.device.BulbActivity;
 import com.growatt.grohome.module.home.view.IGrohomeView;
 import com.growatt.grohome.tuya.TuyaApiUtils;
+import com.growatt.grohome.utils.ActivityUtils;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.sdk.bean.DeviceBean;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -60,6 +71,19 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> {
             }
         });
 
+    }
+
+
+
+    /**
+     * 跳转到设备操作页面
+     *
+     */
+    public void jumpTodevice(HomeDeviceBean.DataBean bean) {
+        Intent intentThermostat = new Intent(context, BulbActivity.class);
+        intentThermostat.putExtra(GlobalConstant.DEVICE_ID, bean.getDevId());
+        intentThermostat.putExtra(GlobalConstant.DEVICE_NAME, bean.getName());
+        ActivityUtils.startActivity((Activity) context,intentThermostat,ActivityUtils.ANIMATE_FORWARD,false);
     }
 
 
