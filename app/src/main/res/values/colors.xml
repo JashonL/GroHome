@@ -61,5 +61,7 @@
     <color name="seek_thumb_color">#8ea896</color>
     <color name="color_bottom_menu">#33ffffff</color>
 
+    <!--BULB-->
+    <color name="color_white_background">#F3EDEB</color>
 
 </resources>

@@ -29,130 +29,171 @@ public class ColorPicker extends View {
     private static final String STATE_SHOW_OLD_COLOR = "showColor";
 
     /**
-     * Colors to construct the color wheel using {@link SweepGradient}.
+     * Colors to construct the color wheel using {@link android.graphics.SweepGradient}.
      */
-    private static final int[] COLORS = new int[]{0xFFFF0000, 0xFFFF00FF,
-            0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000};
+    private static final int[] COLORS = new int[] { 0xFFFF0000, 0xFFFF00FF,
+            0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000 };
 
     /**
      * {@code Paint} instance used to draw the color wheel.
+     * 用于绘制色轮的实例。
      */
     private Paint mColorWheelPaint;
 
     /**
      * {@code Paint} instance used to draw the pointer's "halo".
-     * 小圆
+     * 用于绘制指针的“光晕”的实例。
      */
     private Paint mPointerHaloPaint;
 
     /**
+     * 用于绘制指针的实例（选定的颜色）。
      * {@code Paint} instance used to draw the pointer (the selected color).
      */
     private Paint mPointerColor;
 
     /**
+     * 色轮的宽度厚度。
      * The width of the color wheel thickness.
      */
     private int mColorWheelThickness;
 
     /**
+     * 色轮的半径。
      * The radius of the color wheel.
      */
     private int mColorWheelRadius;
     private int mPreferredColorWheelRadius;
 
     /**
+     * 色轮内部的中心圆的半径。
      * The radius of the center circle inside the color wheel.
      */
     private int mColorCenterRadius;
     private int mPreferredColorCenterRadius;
 
     /**
+     * 色轮内中心圆的光晕半径。
      * The radius of the halo of the center circle inside the color wheel.
      */
     private int mColorCenterHaloRadius;
     private int mPreferredColorCenterHaloRadius;
 
     /**
+     * 指针的半径。
      * The radius of the pointer.
      */
     private int mColorPointerRadius;
 
     /**
+     * 指针的光晕半径。
      * The radius of the halo of the pointer.
      */
     private int mColorPointerHaloRadius;
 
     /**
+     * 包围色轮的矩形。
      * The rectangle enclosing the color wheel.
      */
     private RectF mColorWheelRectangle = new RectF();
 
     /**
+     * 包围色轮内部中心的矩形。
      * The rectangle enclosing the center inside the color wheel.
      */
     private RectF mCenterRectangle = new RectF();
 
     /**
-     * {@code true} if the user clicked on the pointer to start the move mode. <br>
-     * {@code false} once the user stops touching the screen.
      *
-     * @see #onTouchEvent(MotionEvent)
+     * {@code true} if the user clicked on the pointer to start the move mode. <br>如果用户单击指针以启动移动模式。
+     * {@code false} once the user stops touching the screen.  一旦用户停止触摸屏幕。
+     *
+     * @see #onTouchEvent(android.view.MotionEvent)
      */
     private boolean mUserIsMovingPointer = false;
 
     /**
+     * 当前所选颜色的ARGB值。
      * The ARGB value of the currently selected color.
      */
     private int mColor;
 
     /**
+     * 中心的ARGB值与旧的选定颜色。
      * The ARGB value of the center with the old selected color.
      */
     private int mCenterOldColor;
 
     /**
+     * 是否在中心显示旧颜色。
      * Whether to show the old color in the center or not.
      */
     private boolean mShowCenterOldColor;
 
     /**
+     * 中心的ARGB值以及新选择的颜色。
      * The ARGB value of the center with the new selected color.
      */
     private int mCenterNewColor;
 
-
+    /**
+     * Number of pixels the origin of this view is moved in X- and Y-direction.
+     *此视图的原点在X和Y方向上移动的像素数。
+     *
+     * 我们使用这个（二次）视图的中心作为内部
+     * 坐标系。 Android使用左上角作为
+     * 特定于视图的坐标系。 这就是我们用来平移的价值
+     * 从一个坐标系到另一个坐标系。
+     * <p>
+     * We use the center of this (quadratic) View as origin of our internal
+     * coordinate system. Android uses the upper left corner as origin for the
+     * View-specific coordinate system. So this is the value we use to translate
+     * from one coordinate system to the other.
+     * </p>
+     *
+     * <p>
+     * Note: (Re)calculated in {@link #onMeasure(int, int)}.
+     * </p>
+     *
+     * @see #onDraw(android.graphics.Canvas)
+     */
     private float mTranslationOffset;
 
 
     /**
+     * 指针与用户触摸之间在X方向上的距离。
      * Distance between pointer and user touch in X-direction.
      */
     private float mSlopX;
 
     /**
+     * 指针与用户触摸之间在Y方向上的距离。
      * Distance between pointer and user touch in Y-direction.
      */
     private float mSlopY;
 
     /**
+     * 指针的位置以角度表示（以弧度为单位）。
      * The pointer's position expressed as angle (in rad).
      */
     private float mAngle;
 
     /**
+     * 用旧的选择绘制中心的实例
      * {@code Paint} instance used to draw the center with the old selected
      * color.
      */
     private Paint mCenterOldPaint;
 
     /**
+     * 用于以新选定的中心绘制中心的实例
      * {@code Paint} instance used to draw the center with the new selected
      * color.
      */
     private Paint mCenterNewPaint;
 
     /**
+     * 用于绘制所选中心光环的实例
      * {@code Paint} instance used to draw the halo of the center selected
      * colors.
      */
@@ -237,7 +278,7 @@ public class ColorPicker extends View {
     /**
      * Set a onColorChangedListener
      *
-     * @param listener {@code OnColorChangedListener}
+     * @param {@code OnColorChangedListener}
      */
     public void setOnColorChangedListener(OnColorChangedListener listener) {
         this.onColorChangedListener = listener;
@@ -255,7 +296,7 @@ public class ColorPicker extends View {
     /**
      * Set a onColorSelectedListener
      *
-     * @param listener {@code OnColorSelectedListener}
+     * @param {@code OnColorSelectedListener}
      */
     public void setOnColorSelectedListener(OnColorSelectedListener listener) {
         this.onColorSelectedListener = listener;
@@ -349,21 +390,22 @@ public class ColorPicker extends View {
         // them we let Canvas do the work for us.
         canvas.translate(mTranslationOffset, mTranslationOffset);
 
-        // 大圆环
+        // Draw the color wheel.
         canvas.drawOval(mColorWheelRectangle, mColorWheelPaint);
 
         float[] pointerPosition = calculatePointerPosition(mAngle);
 
-        // 小圆外面的圆
+        // Draw the pointer's "halo"
         canvas.drawCircle(pointerPosition[0], pointerPosition[1],
                 mColorPointerHaloRadius, mPointerHaloPaint);
 
-        // 滑动的小圆
+        // Draw the pointer (the currently selected color) slightly smaller on
+        // top.
         canvas.drawCircle(pointerPosition[0], pointerPosition[1],
                 mColorPointerRadius, mPointerColor);
 
         // Draw the halo of the center colors.
-        //	canvas.drawCircle(0, 0, mColorCenterHaloRadius, mCenterHaloPaint);
+        canvas.drawCircle(0, 0, mColorCenterHaloRadius, mCenterHaloPaint);
 
         if (mShowCenterOldColor) {
             // Draw the old selected color in the center.
@@ -371,9 +413,10 @@ public class ColorPicker extends View {
 
             // Draw the new selected color in the center.
             canvas.drawArc(mCenterRectangle, 270, 180, true, mCenterNewPaint);
-        } else {
+        }
+        else {
             // Draw the new selected color in the center.
-            	canvas.drawArc(mCenterRectangle, 0, 360, true, mCenterNewPaint);
+            canvas.drawArc(mCenterRectangle, 0, 360, true, mCenterNewPaint);
         }
     }
 
@@ -427,9 +470,11 @@ public class ColorPicker extends View {
     /**
      * Calculate the color using the supplied angle.
      *
-     * @param angle The selected color's position expressed as angle (in rad).
+     * @param angle
+     *            The selected color's position expressed as angle (in rad).
+     *
      * @return The ARGB value of the color on the color wheel at the specified
-     * angle.
+     *         angle.
      */
     private int calculateColor(float angle) {
         float unit = (float) (angle / (2 * Math.PI));
@@ -471,15 +516,16 @@ public class ColorPicker extends View {
     }
 
     /**
-     * Set the color to be highlighted by the pointer. If the
+     * Set the color to be highlighted by the pointer. </br> </br> If the
      * instances {@code SVBar} and the {@code OpacityBar} aren't null the color
      * will also be set to them
      *
-     * @param color The RGB value of the color to highlight. If this is not a
-     *              color displayed on the color wheel a very simple algorithm is
-     *              used to map it to the color wheel. The resulting color often
-     *              won't look close to the original color. This is especially
-     *              true for shades of grey. You have been warned!
+     * @param color
+     *            The RGB value of the color to highlight. If this is not a
+     *            color displayed on the color wheel a very simple algorithm is
+     *            used to map it to the color wheel. The resulting color often
+     *            won't look close to the original color. This is especially
+     *            true for shades of grey. You have been warned!
      */
     public void setColor(int color) {
         mAngle = colorToAngle(color);
@@ -503,7 +549,7 @@ public class ColorPicker extends View {
             // Here will be checked which we shall use.
             if (mHSV[1] < mHSV[2]) {
                 mSVbar.setSaturation(mHSV[1]);
-            } else if (mHSV[1] > mHSV[2]) {
+            } else if(mHSV[1] > mHSV[2]){
                 mSVbar.setValue(mHSV[2]);
             }
         }
@@ -528,9 +574,11 @@ public class ColorPicker extends View {
     /**
      * Convert a color to an angle.
      *
-     * @param color The RGB value of the color to "find" on the color wheel.
+     * @param color
+     *            The RGB value of the color to "find" on the color wheel.
+     *
      * @return The angle (in rad) the "normalized" color is displayed on the
-     * color wheel.
+     *         color wheel.
      */
     private float colorToAngle(int color) {
         float[] colors = new float[3];
@@ -569,14 +617,14 @@ public class ColorPicker extends View {
                     invalidate();
                 }
                 // Check whether the user pressed anywhere on the wheel.
-                else if (Math.sqrt(x * x + y * y) <= mColorWheelRadius + mColorPointerHaloRadius
-                        && Math.sqrt(x * x + y * y) >= mColorWheelRadius - mColorPointerHaloRadius
+                else if (Math.sqrt(x*x + y*y)  <= mColorWheelRadius + mColorPointerHaloRadius
+                        && Math.sqrt(x*x + y*y) >= mColorWheelRadius - mColorPointerHaloRadius
                         && mTouchAnywhereOnColorWheelEnabled) {
                     mUserIsMovingPointer = true;
                     invalidate();
                 }
                 // If user did not press pointer or center, report event not handled
-                else {
+                else{
                     getParent().requestDisallowInterceptTouchEvent(false);
                     return false;
                 }
@@ -607,7 +655,7 @@ public class ColorPicker extends View {
                     invalidate();
                 }
                 // If user did not press pointer or center, report event not handled
-                else {
+                else{
                     getParent().requestDisallowInterceptTouchEvent(false);
                     return false;
                 }
@@ -637,21 +685,24 @@ public class ColorPicker extends View {
      * Calculate the pointer's coordinates on the color wheel using the supplied
      * angle.
      *
-     * @param angle The position of the pointer expressed as angle (in rad).
+     * @param angle
+     *            The position of the pointer expressed as angle (in rad).
+     *
      * @return The coordinates of the pointer's center in our internal
-     * coordinate system.
+     *         coordinate system.
      */
     private float[] calculatePointerPosition(float angle) {
         float x = (float) (mColorWheelRadius * Math.cos(angle));
         float y = (float) (mColorWheelRadius * Math.sin(angle));
 
-        return new float[]{x, y};
+        return new float[] { x, y };
     }
 
     /**
      * Add a Saturation/Value bar to the color wheel.
      *
-     * @param bar The instance of the Saturation/Value bar.
+     * @param bar
+     *            The instance of the Saturation/Value bar.
      */
     public void addSVBar(SVBar bar) {
         mSVbar = bar;
@@ -663,7 +714,8 @@ public class ColorPicker extends View {
     /**
      * Add a Opacity bar to the color wheel.
      *
-     * @param bar The instance of the Opacity bar.
+     * @param bar
+     *            The instance of the Opacity bar.
      */
     public void addOpacityBar(OpacityBar bar) {
         mOpacityBar = bar;
@@ -687,7 +739,8 @@ public class ColorPicker extends View {
     /**
      * Change the color of the center which indicates the new color.
      *
-     * @param color int of the color.
+     * @param color
+     *            int of the color.
      */
     public void setNewCenterColor(int color) {
         mCenterNewColor = color;
@@ -696,9 +749,9 @@ public class ColorPicker extends View {
             mCenterOldColor = color;
             mCenterOldPaint.setColor(color);
         }
-        if (onColorChangedListener != null && color != oldChangedListenerColor) {
+        if (onColorChangedListener != null && color != oldChangedListenerColor ) {
             onColorChangedListener.onColorChanged(color);
-            oldChangedListenerColor = color;
+            oldChangedListenerColor  = color;
         }
         invalidate();
     }
@@ -706,7 +759,8 @@ public class ColorPicker extends View {
     /**
      * Change the color of the center which indicates the old color.
      *
-     * @param color int of the color.
+     * @param color
+     *            int of the color.
      */
     public void setOldCenterColor(int color) {
         mCenterOldColor = color;
@@ -736,7 +790,8 @@ public class ColorPicker extends View {
      * Used to change the color of the {@code OpacityBar} used by the
      * {@code SVBar} if there is an change in color.
      *
-     * @param color int of the color used to change the opacity bar color.
+     * @param color
+     *            int of the color used to change the opacity bar color.
      */
     public void changeOpacityBarColor(int color) {
         if (mOpacityBar != null) {
@@ -747,7 +802,8 @@ public class ColorPicker extends View {
     /**
      * Used to change the color of the {@code SaturationBar}.
      *
-     * @param color int of the color used to change the opacity bar color.
+     * @param color
+     *            int of the color used to change the opacity bar color.
      */
     public void changeSaturationBarColor(int color) {
         if (mSaturationBar != null) {
@@ -758,7 +814,8 @@ public class ColorPicker extends View {
     /**
      * Used to change the color of the {@code ValueBar}.
      *
-     * @param color int of the color used to change the opacity bar color.
+     * @param color
+     *            int of the color used to change the opacity bar color.
      */
     public void changeValueBarColor(int color) {
         if (mValueBar != null) {
@@ -771,7 +828,7 @@ public class ColorPicker extends View {
      *
      * @return true or false.
      */
-    public boolean hasOpacityBar() {
+    public boolean hasOpacityBar(){
         return mOpacityBar != null;
     }
 
@@ -780,7 +837,7 @@ public class ColorPicker extends View {
      *
      * @return true or false.
      */
-    public boolean hasValueBar() {
+    public boolean hasValueBar(){
         return mValueBar != null;
     }
 
@@ -789,7 +846,7 @@ public class ColorPicker extends View {
      *
      * @return true or false.
      */
-    public boolean hasSaturationBar() {
+    public boolean hasSaturationBar(){
         return mSaturationBar != null;
     }
 
@@ -798,7 +855,7 @@ public class ColorPicker extends View {
      *
      * @return true or false.
      */
-    public boolean hasSVBar() {
+    public boolean hasSVBar(){
         return mSVbar != null;
     }
 
@@ -830,11 +887,11 @@ public class ColorPicker extends View {
         setNewCenterColor(currentColor);
     }
 
-    public void setTouchAnywhereOnColorWheelEnabled(boolean TouchAnywhereOnColorWheelEnabled) {
+    public void setTouchAnywhereOnColorWheelEnabled(boolean TouchAnywhereOnColorWheelEnabled){
         mTouchAnywhereOnColorWheelEnabled = TouchAnywhereOnColorWheelEnabled;
     }
 
-    public boolean getTouchAnywhereOnColorWheel() {
+    public boolean getTouchAnywhereOnColorWheel(){
         return mTouchAnywhereOnColorWheelEnabled;
     }
 }

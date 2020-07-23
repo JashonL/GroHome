@@ -5,15 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
+
+    <com.growatt.grohome.customview.colorpicker.BlurMaskCircularView
+        android:id="@+id/blur_mask_view"
+        android:layout_width="@dimen/dp_220"
+        android:layout_height="@dimen/dp_220"
+        app:layout_constraintBottom_toBottomOf="@+id/v_bulb_backgroud_white"
+        app:layout_constraintLeft_toLeftOf="@+id/v_bulb_backgroud_white"
+        app:layout_constraintRight_toRightOf="@+id/v_bulb_backgroud_white"
+        app:layout_constraintTop_toTopOf="@+id/v_bulb_backgroud_white" />
+
+
+    <com.growatt.grohome.customview.colorpicker.CircleBackgroundView
         android:id="@+id/v_bulb_backgroud_white"
         android:layout_width="@dimen/dp_200"
         android:layout_height="@dimen/dp_200"
-        android:background="@drawable/shape_circle_solid_gray"
         app:layout_constraintBottom_toTopOf="@+id/seek_brightness_white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
     <ImageView
         android:id="@+id/iv_bulb_white"

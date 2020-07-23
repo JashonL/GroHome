@@ -9,7 +9,6 @@
         android:id="@+id/v_bulb_background_colour"
         android:layout_width="@dimen/dp_200"
         android:layout_height="@dimen/dp_200"
-        android:background="@drawable/shape_circle_solid_gray"
         app:layout_constraintBottom_toTopOf="@+id/seek_brightness_colour"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -18,8 +17,8 @@
 
     <com.growatt.grohome.customview.colorpicker.ColorPicker
         android:id="@+id/color_picker"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="@dimen/dp_0"
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="@dimen/dp_250"
         app:color_wheel_thickness="@dimen/dp_30"
         app:layout_constraintBottom_toBottomOf="@+id/v_bulb_background_colour"
         app:layout_constraintLeft_toLeftOf="@+id/v_bulb_background_colour"
@@ -52,13 +51,12 @@
         android:layout_height="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_20"
         android:padding="@dimen/dp_10"
-        android:progress="20"
         android:progressDrawable="@drawable/seek_colour_temp"
         android:thumb="@drawable/seek_colour_temp_thumb"
         app:layout_constraintBottom_toTopOf="@+id/seek_temp_colour"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-
+        android:max="990"
         app:layout_constraintTop_toBottomOf="@+id/v_bulb_background_colour" />
 
 
@@ -88,7 +86,7 @@
         android:layout_height="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_20"
         android:padding="@dimen/dp_10"
-        android:progress="20"
+        android:max="1000"
         android:progressDrawable="@drawable/seek_colour_temp"
         android:thumb="@drawable/seek_colour_temp_thumb"
         app:layout_constraintBottom_toBottomOf="parent"

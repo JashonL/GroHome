@@ -93,14 +93,13 @@
         android:textSize="@dimen/size_content_sp_14"
         app:layout_constraintBottom_toBottomOf="@+id/v_bottom_background"
         app:layout_constraintLeft_toLeftOf="@+id/v_bottom_background"
-        app:layout_constraintRight_toLeftOf="@+id/imb_switch"
+        app:layout_constraintRight_toLeftOf="@+id/iv_switch"
         app:layout_constraintTop_toTopOf="@+id/v_bottom_background" />
 
-    <ImageButton
-        android:id="@+id/imb_switch"
+    <ImageView
+        android:id="@+id/iv_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/icon_on"
         app:layout_constraintBottom_toBottomOf="@+id/v_bottom_background"
         app:layout_constraintLeft_toLeftOf="@+id/v_bottom_background"
         app:layout_constraintRight_toRightOf="@+id/v_bottom_background"
@@ -119,7 +118,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/size_content_sp_14"
         app:layout_constraintBottom_toBottomOf="@+id/v_bottom_background"
-        app:layout_constraintLeft_toRightOf="@+id/imb_switch"
+        app:layout_constraintLeft_toRightOf="@+id/iv_switch"
         app:layout_constraintRight_toRightOf="@+id/v_bottom_background"
         app:layout_constraintTop_toTopOf="@+id/v_bottom_background" />
 

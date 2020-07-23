@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class TuyaApiUtils {
 
-    public static final String TUYA_TAG="tuya";
+    public static final String TUYA_TAG="tuya_log";
 
     /**
      * 注册到涂鸦
@@ -122,7 +122,7 @@ public class TuyaApiUtils {
         mTuyaDevice.publishDps(s, new IResultCallback() {
             @Override
             public void onError(String s, String s1) {
-                listener.sendCommandError(s, s1);
+//                listener.sendCommandError(s, s1);
             }
 
             @Override

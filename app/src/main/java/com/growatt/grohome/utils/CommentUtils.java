@@ -16,11 +16,11 @@ import java.util.Objects;
 
 public class CommentUtils {
     //判断WiFi是否打开
-    public static boolean isWiFi(Context context) throws Exception{
+    public static boolean isWiFi(Context context) throws Exception {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert connectivityManager != null;
         NetworkInfo networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (networkInfo==null)return false;
+        if (networkInfo == null) return false;
         return networkInfo.isConnected();
     }
 
@@ -30,12 +30,12 @@ public class CommentUtils {
      * @param activity 上下文
      * @return WIFI 的SSID
      */
-    public static String getWiFiSsid(Activity activity) throws Exception{
+    public static String getWiFiSsid(Activity activity) throws Exception {
         String ssid = null;
-        ConnectivityManager manager = (ConnectivityManager)activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager manager = (ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         assert manager != null;
         NetworkInfo.State wifi = Objects.requireNonNull(manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)).getState();
-        if (wifi ==null) {
+        if (wifi == null) {
             return null;
         }
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O) {
@@ -63,7 +63,6 @@ public class CommentUtils {
         }
         return ssid;
     }
-
 
 
     /**
@@ -110,6 +109,26 @@ public class CommentUtils {
     public static int dip2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
+    }
+
+    //将int数值转成4位的16进制的字符串，不足的补0
+    public static String integerToHexstring(int value) {
+        String hex = Integer.toHexString(value);
+        if (hex.length() < 4) {
+            StringBuilder suff = new StringBuilder();
+            for (int i = 0; i < 4 - hex.length(); i++) {
+                suff.append("0");
+            }
+            hex=suff.toString()+hex;
+        }
+        return hex;
+    }
+
+
+    //将int数值转成4位的16进制的字符串，不足的补0
+    public static int hexStringToInter(String value) {
+        if (TextUtils.isEmpty(value))return 0;
+        return Integer.parseInt(value,16);
     }
 
 }

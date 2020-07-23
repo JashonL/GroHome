@@ -1,10 +1,11 @@
 package com.growatt.grohome.module.device;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -16,16 +17,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
+import com.growatt.grohome.customview.colorpicker.BlurMaskCircularView;
+import com.growatt.grohome.customview.colorpicker.CircleBackgroundView;
+import com.growatt.grohome.customview.colorpicker.ColorPicker;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.presenter.BulbPresenter;
 import com.growatt.grohome.module.device.view.IBulbView;
+import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbView , SeekBar.OnSeekBarChangeListener {
+public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbView, SeekBar.OnSeekBarChangeListener, ColorPicker.OnColorChangedListener, ColorPicker.OnColorSelectedListener {
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -37,7 +42,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     @BindView(R.id.iv_scenec_light)
     ImageView ivScenecLight;
     @BindView(R.id.v_bulb_backgroud_white)
-    View vBulbBackgroudWhite;
+    CircleBackgroundView vBulbBackgroudWhite;
     @BindView(R.id.iv_bulb_white)
     ImageView ivBulbWhite;
     @BindView(R.id.iv_brightness_white_left)
@@ -84,8 +89,8 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     View vBottomBackground;
     @BindView(R.id.tv_leftdown)
     TextView tvLeftdown;
-    @BindView(R.id.imb_switch)
-    ImageButton imbSwitch;
+    @BindView(R.id.iv_switch)
+    ImageView ivSwitch;
     @BindView(R.id.tv_timer)
     TextView tvTimer;
     @BindView(R.id.layout_white)
@@ -94,6 +99,10 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     View colourClude;
     @BindView(R.id.layout_scene)
     View sceneClude;
+    @BindView(R.id.color_picker)
+    ColorPicker colorPicker;
+    @BindView(R.id.blur_mask_view)
+    BlurMaskCircularView maskView;
 
 
 
@@ -110,7 +119,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     @Override
     protected void initViews() {
         showViewsByTab(DeviceBulb.BULB_MODE_WHITE);
-        imbSwitch.setBackgroundResource(R.drawable.icon_on);
+        ivSwitch.setImageResource(R.drawable.icon_on);
     }
 
     @Override
@@ -126,17 +135,18 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     @Override
     public void setOnoff(String onoff) {
         if ("true".equals(onoff)) {//状态开启
-            imbSwitch.setBackgroundResource(R.drawable.icon_on);
+            ivSwitch.setImageResource(R.drawable.icon_on);
         } else {//关闭
-            imbSwitch.setBackgroundResource(R.drawable.icon_off);
+            ivSwitch.setImageResource(R.drawable.icon_off);
         }
     }
 
     @Override
     public void setBright(String bright) {
-        if (!TextUtils.isEmpty(bright)){
+        if (!TextUtils.isEmpty(bright)) {
             try {
-                int brightValue = Integer.parseInt(bright)-10;
+                int brightValue = Integer.parseInt(bright) - 10;
+                Log.i(TuyaApiUtils.TUYA_TAG,"白光亮度："+brightValue);
                 seekBrightnessWhite.setProgress(brightValue);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
@@ -145,8 +155,8 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     }
 
     @Override
-    public void setColour(String colour) {
-
+    public void setColour(int color) {
+        colorPicker.setColor(color);
     }
 
     @Override
@@ -171,10 +181,12 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setTemp(String temp) {
-        if (!TextUtils.isEmpty(temp)){
+        if (!TextUtils.isEmpty(temp)) {
             try {
                 int brightValue = Integer.parseInt(temp);
-                seekTempWhite.setProgress(brightValue);
+                Log.i(TuyaApiUtils.TUYA_TAG,"白光冷暖值："+brightValue);
+                int mProgree = seekTempWhite.getMax() - brightValue;
+                seekTempWhite.setProgress(mProgree);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -187,32 +199,59 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     }
 
     @Override
+    public void setSatProgress(int progress) {
+        seekTempColour.setProgress(progress);
+
+    }
+
+    @Override
+    public void setVatProgress(int progress) {
+        seekBrightnessColour.setProgress(progress);
+    }
+
+    @Override
     public void sendCommandSucces() {
 
     }
 
     @Override
     public void sendCommandError(String code, String error) {
-        String msg = getString(R.string.m151_send_dps_failed)+":"+code+"--->"+error;
+        String msg = getString(R.string.m151_send_dps_failed) + ":" + code + "--->" + error;
         MyToastUtils.toast(msg);
     }
 
+    @Override
+    public void setCenterColor(int color) {
+        colorPicker.setNewCenterColor(color);
+    }
+
+    @Override
+    public void setWhiteBgColor(int color) {
+        vBulbBackgroudWhite.setColor(color);
+    }
+
+    @Override
+    public void setWhiteMaskView(int color) {
+        maskView.setColor(color);
+
+    }
+
     public void showViewsByTab(String mode) {
-        if (DeviceBulb.BULB_MODE_WHITE.equals(mode)){//白光模式
+        if (DeviceBulb.BULB_MODE_WHITE.equals(mode)) {//白光模式
             ivWhiteLight.setSelected(true);
             ivColourLight.setSelected(false);
             ivScenecLight.setSelected(false);
             whiteClude.setVisibility(View.VISIBLE);
             colourClude.setVisibility(View.GONE);
             sceneClude.setVisibility(View.GONE);
-        }else if (DeviceBulb.BULB_MODE_COLOUR.equals(mode)){//彩光模式
+        } else if (DeviceBulb.BULB_MODE_COLOUR.equals(mode)) {//彩光模式
             ivWhiteLight.setSelected(false);
             ivColourLight.setSelected(true);
             ivScenecLight.setSelected(false);
             whiteClude.setVisibility(View.GONE);
             colourClude.setVisibility(View.VISIBLE);
             sceneClude.setVisibility(View.GONE);
-        }else {
+        } else {
             ivWhiteLight.setSelected(false);
             ivColourLight.setSelected(false);
             ivScenecLight.setSelected(true);
@@ -223,7 +262,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     }
 
 
-    @OnClick({R.id.iv_white_light, R.id.iv_colour_light, R.id.iv_scenec_light,R.id.imb_switch})
+    @OnClick({R.id.iv_white_light, R.id.iv_colour_light, R.id.iv_scenec_light, R.id.iv_switch})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_white_light:
@@ -235,7 +274,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             case R.id.iv_scenec_light:
                 presenter.bulbMode(DeviceBulb.BULB_MODE_SCENE);
                 break;
-            case R.id.imb_switch:
+            case R.id.iv_switch:
                 presenter.bulbSwitch();
                 break;
         }
@@ -246,16 +285,30 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         super.initListener();
         seekTempWhite.setOnSeekBarChangeListener(this);
         seekBrightnessWhite.setOnSeekBarChangeListener(this);
+        seekBrightnessColour.setOnSeekBarChangeListener(this);
+        seekTempColour.setOnSeekBarChangeListener(this);
+        colorPicker.setOnColorChangedListener(this);//不松手
+        colorPicker.setOnColorSelectedListener(this);//松手
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (seekBar==seekBrightnessWhite){
-            presenter.bulbBrightness(progress+10);
+        //亮度调节
+        if (seekBar == seekBrightnessWhite) {
+            presenter.bulbBrightness(progress + 10);
         }
-        if (seekBar==seekTempWhite){
-            int mProgree=seekTempWhite.getMax()-progress;
+        //温度调节
+        if (seekBar == seekTempWhite) {
+            int mProgree = seekTempWhite.getMax() - progress;
             presenter.bulbTemper(mProgree);
+        }
+        //饱和度调节
+        if (seekBar == seekBrightnessColour) {
+            presenter.bulbColourVal(progress);
+        }
+
+        if (seekBar == seekTempColour) {
+            presenter.bulbColourSat(progress);
         }
     }
 
@@ -266,6 +319,17 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+
+    @Override
+    public void onColorChanged(int color) {
+        presenter.bulbColour(color);
+    }
+
+    @Override
+    public void onColorSelected(int color) {
 
     }
 }
