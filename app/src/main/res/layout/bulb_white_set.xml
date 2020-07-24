@@ -7,7 +7,7 @@
 
 
     <com.growatt.grohome.customview.colorpicker.BlurMaskCircularView
-        android:id="@+id/blur_mask_view"
+        android:id="@+id/white_mask_view"
         android:layout_width="@dimen/dp_220"
         android:layout_height="@dimen/dp_220"
         app:layout_constraintBottom_toBottomOf="@+id/v_bulb_backgroud_white"

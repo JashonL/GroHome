@@ -2,6 +2,7 @@ package com.growatt.grohome.module.device.presenter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,12 +12,17 @@ import androidx.core.content.ContextCompat;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.module.config.DeviceConfigActivity;
+import com.growatt.grohome.module.config.SelectConfigTypeActivity;
+import com.growatt.grohome.module.device.BulbSceneEditActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.view.IBulbView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
+import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
+import com.gyf.immersionbar.ImmersionBar;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;
@@ -63,11 +69,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         if (!TextUtils.isEmpty(devName)) {
             baseView.setDeviceTitle(devName);
         }
-        float[] hsv = new float[3];
-        hsv[0] = 316f;
-        hsv[1] = 0f;
-        hsv[2] = 1f;
-        mWhiteColor = Color.HSVToColor(hsv);
     }
 
 
@@ -124,11 +125,20 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         baseView.setSatProgress(mColourSatProgrees);
         baseView.setVatProgress(mColourValProgrees);
         baseView.setColour(mColor);
+        baseView.setColourMaskView(mColor);
         baseView.setControData(controdata);
         baseView.setCuntDown(countdown);
         baseView.setScene(scene);
         baseView.setMode(mode);
         baseView.setTemp(temp);
+
+        int whiteBright = Integer.parseInt(bright);
+        int whiteTemp = 1000-Integer.parseInt(temp);
+        float[] hsv = new float[3];
+        hsv[0] = 42.3f;
+        hsv[1] = (float) whiteTemp / 1000f;
+        hsv[2] = (float) whiteBright / 1000f;
+        mWhiteColor = Color.HSVToColor(hsv);
         baseView.setWhiteMaskView(mWhiteColor);
         baseView.setWhiteBgColor(mWhiteColor);
     }
@@ -186,11 +196,11 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      */
 
     public void bulbTemper(int temper) {
-        temp = String.valueOf(temper);
+        temp = String.valueOf((1000-temper));
         int whiteBright = Integer.parseInt(bright);
         float[] hsv = new float[3];
         Color.colorToHSV(mWhiteColor, hsv);
-        hsv[1] = (float) temper / 1000f;
+        hsv[1] = (float) (1000-temper) / 1000f;
         hsv[2] = (float) whiteBright / 1000f;
         int newColor = Color.HSVToColor(hsv);
         baseView.setWhiteBgColor(newColor);
@@ -290,6 +300,12 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             return false;
         }
         return true;
+    }
+
+
+    public void toEditScene(){
+        Intent intent = new Intent(context, BulbSceneEditActivity.class);
+        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
     }
 
 

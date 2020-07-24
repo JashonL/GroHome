@@ -8,6 +8,8 @@ import android.os.Message;
 
 import androidx.annotation.NonNull;
 
+import com.tuya.smart.android.common.utils.SafeHandler;
+
 import java.lang.ref.WeakReference;
 import java.util.Random;
 
@@ -15,7 +17,7 @@ import java.util.Random;
 /**
  * 防止内存泄漏
  */
-public class NoleakHandler extends Handler {
+public class NoleakHandler extends SafeHandler {
     static boolean isDebugMode = false;
     static Random random = new Random(System.currentTimeMillis());
     private boolean isAlive;

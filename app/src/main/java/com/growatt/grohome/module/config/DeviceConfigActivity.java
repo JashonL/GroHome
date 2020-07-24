@@ -116,7 +116,11 @@ public class DeviceConfigActivity extends BaseActivity<DeviceConfigPresenter> im
 
     @Override
     public void showSuccessPage(String devId, String pId, String devName) {
-
+        try {
+            presenter.addDevice(pId,devId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

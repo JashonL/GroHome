@@ -10,7 +10,7 @@
         android:id="@+id/v_bulb_background_scene"
         android:layout_width="@dimen/dp_200"
         android:layout_height="@dimen/dp_200"
-        android:background="@drawable/shape_circle_solid_gray"
+        android:background="@drawable/sence_gorgeous"
         app:layout_constraintBottom_toTopOf="@+id/tv_scene_mode"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -41,9 +41,11 @@
 
 
     <ImageView
+        android:id="@+id/iv_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_edit_scene"
+        android:padding="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="@+id/tv_scene_mode"
         app:layout_constraintRight_toLeftOf="@+id/tv_edit"
         app:layout_constraintTop_toTopOf="@+id/tv_scene_mode" />

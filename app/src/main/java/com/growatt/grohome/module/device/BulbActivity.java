@@ -1,19 +1,15 @@
 package com.growatt.grohome.module.device;
 
-import android.graphics.Color;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
@@ -27,7 +23,6 @@ import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbView, SeekBar.OnSeekBarChangeListener, ColorPicker.OnColorChangedListener, ColorPicker.OnColorSelectedListener {
@@ -43,56 +38,16 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     ImageView ivScenecLight;
     @BindView(R.id.v_bulb_backgroud_white)
     CircleBackgroundView vBulbBackgroudWhite;
-    @BindView(R.id.iv_bulb_white)
-    ImageView ivBulbWhite;
-    @BindView(R.id.iv_brightness_white_left)
-    ImageView ivBrightnessWhiteLeft;
     @BindView(R.id.seek_brightness_white)
     AppCompatSeekBar seekBrightnessWhite;
-    @BindView(R.id.iv_brightness_right_white)
-    ImageView ivBrightnessRightWhite;
-    @BindView(R.id.iv_temp_left_white)
-    ImageView ivTempLeftWhite;
     @BindView(R.id.seek_temp_white)
     AppCompatSeekBar seekTempWhite;
-    @BindView(R.id.iv_temp_right_white)
-    ImageView ivTempRightWhite;
-    @BindView(R.id.v_bulb_background_colour)
-    View vBulbBackgroundColour;
-    @BindView(R.id.iv_bulb_colour)
-    ImageView ivBulbColour;
-    @BindView(R.id.iv_brightness_left_colour)
-    ImageView ivBrightnessLeftColour;
     @BindView(R.id.seek_brightness_colour)
     AppCompatSeekBar seekBrightnessColour;
-    @BindView(R.id.iv_brightness_right_colour)
-    ImageView ivBrightnessRightColour;
-    @BindView(R.id.iv_temp_left_colour)
-    ImageView ivTempLeftColour;
     @BindView(R.id.seek_temp_colour)
     AppCompatSeekBar seekTempColour;
-    @BindView(R.id.iv_temp_right_colour)
-    ImageView ivTempRightColour;
-    @BindView(R.id.v_bulb_background_scene)
-    View vBulbBackgroundScene;
-    @BindView(R.id.iv_bulb_scene)
-    ImageView ivBulbScene;
-    @BindView(R.id.tv_scene_mode)
-    TextView tvSceneMode;
-    @BindView(R.id.tv_edit)
-    TextView tvEdit;
-    @BindView(R.id.rlv_scene)
-    RecyclerView rlvScene;
-    @BindView(R.id.rl_device_menu)
-    FrameLayout rlDeviceMenu;
-    @BindView(R.id.v_bottom_background)
-    View vBottomBackground;
-    @BindView(R.id.tv_leftdown)
-    TextView tvLeftdown;
     @BindView(R.id.iv_switch)
     ImageView ivSwitch;
-    @BindView(R.id.tv_timer)
-    TextView tvTimer;
     @BindView(R.id.layout_white)
     View whiteClude;
     @BindView(R.id.layout_colour)
@@ -101,8 +56,8 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     View sceneClude;
     @BindView(R.id.color_picker)
     ColorPicker colorPicker;
-    @BindView(R.id.blur_mask_view)
-    BlurMaskCircularView maskView;
+    @BindView(R.id.white_mask_view)
+    BlurMaskCircularView whiteMaskView;
 
 
 
@@ -118,6 +73,10 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     protected void initViews() {
+        //设置头部
+        toolbar.setNavigationIcon(R.drawable.icon_return);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.nocolor));
+        tvTitle.setTextColor(ContextCompat.getColor(this,R.color.white));
         showViewsByTab(DeviceBulb.BULB_MODE_WHITE);
         ivSwitch.setImageResource(R.drawable.icon_on);
     }
@@ -232,8 +191,12 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setWhiteMaskView(int color) {
-        maskView.setColor(color);
+        whiteMaskView.setColor(color);
 
+    }
+
+    @Override
+    public void setColourMaskView(int color) {
     }
 
     public void showViewsByTab(String mode) {
@@ -262,7 +225,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     }
 
 
-    @OnClick({R.id.iv_white_light, R.id.iv_colour_light, R.id.iv_scenec_light, R.id.iv_switch})
+    @OnClick({R.id.iv_white_light, R.id.iv_colour_light, R.id.iv_scenec_light, R.id.iv_switch,R.id.iv_edit,R.id.tv_edit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_white_light:
@@ -277,12 +240,17 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             case R.id.iv_switch:
                 presenter.bulbSwitch();
                 break;
+            case R.id.iv_edit:
+            case R.id.tv_edit:
+                presenter.toEditScene();
+                break;
         }
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+        toolbar.setNavigationOnClickListener(v -> finish());
         seekTempWhite.setOnSeekBarChangeListener(this);
         seekBrightnessWhite.setOnSeekBarChangeListener(this);
         seekBrightnessColour.setOnSeekBarChangeListener(this);

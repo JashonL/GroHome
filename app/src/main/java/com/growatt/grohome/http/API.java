@@ -77,6 +77,9 @@ public class API {
         @POST("room/")
         Observable<String> getAllDevice(@Body RequestBody body);
 
+        //---------------------------【   设备   】-----------------------------------
+        @POST("/tuya/addDevice")
+        Observable<String> addDevice(@Body RequestBody body);
 
     }
 

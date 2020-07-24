@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bulb_background"
+
+    >
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+
+    <ImageView
+        android:id="@+id/iv_scene_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_60"
+        android:src="@drawable/sence_gorgeous"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+    <TextView
+        android:id="@+id/tv_scene_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="2"
+        android:maxWidth="@dimen/dp_200"
+        android:padding="@dimen/dp_5"
+        android:text="Night"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_title_sp_14"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/iv_scene_edit"
+        app:layout_constraintTop_toBottomOf="@+id/iv_scene_icon" />
+
+
+    <ImageView
+        android:id="@+id/iv_scene_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/icon_edit2"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_scene_name"
+        app:layout_constraintLeft_toRightOf="@+id/tv_scene_name"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_scene_name" />
+
+
+    <View
+        android:id="@+id/v_colour_background"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:background="@drawable/shape_corner_white"
+        app:layout_constraintTop_toBottomOf="@+id/tv_scene_name" />
+
+    <TextView
+        android:id="@+id/tv_colour_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="2"
+        android:maxWidth="@dimen/dp_200"
+        android:padding="@dimen/dp_5"
+        android:text="@string/m160_scence_colour"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_title_sp_14"
+        app:layout_constraintLeft_toLeftOf="@+id/v_colour_background"
+        app:layout_constraintTop_toTopOf="@+id/v_colour_background" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_scene"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/v_colour_background"
+        app:layout_constraintLeft_toLeftOf="@+id/v_colour_background"
+        app:layout_constraintRight_toRightOf="@+id/v_colour_background"
+        app:layout_constraintTop_toBottomOf="@+id/tv_colour_title">
+
+       <com.growatt.grohome.customview.CircleView
+           android:id="@+id/iv_color_1"
+           android:layout_width="@dimen/dp_28"
+           android:layout_height="@dimen/dp_28"
+           android:layout_gravity="center_vertical"
+           android:layout_marginStart="@dimen/dp_10"
+           app:layout_constraintBottom_toBottomOf="@+id/seek_brightness_white"
+           app:layout_constraintRight_toLeftOf="@+id/seek_brightness_white"
+           app:layout_constraintTop_toTopOf="@+id/seek_brightness_white"/>
+
+
+        <com.growatt.grohome.customview.CircleView
+            android:id="@+id/iv_color_2"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_20"
+            app:layout_constraintBottom_toBottomOf="@+id/seek_brightness_white"
+            app:layout_constraintRight_toLeftOf="@+id/seek_brightness_white"
+            app:layout_constraintTop_toTopOf="@+id/seek_brightness_white"/>
+
+        <com.growatt.grohome.customview.CircleView
+            android:id="@+id/iv_color_3"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/seek_brightness_white"
+            app:layout_constraintRight_toLeftOf="@+id/seek_brightness_white"
+            app:layout_constraintTop_toTopOf="@+id/seek_brightness_white"/>
+
+        <com.growatt.grohome.customview.CircleView
+            android:id="@+id/iv_color_4"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_20"
+            app:layout_constraintBottom_toBottomOf="@+id/seek_brightness_white"
+            app:layout_constraintRight_toLeftOf="@+id/seek_brightness_white"
+            app:layout_constraintTop_toTopOf="@+id/seek_brightness_white"/>
+
+        <com.growatt.grohome.customview.CircleView
+            android:id="@+id/iv_color_5"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_20"
+            app:layout_constraintBottom_toBottomOf="@+id/seek_brightness_white"
+            app:layout_constraintRight_toLeftOf="@+id/seek_brightness_white"
+            app:layout_constraintTop_toTopOf="@+id/seek_brightness_white"/>
+
+        <com.growatt.grohome.customview.CircleView
+            android:id="@+id/iv_color_6"
+            android:layout_width="@dimen/dp_28"
+            android:layout_height="@dimen/dp_28"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_20"
+            app:layout_constraintBottom_toBottomOf="@+id/seek_brightness_white"
+            app:layout_constraintRight_toLeftOf="@+id/seek_brightness_white"
+            app:layout_constraintTop_toTopOf="@+id/seek_brightness_white"/>
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/v_colour_flash_mode"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:background="@drawable/shape_corner_white"
+        app:layout_constraintTop_toBottomOf="@+id/v_colour_background" />
+
+
+    <TextView
+        android:id="@+id/tv_flash_mode_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="2"
+        android:maxWidth="@dimen/dp_200"
+        android:padding="@dimen/dp_5"
+        android:text="@string/m161_colour_flash_mode"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_title_sp_14"
+        app:layout_constraintLeft_toLeftOf="@+id/v_colour_flash_mode"
+        app:layout_constraintTop_toTopOf="@+id/v_colour_flash_mode" />
+
+
+    <ImageView
+        android:id="@+id/iv_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_14"
+        android:src="@drawable/icon_arrow_rw"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_flash_mode_title"
+        app:layout_constraintRight_toRightOf="@+id/v_colour_flash_mode"
+        app:layout_constraintTop_toTopOf="@+id/tv_flash_mode_title" />
+
+
+    <TextView
+        android:id="@+id/tv_flash_mode_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="2"
+        android:maxWidth="@dimen/dp_200"
+        android:padding="@dimen/dp_5"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_title_sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/v_colour_flash_mode"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_flash_mode_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_flash_mode_title" />
+
+
+    <View
+        android:id="@+id/v_colour_flash_speed"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:background="@drawable/shape_corner_white"
+        app:layout_constraintTop_toBottomOf="@+id/v_colour_flash_mode" />
+
+
+    <TextView
+        android:id="@+id/tv_flash_speed_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="2"
+        android:maxWidth="@dimen/dp_200"
+        android:padding="@dimen/dp_5"
+        android:text="@string/m161_colour_flash_mode"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_title_sp_14"
+        app:layout_constraintLeft_toLeftOf="@+id/v_colour_flash_speed"
+        app:layout_constraintTop_toTopOf="@+id/v_colour_flash_speed" />
+
+
+    <ImageView
+        android:id="@+id/iv_brightness_white_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dev_speed"
+        app:layout_constraintBottom_toBottomOf="@+id/seek_brightness_white"
+        app:layout_constraintRight_toLeftOf="@+id/seek_brightness_white"
+        app:layout_constraintTop_toTopOf="@+id/seek_brightness_white" />
+
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/seek_brightness_white"
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="@dimen/dp_32"
+        android:max="990"
+        android:padding="@dimen/dp_10"
+        android:progress="20"
+        android:progressDrawable="@drawable/seek_colour_temp"
+        android:thumb="@drawable/seek_colour_temp_thumb"
+        app:layout_constraintBottom_toBottomOf="@+id/v_colour_flash_speed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_flash_speed_title" />
+
+
+    <ImageView
+        android:id="@+id/iv_brightness_right_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dev_speed2"
+        app:layout_constraintBottom_toBottomOf="@+id/seek_brightness_white"
+        app:layout_constraintLeft_toRightOf="@+id/seek_brightness_white"
+        app:layout_constraintTop_toTopOf="@+id/seek_brightness_white" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

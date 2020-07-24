@@ -10,10 +10,8 @@ import android.view.View;
 
 public class CircleBackgroundView extends View {
 
-    private BlurMaskFilter mMaskCircularView;
 
     private Paint mPaint;
-    private int radius = 0;
 
     public CircleBackgroundView(Context context) {
         this(context, null);
@@ -42,7 +40,7 @@ public class CircleBackgroundView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        radius = getWidth() / 2;
+        int radius = getWidth() / 2;
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, radius, mPaint);
     }
 
@@ -63,6 +61,11 @@ public class CircleBackgroundView extends View {
      */
     public int getColor() {
         return mPaint.getColor();
+    }
+
+
+    public void setDrawable(){
+
     }
 
     public void refresh() {

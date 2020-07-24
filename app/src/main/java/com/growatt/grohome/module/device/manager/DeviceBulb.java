@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class DeviceBulb extends BaseDevice {
 
+    /********************功能dpid**************************/
     public static final String BULB_SWITCH_LED="20";//开关
     public static final String BULB_WORK_MODE="21";//模式
     public static final String BULB_BRIGHT_VALUE="22";//亮度值
@@ -16,11 +17,22 @@ public class DeviceBulb extends BaseDevice {
     public static final String BULB_COUNTDOWN="26";//倒计时剩余时间
     public static final String BULB_CONTROL_DATA="28";//调节
 
-
+    /************************模式**************************/
     public static final String BULB_MODE_WHITE="white";//彩光
     public static final String BULB_MODE_COLOUR="colour";//场景
     public static final String BULB_MODE_SCENE="scene";//倒计时剩余时间
-    public static final String BULB_MODE_MUSIC="music";//调节
+    public static final String BULB_MODE_MUSIC="music";//音乐
+
+    /************************场景序号****************************/
+    public static final String BULB_SCENE_NIGHT="1";//彩光
+    public static final String BULB_SCENE_READ="2";//场景
+    public static final String BULB_SCENE_MEETING="3";//倒计时剩余时间
+    public static final String BULB_SCENE_LEISURE="4";//音乐
+    public static final String BULB_SCENE_SOFT="5";//音乐
+    public static final String BULB_SCENE_SHINE="6";//音乐
+    public static final String BULB_SCENE_GORGEOUS="7";//音乐
+    public static final String BULB_SCENE_RAINBOW="8";//音乐
+
 
 
     @Override
@@ -108,4 +120,11 @@ public class DeviceBulb extends BaseDevice {
     public static String getBulbControlData() {
         return BULB_CONTROL_DATA;
     }
+
+
+
+
+
+
+
 }

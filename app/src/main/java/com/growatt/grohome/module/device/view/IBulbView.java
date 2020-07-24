@@ -22,4 +22,6 @@ public interface IBulbView  extends BaseView {
     void setWhiteBgColor(int color);
     //设置白光遮罩
     void setWhiteMaskView(int color);
+    //彩光遮罩
+    void setColourMaskView(int color);
 }

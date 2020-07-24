@@ -6,19 +6,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.gson.Gson;
+import com.growatt.grohome.app.App;
+import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.bean.HomeDeviceBean;
 import com.growatt.grohome.module.config.ConfigErrorActivity;
 import com.growatt.grohome.module.config.DeviceConfigActivity;
 import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.model.DeviceBindModel;
 import com.growatt.grohome.module.config.view.IDeviceConfigView;
+import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.presenter.DeviceTypePresenter;
 import com.growatt.grohome.tuya.FamilyManager;
+import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.mylhyl.circledialog.CircleDialog;
@@ -27,6 +34,11 @@ import com.tuya.smart.android.mvp.bean.Result;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.ITuyaActivatorGetToken;
 import com.tuya.smart.sdk.bean.DeviceBean;
+
+import org.json.JSONObject;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
     private static final int MESSAGE_SHOW_SUCCESS_PAGE = 1001;
@@ -49,6 +61,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
     public DeviceConfigPresenter(Context context, IDeviceConfigView baseView) {
         super(context, baseView);
         initHandler(context);
+        mModel = new DeviceBindModel(context, handler);
         mConfigMode = ((Activity) context).getIntent().getIntExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.EC_MODE);
         deviceType = ((Activity) context).getIntent().getStringExtra(DeviceTypePresenter.DEVICE_TYPE);
         ssid = ((Activity) context).getIntent().getStringExtra(WiFiOptionsActivity.CONFIG_SSID);
@@ -256,6 +269,43 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
             }
         }, v -> {});
     }
+
+    /**
+     * 向服务器请求添加设备
+     * @throws Exception
+     */
+    public void addDevice(String pid,String divId) throws Exception {
+        JSONObject requestJson=new JSONObject();
+        requestJson.put("userId", App.getUserBean().accountName);
+        requestJson.put("pid", pid);
+        requestJson.put("devId", divId);
+        requestJson.put("deviceServerAddress", 0);
+        requestJson.put("devType", DeviceTypeConstant.TYPE_PADDLE);
+        requestJson.put("lan","0");
+        String s = requestJson.toString();
+        RequestBody body=RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        addDisposable(apiServer.addDevice(body), new BaseObserver<String>(baseView,true) {
+            @Override
+            public void onSuccess(String bean) {
+                Log.i(TuyaApiUtils.TUYA_TAG,"请求成功："+bean);
+                JSONObject obj = null;
+                try {
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+
+    }
+
 
     @Override
     public void onDestroy() {

@@ -66,6 +66,8 @@
 
         <activity android:name=".module.device.BulbActivity"/>
 
+        <activity android:name=".module.device.BulbSceneEditActivity"/>
+
     </application>
 
 </manifest>

@@ -168,4 +168,15 @@
     <string name="m149_device_does_not_exist">Device does not exist</string>
     <string name="m150_device_is_offline">Device is offline</string>
     <string name="m151_send_dps_failed">Failed to send instruction</string>
+    <!--灯泡场景-->
+    <string name="m152_scene_night">Night</string>
+    <string name="m153_scene_read">Read</string>
+    <string name="m154_scene_meeting">Meeting</string>
+    <string name="m155_scene_leisure">Leisure</string>
+    <string name="m156_scene_soft">Soft</string>
+    <string name="m157_scene_shine">Shine</string>
+    <string name="m158_sence_gorgeous">gorgeous</string>
+    <string name="m159_scence_rainbow">rainbow</string>
+    <string name="m160_scence_colour">Scence Color</string>
+    <string name="m161_colour_flash_mode">Colour Flash Mode</string>
 </resources>

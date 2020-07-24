@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+
     <com.growatt.grohome.customview.colorpicker.ColorPicker
         android:id="@+id/color_picker"
         android:layout_width="@dimen/dp_250"

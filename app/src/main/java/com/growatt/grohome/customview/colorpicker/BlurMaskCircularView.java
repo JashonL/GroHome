@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.growatt.grohome.utils.CommentUtils;
 
 public class BlurMaskCircularView extends View {
 
