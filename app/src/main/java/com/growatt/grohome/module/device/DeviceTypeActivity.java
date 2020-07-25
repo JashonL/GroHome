@@ -59,7 +59,7 @@ public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implem
         mDeviceTypeAdapter = new DeviceTypeAdapter(R.layout.item_device_type, new ArrayList<>());
         mRlvdevice.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRlvdevice.setAdapter(mDeviceTypeAdapter);
-        mRlvdevice.addItemDecoration(new LinearDivider(this, LinearLayoutManager.HORIZONTAL, 30, ContextCompat.getColor(this, R.color.nocolor)));
+        mRlvdevice.addItemDecoration(new LinearDivider(this, LinearLayoutManager.VERTICAL, 30, ContextCompat.getColor(this, R.color.nocolor)));
     }
 
     @Override

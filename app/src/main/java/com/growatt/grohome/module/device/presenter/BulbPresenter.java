@@ -7,13 +7,10 @@ import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 
-import androidx.core.content.ContextCompat;
-
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.bean.BulbSceneBean;
 import com.growatt.grohome.constants.GlobalConstant;
-import com.growatt.grohome.module.config.DeviceConfigActivity;
-import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.device.BulbSceneEditActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.view.IBulbView;
@@ -22,7 +19,6 @@ import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
-import com.gyf.immersionbar.ImmersionBar;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;
@@ -30,7 +26,9 @@ import com.tuya.smart.sdk.bean.DeviceBean;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListener, SendDpListener {
 
@@ -47,6 +45,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     private String temp;
     private DeviceBean deviceBean;
 
+
     //颜色
     private int mColor = Color.RED;
     //冷暖色
@@ -56,6 +55,8 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     //白光
     private int mWhiteColor;
+    //场景值
+    private String sceneData;
 
 
     public BulbPresenter(IBulbView baseView) {
@@ -69,6 +70,24 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         if (!TextUtils.isEmpty(devName)) {
             baseView.setDeviceTitle(devName);
         }
+    }
+
+
+    public List<BulbSceneBean> initScene() {
+        String[] scenesName = new String[]{context.getString(R.string.m152_scene_night), context.getString(R.string.m153_scene_read), context.getString(R.string.m154_scene_meeting), context.getString(R.string.m155_scene_leisure),
+                context.getString(R.string.m156_scene_soft), context.getString(R.string.m159_scence_rainbow), context.getString(R.string.m157_scene_shine), context.getString(R.string.m158_sence_gorgeous)};
+        List<String> sceneCodeName = DeviceBulb.getSceneCodeName();
+        List<String> sceneDefultValue = DeviceBulb.getSceneDefultValue();
+        List<BulbSceneBean> sceneList = new ArrayList<>();
+        for (int i = 0; i < scenesName.length; i++) {
+            BulbSceneBean bulbSceneBean = new BulbSceneBean();
+            bulbSceneBean.setId(sceneCodeName.get(i));
+            bulbSceneBean.setName(scenesName[i]);
+            bulbSceneBean.setSelected(i==0);
+            bulbSceneBean.setSceneValue(sceneDefultValue.get(i));
+            sceneList.add(bulbSceneBean);
+        }
+        return  sceneList;
     }
 
 
@@ -133,7 +152,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         baseView.setTemp(temp);
 
         int whiteBright = Integer.parseInt(bright);
-        int whiteTemp = 1000-Integer.parseInt(temp);
+        int whiteTemp = 1000 - Integer.parseInt(temp);
         float[] hsv = new float[3];
         hsv[0] = 42.3f;
         hsv[1] = (float) whiteTemp / 1000f;
@@ -196,11 +215,11 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      */
 
     public void bulbTemper(int temper) {
-        temp = String.valueOf((1000-temper));
+        temp = String.valueOf((1000 - temper));
         int whiteBright = Integer.parseInt(bright);
         float[] hsv = new float[3];
         Color.colorToHSV(mWhiteColor, hsv);
-        hsv[1] = (float) (1000-temper) / 1000f;
+        hsv[1] = (float) (1000 - temper) / 1000f;
         hsv[2] = (float) whiteBright / 1000f;
         int newColor = Color.HSVToColor(hsv);
         baseView.setWhiteBgColor(newColor);
@@ -289,6 +308,19 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         }
     }
 
+
+
+    /**
+     * 设置场景
+     *
+     * @param scene
+     */
+    public void bulbScene(String scene) {
+        if (deviceNotOnline()) {
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), scene, mTuyaDevice, this);
+        }
+    }
+
     /**
      * 判断是否在线
      *
@@ -303,9 +335,9 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     }
 
 
-    public void toEditScene(){
+    public void toEditScene() {
         Intent intent = new Intent(context, BulbSceneEditActivity.class);
-        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
@@ -327,6 +359,9 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                     } else if (key.equals(DeviceBulb.getBulbWorkMode())) {
                         this.mode = object.optString(DeviceBulb.getBulbWorkMode());
                         baseView.setMode(mode);
+                    }else if (key.equals(DeviceBulb.getBulbSceneData())){
+                        this.sceneData = object.optString(DeviceBulb.getBulbSceneData());
+                        baseView.setScene(sceneData);
                     }
                 }
 

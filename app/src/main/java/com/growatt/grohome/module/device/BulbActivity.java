@@ -5,14 +5,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
+import com.growatt.grohome.adapter.BulbSceneAdapter;
 import com.growatt.grohome.base.BaseActivity;
+import com.growatt.grohome.bean.BulbSceneBean;
+import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.customview.colorpicker.BlurMaskCircularView;
 import com.growatt.grohome.customview.colorpicker.CircleBackgroundView;
 import com.growatt.grohome.customview.colorpicker.ColorPicker;
@@ -20,12 +27,16 @@ import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.presenter.BulbPresenter;
 import com.growatt.grohome.module.device.view.IBulbView;
 import com.growatt.grohome.tuya.TuyaApiUtils;
+import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbView, SeekBar.OnSeekBarChangeListener, ColorPicker.OnColorChangedListener, ColorPicker.OnColorSelectedListener {
+public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbView, SeekBar.OnSeekBarChangeListener, ColorPicker.OnColorChangedListener, ColorPicker.OnColorSelectedListener , BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -58,8 +69,12 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     ColorPicker colorPicker;
     @BindView(R.id.white_mask_view)
     BlurMaskCircularView whiteMaskView;
+    @BindView(R.id.rlv_scene)
+    RecyclerView rlvScene;
+    @BindView(R.id.v_bulb_background_scene)
+    View sceneBackGround;
 
-
+    private BulbSceneAdapter mBulbSceneAdapter;
 
     @Override
     protected BulbPresenter createPresenter() {
@@ -79,11 +94,20 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         tvTitle.setTextColor(ContextCompat.getColor(this,R.color.white));
         showViewsByTab(DeviceBulb.BULB_MODE_WHITE);
         ivSwitch.setImageResource(R.drawable.icon_on);
+        //场景列表
+        rlvScene.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        mBulbSceneAdapter=new BulbSceneAdapter(R.layout.item_bulb_scene,new ArrayList<>());
+        rlvScene.setAdapter(mBulbSceneAdapter);
+        rlvScene.addItemDecoration(new LinearDivider(this, LinearLayoutManager.HORIZONTAL, 30, ContextCompat.getColor(this, R.color.nocolor)));
     }
 
     @Override
     protected void initData() {
+        List<BulbSceneBean> bulbSceneBeans = presenter.initScene();
+        mBulbSceneAdapter.replaceData(bulbSceneBeans);
+        sceneBackGround.setBackgroundResource(R.drawable.sence_night);//默认选中第一个
         presenter.initDevice();
+
     }
 
     @Override
@@ -130,7 +154,14 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setScene(String scene) {
-
+        //解析返回的场景设置ui
+        if (!TextUtils.isEmpty(scene)&&scene.length()>2){
+            String number = scene.substring(0, 2);
+            int id = CommentUtils.hexStringToInter(number);
+            mBulbSceneAdapter.setNowSelectPosition(id);
+            Integer integer = DeviceBulb.getSceneDefultPicRes().get(id);
+            sceneBackGround.setBackgroundResource(integer);
+        }
     }
 
     @Override
@@ -257,6 +288,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         seekTempColour.setOnSeekBarChangeListener(this);
         colorPicker.setOnColorChangedListener(this);//不松手
         colorPicker.setOnColorSelectedListener(this);//松手
+        mBulbSceneAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -299,5 +331,11 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     @Override
     public void onColorSelected(int color) {
 
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        BulbSceneBean bulbSceneBean = mBulbSceneAdapter.getData().get(position);
+        presenter.bulbScene(bulbSceneBean.getSceneValue());
     }
 }

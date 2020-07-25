@@ -279,7 +279,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         requestJson.put("userId", App.getUserBean().accountName);
         requestJson.put("pid", pid);
         requestJson.put("devId", divId);
-        requestJson.put("deviceServerAddress", 0);
+        requestJson.put("deviceServerAddress", 1);
         requestJson.put("devType", DeviceTypeConstant.TYPE_PADDLE);
         requestJson.put("lan","0");
         String s = requestJson.toString();

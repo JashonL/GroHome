@@ -84,7 +84,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         mRoomAdapter = new RoomAdapter(R.layout.item_room_view, new ArrayList<>());
         rlvRoom.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         rlvRoom.setAdapter(mRoomAdapter);
-        rlvRoom.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.HORIZONTAL, 5, ContextCompat.getColor(getActivity(), R.color.nocolor)));
+        rlvRoom.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.HORIZONTAL, 30, ContextCompat.getColor(getActivity(), R.color.nocolor)));
         //设备列表初始化
         mGrohomeGridAdapter = new GroHomeDevGridAdapter(new ArrayList<>());
         rlvDevice.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -130,7 +130,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             rlvDevice.setLayoutManager(layoutManager);
             mGroHomeDevLineAdapter = new GroHomeDevLineAdapter(deviceList);
             rlvDevice.setAdapter(mGroHomeDevLineAdapter);
-            rlvDevice.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, 10, ContextCompat.getColor(getActivity(), R.color.nocolor)));
+            rlvDevice.addItemDecoration(new LinearDivider(getActivity(),LinearLayoutManager.HORIZONTAL,ContextCompat.getColor(getActivity(),R.color.nocolor),32));
             ivSwitchDevList.setImageResource(R.drawable.icon_list);
             mLayoutType = TYPE_LINE;
         }

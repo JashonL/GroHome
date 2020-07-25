@@ -86,7 +86,7 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         //条件执行
         mRlvLinkage = linkageView.findViewById(R.id.rlv_linkage_detail);
         mRlvLinkage.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        mRlvLinkage.addItemDecoration(new LinearDivider(getActivity(),LinearLayoutManager.VERTICAL,5, ContextCompat.getColor(getActivity(),R.color.nocolor)));
+        mRlvLinkage.addItemDecoration(new LinearDivider(getActivity(),LinearLayoutManager.VERTICAL,ContextCompat.getColor(getActivity(),R.color.nocolor),32));
         mLinkageSceneAdapter=new LinkageSceneAdapter(R.layout.item_linkage_detail,new ArrayList<>());
         View linkageEmpty=LayoutInflater.from(getContext()).inflate(R.layout.scene_linkage_empty_view,mRlvLinkage,false);
         mLinkageSceneAdapter.setEmptyView(linkageEmpty);
@@ -94,7 +94,7 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         //日志
         mRlvLogs = logsView.findViewById(R.id.rlv_logs);
         mRlvLogs.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        mRlvLogs.addItemDecoration(new LinearDivider(getActivity(),LinearLayoutManager.VERTICAL,5, ContextCompat.getColor(getActivity(),R.color.nocolor)));
+        mRlvLogs.addItemDecoration(new LinearDivider(getActivity(),LinearLayoutManager.VERTICAL,ContextCompat.getColor(getActivity(),R.color.nocolor),32));
         mLogsSceneAdapter=new LogsSceneAdapter(R.layout.item_logs_detail,new ArrayList<>());
         View LogsEmpty=LayoutInflater.from(getContext()).inflate(R.layout.scene_logs_empty_view,mRlvLogs,false);
         mLogsSceneAdapter.setEmptyView(LogsEmpty);

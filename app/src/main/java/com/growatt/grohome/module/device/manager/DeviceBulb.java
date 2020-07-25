@@ -2,7 +2,9 @@ package com.growatt.grohome.module.device.manager;
 
 import com.growatt.grohome.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DeviceBulb extends BaseDevice {
@@ -24,14 +26,14 @@ public class DeviceBulb extends BaseDevice {
     public static final String BULB_MODE_MUSIC="music";//音乐
 
     /************************场景序号****************************/
-    public static final String BULB_SCENE_NIGHT="1";//彩光
-    public static final String BULB_SCENE_READ="2";//场景
-    public static final String BULB_SCENE_MEETING="3";//倒计时剩余时间
-    public static final String BULB_SCENE_LEISURE="4";//音乐
-    public static final String BULB_SCENE_SOFT="5";//音乐
-    public static final String BULB_SCENE_SHINE="6";//音乐
-    public static final String BULB_SCENE_GORGEOUS="7";//音乐
-    public static final String BULB_SCENE_RAINBOW="8";//音乐
+    public static final String BULB_SCENE_NIGHT="1";//night
+    public static final String BULB_SCENE_READ="2";//read
+    public static final String BULB_SCENE_MEETING="3";//meeting
+    public static final String BULB_SCENE_LEISURE="4";//leisure
+    public static final String BULB_SCENE_SOFT="5";//soft
+    public static final String BULB_SCENE_RAINBOW="6";//rainbow
+    public static final String BULB_SCENE_SHINE="7";//shine
+    public static final String BULB_SCENE_GORGEOUS="8";//gorgeous
 
 
 
@@ -88,7 +90,7 @@ public class DeviceBulb extends BaseDevice {
         return res;
     }
 
-
+   /**************************获取dpid*************************************/
     public static String getBulbSwitchLed(){
         return BULB_SWITCH_LED;
     }
@@ -123,8 +125,93 @@ public class DeviceBulb extends BaseDevice {
 
 
 
+    /*********************默认场景***********************/
+    public static List<String> getSceneCodeName() {
+        List<String>codes=new ArrayList<>();
+        codes.add(BULB_SCENE_NIGHT);
+        codes.add(BULB_SCENE_READ);
+        codes.add(BULB_SCENE_MEETING);
+        codes.add(BULB_SCENE_LEISURE);
+        codes.add(BULB_SCENE_SOFT);
+        codes.add(BULB_SCENE_RAINBOW);
+        codes.add(BULB_SCENE_SHINE);
+        codes.add(BULB_SCENE_GORGEOUS);
+        return codes;
+    }
+
+    public static List<Integer> getSceneDefultPicRes() {
+        List<Integer>res=new ArrayList<>();
+        res.add(R.drawable.sence_night);
+        res.add(R.drawable.sence_read);
+        res.add(R.drawable.sence_meeting);
+        res.add(R.drawable.sence_leisure);
+        res.add(R.drawable.sence_soft);
+        res.add(R.drawable.sence_rainbow);
+        res.add(R.drawable.sence_shine);
+        res.add(R.drawable.sence_gorgeous);
+        return res;
+    }
+
+    public static List<String> getSceneDefultValue() {
+        List<String>codes=new ArrayList<>();
+        codes.add("000e0d0000000000000000c80000");
+        codes.add("010e0d0000000000000003e801f4");
+        codes.add("020e0d0000000000000003e803e8");
+        codes.add("030e0d0000000000000001f401f4");
+        codes.add("04464602007803e803e800000000464602007803e8000a00000000");
+        codes.add("05464601000003e803e800000000464601007803e803e80000000046460100f003e803e800000000464601003d03e803e80000000046460100ae03e803e800000000464601011303e803e800000000");
+        codes.add("06464601000003e803e800000000464601007803e803e80000000046460100f003e803e800000000");
+        codes.add("07464602000003e803e800000000464602007803e803e80000000046460200f003e803e800000000464602003d03e803e80000000046460200ae03e803e800000000464602011303e803e800000000");
+        return codes;
+    }
 
 
 
+    //默认night值
+    public static String defultSceneNight(){
+        return "000e0d0000000000000000c80000";
+    }
+
+
+    //默认Read值
+    public static String defultSceneRead(){
+        return "010e0d0000000000000003e801f4";
+    }
+
+
+    //默认Meeting值
+    public static String defultSceneMeeting(){
+        return "020e0d0000000000000003e803e8";
+    }
+
+
+    //默认Sure值
+    public static String defultSceneLeiSure(){
+        return "030e0d0000000000000001f401f4";
+    }
+
+
+    //默认soft值
+    public static String defultSceneSoft(){
+        return "04464602007803e803e800000000464602007803e8000a00000000";
+    }
+
+
+    //默认Rainbow值
+    public static String defultSceneRainbow(){
+        return "05464601000003e803e800000000464601007803e803e80000000046460100f003e803e800000000464601003d03e803e80000000046460100ae03e803e800000000464601011303e803e800000000";
+    }
+
+
+    //默认Shine值
+    public static String defultSceneShine(){
+        return "06464601000003e803e800000000464601007803e803e80000000046460100f003e803e800000000";
+    }
+
+
+    //默认Gorgeous值
+    public static String defultSceneGorgeous(){
+        return "07464602000003e803e800000000464602007803e803e80000000046460200f003e803e800000000464602003d03e803e80000000046460200ae03e803e800000000464602011303e803e800000000";
+    }
 
 }

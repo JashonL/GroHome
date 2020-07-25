@@ -8,117 +8,95 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class LinearDivider extends RecyclerView.ItemDecoration {
 
-    private Drawable mDividerDarwable;
+    public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
+
+    public static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
+
+
+
     private int mOrientation;
-    private int mDividerHight = 1;
-    private Paint mColorPaint;
 
-    public final int[] ATRRS = new int[]{
-            android.R.attr.listDivider
-    };
+    private Paint mDividerPaint;
+    private Context context;
+    private int mDivider;//分割线的宽度
+    private int mColor;
 
-    /*
-     orientation 方向
-     */
-    public LinearDivider(Context context, int orientation) {
-        final TypedArray ta = context.obtainStyledAttributes(ATRRS);
-        this.mDividerDarwable = ta.getDrawable(0);
-        ta.recycle();
+    public LinearDivider(Context context, int orientation,int width, int color) {
+        this.context = context;
+        this.mColor = color;
+        this.mDivider = width;
+        initPaint();
         setOrientation(orientation);
     }
 
-    /*
-     int orientation 方向
-     int dividerHight  分割线的线宽
-     Drawable dividerDrawable  充当分割线的图片
-     */
-    public LinearDivider(Context context, int orientation, int dividerHight, Drawable dividerDrawable) {
-        this(context, orientation);
-        mDividerHight = dividerHight;
-        mDividerDarwable = dividerDrawable;
-    }
-
-    /*
-     int orientation 方向
-     int dividerHight  分割线的线宽
-     int dividerColor  分割线的颜色
-     */
-    public LinearDivider(Context context, int orientation, int dividerHight, int dividerColor) {
-        this(context, orientation);
-        mDividerHight = dividerHight;
-        mColorPaint = new Paint();
-        mColorPaint.setColor(dividerColor);
+    private void initPaint() {
+        mDividerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mDividerPaint.setColor(mColor);
+        mDividerPaint.setStrokeWidth(mDivider);
     }
 
     public void setOrientation(int orientation) {
-        if (orientation != LinearLayoutManager.HORIZONTAL && orientation != LinearLayoutManager.VERTICAL) {
-            throw new IllegalArgumentException("方向参数错误！");
+        if (orientation != HORIZONTAL_LIST && orientation != VERTICAL_LIST) {
+            throw new IllegalArgumentException("invalid orientation");
         }
         mOrientation = orientation;
     }
 
+
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);
-        if (mOrientation == LinearLayoutManager.HORIZONTAL) {
-            drawHorizontalDivider(c, parent);
+        if (mOrientation == VERTICAL_LIST) {
+            drawVertical(c, parent);
         } else {
-            drawVirticalDivider(c, parent);
+            drawHorizontal(c, parent);
         }
     }
 
-    //画垂直分割线
-    public void drawVirticalDivider(Canvas c, RecyclerView parent) {
-        int left = parent.getPaddingLeft();
-        int right = parent.getWidth() - parent.getPaddingRight();
+    public void drawVertical(Canvas c, RecyclerView parent) {
+        final int left = parent.getPaddingLeft();
+        final int right = parent.getWidth() - parent.getPaddingRight();
+
         final int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
-            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
+                    .getLayoutParams();
             final int top = child.getBottom() + params.bottomMargin;
-            final int bottom = top + mDividerHight;
-            if (mDividerDarwable != null) {
-                mDividerDarwable.setBounds(left, top, right, bottom);
-                mDividerDarwable.draw(c);
-            }
-            if (mColorPaint != null) {
-                c.drawRect(left, top, right, bottom, mColorPaint);
-            }
+            final int bottom = top + mDivider;
+            c.drawRect(left, top, right, bottom, mDividerPaint);
         }
     }
 
-    //画水平分割线
-    public void drawHorizontalDivider(Canvas c, RecyclerView parent) {
-        int top = parent.getPaddingTop();
-        int bottom = parent.getHeight() - parent.getPaddingBottom();
+    public void drawHorizontal(Canvas c, RecyclerView parent) {
+        final int top = parent.getPaddingTop();
+        final int bottom = parent.getHeight() - parent.getPaddingBottom();
+
         final int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
-            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
+                    .getLayoutParams();
             final int left = child.getRight() + params.rightMargin;
-            final int right = left + mDividerHight;
-            if (mDividerDarwable != null) {
-                mDividerDarwable.setBounds(left, top, right, bottom);
-                mDividerDarwable.draw(c);
-            }
-            if (mColorPaint != null) {
-                c.drawRect(left, top, right, bottom, mColorPaint);
-            }
+            final int right = left + mDivider;
+            c.drawRect(left, top, right, bottom, mDividerPaint);
         }
     }
+
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
-        if (mOrientation == LinearLayoutManager.HORIZONTAL) {
-            outRect.set(0, 0, 0, mDividerHight);
+        if (mOrientation == VERTICAL_LIST) {
+            outRect.set(0, 0, 0, mDivider);
         } else {
-            outRect.set(0, 0, mDividerHight, 0);
+            outRect.set(0, 0, mDivider, 0);
         }
     }
 }
