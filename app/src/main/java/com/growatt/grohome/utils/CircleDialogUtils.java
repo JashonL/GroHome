@@ -3,8 +3,10 @@ package com.growatt.grohome.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
@@ -13,10 +15,14 @@ import androidx.fragment.app.FragmentManager;
 import com.growatt.grohome.R;
 import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.view.listener.OnCreateBodyViewListener;
+import com.mylhyl.circledialog.view.listener.OnLvItemClickListener;
+
+import java.util.List;
 
 public class CircleDialogUtils {
     /**
      * 灯泡面板
+     *
      * @return
      */
     public static DialogFragment showBulbWhiteMode(View bodyView, FragmentManager fragmentManager, OnCreateBodyViewListener listener) {
@@ -49,11 +55,11 @@ public class CircleDialogUtils {
      * 跳转到连接5G提示
      */
     public static DialogFragment show5GHzDialog(Context context, FragmentManager fragmentManager, View.OnClickListener onNegativeListener, View.OnClickListener onPositiveListner) {
-      DialogFragment _5GhzDialog=  new CircleDialog.Builder()
+        DialogFragment _5GhzDialog = new CircleDialog.Builder()
                 .setTitle(context.getString(R.string.m95_tips))
                 .setText(context.getString(R.string.m99_connected_5ghz_wifi))
                 .setWidth(0.7f)
-                .setNegative(context.getString(R.string.m100_go_on),onNegativeListener)
+                .setNegative(context.getString(R.string.m100_go_on), onNegativeListener)
                 .setPositive(context.getString(R.string.m101_switch_wifi), onPositiveListner)
                 .show(fragmentManager);
         return _5GhzDialog;
@@ -63,13 +69,13 @@ public class CircleDialogUtils {
     /**
      * 获取涂鸦token失败提示
      */
-    public static DialogFragment showGetTuyaTokenFail(Context context, FragmentManager fragmentManager,String errorMsg) {
+    public static DialogFragment showGetTuyaTokenFail(Context context, FragmentManager fragmentManager, String errorMsg) {
         DialogFragment getTokenFailDialog = new CircleDialog.Builder()
                 .setTitle(context.getString(R.string.m95_tips))
                 .setText(errorMsg)
                 .setWidth(0.7f)
                 .setPositive(context.getString(R.string.m90_ok), v -> {
-                    ((FragmentActivity)context).finish();
+                    ((FragmentActivity) context).finish();
                 })
                 .show(fragmentManager);
         return getTokenFailDialog;
@@ -78,6 +84,7 @@ public class CircleDialogUtils {
 
     /**
      * 配网失败
+     *
      * @return
      */
     public static DialogFragment showFailConfig(View bodyView, FragmentManager fragmentManager, OnCreateBodyViewListener listener) {
@@ -94,14 +101,27 @@ public class CircleDialogUtils {
      * 跳转到连接5G提示
      */
     public static DialogFragment showCancelConfigDialog(Context context, FragmentManager fragmentManager, View.OnClickListener onNegativeListener, View.OnClickListener onPositiveListner) {
-        DialogFragment cancelConfigDialog=  new CircleDialog.Builder()
+        DialogFragment cancelConfigDialog = new CircleDialog.Builder()
                 .setTitle(context.getString(R.string.m95_tips))
                 .setText(context.getString(R.string.m126_confirm_exit))
                 .setWidth(0.7f)
-                .setNegative(context.getString(R.string.m127_no),onNegativeListener)
+                .setNegative(context.getString(R.string.m127_no), onNegativeListener)
                 .setPositive(context.getString(R.string.m90_ok), onPositiveListner)
                 .show(fragmentManager);
         return cancelConfigDialog;
     }
 
+    /**
+     * 场景颜色闪烁模式弹框
+     */
+    public static DialogFragment showSceneFlashMode(FragmentActivity activity, List<String>modes,OnLvItemClickListener listener) {
+        DialogFragment flashModeDialog = new CircleDialog.Builder()
+                .setTitle(activity.getString(R.string.m161_colour_flash_mode))
+                .configTitle(params -> {
+                    params.styleText = Typeface.BOLD; })
+                .setItems(modes,listener)
+                .setGravity(Gravity.CENTER)
+                .show(activity.getSupportFragmentManager());
+        return flashModeDialog;
+    }
 }

@@ -98,7 +98,8 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         rlvScene.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         mBulbSceneAdapter=new BulbSceneAdapter(R.layout.item_bulb_scene,new ArrayList<>());
         rlvScene.setAdapter(mBulbSceneAdapter);
-        rlvScene.addItemDecoration(new LinearDivider(this, LinearLayoutManager.HORIZONTAL, 30, ContextCompat.getColor(this, R.color.nocolor)));
+        int div=CommentUtils.dip2px(this,24);
+        rlvScene.addItemDecoration(new LinearDivider(this, LinearLayoutManager.HORIZONTAL, div, ContextCompat.getColor(this, R.color.nocolor)));
     }
 
     @Override

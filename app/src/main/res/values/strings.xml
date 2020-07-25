@@ -179,4 +179,9 @@
     <string name="m159_scence_rainbow">rainbow</string>
     <string name="m160_scence_colour">Scence Color</string>
     <string name="m161_colour_flash_mode">Colour Flash Mode</string>
+    <string name="m162_reset">Reset</string>
+    <string name="m163_static">Static</string>
+    <string name="m164_flash">Flash</string>
+    <string name="m165_breath">Breath</string>
+    <string name="m166_colour_flash_speed">Colour Flash Speed</string>
 </resources>
