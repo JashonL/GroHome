@@ -14,9 +14,16 @@ import com.growatt.grohome.R;
 
 public class CircleView extends View {
 
-    private int type = 2;
+    public static final int CIRCLE_VIEW_TYPE_STROKE=1;//
+    public static final int CIRCLE_VIEW_TYPE_SOLID=2;
+    public static final int CIRCLE_VIEW_TYPE_NONE=3;
+
+
+    private int type = CIRCLE_VIEW_TYPE_STROKE;
+
 
     private Paint mPaint;
+    private Paint mStrokePaint;
 
     private Bitmap mBitmap;
 
@@ -31,13 +38,20 @@ public class CircleView extends View {
 
     public CircleView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mBitmap= BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground);
         init();
+
     }
 
     private void init() {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(Color.YELLOW);
+
+        mStrokePaint=new Paint();
+        mStrokePaint.setAntiAlias(true);
+        mStrokePaint.setStyle(Paint.Style.STROKE);
+        mStrokePaint.setColor(Color.RED);
     }
 
     @Override
@@ -48,33 +62,47 @@ public class CircleView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        drawBitmap(canvas);
-     /*   if (type == 1) {
-            drawCircle(canvas);
-        } else {
-            drawBitmap(canvas);
-        }*/
+
+        switch (type){
+            case CIRCLE_VIEW_TYPE_STROKE:
+                drawCircle_stroke(canvas);
+                break;
+            case CIRCLE_VIEW_TYPE_SOLID:
+                drawCircle_solid(canvas);
+                break;
+            case CIRCLE_VIEW_TYPE_NONE:
+                drawBitmap(canvas);
+                break;
+
+
+        }
     }
 
     private void drawBitmap(Canvas canvas) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.colour_n);
-        Rect b1 = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-        Rect b = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-        canvas.drawBitmap(bitmap, b1, b, mPaint);
-
-      /*  if (mBitmap != null) {
+        if (mBitmap!=null){
             Rect b1 = new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
             Rect b = new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
             canvas.drawBitmap(mBitmap, b1, b, mPaint);
-        } else {
-            drawCircle(canvas);
-        }*/
+        }else {
+            drawCircle_stroke(canvas);
+        }
+
     }
 
-    private void drawCircle(Canvas canvas) {
+    private void drawCircle_solid(Canvas canvas) {
         int radius = getWidth() / 2;
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, radius, mPaint);
     }
+
+
+    private void drawCircle_stroke(Canvas canvas) {
+        int radius = getWidth() / 2;
+        canvas.drawCircle(getWidth() / 2, getHeight() / 2, radius, mPaint);
+        int stroke_width = radius / 10;
+        mStrokePaint.setStrokeWidth(stroke_width);
+        canvas.drawCircle(getWidth() / 2, getHeight() / 2, radius-stroke_width/2, mStrokePaint);
+    }
+
 
     /**
      * 刷新颜色zhi

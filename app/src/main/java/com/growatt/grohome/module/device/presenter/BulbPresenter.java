@@ -316,6 +316,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * @param scene
      */
     public void bulbScene(String scene) {
+        sceneData=scene;
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), scene, mTuyaDevice, this);
         }
@@ -337,6 +338,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     public void toEditScene() {
         Intent intent = new Intent(context, BulbSceneEditActivity.class);
+        intent.putExtra(DeviceBulb.BULB_SCENE_DATA,sceneData);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 

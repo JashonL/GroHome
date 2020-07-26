@@ -33,7 +33,7 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     TextView tvSceneName;
     @BindView(R.id.iv_scene_edit)
     ImageView ivSceneEdit;
-    @BindView(R.id.v_colour_background)
+    @BindView(R.id.ctl_scence_color)
     View vColourBackground;
     @BindView(R.id.tv_colour_title)
     TextView tvColourTitle;
@@ -110,10 +110,10 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     }
 
 
-    @OnClick({R.id.v_colour_background, R.id.v_colour_flash_mode, R.id.v_colour_flash_speed, R.id.btn_next})
+    @OnClick({R.id.ctl_scence_color, R.id.v_colour_flash_mode, R.id.v_colour_flash_speed, R.id.btn_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.v_colour_background:
+            case R.id.ctl_scence_color:
                 break;
             case R.id.v_colour_flash_mode:
                 presenter.setSceneMode();
