@@ -55,8 +55,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     //白光
     private int mWhiteColor;
-    //场景值
-    private String sceneData;
+
 
 
     public BulbPresenter(IBulbView baseView) {
@@ -316,7 +315,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * @param scene
      */
     public void bulbScene(String scene) {
-        sceneData=scene;
+        scene=scene;
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), scene, mTuyaDevice, this);
         }
@@ -338,7 +337,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     public void toEditScene() {
         Intent intent = new Intent(context, BulbSceneEditActivity.class);
-        intent.putExtra(DeviceBulb.BULB_SCENE_DATA,sceneData);
+        intent.putExtra(DeviceBulb.BULB_SCENE_DATA,scene);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -362,8 +361,8 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                         this.mode = object.optString(DeviceBulb.getBulbWorkMode());
                         baseView.setMode(mode);
                     }else if (key.equals(DeviceBulb.getBulbSceneData())){
-                        this.sceneData = object.optString(DeviceBulb.getBulbSceneData());
-                        baseView.setScene(sceneData);
+                        this.scene = object.optString(DeviceBulb.getBulbSceneData());
+                        baseView.setScene(scene);
                     }
                 }
 
