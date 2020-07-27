@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 
 import com.growatt.grohome.R;
@@ -17,6 +18,9 @@ import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.customview.CircleView;
 import com.growatt.grohome.module.device.presenter.BulbScenePresenter;
 import com.growatt.grohome.module.device.view.IBulbSceneView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,10 +73,14 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     AppCompatSeekBar seekBrightnessWhite;
     @BindView(R.id.iv_brightness_right_white)
     ImageView ivBrightnessRightWhite;
+    @BindView(R.id.gp_speed)
+    Group group_speed;
 
 
     private TextView tvMenuRightText;
     private MenuItem switchItem;
+
+    private List<View>colours=new ArrayList<>();
 
     @Override
     protected BulbScenePresenter createPresenter() {
@@ -96,6 +104,12 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
         tvMenuRightText.setText(R.string.m162_reset);
         tvTitle.setText(R.string.m148_edit);
 
+        colours.add(ivColor1);
+        colours.add(ivColor2);
+        colours.add(ivColor3);
+        colours.add(ivColor4);
+        colours.add(ivColor5);
+        colours.add(ivColor6);
     }
 
     @Override
@@ -107,6 +121,11 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     protected void initListener() {
         super.initListener();
         toolbar.setNavigationOnClickListener(v -> finish());
+        for (int i = 0; i < colours.size(); i++) {
+            colours.get(i).setOnClickListener(v -> {
+                setColorPick((CircleView) v);
+            });
+        }
     }
 
 
@@ -123,5 +142,25 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
             case R.id.btn_next:
                 break;
         }
+    }
+
+    @Override
+    public void setViewById(int id) {
+        if (id<4){
+            ivColor1.setVisibility(View.VISIBLE);
+            ivColor2.setVisibility(View.GONE);
+            ivColor3.setVisibility(View.GONE);
+            ivColor4.setVisibility(View.GONE);
+            ivColor5.setVisibility(View.GONE);
+            ivColor6.setVisibility(View.GONE);
+            group_speed.setVisibility(View.GONE);
+        }
+    }
+
+
+
+    private void setColorPick(CircleView view){
+        int color = view.getColor();
+
     }
 }

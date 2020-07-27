@@ -2,6 +2,7 @@ package com.growatt.grohome.module.device.presenter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class BulbScenePresenter extends BasePresenter<IBulbSceneView> {
 
 
+    private  String scene;
 
     public BulbScenePresenter(IBulbSceneView baseView) {
         super(baseView);
@@ -29,8 +31,19 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> {
 
     public BulbScenePresenter(Context context, IBulbSceneView baseView) {
         super(context, baseView);
-        String scene = ((Activity) context).getIntent().getStringExtra(DeviceBulb.BULB_SCENE_DATA);
+        scene = ((Activity) context).getIntent().getStringExtra(DeviceBulb.BULB_SCENE_DATA);
+        parserScene();
+    }
 
+    /**
+     * 场景解析
+     */
+    public void parserScene(){
+        if (!TextUtils.isEmpty(scene)){
+            String number = scene.substring(0, 2);//序号
+            int id = Integer.parseInt(number);
+            baseView.setViewById(id);
+        }
     }
 
     public void setSceneMode(){

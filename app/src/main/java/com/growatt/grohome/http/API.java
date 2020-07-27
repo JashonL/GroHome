@@ -52,8 +52,8 @@ public class API {
         Observable<String> getUserType(@Field("userName") String username, @Field("password") String password, @Field("language") String language);
 
         @FormUrlEncoded
-        @POST(USER_URL + "newTwoLoginAPI.do")
-        Observable<String> login(@Field("userName") String username, @Field("password") String password);
+        @POST
+        Observable<String> login(@Url String url, @Field("userName") String username, @Field("password") String password);
 
 
         //注册
@@ -80,7 +80,8 @@ public class API {
         //---------------------------【   设备   】-----------------------------------
         @POST("/tuya/addDevice")
         Observable<String> addDevice(@Body RequestBody body);
-
+        @POST("/tuya/switchInfo")
+        Observable<String> getSwitchDetail(@Body RequestBody body);
     }
 
 }

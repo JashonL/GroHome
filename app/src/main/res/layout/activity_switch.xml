@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_panel_background">
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_panel_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_3"
+        android:paddingRight="@dimen/dp_3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_top_menu" />
+
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_top_menu"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_90"
+        android:elevation="@dimen/dp_5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerView">
+
+        <View
+            android:id="@+id/vDivider"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_1"
+            android:background="#78d4d4d4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/llTiming"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/llAllOpen"
+            app:layout_constraintTop_toBottomOf="@+id/vDivider">
+
+            <ImageView
+                android:id="@+id/ivTiming"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:src="@drawable/wallswitch_timer" />
+
+            <TextView
+                android:id="@+id/tvTiming"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_3"
+                android:paddingBottom="@dimen/dp_3"
+                android:singleLine="true"
+                android:text="@string/m146_timer"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_content_sp_14" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llAllOpen"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/llTiming"
+            app:layout_constraintRight_toLeftOf="@+id/llAllClose"
+            app:layout_constraintTop_toBottomOf="@+id/vDivider">
+
+            <ImageView
+                android:id="@+id/ivAllOpen"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:src="@drawable/wallswitch_openall"
+                />
+
+            <TextView
+                android:id="@+id/tvAllOpen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_3"
+                android:paddingBottom="@dimen/dp_3"
+                android:singleLine="true"
+                android:text="@string/m169_open_all"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_content_sp_14" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llAllClose"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/llAllOpen"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vDivider">
+
+            <ImageView
+                android:id="@+id/ivAllClose"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:src="@drawable/wallswitch_closeall"
+                />
+
+            <TextView
+                android:id="@+id/tvAllClose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_3"
+                android:paddingBottom="@dimen/dp_3"
+                android:singleLine="true"
+                android:text="@string/m170_close_all"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_content_sp_14" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

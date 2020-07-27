@@ -112,7 +112,7 @@
                             android:layout_weight="1"
                             android:background="@null"
                             android:gravity="center_vertical"
-                            android:inputType="text"
+                            android:inputType="textPassword"
                             android:nextFocusForward="@+id/et_password"
                             android:textColor="@color/color_text_00"
                             android:textColorHint="@color/color_text_99"

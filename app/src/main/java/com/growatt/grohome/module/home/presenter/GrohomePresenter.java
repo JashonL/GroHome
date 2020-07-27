@@ -14,6 +14,8 @@ import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.HomeDeviceBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.BulbActivity;
+import com.growatt.grohome.module.device.SwitchActivity;
+import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.home.view.IGrohomeView;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
@@ -80,7 +82,15 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> {
      *
      */
     public void jumpTodevice(HomeDeviceBean.DataBean bean) {
-        Intent intentThermostat = new Intent(context, BulbActivity.class);
+        String devType = bean.getDevType();
+        Class clazz=null;
+        if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)){
+            clazz= SwitchActivity.class;
+        }else if (DeviceTypeConstant.TYPE_BULB.equals(devType)){
+            clazz=BulbActivity.class;
+        }
+        if (clazz==null)return;
+        Intent intentThermostat = new Intent(context, clazz);
         intentThermostat.putExtra(GlobalConstant.DEVICE_ID, bean.getDevId());
         intentThermostat.putExtra(GlobalConstant.DEVICE_NAME, bean.getName());
         ActivityUtils.startActivity((Activity) context,intentThermostat,ActivityUtils.ANIMATE_FORWARD,false);

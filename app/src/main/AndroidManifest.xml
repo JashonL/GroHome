@@ -68,6 +68,8 @@
 
         <activity android:name=".module.device.BulbSceneEditActivity"/>
 
+        <activity android:name=".module.device.SwitchActivity"/>
+
     </application>
 
 </manifest>

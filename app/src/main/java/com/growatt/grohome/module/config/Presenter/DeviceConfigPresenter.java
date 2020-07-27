@@ -274,11 +274,11 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
      * 向服务器请求添加设备
      * @throws Exception
      */
-    public void addDevice(String pid,String divId) throws Exception {
+    public void addDevice(String pid,String devId) throws Exception {
         JSONObject requestJson=new JSONObject();
         requestJson.put("userId", App.getUserBean().accountName);
         requestJson.put("pid", pid);
-        requestJson.put("devId", divId);
+        requestJson.put("devId", devId);
         requestJson.put("deviceServerAddress", 1);
         requestJson.put("devType", DeviceTypeConstant.TYPE_PADDLE);
         requestJson.put("lan","0");

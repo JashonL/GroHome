@@ -184,4 +184,11 @@
     <string name="m164_flash">Flash</string>
     <string name="m165_breath">Breath</string>
     <string name="m166_colour_flash_speed">Colour Flash Speed</string>
+
+
+    <string name="m167_on">ON</string>
+    <string name="m168_off">OFF</string>
+    <string name="m169_open_all">Open All</string>
+    <string name="m170_close_all">Close All</string>
+    <string name="m171_check_network">Please try again or check network connection</string>
 </resources>

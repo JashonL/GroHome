@@ -66,4 +66,9 @@
     <!--BULB-->
     <color name="color_white_background">#F3EDEB</color>
 
+    <!--面板开关-->
+    <color name="color_panel_background">#2a2c3f</color>
+    <color name="color_panel_switch_background">#393d52</color>
+    
+
 </resources>

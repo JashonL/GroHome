@@ -225,10 +225,10 @@
                     android:id="@+id/seek_temper"
                     android:layout_width="@dimen/dp_250"
                     android:layout_height="@dimen/dp_32"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:max="990"
                     android:padding="@dimen/dp_10"
                     android:progress="20"
-                    android:layout_marginTop="@dimen/dp_10"
                     android:progressDrawable="@drawable/seek_colour_temp"
                     android:thumb="@drawable/seek_colour_temp_thumb"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -247,9 +247,9 @@
 
                 <View
                     android:id="@+id/v_bottom"
-                    app:layout_constraintTop_toBottomOf="@+id/seek_temper"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_20"/>
+                    android:layout_height="@dimen/dp_20"
+                    app:layout_constraintTop_toBottomOf="@+id/seek_temper" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -308,6 +308,13 @@
                 app:layout_constraintLeft_toLeftOf="@+id/tv_flash_mode_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_flash_mode_title" />
 
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/gp_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="v_colour_flash_speed,tv_flash_speed_title,iv_speed_slowly,seek_speed,iv_speed_fast"
+                />
 
             <View
                 android:id="@+id/v_colour_flash_speed"
