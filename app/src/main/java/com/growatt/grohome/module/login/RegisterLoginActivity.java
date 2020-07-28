@@ -17,8 +17,10 @@ import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.bean.User;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.login.presenter.RegisterLoginPresenter;
 import com.growatt.grohome.module.login.view.IRegisterLoginView;
+import com.growatt.grohome.utils.CommentUtils;
 import com.hjq.toast.ToastUtils;
 
 import java.util.Map;
@@ -29,8 +31,6 @@ import butterknife.OnClick;
 public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> implements IRegisterLoginView, TabLayout.OnTabSelectedListener {
 
 
-    @BindView(R.id.iv_top_image)
-    ImageView ivTopImage;
     @BindView(R.id.tab_title)
     TabLayout tabTitle;
     @BindView(R.id.et_username)
@@ -55,6 +55,8 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     ConstraintLayout ctlGroupRegister;
     @BindView(R.id.iv_passwor_view)
     ImageView ivPasswordView;
+    @BindView(R.id.tv_get_code)
+    TextView tvGetCode;
 
     private boolean passwordOn = false;
 
@@ -144,7 +146,7 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
 
     }
 
-    @OnClick({R.id.btn_login, R.id.btn_register,R.id.iv_passwor_view})
+    @OnClick({R.id.btn_login, R.id.btn_register,R.id.iv_passwor_view,R.id.ll_country,R.id.tv_get_code,R.id.ll_zone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
@@ -163,10 +165,25 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
                 presenter.getUserType();
                 break;
             case R.id.btn_register:
-
+                String country = tvCountry.getText().toString();
+                String zone = tvZone.getText().toString();
+                String rePassword = etPassword.getText().toString();
+                String rePasswordRepeat = tvRepeatPwd.getText().toString();
+                String email = tvEmail.getText().toString();
+                String verification = tvVerificationCode.getText().toString();
+                presenter.register(email,rePassword,rePasswordRepeat,zone,email,country,verification);
                 break;
             case R.id.iv_passwor_view:
                 clickPasswordSwitch();
+                break;
+            case R.id.ll_country:
+                presenter.getCountry();
+                break;
+            case R.id.tv_get_code:
+                presenter.getVerificationCode(tvGetCode);
+                break;
+            case R.id.ll_zone:
+                presenter.setZone();
                 break;
         }
     }
@@ -204,5 +221,54 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     @Override
     public void loginError(String errorMessage) {
         ToastUtils.show(errorMessage);
+    }
+
+    @Override
+    public String getEmail() {
+        return tvEmail.getText().toString();
+    }
+
+    @Override
+    public void getCodeStart() {
+        if (tvGetCode.isEnabled()) {
+            tvGetCode.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void timing(int second) {
+        tvGetCode.setText(second);
+    }
+
+    @Override
+    public void getCodeEnd() {
+        if (!tvGetCode.isEnabled()) {
+            tvGetCode.setEnabled(true);
+        }
+        tvGetCode.setText(R.string.m175_get_code);
+    }
+
+    @Override
+    public void setZone(String zone) {
+        tvZone.setText(zone);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RegisterLoginPresenter.START_FOR_RESULT_COUNTRY) {
+            if (resultCode == RESULT_OK) {
+                String result = data.getStringExtra(GlobalConstant.COUNTRY);
+                if (TextUtils.isEmpty(result))return;
+                presenter.getServerByCountry(result);
+                tvCountry.setText(result);
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 }

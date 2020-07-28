@@ -339,4 +339,10 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         BulbSceneBean bulbSceneBean = mBulbSceneAdapter.getData().get(position);
         presenter.bulbScene(bulbSceneBean.getSceneValue());
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroyTuya();
+    }
 }

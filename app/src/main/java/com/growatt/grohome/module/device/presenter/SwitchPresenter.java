@@ -16,6 +16,7 @@ import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.view.ISwitchView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
+import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IDevListener;
@@ -92,13 +93,13 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
     public void getDetailData() throws Exception {
         JSONObject requestJson=new JSONObject();
         requestJson.put("devId", deviceId);
+        requestJson.put("lan",String.valueOf(CommentUtils.getLanguage()));
         String s = requestJson.toString();
         RequestBody body=RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
         addDisposable(apiServer.getSwitchDetail(body), new BaseObserver<String>(baseView,true) {
             @Override
             public void onSuccess(String bean) {
                 Log.i(TuyaApiUtils.TUYA_TAG,"请求成功："+bean);
-                baseView.hideLoading();
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(bean);
@@ -156,7 +157,6 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
 
             @Override
             public void onError(String msg) {
-                baseView.hideLoading();
             }
         });
 
@@ -266,4 +266,12 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
     public void onDevInfoUpdate(String devId) {
 
     }
+
+    public void destroyTuya(){
+        if (mTuyaDevice != null) {
+            mTuyaDevice.unRegisterDevListener();
+            mTuyaDevice.onDestroy();
+        }
+    }
+
 }

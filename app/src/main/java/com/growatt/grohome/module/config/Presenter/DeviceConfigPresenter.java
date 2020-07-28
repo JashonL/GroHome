@@ -28,6 +28,7 @@ import com.growatt.grohome.tuya.FamilyManager;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;
+import com.growatt.grohome.utils.CommentUtils;
 import com.mylhyl.circledialog.CircleDialog;
 import com.tuya.smart.android.device.utils.WiFiUtil;
 import com.tuya.smart.android.mvp.bean.Result;
@@ -281,7 +282,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         requestJson.put("devId", devId);
         requestJson.put("deviceServerAddress", 1);
         requestJson.put("devType", DeviceTypeConstant.TYPE_PADDLE);
-        requestJson.put("lan","0");
+        requestJson.put("lan",String.valueOf(CommentUtils.getLanguage()));
         String s = requestJson.toString();
         RequestBody body=RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
         addDisposable(apiServer.addDevice(body), new BaseObserver<String>(baseView,true) {

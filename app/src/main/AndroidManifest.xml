@@ -70,6 +70,8 @@
 
         <activity android:name=".module.device.SwitchActivity"/>
 
+        <activity android:name=".module.login.CountryListActivity"/>
+
     </application>
 
 </manifest>

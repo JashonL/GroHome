@@ -19,6 +19,7 @@ import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.home.view.IGrohomeView;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
+import com.growatt.grohome.utils.CommentUtils;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
@@ -45,7 +46,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> {
         requestJson.put("cmd", "devList");
         requestJson.put("userServerId", "0");
         requestJson.put("userServerUrl", "http://server-cn.growatt.com/");
-        requestJson.put("lan","0");
+        requestJson.put("lan",String.valueOf(CommentUtils.getLanguage()));
         String s = requestJson.toString();
         RequestBody body=RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
         addDisposable(apiServer.getAllDevice(body), new BaseObserver<String>(baseView,true) {

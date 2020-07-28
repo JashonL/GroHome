@@ -401,4 +401,11 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     public void sendCommandError(String code, String error) {
         baseView.sendCommandError(code, error);
     }
+
+    public void destroyTuya(){
+        if (mTuyaDevice != null) {
+            mTuyaDevice.unRegisterDevListener();
+            mTuyaDevice.onDestroy();
+        }
+    }
 }

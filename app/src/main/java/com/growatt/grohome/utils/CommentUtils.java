@@ -9,9 +9,15 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
+import com.growatt.grohome.app.App;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class CommentUtils {
@@ -119,7 +125,7 @@ public class CommentUtils {
             for (int i = 0; i < 4 - hex.length(); i++) {
                 suff.append("0");
             }
-            hex=suff.toString()+hex;
+            hex = suff.toString() + hex;
         }
         return hex;
     }
@@ -127,8 +133,132 @@ public class CommentUtils {
 
     //将int数值转成4位的16进制的字符串，不足的补0
     public static int hexStringToInter(String value) {
-        if (TextUtils.isEmpty(value))return 0;
-        return Integer.parseInt(value,16);
+        if (TextUtils.isEmpty(value)) return 0;
+        return Integer.parseInt(value, 16);
+    }
+
+
+    /**
+     * 获取新语言
+     *
+     * @return
+     */
+    public static int getLanguage() {
+        int lan = 1;
+        Locale locale = App.getInstance().getResources().getConfiguration().locale;
+        String language = locale.getLanguage();
+        if (language.toLowerCase().contains("zh")) {
+            language = "zh_cn";
+            lan = 0;
+            if (!locale.getCountry().toLowerCase().equals("cn")) {
+                lan = 14;
+            }
+        }
+        if (language.toLowerCase().contains("en")) {
+            language = "en";
+            lan = 1;
+        }
+        if (language.toLowerCase().contains("fr")) {
+            language = "fr";
+            lan = 2;
+        }
+        if (language.toLowerCase().contains("ja")) {
+            language = "ja";
+            lan = 3;
+        }
+        if (language.toLowerCase().contains("it")) {
+            language = "it";
+            lan = 4;
+        }
+        if (language.toLowerCase().contains("ho")) {
+            language = "ho";
+            lan = 5;
+        }
+        if (language.toLowerCase().contains("tk")) {
+            language = "tk";
+            lan = 6;
+        }
+        if (language.toLowerCase().contains("pl")) {
+            language = "pl";
+            lan = 7;
+        }
+        if (language.toLowerCase().contains("gk")) {
+            language = "gk";
+            lan = 8;
+        }
+        if (language.toLowerCase().contains("gm")) {
+            language = "gm";
+            lan = 9;
+        }
+        if (language.toLowerCase().contains("pt")) {
+            language = "pt";
+            lan = 10;
+        }
+        if (language.toLowerCase().contains("sp")) {
+            language = "sp";
+            lan = 11;
+        }
+        if (language.toLowerCase().contains("vn")) {
+            language = "vn";
+            lan = 12;
+        }
+        if (language.toLowerCase().contains("hu")) {
+            language = "hu";
+            lan = 13;
+        }
+        return lan;
+    }
+
+
+    /**
+     * 获取新语言
+     *
+     * @return
+     */
+    public static List<String> getZones() {
+        List<String> zones = new ArrayList<>();
+        zones.add("-12");
+        zones.add("-11");
+        zones.add("-10");
+        zones.add("-9");
+        zones.add("-8");
+        zones.add("-7");
+        zones.add("-6");
+        zones.add("-5");
+        zones.add("-4");
+        zones.add("-3");
+        zones.add("-2");
+        zones.add("-1");
+        zones.add("0");
+        zones.add("1");
+        zones.add("2");
+        zones.add("3");
+        zones.add("4");
+        zones.add("5");
+        zones.add("6");
+        zones.add("7");
+        zones.add("8");
+        zones.add("9");
+        zones.add("10");
+        zones.add("11");
+        zones.add("12");
+        return zones;
+    }
+
+
+    //隐藏虚拟键盘
+    public static void hideKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null && imm.isActive()) {
+            imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+
+        }
+    }
+
+    //显示虚拟键盘
+    public static void showKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) imm.showSoftInput(v, 0);
     }
 
 }

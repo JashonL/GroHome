@@ -13,9 +13,14 @@ public class GlobalConstant {
     //*********************Activity跳转传值*********************
     public static final String DEVICE_ID="device_id";
     public static final String DEVICE_NAME="device_name";
+    public static final String COUNTRY="country";
 
     //************shareperferen保存常量***************/
     public static final String SP_USER_NAME="user_name";
     public static final String SP_USER_PASSWORD="user_password";
+
+    //*********************中国***************************/
+    public static final String STRING_CHINA_CHINESE="中国";
+    public static final String STRING_CHINA_ENLISH="china";
 
 }

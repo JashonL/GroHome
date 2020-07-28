@@ -28,6 +28,8 @@ import com.growatt.grohome.utils.CommentUtils;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -212,5 +214,12 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
                 presenter.allOnoff(false);
                 break;
         }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroyTuya();
     }
 }

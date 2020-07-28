@@ -185,10 +185,26 @@
     <string name="m165_breath">Breath</string>
     <string name="m166_colour_flash_speed">Colour Flash Speed</string>
 
-
+    <!--面板开关-->
     <string name="m167_on">ON</string>
     <string name="m168_off">OFF</string>
     <string name="m169_open_all">Open All</string>
     <string name="m170_close_all">Close All</string>
     <string name="m171_check_network">Please try again or check network connection</string>
+
+    <!--注册-->
+    <string name="m172_enter_country">Please enter your country</string>
+    <string name="m173_country">Country</string>
+    <string name="m174_china">China</string>
+    <string name="m175_get_code">Get code</string>
+    <string name="m176_enter_email">Please enter email</string>
+    <string name="m177_select_country">Please select country</string>
+    <string name="m178_verification_send_email">The verification code has been sent to your email</string>
+    <string name="m179_select_time_zone">Please select time zone</string>
+    <string name="m180_enter_password">Please enter password</string>
+    <string name="m181_verificationcode_error">VerificationCode Error</string>
+    <string name="m182_register_success">Registered successfully</string>
+    <string name="m183_registered_name">Registered username</string>
+    <string name="m184_register_error">Register Erorr</string>
+    <string name="m185_zone">Zone</string>
 </resources>

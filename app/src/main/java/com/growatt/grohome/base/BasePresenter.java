@@ -88,6 +88,8 @@ public class BasePresenter<V extends BaseView> implements Handler.Callback {
     }
 
     public void onDestroy() {
-        this.handler.destroy();
+        if (handler!=null){
+            this.handler.destroy();
+        }
     }
 }

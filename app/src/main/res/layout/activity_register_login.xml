@@ -377,9 +377,9 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:gravity="center"
+                            android:minWidth="@dimen/dp_80"
                             android:padding="@dimen/dp_2"
-                            android:src="@drawable/icon_sign_more"
-                            android:text="get code"
+                            android:text="@string/m175_get_code"
                             android:textColor="@color/color_theme_green"
                             android:textSize="@dimen/size_content_sp_16" />
 

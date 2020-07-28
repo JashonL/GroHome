@@ -13,6 +13,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 /**
@@ -31,7 +32,10 @@ public class API {
 
     private static final String OSS_URL = "http://oss1.growatt.com/";
 
-    public static final String USER_URL = "http://server-cn.growatt.com/";
+    public static final String USER_URL = "http://server-api.growatt.com/";
+
+    public static final String VERIFICATION_CODE="/newTwoRegisterAPI.do?action=sendEmailVerification";
+
 
 
     public interface WAZApi {
@@ -60,6 +64,24 @@ public class API {
         @FormUrlEncoded
         @POST("user/register")
         Observable<String> register(@Field("username") String username, @Field("password") String password, @Field("repassword") String repassword);
+
+
+        //获取国家
+        @GET(USER_URL+"newCountryCityAPI.do?op=getCountryList")
+        Observable<String> getCountry();
+
+        //根据国家获取服务器
+        @GET(USER_URL+"newLoginAPI.do?op=getServerUrl")
+        Observable<String> getServerCountry(@Query("country")String country);
+
+        //获取邮箱验证码
+        @FormUrlEncoded
+        @POST
+        Observable<String> getVerificationCode(@Url String url, @Field("accountName")String accountName,@Field("email")String email,@Field("language")String language);
+
+        @FormUrlEncoded
+        @POST
+        Observable<String> groHomeRegister(@Url String url, @Field("regUserName")String regUserName,@Field("regPassword")String regPassword,@Field("regTimeZone")String regTimeZone,@Field("regEmail")String regEmail,@Field("regCountry")String regCountry);
 
 
         //-----------------------【  收藏  】----------------------
