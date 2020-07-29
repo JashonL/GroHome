@@ -1,6 +1,9 @@
 package com.growatt.grohome.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,6 +13,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.growatt.grohome.R;
 import com.growatt.grohome.bean.HomeDeviceBean;
+import com.growatt.grohome.module.device.manager.DeviceAirCon;
+import com.growatt.grohome.module.device.manager.DeviceBulb;
+import com.growatt.grohome.module.device.manager.DevicePanel;
+import com.growatt.grohome.module.device.manager.DevicePlug;
+import com.growatt.grohome.module.device.manager.DeviceThermostat;
+import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 
 import java.util.List;
 
@@ -27,6 +36,58 @@ public class GroHomeDevGridAdapter extends BaseMultiItemQuickAdapter<HomeDeviceB
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, HomeDeviceBean.DataBean item) {
-        helper.setText(R.id.tv_device_name,item.getName());
+        //设备名称
+        helper.setText(R.id.tv_device_name, item.getName());
+
+
+        //房间
+        String roomName = item.getRoomName();
+        if (TextUtils.isEmpty(roomName)) roomName = "--";
+        helper.setText(R.id.tv_device_room, roomName);
+
+        //设备类型设置图标
+        ImageView deviceIcon = helper.getView(R.id.iv_device_icon);
+        String devType = item.getDevType();
+        if (item.getItemType() == STATUS_ON) {
+            switch (devType) {
+                case DeviceTypeConstant.TYPE_PANELSWITCH:
+                    deviceIcon.setImageResource(DevicePanel.getOpenIcon(1));
+                    break;
+                case DeviceTypeConstant.TYPE_BULB:
+                    deviceIcon.setImageResource(DeviceBulb.getOpenIcon(1));
+                    break;
+                case DeviceTypeConstant.TYPE_AIRCONDITION:
+                    deviceIcon.setImageResource(DeviceAirCon.getOpenIcon(1));
+                    break;
+                case DeviceTypeConstant.TYPE_PADDLE:
+                    deviceIcon.setImageResource(DevicePlug.getOpenIcon(1));
+                    break;
+                case DeviceTypeConstant.TYPE_THERMOSTAT:
+                    deviceIcon.setImageResource(DeviceThermostat.getOpenIcon(1));
+                    break;
+            }
+        } else {
+            switch (devType) {
+                case DeviceTypeConstant.TYPE_PANELSWITCH:
+                    deviceIcon.setImageResource(DevicePanel.getCloseIcon(1));
+                    break;
+                case DeviceTypeConstant.TYPE_BULB:
+                    deviceIcon.setImageResource(DeviceBulb.getCloseIcon(1));
+                    break;
+
+                case DeviceTypeConstant.TYPE_AIRCONDITION:
+                    deviceIcon.setImageResource(DeviceAirCon.getCloseIcon(1));
+                    break;
+                case DeviceTypeConstant.TYPE_PADDLE:
+                    deviceIcon.setImageResource(DevicePlug.getCloseIcon(1));
+                    break;
+                case DeviceTypeConstant.TYPE_THERMOSTAT:
+                    deviceIcon.setImageResource(DeviceThermostat.getCloseIcon(1));
+                    break;
+
+            }
+        }
+        helper.addOnClickListener(R.id.card_item);
+        helper.addOnClickListener(R.id.iv_onoff);
     }
 }

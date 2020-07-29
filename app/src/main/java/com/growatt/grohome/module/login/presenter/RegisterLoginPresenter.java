@@ -345,6 +345,5 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     public void onDestroy() {
         handler.removeMessages(MESSAGE_SHOW_TIMING);
         super.onDestroy();
-        super.onDestroy();
     }
 }

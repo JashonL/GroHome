@@ -3,6 +3,11 @@ package com.growatt.grohome.module.device.manager;
 import com.growatt.grohome.R;
 
 public class DeviceThermostat extends BaseDevice {
+
+    /********************功能dpid**************************/
+    public static final String THERMMOSTAT_ONOFF="101";//开关
+
+
     @Override
     public String getType() {
         return DeviceTypeConstant.TYPE_THERMOSTAT;
@@ -45,4 +50,13 @@ public class DeviceThermostat extends BaseDevice {
         }
         return res;
     }
+
+
+
+    /**************************获取dpid*************************************/
+    public static String getSwitchThermostat(){
+        return THERMMOSTAT_ONOFF;
+    }
+
+
 }

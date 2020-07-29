@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.tuya.smart.android.user.api.ILoginCallback;
 import com.tuya.smart.android.user.api.IRegisterCallback;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
@@ -163,6 +164,16 @@ public class TuyaApiUtils {
     public static String mapToJsonString(Map<String, Object> map) {
         org.json.JSONObject jsonObject = new org.json.JSONObject(map);
         return jsonObject.toString();
+    }
+
+
+    /**
+     * 判断是否是要显示该设备
+     * @return
+     */
+    public static boolean isShowDevice(String deviceType){
+        return DeviceTypeConstant.TYPE_BULB.equals(deviceType) || DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)||DeviceTypeConstant.TYPE_PADDLE.equals(deviceType)
+                ||DeviceTypeConstant.TYPE_THERMOSTAT.equals(deviceType)||DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(deviceType);
     }
 
 }

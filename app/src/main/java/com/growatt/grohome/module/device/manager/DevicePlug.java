@@ -3,6 +3,10 @@ package com.growatt.grohome.module.device.manager;
 import com.growatt.grohome.R;
 
 public class DevicePlug extends BaseDevice {
+    /********************功能dpid**************************/
+    public static final String PLUG_ONOFF="101";//开关
+
+
     @Override
     public String getType() {
         return DeviceTypeConstant.TYPE_PADDLE;
@@ -12,7 +16,7 @@ public class DevicePlug extends BaseDevice {
         return R.string.m36_socket;
     }
 
-    public static int getOpenIcon(int resIndex) {
+    public static int getCloseIcon (int resIndex) {
         int res;
         switch (resIndex) {
             case 0:
@@ -29,7 +33,7 @@ public class DevicePlug extends BaseDevice {
         return res;
     }
 
-    public static int getCloseIcon(int resIndex) {
+    public static int getOpenIcon(int resIndex) {
         int res;
         switch (resIndex) {
             case 0:
@@ -43,5 +47,10 @@ public class DevicePlug extends BaseDevice {
                 break;
         }
         return res;
+    }
+
+
+    public static String getPlugOnoff() {
+        return PLUG_ONOFF;
     }
 }

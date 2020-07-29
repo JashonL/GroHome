@@ -6,12 +6,14 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_3"
+        android:foreground="@drawable/card_foreground"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/dp_12"
         app:cardElevation="@dimen/dp_2"
-        android:layout_margin="@dimen/dp_3"
-        app:cardBackgroundColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -27,6 +29,7 @@
                 android:layout_height="@dimen/dp_32"
                 android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginRight="@dimen/dp_12"
+                android:src="@drawable/icon_card_off"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,17 +47,17 @@
             <TextView
                 android:id="@+id/tv_device_name"
                 android:layout_width="@dimen/dp_0"
-                android:gravity="center_vertical"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
                 android:ellipsize="end"
+                android:gravity="center_vertical"
                 android:maxLines="1"
                 android:padding="@dimen/dp_2"
                 android:textColor="@color/color_text_66"
                 android:textStyle="bold"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/tv_device_room"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
 
 
             <TextView
@@ -64,13 +67,13 @@
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginBottom="@dimen/dp_10"
                 android:ellipsize="end"
+                android:gravity="center_vertical"
                 android:maxLines="1"
                 android:padding="@dimen/dp_2"
                 android:textColor="@color/color_text_66"
-                android:gravity="center_vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

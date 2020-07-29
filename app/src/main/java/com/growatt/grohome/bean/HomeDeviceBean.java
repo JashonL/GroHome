@@ -27,8 +27,6 @@ public class HomeDeviceBean {
 
 
     public static class DataBean implements MultiItemEntity {
-        private int onoffStatus;
-
         /**
          * devId : 012003622c3ae8410c14
          * devType : socket
@@ -346,13 +344,6 @@ public class HomeDeviceBean {
             this.mode = mode;
         }
 
-        public int getOnoffStatus() {
-            return onoffStatus;
-        }
-
-        public void setOnoffStatus(int onoffStatus) {
-            this.onoffStatus = onoffStatus;
-        }
 
         @Override
         public boolean equals(Object obj) {
@@ -364,7 +355,7 @@ public class HomeDeviceBean {
 
         @Override
         public int getItemType() {
-            return onoffStatus;
+            return onoff;
         }
     }
 

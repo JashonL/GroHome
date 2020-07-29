@@ -315,7 +315,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * @param scene
      */
     public void bulbScene(String scene) {
-        scene=scene;
+        this.scene=scene;
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), scene, mTuyaDevice, this);
         }

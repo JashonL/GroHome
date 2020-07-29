@@ -26,6 +26,7 @@ import com.growatt.grohome.module.device.DeviceTypeActivity;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.home.presenter.GrohomePresenter;
 import com.growatt.grohome.module.home.view.IGrohomeView;
+import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.CommentUtils;
 
 import java.util.ArrayList;
@@ -85,15 +86,9 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         rlvRoom.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         rlvRoom.setAdapter(mRoomAdapter);
         rlvRoom.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.HORIZONTAL, 30, ContextCompat.getColor(getActivity(), R.color.nocolor)));
+
         //设备列表初始化
-        mGrohomeGridAdapter = new GroHomeDevGridAdapter(new ArrayList<>());
-        rlvDevice.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        rlvDevice.setAdapter(mGrohomeGridAdapter);
-        int div=  CommentUtils.dip2px(getActivity(),10);
-        rlvDevice.addItemDecoration(new GridDivider(ContextCompat.getColor(getActivity(), R.color.nocolor),div,div));
-        //设置空布局
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_empty_view, rlvDevice, false);
-        mGrohomeGridAdapter.setEmptyView(view);
+        setGridAdapter();
     }
 
     @Override
@@ -114,28 +109,49 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         }
         //布局切换方法
         if (mLayoutType == TYPE_LINE) {
-            //瀑布流设置
-            GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-            rlvDevice.setLayoutManager(layoutManager);
-            mGrohomeGridAdapter = new GroHomeDevGridAdapter(deviceList);
-            rlvDevice.setAdapter(mGrohomeGridAdapter);
-            ivSwitchDevList.setImageResource(R.drawable.icon_card);
-            int div=  CommentUtils.dip2px(getActivity(),10);
-            rlvDevice.addItemDecoration(new GridDivider(ContextCompat.getColor(getActivity(), R.color.nocolor),div,div));
+            setGridAdapter();
             mLayoutType = TYPE_GRID;
         } else {
             //列表模式
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            rlvDevice.setLayoutManager(layoutManager);
-            mGroHomeDevLineAdapter = new GroHomeDevLineAdapter(deviceList);
-            rlvDevice.setAdapter(mGroHomeDevLineAdapter);
-            rlvDevice.addItemDecoration(new LinearDivider(getActivity(),LinearLayoutManager.HORIZONTAL,ContextCompat.getColor(getActivity(),R.color.nocolor),32));
-            ivSwitchDevList.setImageResource(R.drawable.icon_list);
+            setLineAdapter();
             mLayoutType = TYPE_LINE;
         }
-        mGroHomeDevLineAdapter.setOnItemChildClickListener(this);
+
+    }
+
+
+    /**
+     * 设置表格布局
+     */
+    private void setGridAdapter() {
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        rlvDevice.setLayoutManager(layoutManager);
+        mGrohomeGridAdapter = new GroHomeDevGridAdapter(deviceList);
+        rlvDevice.setAdapter(mGrohomeGridAdapter);
+        ivSwitchDevList.setImageResource(R.drawable.icon_card);
+        int div = CommentUtils.dip2px(getActivity(), 10);
+        rlvDevice.addItemDecoration(new GridDivider(ContextCompat.getColor(getActivity(), R.color.nocolor), div, div));
+        //设置空布局
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_empty_view, rlvDevice, false);
+        mGrohomeGridAdapter.setEmptyView(view);
+        mGrohomeGridAdapter.setOnItemChildClickListener(this);
         mGrohomeGridAdapter.setOnItemClickListener(this);
+    }
+
+
+    private void setLineAdapter() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rlvDevice.setLayoutManager(layoutManager);
+        mGroHomeDevLineAdapter = new GroHomeDevLineAdapter(deviceList);
+        rlvDevice.setAdapter(mGroHomeDevLineAdapter);
+        rlvDevice.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.HORIZONTAL, ContextCompat.getColor(getActivity(), R.color.nocolor), 32));
+        ivSwitchDevList.setImageResource(R.drawable.icon_list);
+        //设置空布局
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_empty_view, rlvDevice, false);
+        mGroHomeDevLineAdapter.setEmptyView(view);
+        mGroHomeDevLineAdapter.setOnItemChildClickListener(this);
+        mGroHomeDevLineAdapter.setOnItemClickListener(this);
     }
 
 
@@ -159,30 +175,85 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         deviceList.clear();
         List<HomeDeviceBean.DataBean> newList = bean.getData();
         for (int i = 0; i < newList.size(); i++) {
-            String devType = newList.get(i).getDevType();
-            if (DeviceTypeConstant.TYPE_AMETER.equals(devType)) continue;
-            deviceList.add(newList.get(i));
+            HomeDeviceBean.DataBean deviceBean = newList.get(i);
+            String devType = deviceBean.getDevType();
+            if (!TuyaApiUtils.isShowDevice(devType)) continue;
+            String devId = deviceBean.getDevId();
+            presenter.initTuyaDevices(devId);
+            int onOff = presenter.initDevOnOff(devType, devId);
+            deviceBean.setOnoff(onOff);
+            deviceList.add(deviceBean);
         }
         mGrohomeGridAdapter.replaceData(deviceList);
     }
 
     @Override
-    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+    public List<HomeDeviceBean.DataBean> getDeviceList() {
+        if (mLayoutType == TYPE_GRID) {
+            return mGrohomeGridAdapter.getData();
+        } else {
+            return mGroHomeDevLineAdapter.getData();
+        }
 
     }
 
     @Override
+    public void upDataStatus(String devId, String value) {
+        List<HomeDeviceBean.DataBean> data;
+        if (mLayoutType == TYPE_GRID) {
+            data = mGrohomeGridAdapter.getData();
+        } else {
+            data = mGroHomeDevLineAdapter.getData();
+        }
+        HomeDeviceBean.DataBean bean = new HomeDeviceBean.DataBean();
+        bean.setDevId(devId);
+        int homeAllDevice = data.indexOf(bean);
+        if (homeAllDevice!=-1){
+            data.get(homeAllDevice).setOnoff(Integer.parseInt(value));
+        }
+        if (mLayoutType == TYPE_GRID) {
+            mGrohomeGridAdapter.notifyDataSetChanged();
+        } else {
+            mGroHomeDevLineAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean) adapter.getData().get(position);
+        String deviceType=bean.getDevType();
+          switch (view.getId()){
+              case R.id.card_item:
+                  presenter.jumpTodevice(bean);
+                  break;
+              case R.id.iv_onoff:
+                  if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)){
+                      presenter.deviceSwitch(bean.getDevId(),bean.getRoad(),bean.getOnoff());
+                  }else {
+                      presenter.deviceSwitch(bean.getDevId(),bean.getDevType());
+                  }
+                  break;
+          }
+    }
+
+    @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean)adapter.getData().get(position);
+        HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean) adapter.getData().get(position);
         presenter.jumpTodevice(bean);
     }
 
     @OnClick(R.id.rl_switch_click)
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.rl_switch_click:
                 changeLayout();
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.onDestroy();
     }
 }
