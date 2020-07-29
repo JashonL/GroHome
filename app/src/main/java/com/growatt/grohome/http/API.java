@@ -36,6 +36,8 @@ public class API {
 
     public static final String VERIFICATION_CODE="/newTwoRegisterAPI.do?action=sendEmailVerification";
 
+    public static final String TEST_URL="http://192.168.3.214:8082/eic_web/";
+
 
 
     public interface WAZApi {
@@ -96,8 +98,13 @@ public class API {
 
 
         //-------------------------【  首页  】----------------------------------
+        //获取设备列表
         @POST("room/")
         Observable<String> getAllDevice(@Body RequestBody body);
+
+        //获取房间列表
+        @POST(TEST_URL+"room/")
+        Observable<String> getRoomList(@Body RequestBody body);
 
         //---------------------------【   设备   】-----------------------------------
         @POST("/tuya/addDevice")

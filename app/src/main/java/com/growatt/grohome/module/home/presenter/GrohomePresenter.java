@@ -13,6 +13,7 @@ import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.HomeDeviceBean;
+import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.bean.SchemaDpdBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.BulbActivity;
@@ -22,6 +23,7 @@ import com.growatt.grohome.module.device.manager.DevicePlug;
 import com.growatt.grohome.module.device.manager.DeviceStripLights;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
+import com.growatt.grohome.module.home.RoomListActivity;
 import com.growatt.grohome.module.home.view.IGrohomeView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
@@ -33,6 +35,7 @@ import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -81,7 +84,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                     int code = obj.getInt("code");
                     if (0 == code) {
                         HomeDeviceBean infoData = new Gson().fromJson(bean, HomeDeviceBean.class);
-                        baseView.getAllDeviceSuccess(infoData);
+                        baseView.setAllDeviceSuccess(infoData);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -97,6 +100,64 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         });
 
     }
+
+    /**
+     * 获取房间列表
+     *
+     * @throws Exception
+     */
+    public void getRoomList() throws Exception {
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("userId", App.getUserBean().accountName);
+        requestJson.put("cmd", "roomList");
+        requestJson.put("lan", CommentUtils.getLanguage());
+        String s = requestJson.toString();
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        addDisposable(apiServer.getRoomList(body), new BaseObserver<String>(baseView, true) {
+            @Override
+            public void onSuccess(String bean) {
+                Log.i(TuyaApiUtils.TUYA_TAG, "请求成功：" + bean);
+                try {
+                    JSONObject obj = new JSONObject(bean);
+                    int code = obj.getInt("code");
+                    if (code == 0) {
+                        JSONArray dataArray = obj.getJSONArray("data");
+                        List<HomeRoomBean> roomList = new ArrayList<>();
+                        for (int i = 0; i < dataArray.length(); i++) {
+                            JSONObject jsonObject = dataArray.getJSONObject(i);
+                            HomeRoomBean roomBean = new Gson().fromJson(jsonObject.toString(), HomeRoomBean.class);
+                            roomList.add(roomBean);
+                        }
+                        baseView.setRoomListSuccess(roomList);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+
+    }
+
+
+
+
+    /**
+     * 跳转到设备操作页面
+     */
+    public void jumpToRoom() {
+        Intent intentThermostat = new Intent(context, RoomListActivity.class);
+        ActivityUtils.startActivity((Activity) context, intentThermostat, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
+
+
 
 
     /**
@@ -186,47 +247,46 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
         String onOff;
         boolean bulb_onoff;
-        LinkedHashMap<String,Object>sendMap=new LinkedHashMap<>();
+        LinkedHashMap<String, Object> sendMap = new LinkedHashMap<>();
         if (deviceNotOnline()) {
             switch (devType) {
                 case DeviceTypeConstant.TYPE_BULB:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
                     bulb_onoff = "true".equals(onOff);
-                    sendMap.put(DeviceBulb.getBulbSwitchLed(),!bulb_onoff);
+                    sendMap.put(DeviceBulb.getBulbSwitchLed(), !bulb_onoff);
                     break;
                 case DeviceTypeConstant.TYPE_PADDLE:
                     onOff = String.valueOf(deviceBean.getDps().get(DevicePlug.getPlugOnoff()));
                     bulb_onoff = "true".equals(onOff);
-                    sendMap.put(DeviceBulb.getBulbSwitchLed(),!bulb_onoff);
+                    sendMap.put(DeviceBulb.getBulbSwitchLed(), !bulb_onoff);
                     break;
                 case DeviceTypeConstant.TYPE_THERMOSTAT:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceThermostat.getSwitchThermostat()));
                     bulb_onoff = "true".equals(onOff);
-                    sendMap.put(DeviceBulb.getBulbSwitchLed(),!bulb_onoff);
+                    sendMap.put(DeviceBulb.getBulbSwitchLed(), !bulb_onoff);
                     break;
             }
-            ITuyaDevice mTuyaDevice=mTuyaDevices.get(devId);
-            if (mTuyaDevice==null)return;
+            ITuyaDevice mTuyaDevice = mTuyaDevices.get(devId);
+            if (mTuyaDevice == null) return;
             TuyaApiUtils.sendCommand(sendMap, mTuyaDevice, this);
         }
 
     }
 
 
-
     /**
      * 开关
      */
-    public void deviceSwitch(String devId,int road,int onOff) {
+    public void deviceSwitch(String devId, int road, int onOff) {
         deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
-        boolean bulb_onoff=onOff==1;
-        LinkedHashMap<String,Object>sendMap=new LinkedHashMap<>();
+        boolean bulb_onoff = onOff == 1;
+        LinkedHashMap<String, Object> sendMap = new LinkedHashMap<>();
         if (deviceNotOnline()) {
             for (int i = 0; i < road; i++) {
-                sendMap.put(String.valueOf(i+1), !bulb_onoff);
+                sendMap.put(String.valueOf(i + 1), !bulb_onoff);
             }
-            ITuyaDevice mTuyaDevice=mTuyaDevices.get(devId);
-            if (mTuyaDevice==null)return;
+            ITuyaDevice mTuyaDevice = mTuyaDevices.get(devId);
+            if (mTuyaDevice == null) return;
             TuyaApiUtils.sendCommand(sendMap, mTuyaDevice, this);
         }
 

@@ -20,6 +20,7 @@ import com.growatt.grohome.adapter.GroHomeDevLineAdapter;
 import com.growatt.grohome.adapter.RoomAdapter;
 import com.growatt.grohome.base.BaseFragment;
 import com.growatt.grohome.bean.HomeDeviceBean;
+import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.customview.GridDivider;
 import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.module.device.DeviceTypeActivity;
@@ -95,6 +96,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     protected void initData() {
         //获取列表设备列表
         try {
+            presenter.getRoomList();
             presenter.getAlldevice();
         } catch (Exception e) {
             e.printStackTrace();
@@ -170,7 +172,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     }
 
     @Override
-    public void getAllDeviceSuccess(HomeDeviceBean bean) {
+    public void setAllDeviceSuccess(HomeDeviceBean bean) {
         if (bean == null) return;
         deviceList.clear();
         List<HomeDeviceBean.DataBean> newList = bean.getData();
@@ -219,6 +221,11 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     }
 
     @Override
+    public void setRoomListSuccess(List<HomeRoomBean> roomList) {
+        mRoomAdapter.replaceData(roomList);
+    }
+
+    @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean) adapter.getData().get(position);
         String deviceType=bean.getDevType();
@@ -242,11 +249,14 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         presenter.jumpTodevice(bean);
     }
 
-    @OnClick(R.id.rl_switch_click)
+    @OnClick({R.id.rl_switch_click,R.id.cl_all_room})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_switch_click:
                 changeLayout();
+                break;
+            case R.id.cl_all_room:
+                presenter.jumpToRoom();
                 break;
         }
     }

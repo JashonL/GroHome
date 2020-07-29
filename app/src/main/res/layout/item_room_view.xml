@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.growatt.grohome.customview.ScaleConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/parent_ground"
     android:layout_width="@dimen/dp_300"
     android:layout_height="@dimen/dp_140">
+
+
+    <ImageView
+        android:id="@+id/iv_room_pic"
+        android:src="@drawable/home_keting"
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
     <TextView
@@ -51,4 +58,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-</com.growatt.grohome.customview.ScaleConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

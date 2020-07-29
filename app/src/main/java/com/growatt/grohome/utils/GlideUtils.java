@@ -8,15 +8,14 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.ViewTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.growatt.grohome.R;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class GlideUtils {
 
@@ -84,5 +83,16 @@ public class GlideUtils {
                 Glide.with(act).load(resId).placeholder(type).error(R.drawable.loading).dontAnimate().into(iv);
                 break;
         }
+    }
+
+
+    //加载圆角图片
+    public static void showImageContext(Context context,int placeholderRes,int errorRes,String path,ImageView iv,int dp){
+        Glide.with(context).load(path).placeholder(placeholderRes).error(errorRes).dontAnimate().transform(new RoundedCornersTransformation(dp,0)).into(iv);
+    }
+
+    //加载圆角图片
+    public  void showImageContext(Context context,int placeholderRes,int errorRes,int path,ImageView iv,int dp){
+        Glide.with(context).load(path).placeholder(placeholderRes).error(errorRes).dontAnimate().transform(new RoundedCornersTransformation(dp,0)).into(iv);
     }
 }
