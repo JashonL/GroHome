@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView ,EasyPermissions.PermissionCallbacks{
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView, EasyPermissions.PermissionCallbacks {
 
     protected P presenter;
 
@@ -47,11 +47,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         setContentView(LayoutInflater.from(this).inflate(getLayoutId(), null));
         ButterKnife.bind(this);
         App.getInstance().addActivityList(new WeakReference<>(this));
-        presenter=createPresenter();
+        presenter = createPresenter();
         initViews();
         initData();
     }
-
 
 
     @Override
@@ -65,7 +64,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             mToolBar = findViewById(R.id.toolbar);
             if (mToolBar == null) {
             } else {
-                mToolBar.setTitleTextColor(ContextCompat.getColor(this,R.color.color_text_00));
+                mToolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.color_text_00));
             }
         }
     }
@@ -189,6 +188,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     /**
      * 用户同意权限
+     *
      * @param requestCode
      * @param perms
      */
@@ -199,6 +199,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     /**
      * 用户拒绝了权限
+     *
      * @param requestCode
      * @param perms
      */
@@ -215,7 +216,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode>= AllPermissionRequestCode.ALL_PERMISSION_CODE&&requestCode<=AllPermissionRequestCode.PERMISSION_LOCATION_CODE){
+        if (requestCode >= AllPermissionRequestCode.ALL_PERMISSION_CODE && requestCode <= AllPermissionRequestCode.PERMISSION_LOCATION_CODE) {
             this.onPermissionsGranted(requestCode, null);
         }
     }

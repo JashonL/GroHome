@@ -50,6 +50,7 @@
         android:layout_marginTop="@dimen/dp_14"
         android:layout_marginEnd="@dimen/dp_12"
         android:scaleType="fitXY"
+        android:src="@drawable/icon_edit"
         app:layout_constraintRight_toRightOf="@+id/iv_room_pic"
         app:layout_constraintTop_toTopOf="@+id/iv_room_pic" />
 

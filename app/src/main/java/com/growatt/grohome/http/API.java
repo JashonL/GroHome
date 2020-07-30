@@ -86,7 +86,7 @@ public class API {
         Observable<String> groHomeRegister(@Url String url, @Field("regUserName")String regUserName,@Field("regPassword")String regPassword,@Field("regTimeZone")String regTimeZone,@Field("regEmail")String regEmail,@Field("regCountry")String regCountry);
 
 
-        //-----------------------【  收藏  】----------------------
+        //---------------------------【   设备   】----------------------------------
 
         //收藏站内文章
         @POST("lg/collect/{id}/json")
@@ -97,20 +97,28 @@ public class API {
         Observable<String> uncollect(@Path("id") Integer id);
 
 
-        //-------------------------【  首页  】----------------------------------
+        //---------------------------【   首页   】----------------------------------
         //获取设备列表
         @POST("room/")
         Observable<String> getAllDevice(@Body RequestBody body);
 
-        //获取房间列表
-        @POST(TEST_URL+"room/")
-        Observable<String> getRoomList(@Body RequestBody body);
 
         //---------------------------【   设备   】-----------------------------------
         @POST("/tuya/addDevice")
         Observable<String> addDevice(@Body RequestBody body);
         @POST("/tuya/switchInfo")
         Observable<String> getSwitchDetail(@Body RequestBody body);
+
+        //---------------------------【   房间   】-----------------------------------
+
+        //获取房间列表
+        @POST("room/")
+        Observable<String> getRoomList(@Body RequestBody body);
+
+        @POST("/room/addRoom")
+        Observable<String>createRoom(@Body RequestBody body);
+
+
     }
 
 }

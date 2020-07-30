@@ -207,4 +207,26 @@
     <string name="m183_registered_name">Registered username</string>
     <string name="m184_register_error">Register Erorr</string>
     <string name="m185_zone">Zone</string>
+
+    <!--房间-->
+    <string name="m186_room_list">Room List</string>
+    <string name="m187_room_name">Room name</string>
+    <string name="m189_enter_room_name_tips">Please enter a room name</string>
+    <string name="m190_select_cover_image">Select cover image</string>
+    <string name="m191_add_picture">Add a picture</string>
+    <string name="m192_default_picture">Default picture</string>
+    <string name="m193_add_room">Add room</string>
+
+    <!--拍照-->
+    <string name="m194_take_photo">Take a photo</string>
+    <string name="m195_choose_photos">Choose from photos</string>
+    <string name="m196_canmer">Choose from photos</string>
+    <string name="m197_camera_or_storage">Camera or storage</string>
+    <string name="m198_storage">Storage</string>
+    <string name="m199_camera">Camera</string>
+    <string name="m200_success">Success</string>
+    <string name="m201_fail">Fail</string>
+    <string name="m202_add_picture">Please add a picture</string>
+    <string name="m203_room_name">Please enter a room name</string>
+
 </resources>

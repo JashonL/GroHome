@@ -46,7 +46,7 @@ public class DeviceBulb extends BaseDevice {
         return R.string.m39_bulb;
     }
 
-    public static int getOpenIcon(int resIndex) {
+    public static int  getCloseIcon (int resIndex) {
         int res;
         switch (resIndex) {
             case 0:
@@ -61,6 +61,9 @@ public class DeviceBulb extends BaseDevice {
             case 3:
                 res = R.drawable.device_real_bulb_c;
                 break;
+            case 4:
+                res=R.drawable.device_s_bulb;
+                break;
             default:
                 res = R.drawable.device_real_bulb;
                 break;
@@ -68,7 +71,7 @@ public class DeviceBulb extends BaseDevice {
         return res;
     }
 
-    public static int getCloseIcon(int resIndex) {
+    public static int getOpenIcon(int resIndex) {
         int res;
         switch (resIndex) {
             case 0:

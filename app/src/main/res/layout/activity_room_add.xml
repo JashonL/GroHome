@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_eeeeeee">
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--Guide-->
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideLeft15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/dp_10"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideRight15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/dp_10"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tvNameTitle"
+                app:barrierDirection="end" />
+            <!--房间名称-->
+            <View
+                android:id="@+id/viewName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/shape_corner_white"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvNameTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center_vertical"
+                android:text="@string/m187_room_name"
+                android:textColor="@color/color_text_33"
+                android:textSize="@dimen/size_content_sp_14"
+                app:layout_constraintBottom_toBottomOf="@+id/viewName"
+                app:layout_constraintLeft_toLeftOf="@+id/guideLeft15"
+                app:layout_constraintTop_toTopOf="@id/viewName" />
+
+            <EditText
+                android:id="@+id/etNameValue"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/m189_enter_room_name_tips"
+                android:paddingStart="@dimen/dp_10"
+                android:textColor="@color/color_text_33"
+                android:textSize="@dimen/size_content_sp_14"
+                app:layout_constraintBottom_toBottomOf="@+id/viewName"
+                app:layout_constraintLeft_toRightOf="@+id/barRoom"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/viewName" />
+
+            <View
+                android:id="@+id/viewSelect"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginTop="1dp"
+                app:layout_constraintTop_toBottomOf="@+id/viewName" />
+
+            <TextView
+                android:id="@+id/tvNoteSelect"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:text="@string/m190_select_cover_image"
+                android:textColor="@color/color_text_33"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewSelect" />
+
+            <ImageView
+                android:id="@+id/ivRoomImgSelect"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_125"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_14"
+                android:scaleType="fitXY"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvNoteSelect" />
+
+
+            <TextView
+                android:id="@+id/tv_defauted"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textSize="@dimen/sp_30"
+                android:textColor="@color/black_333333"
+                android:text="@string/m191_add_picture"
+                android:gravity="center"
+                android:background="@drawable/shape_white_corner_bg"
+                app:layout_constraintBottom_toBottomOf="@+id/ivRoomImgSelect"
+                app:layout_constraintLeft_toLeftOf="@+id/ivRoomImgSelect"
+                app:layout_constraintRight_toRightOf="@+id/ivRoomImgSelect"
+                app:layout_constraintTop_toTopOf="@+id/ivRoomImgSelect" />
+
+
+            <View
+                android:id="@+id/viewImg2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginTop="1dp"
+                app:layout_constraintTop_toBottomOf="@+id/ivRoomImgSelect" />
+
+            <TextView
+                android:id="@+id/tvNote1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_42"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:text="@string/m192_default_picture"
+                android:textColor="@color/color_text_66"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewImg2" />
+
+            <ImageView
+                android:id="@+id/ivRoomImg1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_125"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_14"
+                android:scaleType="fitXY"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvNote1" />
+
+
+            <View
+                android:id="@+id/viewImg3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginTop="1dp"
+                app:layout_constraintTop_toBottomOf="@+id/ivRoomImg1" />
+
+            <TextView
+                android:id="@+id/tvNote2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_42"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:text="@string/m192_default_picture"
+                android:textColor="@color/color_text_66"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewImg3" />
+
+            <ImageView
+                android:id="@+id/ivRoomImg2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_125"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_14"
+                android:scaleType="fitXY"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvNote2" />
+
+
+            <View
+                android:id="@+id/viewImg4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginTop="1dp"
+                app:layout_constraintTop_toBottomOf="@+id/ivRoomImg2" />
+
+            <TextView
+                android:id="@+id/tvNote3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_42"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:text="@string/m192_default_picture"
+                android:textColor="@color/color_text_66"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewImg4" />
+
+            <ImageView
+                android:id="@+id/ivRoomImg3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_125"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_14"
+                android:scaleType="fitXY"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvNote3" />
+
+
+            <View
+                android:id="@+id/viewImg5"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_5"
+                app:layout_constraintTop_toBottomOf="@+id/ivRoomImg3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

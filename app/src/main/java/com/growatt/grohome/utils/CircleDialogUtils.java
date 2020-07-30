@@ -124,4 +124,24 @@ public class CircleDialogUtils {
                 .show(activity.getSupportFragmentManager());
         return flashModeDialog;
     }
+
+
+
+    /**
+     * 场景颜色闪烁模式弹框
+     */
+    public static DialogFragment showTakePictureDialog(FragmentActivity activity, List<String>modes,OnLvItemClickListener listener) {
+        DialogFragment takePictureDialog = new CircleDialog.Builder()
+                .setTitle(activity.getString(R.string.m80_selection))
+                .setItems(modes,listener)
+                .setGravity(Gravity.BOTTOM)
+                .setNegative(activity.getString(R.string.m89_cancel), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .show(activity.getSupportFragmentManager());
+        return takePictureDialog;
+    }
 }

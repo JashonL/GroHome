@@ -22,6 +22,9 @@ public class DevicePanel extends BaseDevice {
             case 1:
                 res = R.drawable.device_card_panel_off;
                 break;
+            case 2:
+                res=R.drawable.device_s_panel;
+                break;
             default:
                 res = R.drawable.device_real_panel;
 

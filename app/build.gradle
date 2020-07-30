@@ -111,5 +111,8 @@ dependencies {
 
     //PickerView
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
+    //汉字转拼音
     implementation files('libs/pinyin4j-2.5.0.jar')
+    //图片裁剪
+    implementation 'com.github.yalantis:ucrop:2.2.1'
 }

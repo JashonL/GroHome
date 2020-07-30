@@ -1,7 +1,5 @@
 package com.growatt.grohome.bean;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -22,7 +20,7 @@ public class HomeRoomBean {
     //房间图片
     private String cdn;
     //房间设备
-    private List<DeviceBean>devList;
+    private List<GroDeviceBean>devList;
 
     public boolean isSelect() {
         return isSelect;
@@ -64,11 +62,11 @@ public class HomeRoomBean {
         this.cdn = cdn;
     }
 
-    public List<DeviceBean> getDevList() {
+    public List<GroDeviceBean> getDevList() {
         return devList;
     }
 
-    public void setDevList(List<DeviceBean> devList) {
+    public void setDevList(List<GroDeviceBean> devList) {
         this.devList = devList;
     }
 }

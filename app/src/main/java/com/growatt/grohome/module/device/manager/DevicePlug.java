@@ -25,7 +25,9 @@ public class DevicePlug extends BaseDevice {
             case 1:
                 res= R.drawable.device_card_plug_off;
                 break;
-
+            case 2:
+                res=R.drawable.device_s_plug;
+                break;
             default:
                 res=R.drawable.device_real_plug;
                 break;

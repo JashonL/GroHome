@@ -2,6 +2,8 @@ package com.growatt.grohome.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
@@ -261,4 +263,23 @@ public class CommentUtils {
         if (imm != null) imm.showSoftInput(v, 0);
     }
 
+
+
+    /**
+     * [获取应用程序包名称信息]
+     *
+     * @param context
+     * @return 当前应用的包名
+     */
+    public static String getPackageName(Context context) {
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(
+                    context.getPackageName(), 0);
+            return packageInfo.packageName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

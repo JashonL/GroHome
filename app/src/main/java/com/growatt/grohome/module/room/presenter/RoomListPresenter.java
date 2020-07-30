@@ -1,16 +1,15 @@
-package com.growatt.grohome.module.home.presenter;
+package com.growatt.grohome.module.room.presenter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.growatt.grohome.R;
-import com.growatt.grohome.app.App;
-import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
-import com.growatt.grohome.bean.HomeDeviceBean;
+import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.BulbActivity;
@@ -19,12 +18,11 @@ import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePlug;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
-import com.growatt.grohome.module.room.RoomListActivity;
-import com.growatt.grohome.module.home.view.IGrohomeView;
+import com.growatt.grohome.module.room.RoomAddActivity;
+import com.growatt.grohome.module.room.view.IRoomListView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
-import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IDevListener;
@@ -42,126 +40,53 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-
-public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDevListener, SendDpListener {
-
+public class RoomListPresenter extends BasePresenter<IRoomListView> implements IDevListener, SendDpListener {
     /*用来操作涂鸦设备的集合*/
     private Map<String, ITuyaDevice> mTuyaDevices = new HashMap<>();
+
     private DeviceBean deviceBean;
 
-
-    public GrohomePresenter(IGrohomeView baseView) {
+    public RoomListPresenter(IRoomListView baseView) {
         super(baseView);
     }
 
-    public GrohomePresenter(Context context, IGrohomeView baseView) {
+    public RoomListPresenter(Context context, IRoomListView baseView) {
         super(context, baseView);
     }
 
-
-    public void getAlldevice() throws Exception {
-        JSONObject requestJson = new JSONObject();
-        requestJson.put("userId", App.getUserBean().accountName);
-        requestJson.put("cmd", "devList");
-        requestJson.put("userServerId", "0");
-        requestJson.put("userServerUrl", "http://server-cn.growatt.com/");
-        requestJson.put("lan", String.valueOf(CommentUtils.getLanguage()));
-        String s = requestJson.toString();
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.getAllDevice(body), new BaseObserver<String>(baseView, true) {
-            @Override
-            public void onSuccess(String bean) {
-                Log.i(TuyaApiUtils.TUYA_TAG, "请求成功：" + bean);
-                JSONObject obj = null;
-                try {
-                    obj = new JSONObject(bean);
-                    int code = obj.getInt("code");
-                    if (0 == code) {
-                        HomeDeviceBean infoData = new Gson().fromJson(bean, HomeDeviceBean.class);
-                        baseView.setAllDeviceSuccess(infoData);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-            @Override
-            public void onError(String msg) {
-
-            }
-        });
-
-    }
-
     /**
-     * 获取房间列表
-     *
-     * @throws Exception
+     * 添加房间
      */
-    public void getRoomList() throws Exception {
-        JSONObject requestJson = new JSONObject();
-        requestJson.put("userId", App.getUserBean().accountName);
-        requestJson.put("cmd", "roomList");
-        requestJson.put("lan", CommentUtils.getLanguage());
-        String s = requestJson.toString();
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.getRoomList(body), new BaseObserver<String>(baseView, true) {
-            @Override
-            public void onSuccess(String bean) {
-                Log.i(TuyaApiUtils.TUYA_TAG, "请求成功：" + bean);
-                try {
-                    JSONObject obj = new JSONObject(bean);
-                    int code = obj.getInt("code");
-                    if (code == 0) {
-                        JSONArray dataArray = obj.getJSONArray("data");
-                        List<HomeRoomBean> roomList = new ArrayList<>();
-                        for (int i = 0; i < dataArray.length(); i++) {
-                            JSONObject jsonObject = dataArray.getJSONObject(i);
-                            HomeRoomBean roomBean = new Gson().fromJson(jsonObject.toString(), HomeRoomBean.class);
-                            roomList.add(roomBean);
-                        }
-                        baseView.setRoomListSuccess(roomList);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-            @Override
-            public void onError(String msg) {
-
-            }
-        });
-
-    }
-
-
-
-
-    /**
-     * 跳转到设备操作页面
-     */
-    public void jumpToRoom(String roomList,int position) {
-        Intent intent = new Intent(context, RoomListActivity.class);
-        intent.putExtra(GlobalConstant.ROOM_LIST,roomList);
-        intent.putExtra(GlobalConstant.ROOM_POSITION,position);
+    public void addRoom() {
+        Intent intent = new Intent(context, RoomAddActivity.class);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
+    public void parserData() {
+        String roomDataJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_LIST);
+        int position = ((Activity) context).getIntent().getIntExtra(GlobalConstant.ROOM_POSITION, 0);
+        List<HomeRoomBean> roomList = new ArrayList<>();
+        if (!TextUtils.isEmpty(roomDataJson)) {
+            try {
+                JSONArray jsonArray = new JSONArray(roomDataJson);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    HomeRoomBean roomBean = new Gson().fromJson(jsonObject.toString(), HomeRoomBean.class);
+                    roomList.add(roomBean);
+                }
+                baseView.updata(roomList, position);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-
+    }
 
     /**
      * 跳转到设备操作页面
      */
-    public void jumpTodevice(HomeDeviceBean.DataBean bean) {
+    public void jumpTodevice(GroDeviceBean bean) {
         String devType = bean.getDevType();
         Class clazz = null;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {
@@ -170,10 +95,10 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
             clazz = BulbActivity.class;
         }
         if (clazz == null) return;
-        Intent intentThermostat = new Intent(context, clazz);
-        intentThermostat.putExtra(GlobalConstant.DEVICE_ID, bean.getDevId());
-        intentThermostat.putExtra(GlobalConstant.DEVICE_NAME, bean.getName());
-        ActivityUtils.startActivity((Activity) context, intentThermostat, ActivityUtils.ANIMATE_FORWARD, false);
+        Intent intent = new Intent(context, clazz);
+        intent.putExtra(GlobalConstant.DEVICE_ID, bean.getDevId());
+        intent.putExtra(GlobalConstant.DEVICE_NAME, bean.getName());
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
@@ -309,21 +234,31 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     }
 
     @Override
+    public void sendCommandSucces() {
+
+    }
+
+    @Override
+    public void sendCommandError(String code, String error) {
+
+    }
+
+    @Override
     public void onDpUpdate(String devId, String dpStr) {
         Log.i(TuyaApiUtils.TUYA_TAG, "deviceId:" + devId + "responed:" + dpStr + "time：" + System.currentTimeMillis());
         try {
-            List<HomeDeviceBean.DataBean> deviceList = baseView.getDeviceList();
-            HomeDeviceBean.DataBean allDeviceBean = new HomeDeviceBean.DataBean();
+            List<GroDeviceBean> data = baseView.getData();
+            GroDeviceBean allDeviceBean = new GroDeviceBean();
             allDeviceBean.setDevId(devId);
-            int allDevice = deviceList.indexOf(allDeviceBean);
+            int allDevice = data.indexOf(allDeviceBean);
             if (allDevice != -1) {
-                String devType = deviceList.get(allDevice).getDevType();
+                String devType = data.get(allDevice).getDevType();
                 JSONObject object = new JSONObject(dpStr);
                 Iterator iterator = object.keys();
                 switch (devType) {
                     case DeviceTypeConstant.TYPE_PANELSWITCH:
                         try {
-                            int road = deviceList.get(allDevice).getRoad();
+                            int road = data.get(allDevice).getRoad();
                             while (iterator.hasNext()) {
                                 String key = (String) iterator.next();
                                 String value = String.valueOf(object.optBoolean(key));
@@ -433,15 +368,5 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     public void onDestroy() {
         super.onDestroy();
         destroyDevices();
-    }
-
-    @Override
-    public void sendCommandSucces() {
-
-    }
-
-    @Override
-    public void sendCommandError(String code, String error) {
-
     }
 }

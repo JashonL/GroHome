@@ -2,7 +2,7 @@ package com.growatt.grohome.bean;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
-public class DeviceBean implements MultiItemEntity {
+public class GroDeviceBean implements MultiItemEntity {
 
     /**
      * devId : 012003622c3ae8410c14
@@ -62,10 +62,10 @@ public class DeviceBean implements MultiItemEntity {
 
     private SchemaDpdBean  dpd;
 
-    public DeviceBean() {
+    public GroDeviceBean() {
     }
 
-    public DeviceBean(String devId) {
+    public GroDeviceBean(String devId) {
         this.devId = devId;
     }
 
@@ -325,8 +325,8 @@ public class DeviceBean implements MultiItemEntity {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof DeviceBean)) throw new ClassCastException("类型错误");
-        DeviceBean p = (DeviceBean) obj;
+        if (!(obj instanceof GroDeviceBean)) throw new ClassCastException("类型错误");
+        GroDeviceBean p = (GroDeviceBean) obj;
         return this.devId.equals(p.devId);
     }
 

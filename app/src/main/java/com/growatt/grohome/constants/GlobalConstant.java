@@ -14,6 +14,8 @@ public class GlobalConstant {
     public static final String DEVICE_ID="device_id";
     public static final String DEVICE_NAME="device_name";
     public static final String COUNTRY="country";
+    public static final String ROOM_LIST="room_list";
+    public static final String ROOM_POSITION="room_position";
 
     //************shareperferen保存常量***************/
     public static final String SP_USER_NAME="user_name";

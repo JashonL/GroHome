@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.GroHomeDevGridAdapter;
 import com.growatt.grohome.adapter.GroHomeDevLineAdapter;
@@ -256,7 +257,8 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
                 changeLayout();
                 break;
             case R.id.cl_all_room:
-                presenter.jumpToRoom();
+                String roomlist = new Gson().toJson(mRoomAdapter.getData());
+                presenter.jumpToRoom(roomlist,0);
                 break;
         }
     }

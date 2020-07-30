@@ -26,6 +26,9 @@ public class DeviceThermostat extends BaseDevice {
             case 1:
                 res = R.drawable.device_card_thermostat_off;
                 break;
+            case 2:
+                res=R.drawable.device_s_thermostat;
+                break;
             default:
                 res = R.drawable.device_real_thermostat;
 
