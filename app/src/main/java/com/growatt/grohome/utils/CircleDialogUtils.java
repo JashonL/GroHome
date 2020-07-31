@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import com.growatt.grohome.R;
 import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.view.listener.OnCreateBodyViewListener;
+import com.mylhyl.circledialog.view.listener.OnInputClickListener;
 import com.mylhyl.circledialog.view.listener.OnLvItemClickListener;
 
 import java.util.List;
@@ -144,4 +145,50 @@ public class CircleDialogUtils {
                 .show(activity.getSupportFragmentManager());
         return takePictureDialog;
     }
+
+
+    /**
+     * 公共输入框
+     * @param activity
+     * @return
+     */
+    public static DialogFragment showCommentInputDialog(FragmentActivity activity,String title,String text,String hint,boolean showKeyboard,OnInputClickListener listener){
+        DialogFragment inputDialog = new CircleDialog.Builder()
+                .setTitle(title)
+                .setInputText(text)
+                .setGravity(Gravity.CENTER)
+                .setInputShowKeyboard(true)
+                .setPositiveInput(activity.getString(R.string.m90_ok), listener)
+                .setNegative(activity.getString(R.string.m89_cancel), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .show(activity.getSupportFragmentManager());
+        return inputDialog;
+    }
+
+
+    /**
+     * 公共提示框
+     * @param activity
+     * @return
+     */
+    public static DialogFragment showCommentDialog(FragmentActivity activity,String title,String text,View.OnClickListener listener){
+        DialogFragment inputDialog = new CircleDialog.Builder()
+                .setTitle(title)
+                .setText(text)
+                .setGravity(Gravity.CENTER)
+                .setPositive(activity.getString(R.string.m90_ok),listener)
+                .setNegative(activity.getString(R.string.m89_cancel), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .show(activity.getSupportFragmentManager());
+        return inputDialog;
+    }
+
 }

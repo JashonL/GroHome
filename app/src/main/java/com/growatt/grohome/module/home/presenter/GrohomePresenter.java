@@ -109,7 +109,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         requestJson.put("lan", CommentUtils.getLanguage());
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.getRoomList(body), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.roomRequest(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
                 Log.i(TuyaApiUtils.TUYA_TAG, "请求成功：" + bean);

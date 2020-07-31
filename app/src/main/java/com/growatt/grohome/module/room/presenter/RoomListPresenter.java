@@ -19,6 +19,7 @@ import com.growatt.grohome.module.device.manager.DevicePlug;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.room.RoomAddActivity;
+import com.growatt.grohome.module.room.RoomEditActivity;
 import com.growatt.grohome.module.room.view.IRoomListView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
@@ -46,12 +47,18 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
 
     private DeviceBean deviceBean;
 
+    private HomeRoomBean mCurrenRoom;
+
     public RoomListPresenter(IRoomListView baseView) {
         super(baseView);
     }
 
     public RoomListPresenter(Context context, IRoomListView baseView) {
         super(context, baseView);
+    }
+
+    public void setmCurrenRoom(HomeRoomBean mCurrenRoom) {
+        this.mCurrenRoom = mCurrenRoom;
     }
 
     /**
@@ -100,6 +107,20 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
         intent.putExtra(GlobalConstant.DEVICE_NAME, bean.getName());
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
+
+
+
+    /**
+     * 跳转到设备操作页面
+     */
+    public void jumpEditRoom() {
+        if (mCurrenRoom==null)return;
+        String roomJson = new Gson().toJson(mCurrenRoom);
+        Intent intent = new Intent(context, RoomEditActivity.class);
+        intent.putExtra(GlobalConstant.ROOM_BEAN, roomJson);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
 
 
     /**

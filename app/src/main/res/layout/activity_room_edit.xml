@@ -1,168 +1,160 @@
-<!--
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_eeeeeee">
-    <include layout="@layout/toobar_title" android:id="@+id/headerView"/>
-    &lt;!&ndash;Guide&ndash;&gt;
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+    <!--Guide-->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideLeft15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintGuide_begin="@dimen/dp_7"
-        />
+        app:layout_constraintLeft_toLeftOf="parent" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideRight15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintGuide_end="@dimen/dp_7"
-        />
-    &lt;!&ndash;房间名称&ndash;&gt;
+        app:layout_constraintRight_toRightOf="parent" />
+    <!--房间名称-->
     <View
         android:id="@+id/viewName"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/xa90"
-        app:layout_constraintTop_toBottomOf="@+id/headerView"
-        android:layout_marginTop="@dimen/xa20"
-        android:background="@drawable/touch_bg"
-        />
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
     <TextView
         android:id="@+id/tvNameTitle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:text="@string/m房间名称"
         android:gravity="center_vertical"
-        android:textColor="@color/note_bg_white"
-        app:layout_constraintLeft_toLeftOf="@+id/guideLeft15"
-        app:layout_constraintTop_toTopOf="@id/viewName"
+        android:text="@string/m187_room_name"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
         app:layout_constraintBottom_toBottomOf="@+id/viewName"
+        app:layout_constraintLeft_toLeftOf="@+id/guideLeft15"
         app:layout_constraintRight_toLeftOf="@+id/tvNameValue"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:textSize="@dimen/sizea_content"
-        />
+        app:layout_constraintTop_toTopOf="@id/viewName"
+        app:layout_constraintVertical_chainStyle="packed" />
+
     <TextView
         android:id="@+id/tvNameValue"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center_vertical|right"
-        android:textColor="@color/title_bg_white"
-        app:layout_constraintLeft_toRightOf="@+id/tvNameTitle"
-        app:layout_constraintTop_toTopOf="@id/viewName"
-        app:layout_constraintBottom_toBottomOf="@+id/viewName"
-        app:layout_constraintRight_toLeftOf="@+id/ivName"
-        android:layout_marginRight="@dimen/xa20"
-        android:layout_marginLeft="@dimen/xa10"
-        android:lines="1"
+        android:layout_marginStart="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_10"
         android:ellipsize="end"
-        android:textSize="@dimen/sizea_content"
-        />
+        android:gravity="center_vertical|end"
+        android:lines="1"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/viewName"
+        app:layout_constraintLeft_toRightOf="@+id/tvNameTitle"
+        app:layout_constraintRight_toLeftOf="@+id/ivName"
+        app:layout_constraintTop_toTopOf="@id/viewName" />
+
     <ImageView
         android:id="@+id/ivName"
-        android:layout_width="@dimen/xa12"
+        android:layout_width="@dimen/dp_6"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/viewName"
+        android:src="@drawable/net_more"
         app:layout_constraintBottom_toBottomOf="@+id/viewName"
         app:layout_constraintRight_toRightOf="@+id/guideRight15"
-        android:src="@drawable/max_right"
-        />
-    &lt;!&ndash;房间封面图&ndash;&gt;
+        app:layout_constraintTop_toTopOf="@id/viewName" />
+    <!--房间封面图-->
     <View
         android:id="@+id/viewImg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/xa90"
-        app:layout_constraintTop_toBottomOf="@+id/viewName"
+        android:layout_height="@dimen/dp_45"
         android:layout_marginTop="1dp"
-        android:background="@drawable/touch_bg"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/viewName" />
+
     <TextView
         android:id="@+id/tvImgTitle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:text="@string/m房间封面图"
         android:gravity="center_vertical"
-        android:textColor="@color/note_bg_white"
-        app:layout_constraintLeft_toLeftOf="@+id/guideLeft15"
-        app:layout_constraintTop_toTopOf="@id/viewImg"
+        android:text="@string/m204_room_picture"
+        android:textColor="@color/color_text_99"
+        android:textSize="@dimen/size_content_sp_14"
         app:layout_constraintBottom_toBottomOf="@+id/viewImg"
+        app:layout_constraintLeft_toLeftOf="@+id/guideLeft15"
         app:layout_constraintRight_toLeftOf="@+id/tvImgValue"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:textSize="@dimen/sizea_content"
-        />
+        app:layout_constraintTop_toTopOf="@id/viewImg"
+        app:layout_constraintVertical_chainStyle="packed" />
+
     <TextView
         android:id="@+id/tvImgValue"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center_vertical|right"
-        android:textColor="@color/title_bg_white"
-        app:layout_constraintLeft_toRightOf="@+id/tvImgTitle"
-        app:layout_constraintTop_toTopOf="@id/viewImg"
-        app:layout_constraintBottom_toBottomOf="@+id/viewImg"
-        app:layout_constraintRight_toLeftOf="@+id/ivName"
-        android:layout_marginRight="@dimen/xa20"
-        android:layout_marginLeft="@dimen/xa10"
-        android:lines="1"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginRight="@dimen/dp_10"
         android:ellipsize="end"
-        android:textSize="@dimen/sizea_content"
-        />
+        android:gravity="center_vertical|right"
+        android:lines="1"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/viewImg"
+        app:layout_constraintLeft_toRightOf="@+id/tvImgTitle"
+        app:layout_constraintRight_toLeftOf="@+id/ivName"
+        app:layout_constraintTop_toTopOf="@id/viewImg" />
+
     <ImageView
-        android:layout_width="@dimen/xa12"
+        android:layout_width="@dimen/dp_5"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/viewImg"
+        android:src="@drawable/net_more"
         app:layout_constraintBottom_toBottomOf="@+id/viewImg"
         app:layout_constraintRight_toRightOf="@+id/guideRight15"
-        android:src="@drawable/max_right"
-        />
-    &lt;!&ndash;设备&ndash;&gt;
+        app:layout_constraintTop_toTopOf="@id/viewImg" />
+    <!--设备-->
     <TextView
         android:id="@+id/tvDeviceTitle"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/xa80"
-        android:text="@string/m全部设备"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_10"
         android:gravity="center_vertical"
-        android:textColor="@color/note_bg_white"
+        android:text="@string/m205_all_device"
+        android:textColor="@color/color_text_99"
+        android:textSize="@dimen/size_content_sp_14"
         app:layout_constraintLeft_toLeftOf="@+id/guideLeft15"
-        app:layout_constraintTop_toBottomOf="@+id/viewImg"
-        android:textSize="@dimen/sizea_content"
-        android:layout_marginTop="@dimen/xa20"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/viewImg" />
+
     <ImageView
         android:id="@+id/ivAddDevice"
-        android:layout_width="@dimen/xa55"
+        android:layout_width="@dimen/dp_25"
         android:layout_height="0dp"
-        app:layout_constraintRight_toRightOf="@+id/guideRight15"
-        app:layout_constraintTop_toTopOf="@id/tvDeviceTitle"
+        android:padding="@dimen/dp_5"
+        android:src="@drawable/icon_home_add"
         app:layout_constraintBottom_toBottomOf="@+id/tvDeviceTitle"
-        android:src="@drawable/oss_add"
-        android:padding="@dimen/xa10"
-        />
-    <android.support.v7.widget.RecyclerView
+        app:layout_constraintRight_toRightOf="@+id/guideRight15"
+        app:layout_constraintTop_toTopOf="@id/tvDeviceTitle" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDevice"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvDeviceTitle"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/btnDelete"
-        android:background="@color/white1"
-        app:layout_constraintVertical_bias="0"
-        android:layout_marginBottom="@dimen/xa20"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/tvDeviceTitle"
+        app:layout_constraintVertical_bias="0" />
 
     <Button
         android:id="@+id/btnDelete"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/xa90"
-        android:layout_marginBottom="@dimen/xa40"
-        android:background="@drawable/touch_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:textColor="@color/red"
-        android:text="@string/MessagesActivity_delete"
-        />
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="@drawable/selector_button_rect"
+        android:text="@string/m206_delete"
+        android:textColor="@color/color_theme_green"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
--->

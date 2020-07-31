@@ -12,12 +12,15 @@ import android.widget.AdapterView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.gson.Gson;
 import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
-import com.growatt.grohome.module.room.view.IRoomAddView;
+import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.module.room.view.IRoomImageView;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.FileUtils;
@@ -27,13 +30,16 @@ import com.growatt.grohome.utils.PhotoUtil;
 import com.mylhyl.circledialog.view.listener.OnLvItemClickListener;
 import com.yalantis.ucrop.UCrop;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -42,49 +48,58 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import static com.growatt.grohome.utils.CommentUtils.getLanguage;
 
-public class RoomAddPresenter extends BasePresenter<IRoomAddView> {
-    //原始数据uri:需要FileProvide
-    private Uri imageUri;
-    //裁剪后uri：不需要FileProvide
-    private Uri cropImageUri;
-    //添加房间时的图片路径:第一张图"1->现有资源/drawable" 2->drawable资源
-//    private Bitmap bitmap;
-    private String imagePath;
+public class RoomImagePresenter extends BasePresenter<IRoomImageView> {
 
     /**
      * 相册图片相关
      */
     private static final int CODE_GALLERY_REQUEST = 0xa0;
     private static final int CODE_CAMERA_REQUEST = 0xa1;
+    //原始数据uri:需要FileProvide
+    private Uri imageUri;
+    //裁剪后uri：不需要FileProvide
+    private Uri cropImageUri;
+    private String imagePath;
+
+    private HomeRoomBean mRoomBean;
 
 
-    public RoomAddPresenter(IRoomAddView baseView) {
+    public RoomImagePresenter(IRoomImageView baseView) {
         super(baseView);
     }
 
-    public RoomAddPresenter(Context context, IRoomAddView baseView) {
+    public RoomImagePresenter(Context context, IRoomImageView baseView) {
         super(context, baseView);
         checkPermission();
+        String roomJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_BEAN);
+        if (!TextUtils.isEmpty(roomJson)) {
+            this.mRoomBean = new Gson().fromJson(roomJson,HomeRoomBean.class);
+             baseView.setImage(mRoomBean.getCdn());
+        }
+
     }
 
 
     public void checkPermission(){
         //请求拍照权限
-        if (!EasyPermissions.hasPermissions(context,AllPermissionRequestCode.PERMISSION_CAMERA)) {
+        if (!EasyPermissions.hasPermissions(context, AllPermissionRequestCode.PERMISSION_CAMERA)) {
             EasyPermissions.requestPermissions((Activity) context, String.format("%s:%s",context.getString(R.string.m93_request_permission), context.getString(R.string.m197_camera_or_storage)), AllPermissionRequestCode.PERMISSION_CAMERA_CODE, AllPermissionRequestCode.PERMISSION_CAMERA);
         }
     }
+
+
 
 
     /**
      * 切换图片调用相册或相机弹框
      */
     public void changeImgDialog() {
-        List<String>photos=new ArrayList<>();
+        List<String> photos=new ArrayList<>();
         photos.add(context.getString(R.string.m194_take_photo));
         photos.add(context.getString(R.string.m195_choose_photos));
-         CircleDialogUtils.showTakePictureDialog((FragmentActivity) context, photos, new OnLvItemClickListener() {
+        CircleDialogUtils.showTakePictureDialog((FragmentActivity) context, photos, new OnLvItemClickListener() {
             @Override
             public boolean onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -115,6 +130,48 @@ public class RoomAddPresenter extends BasePresenter<IRoomAddView> {
     public void selectPicture() {
         PhotoUtil.openPic((FragmentActivity) context, CODE_GALLERY_REQUEST);
     }
+
+
+    /**
+     * 联网更新图片
+     *
+     */
+    public void updateImg() {
+        if (TextUtils.isEmpty(imagePath)) {
+            MyToastUtils.toast(R.string.m202_add_picture);
+            return;
+        }
+        if (mRoomBean == null || mRoomBean.getCid() == -1) return;
+        File imageFile=new File(imagePath);
+        RequestBody requestBody =new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("roomId", String.valueOf(mRoomBean.getCid())).
+                addFormDataPart("lan", String.valueOf(CommentUtils.getLanguage())).
+                addFormDataPart("imagefile",imageFile.getName(),RequestBody.create(MediaType.parse("image/*"),imageFile)).build();
+        addDisposable(apiServer.updateImage(requestBody), new BaseObserver<String>(baseView,true) {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONObject obj = new JSONObject(result);
+                    int code = obj.getInt("code");
+                    String data =obj.getString("data");
+                    if (code == 0) {
+                        baseView.updateImageSuccess();
+                        File file = new File(imagePath);
+                        if (file.exists()) file.delete();
+                    }else {
+                        baseView.updateImageFail(data);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+    }
+
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) throws IOException {
@@ -182,49 +239,6 @@ public class RoomAddPresenter extends BasePresenter<IRoomAddView> {
             pictureFile.delete();
         }
         imagePath= FileUtils.fileOut(is,pictureFile);
-    }
-
-    /**
-     * 添加房间到服务器
-     */
-
-    public void addRoom(String roomName) {
-        if (TextUtils.isEmpty(imagePath)){
-            MyToastUtils.toast(R.string.m202_add_picture);
-            return;
-        }
-        if (TextUtils.isEmpty(roomName)) {
-            MyToastUtils.toast(R.string.m203_enter_room_name);
-            return;
-        }
-        File imageFile=new File(imagePath);
-        RequestBody requestBody =new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("roomName",roomName).
-                addFormDataPart("userId",App.getUserBean().accountName).addFormDataPart("lan", String.valueOf(CommentUtils.getLanguage())).
-                addFormDataPart("imagefile",imageFile.getName(),RequestBody.create(MediaType.parse("image/*"),imageFile)).build();
-        addDisposable(apiServer.createRoom(requestBody), new BaseObserver<String>(baseView,true) {
-            @Override
-            public void onSuccess(String result) {
-                try {
-                    JSONObject obj = new JSONObject(result);
-                    int code = obj.getInt("code");
-                    String data =obj.getString("data");
-                    if (code == 0) {
-                     baseView.createRoomSuccess();
-                        File file = new File(imagePath);
-                        if (file.exists()) file.delete();
-                    }else {
-                        baseView.createRoomFail(data);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(String msg) {
-
-            }
-        });
     }
 
 }

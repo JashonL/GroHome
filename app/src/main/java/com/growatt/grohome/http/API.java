@@ -113,12 +113,19 @@ public class API {
 
         //获取房间列表
         @POST("room/")
-        Observable<String> getRoomList(@Body RequestBody body);
+        Observable<String> roomRequest(@Body RequestBody body);
 
-        @POST("/room/addRoom")
+        @POST("room/addRoom")
         Observable<String>createRoom(@Body RequestBody body);
 
+        @POST("room/")
+        Observable<String> editRoomName(@Body RequestBody body);
 
+        @POST("room/updateImage")
+        Observable<String>updateImage(@Body RequestBody body);
+
+        @POST("tuya/removeDevice")
+        Observable<String>removeDevice(@Body RequestBody body);
     }
 
 }

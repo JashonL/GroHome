@@ -90,6 +90,10 @@
 
         <activity android:name=".module.room.RoomEditActivity"/>
 
+        <activity android:name=".module.room.RoomImageActivity"/>
+
+        <activity android:name=".module.room.RoomLineListActivity"/>
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

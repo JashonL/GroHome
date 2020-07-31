@@ -1,73 +1,86 @@
 package com.growatt.grohome.module.room;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.Guideline;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
-import com.growatt.grohome.module.room.presenter.RoomAddPresenter;
-import com.growatt.grohome.module.room.view.IRoomAddView;
+import com.growatt.grohome.module.room.presenter.RoomImagePresenter;
+import com.growatt.grohome.module.room.view.IRoomImageView;
 import com.growatt.grohome.utils.GlideUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements IRoomAddView,Toolbar.OnMenuItemClickListener {
+public class RoomImageActivity extends BaseActivity<RoomImagePresenter> implements IRoomImageView, Toolbar.OnMenuItemClickListener {
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.guideLeft15)
+    Guideline guideLeft15;
+    @BindView(R.id.guideRight15)
+    Guideline guideRight15;
+    @BindView(R.id.tvNoteSelect)
+    TextView tvNoteSelect;
     @BindView(R.id.ivRoomImgSelect)
     ImageView ivRoomImgSelect;
     @BindView(R.id.tv_defauted)
     TextView tvDefauted;
+    @BindView(R.id.viewImg2)
+    View viewImg2;
     @BindView(R.id.tvNote1)
     TextView tvNote1;
     @BindView(R.id.ivRoomImg1)
     ImageView ivRoomImg1;
+    @BindView(R.id.viewImg3)
+    View viewImg3;
     @BindView(R.id.tvNote2)
     TextView tvNote2;
     @BindView(R.id.ivRoomImg2)
     ImageView ivRoomImg2;
+    @BindView(R.id.viewImg4)
+    View viewImg4;
     @BindView(R.id.tvNote3)
     TextView tvNote3;
     @BindView(R.id.ivRoomImg3)
     ImageView ivRoomImg3;
-    @BindView(R.id.etNameValue)
-    EditText etNameValue;
+    @BindView(R.id.viewImg5)
+    View viewImg5;
 
     @Override
-    protected RoomAddPresenter createPresenter() {
-        return new RoomAddPresenter(this, this);
+    protected RoomImagePresenter createPresenter() {
+        return new RoomImagePresenter(this, this);
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_room_add;
+        return R.layout.activity_room_image;
     }
 
     @Override
     protected void initViews() {
-        tvTitle.setText(R.string.m193_add_room);
+        //头部
+        tvTitle.setText(R.string.m190_select_cover_image);
         toolbar.setNavigationIcon(R.drawable.icon_return);
         toolbar.inflateMenu(R.menu.menu_grohome);
         toolbar.setOnMenuItemClickListener(this);
+
         String default1 = getString(R.string.m192_default_picture) + "1";
         tvNote1.setText(default1);
         String default2 = getString(R.string.m192_default_picture) + "2";
@@ -84,7 +97,6 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
 
     }
 
-
     @Override
     protected void initListener() {
         super.initListener();
@@ -92,10 +104,64 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
     }
 
 
-    @OnClick({R.id.ivRoomImgSelect, R.id.ivRoomImg1, R.id.ivRoomImg2, R.id.ivRoomImg3})
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+           /*     View bodyView=LayoutInflater.from(getActivity()).inflate(R.layout.bulb_dialog_white_mode,null,false);
+                CircleDialogUtils.showBulbWhiteMode(bodyView, GrohomeFragment.this.getFragmentManager(), view -> {
+
+                });*/
+                presenter.updateImg();
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void getPhotoSuccess(String path) {
+        GlideUtils.showImageAct(this, path, ivRoomImgSelect);
+        tvDefauted.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void getPhotoFail(String message) {
+        if (TextUtils.isEmpty(message)){
+            MyToastUtils.toast(getString(R.string.m201_fail));
+        }else {
+            MyToastUtils.toast(message);
+
+        }
+    }
+
+    @Override
+    public void setImage(String path) {
+        GlideUtils.showImageAct(this, R.drawable.home_keting, R.drawable.home_keting, path, ivRoomImgSelect);
+    }
+
+    @Override
+    public void updateImageSuccess() {
+        finish();
+    }
+
+    @Override
+    public void updateImageFail(String msg) {
+        MyToastUtils.toast(msg);
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        super.onPermissionsDenied(requestCode, perms);
+        finish();
+    }
+
+
+
+    @OnClick({R.id.ivRoomImgSelect,R.id.ivRoomImg1, R.id.ivRoomImg2, R.id.ivRoomImg3,R.id.tv_defauted})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivRoomImgSelect:
+            case R.id.tv_defauted:
                 presenter.changeImgDialog();
                 break;
             case R.id.ivRoomImg1:
@@ -111,33 +177,12 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
     }
 
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add:
-           /*     View bodyView=LayoutInflater.from(getActivity()).inflate(R.layout.bulb_dialog_white_mode,null,false);
-                CircleDialogUtils.showBulbWhiteMode(bodyView, GrohomeFragment.this.getFragmentManager(), view -> {
-
-                });*/
-
-                presenter.addRoom(etNameValue.getText().toString());
-                break;
-        }
-        return true;
-    }
-
-
     private void setImageView(int res){
         tvDefauted.setVisibility(View.GONE);
         GlideUtils.showImageAct(this, res, res, res, ivRoomImgSelect);
         presenter.savePic(res);
     }
 
- /*   @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        finish();
-    }
-*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode,
@@ -148,39 +193,5 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        super.onPermissionsDenied(requestCode, perms);
-        finish();
-    }
-
-    @Override
-    public void getPhotoSuccess(String path) {
-        GlideUtils.showImageAct(this, path, ivRoomImgSelect);
-        tvDefauted.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void getPhotoFail(String meesage) {
-        if (TextUtils.isEmpty(meesage)){
-            MyToastUtils.toast(getString(R.string.m201_fail));
-        }else {
-            MyToastUtils.toast(meesage);
-
-        }
-    }
-
-    @Override
-    public void createRoomSuccess() {
-        MyToastUtils.toast(R.string.m200_success);
-        finish();
-    }
-
-    @Override
-    public void createRoomFail(String msg) {
-        MyToastUtils.toast(msg);
     }
 }

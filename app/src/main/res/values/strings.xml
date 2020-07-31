@@ -227,6 +227,14 @@
     <string name="m200_success">Success</string>
     <string name="m201_fail">Fail</string>
     <string name="m202_add_picture">Please add a picture</string>
-    <string name="m203_room_name">Please enter a room name</string>
+    <string name="m203_enter_room_name">Please enter a room name</string>
+
+    <string name="m204_room_picture">Room picture</string>
+    <string name="m205_all_device">All device</string>
+    <string name="m206_delete">Delete</string>
+    <string name="m207_transfer">Transfer</string>
+    <string name="m208_note">Note</string>
+    <string name="m209_delete_room">Whether to delete the room</string>
+    <string name="m210_delete_device">Delete device</string>
 
 </resources>

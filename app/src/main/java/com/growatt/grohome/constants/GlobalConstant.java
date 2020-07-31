@@ -13,9 +13,16 @@ public class GlobalConstant {
     //*********************Activity跳转传值*********************
     public static final String DEVICE_ID="device_id";
     public static final String DEVICE_NAME="device_name";
+    public static final String DEVICE_TYPE="device_type";
     public static final String COUNTRY="country";
     public static final String ROOM_LIST="room_list";
     public static final String ROOM_POSITION="room_position";
+    public static final String ROOM_BEAN="room_bean";
+    public static final String ROOM_ID="room_id";
+    public static final String ROOM_NAME="room_name";
+    public static final String ACITION_DEVICE_TRANSFER="device_transfer";
+    public static final String ACITION_KEY="action_key";
+
 
     //************shareperferen保存常量***************/
     public static final String SP_USER_NAME="user_name";

@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class RoomListActivity extends BaseActivity<RoomListPresenter> implements IRoomListView, Toolbar.OnMenuItemClickListener, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener, TabLayout.OnTabSelectedListener {
     @BindView(R.id.tv_title)
@@ -160,6 +161,7 @@ public class RoomListActivity extends BaseActivity<RoomListPresenter> implements
     public void setSelected(int position) {
         if (mRoomList != null && mRoomList.size() > position) {
             HomeRoomBean roomBean = mRoomList.get(position);//当前选中的房间
+            presenter.setmCurrenRoom(roomBean);
             GlideUtils.showImageAct(this, roomBean.getCdn(), ivRoomPic);
             //设置设备列表
             List<GroDeviceBean> devList = roomBean.getDevList();
@@ -214,5 +216,16 @@ public class RoomListActivity extends BaseActivity<RoomListPresenter> implements
     protected void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
+    }
+
+
+
+    @OnClick({R.id.iv_pic_edit})
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.iv_pic_edit:
+                presenter.jumpEditRoom();
+                break;
+        }
     }
 }
