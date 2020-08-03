@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.HomeDeviceBean;
 import com.growatt.grohome.module.scenes.presenter.SceneTaskPrensenter;
@@ -21,7 +22,7 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_scene_task_setting;
     }
 
     @Override

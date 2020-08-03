@@ -76,7 +76,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         mToolBar = null;
     }
 
-    private void initListener() {
+    public void initListener() {
     }
 
 

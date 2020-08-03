@@ -243,5 +243,29 @@
     <string name="m213_execution_task">Execution task</string>
     <string name="m214_switch_status">Switch status</string>
     <string name="m215_setting_temperature">Setting temperature</string>
+    <string name="m216_effective_period">Effective Period</string>
+    <string name="m217_all_conditions_are_met">All Conditions Are Met</string>
+    <string name="m218_any_conditions_is_met">Any Condition Is Met</string>
+    <string name="m219_time_period">Time Period</string>
+    <string name="m220_repeat">Repeat</string>
+
+    <string name="m221_username_password_error">User name or password error</string>
+
+    <!--重复选择-->
+    <string name="m222_single">Single</string>
+    <string name="m224_everyday">Everyday</string>
+    <string name="m225_monday">Monday</string>
+    <string name="m226_tuesday">Tuesday</string>
+    <string name="m227_wednesday">Wednesday</string>
+    <string name="m228_thursday">Thursday</string>
+    <string name="m229_friday">Friday</string>
+    <string name="m230_saturday">Saturday</string>
+    <string name="m231_sunday">Sunday</string>
+     
+    <string name="m232_click_to_add">Click to Add</string>
+    <string name="m233_please_entry_name">Please Enter name</string>
+    <string name="m234_smart">Smart</string>
+    <string name="m235_not_set">Not set</string>
+    <string name="m236_set_effect_time">Set Effective Period</string>
 
 </resources>

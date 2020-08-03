@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -23,13 +24,14 @@ import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.module.device.DeviceTypeActivity;
 import com.growatt.grohome.module.scenes.presenter.ScenesPresenter;
 import com.growatt.grohome.module.scenes.view.IScenesView;
+import com.growatt.grohome.utils.MyToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class ScenesFragment extends BaseFragment<ScenesPresenter> implements IScenesView, Toolbar.OnMenuItemClickListener {
+public class ScenesFragment extends BaseFragment<ScenesPresenter> implements IScenesView, Toolbar.OnMenuItemClickListener, View.OnClickListener {
 
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
@@ -51,9 +53,16 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
     private LinkageSceneAdapter mLinkageSceneAdapter;
     private LogsSceneAdapter mLogsSceneAdapter;
 
+    private View launchEmpty;
+    private View linkageEmpty;
+    private View LogsEmpty;
+
+    private LinearLayout llAddLaunchView;
+    private LinearLayout llAddLinkageView;
+
     @Override
     protected ScenesPresenter createPresenter() {
-        return new ScenesPresenter(this);
+        return new ScenesPresenter(getActivity(),this);
     }
 
     @Override
@@ -80,7 +89,8 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         mRlvLaunch.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         mRlvLaunch.addItemDecoration(new LinearDivider(getActivity(),LinearLayoutManager.VERTICAL,5, ContextCompat.getColor(getActivity(),R.color.nocolor)));
         mLaunchTapAdapter=new LaunchTapAdapter(R.layout.item_launch_tap_to_run,new ArrayList<>());
-        View launchEmpty=LayoutInflater.from(getContext()).inflate(R.layout.scene_launch_empty_view,mRlvLaunch,false);
+        launchEmpty=LayoutInflater.from(getContext()).inflate(R.layout.scene_launch_empty_view,mRlvLaunch,false);
+        llAddLaunchView = launchEmpty.findViewById(R.id.ll_add_launch_background);
         mLaunchTapAdapter.setEmptyView(launchEmpty);
         mRlvLaunch.setAdapter(mLaunchTapAdapter);
         //条件执行
@@ -88,7 +98,8 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         mRlvLinkage.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         mRlvLinkage.addItemDecoration(new LinearDivider(getActivity(),LinearLayoutManager.VERTICAL,ContextCompat.getColor(getActivity(),R.color.nocolor),32));
         mLinkageSceneAdapter=new LinkageSceneAdapter(R.layout.item_linkage_detail,new ArrayList<>());
-        View linkageEmpty=LayoutInflater.from(getContext()).inflate(R.layout.scene_linkage_empty_view,mRlvLinkage,false);
+        linkageEmpty=LayoutInflater.from(getContext()).inflate(R.layout.scene_linkage_empty_view,mRlvLinkage,false);
+        llAddLinkageView = linkageEmpty.findViewById(R.id.ll_add_linkage_background);
         mLinkageSceneAdapter.setEmptyView(linkageEmpty);
         mRlvLinkage.setAdapter(mLinkageSceneAdapter);
         //日志
@@ -96,9 +107,10 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         mRlvLogs.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         mRlvLogs.addItemDecoration(new LinearDivider(getActivity(),LinearLayoutManager.VERTICAL,ContextCompat.getColor(getActivity(),R.color.nocolor),32));
         mLogsSceneAdapter=new LogsSceneAdapter(R.layout.item_logs_detail,new ArrayList<>());
-        View LogsEmpty=LayoutInflater.from(getContext()).inflate(R.layout.scene_logs_empty_view,mRlvLogs,false);
+        LogsEmpty = LayoutInflater.from(getContext()).inflate(R.layout.scene_logs_empty_view, mRlvLogs, false);
         mLogsSceneAdapter.setEmptyView(LogsEmpty);
         mRlvLogs.setAdapter(mLogsSceneAdapter);
+
 
 
         pagers.add(launchView);
@@ -123,6 +135,12 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
 
     }
 
+    @Override
+    public void initListener() {
+        super.initListener();
+        llAddLaunchView.setOnClickListener(this);
+        llAddLinkageView.setOnClickListener(this);
+    }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -132,5 +150,17 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ll_add_launch_background:
+               presenter.addSceneLaunchTap();
+                break;
+            case R.id.ll_add_linkage_background:
+                MyToastUtils.toast("点击一liandong");
+                break;
+        }
     }
 }

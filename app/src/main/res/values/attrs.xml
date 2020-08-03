@@ -45,4 +45,23 @@
         <attr name="bar_pointer_halo_radius" format="dimension" />
         <attr name="bar_orientation_horizontal" format="boolean" />
     </declare-styleable>
+
+
+    <declare-styleable name="WeekSelectView">
+        <!--文本内容-->
+        <attr name="itemGroup_textContent" format="string" />
+        <!--文本颜色-->
+        <attr name="itemGroup_textColor" format="color" />
+        <!--文本大小-->
+        <attr name="itemGroup_textSize" format="dimension" />
+        <!--imageView是否可见-->
+        <attr name="itemGroup_ischecked" format="boolean" />
+
+        <!--item布局的内边距-->
+        <attr name="itemGroup_paddingLeft" format="dimension"/>
+        <attr name="itemGroup_paddingRight" format="dimension"/>
+        <attr name="itemGroup_paddingTop" format="dimension"/>
+        <attr name="itemGroup_paddingBottom" format="dimension"/>
+
+    </declare-styleable>
 </resources>

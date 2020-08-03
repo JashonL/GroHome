@@ -85,12 +85,28 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
             public void onSuccess(String json) {
                 try {
                     JSONObject jsonObject = new JSONObject(json);
-                    JSONObject obj = jsonObject.getJSONObject("obj");
-                    //用户类型
-                    int userType = obj.getInt("userType");
-                    String userServerUrl = "http://" + obj.getString("userServerUrl") + "/newTwoLoginAPI.do";
-                    if (userType == 0) {//监控用户
-                        userLogin(userServerUrl, username, password);
+                    int result = jsonObject.getInt("result");
+                    String errorMsg="";
+                    switch (result){
+                        case 0://失败
+                            errorMsg=context.getString(R.string.m3_bad_network_msg);
+                            baseView.loginError(errorMsg);
+                            break;
+                        case 1:
+                            JSONObject obj = jsonObject.getJSONObject("obj");
+                            //用户类型
+                            int userType = obj.getInt("userType");
+                            String userServerUrl = "http://" + obj.getString("userServerUrl") + "/newTwoLoginAPI.do";
+                            if (userType == 0) {//监控用户
+                                userLogin(userServerUrl, username, password);
+                            }
+                            break;
+                      default:
+                            errorMsg=context.getString(R.string.m221_username_password_error);
+                            break;
+                    }
+                    if (result!=1){
+                        baseView.loginError(errorMsg);
                     }
 
                 } catch (JSONException e) {
@@ -117,14 +133,20 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
             public void onSuccess(String bean) {
                 try {
                     JSONObject jsonObject = new JSONObject(bean);
-                    JSONObject user = jsonObject.getJSONObject("back").getJSONObject("user");
-                    //用户解析
-                    User userInfo = new Gson().fromJson(user.toString(), User.class);
-                    savaUserInfo(username, password, userInfo);
-                } catch (JSONException e) {
+                    JSONObject result = jsonObject.getJSONObject("back");
+                    if (result.optString("success").equals("true")){
+                        JSONObject user = result.getJSONObject("user");
+                        //用户解析
+                        User userInfo = new Gson().fromJson(user.toString(), User.class);
+                        savaUserInfo(username, password, userInfo);
+                    }else {
+                        String msg=context.getString(R.string.m221_username_password_error);
+                        baseView.loginError(msg);
+                    }
+                    baseView.loginSuccess(bean);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                baseView.loginSuccess(bean);
             }
 
             @Override

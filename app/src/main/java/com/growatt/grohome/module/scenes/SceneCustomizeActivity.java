@@ -4,7 +4,6 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.module.scenes.presenter.SceneCustomPresenter;
 import com.growatt.grohome.module.scenes.view.ISceneCustomizeView;
-import com.growatt.grohome.module.scenes.view.ISceneTaskSettingView;
 
 public class SceneCustomizeActivity extends BaseActivity<SceneCustomPresenter>implements ISceneCustomizeView {
     @Override

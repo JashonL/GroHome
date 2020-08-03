@@ -94,13 +94,19 @@
 
         <activity android:name=".module.room.RoomLineListActivity"/>
 
-        <activity android:name=".module.scenes.SceneLaunchTapActivity"/>
+        <activity android:name=".module.scenes.SceneAddActivity"/>
 
         <activity android:name=".module.device.AllDeviceActivity"/>
 
         <activity android:name=".module.scenes.SceneTaskSettingActivity"/>
 
         <activity android:name=".module.scenes.SceneCustomizeActivity"/>
+
+        <activity android:name=".module.scenes.SceneDetailActivity"/>
+
+        <activity android:name=".module.scenes.EffectivePeriodActivity"/>
+
+        <activity android:name=".module.scenes.RepeatActivity"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
