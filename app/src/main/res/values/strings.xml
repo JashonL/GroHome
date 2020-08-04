@@ -267,5 +267,11 @@
     <string name="m234_smart">Smart</string>
     <string name="m235_not_set">Not set</string>
     <string name="m236_set_effect_time">Set Effective Period</string>
-
+    <string name="m237_no_device">No device</string>
+    <string name="m238_device_setting">Device settings</string>
+    <string name="m239_setting">Setting</string>
+    <string name="m240_on_off">On/Off</string>
+    <string name="m241_setting_temperature">Setting temperature</string>
+    <string name="m242_please_set_task">Please set the task</string>
+    <string name="m243_device_status_changes">Device status changes</string>
 </resources>

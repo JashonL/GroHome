@@ -4,10 +4,13 @@ package com.growatt.grohome.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -115,26 +118,26 @@ public class CircleDialogUtils {
     /**
      * 场景颜色闪烁模式弹框
      */
-    public static DialogFragment showSceneFlashMode(FragmentActivity activity, List<String>modes,OnLvItemClickListener listener) {
+    public static DialogFragment showSceneFlashMode(FragmentActivity activity, List<String> modes, OnLvItemClickListener listener) {
         DialogFragment flashModeDialog = new CircleDialog.Builder()
                 .setTitle(activity.getString(R.string.m161_colour_flash_mode))
                 .configTitle(params -> {
-                    params.styleText = Typeface.BOLD; })
-                .setItems(modes,listener)
+                    params.styleText = Typeface.BOLD;
+                })
+                .setItems(modes, listener)
                 .setGravity(Gravity.CENTER)
                 .show(activity.getSupportFragmentManager());
         return flashModeDialog;
     }
 
 
-
     /**
      * 场景颜色闪烁模式弹框
      */
-    public static DialogFragment showTakePictureDialog(FragmentActivity activity, List<String>modes,OnLvItemClickListener listener) {
+    public static DialogFragment showTakePictureDialog(FragmentActivity activity, List<String> modes, OnLvItemClickListener listener) {
         DialogFragment takePictureDialog = new CircleDialog.Builder()
                 .setTitle(activity.getString(R.string.m80_selection))
-                .setItems(modes,listener)
+                .setItems(modes, listener)
                 .setGravity(Gravity.BOTTOM)
                 .setNegative(activity.getString(R.string.m89_cancel), new View.OnClickListener() {
                     @Override
@@ -149,16 +152,58 @@ public class CircleDialogUtils {
 
     /**
      * 公共输入框
+     *
      * @param activity
      * @return
      */
-    public static DialogFragment showCommentInputDialog(FragmentActivity activity,String title,String text,String hint,boolean showKeyboard,OnInputClickListener listener){
+    public static DialogFragment showCommentInputDialog(FragmentActivity activity, String title, String text, String hint, boolean showKeyboard, OnInputClickListener listener) {
         DialogFragment inputDialog = new CircleDialog.Builder()
+                .setCanceledOnTouchOutside(true)
+                .setCancelable(true)
                 .setTitle(title)
                 .setInputText(text)
+                .setInputHint(hint)
                 .setGravity(Gravity.CENTER)
-                .setInputShowKeyboard(true)
+                .setInputShowKeyboard(showKeyboard)
+                .setInputCounter(1000, (maxLen, currentLen) -> "")
                 .setPositiveInput(activity.getString(R.string.m90_ok), listener)
+                .configInput(params -> {
+//                            params.isCounterAllEn = true;
+                    params.padding = new int[]{5, 5, 5, 5};
+                    params.strokeColor = ContextCompat.getColor(activity, R.color.black_999999);
+//                                params.inputBackgroundResourceId = R.drawable.bg_input;
+//                                params.gravity = Gravity.CENTER;
+                    //密码
+//                                params.inputType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
+//                                        | InputType.TYPE_TEXT_FLAG_MULTI_LINE;
+                    //文字加粗
+//            params.styleText = Typeface.BOLD;
+                })
+                .setNegative(activity.getString(R.string.m89_cancel), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .show(activity.getSupportFragmentManager());
+        return inputDialog;
+
+
+    }
+
+
+    /**
+     * 公共提示框
+     *
+     * @param activity
+     * @return
+     */
+    public static DialogFragment showCommentDialog(FragmentActivity activity, String title, String text, View.OnClickListener listener) {
+        DialogFragment inputDialog = new CircleDialog.Builder()
+                .setTitle(title)
+                .setText(text)
+                .setGravity(Gravity.CENTER)
+                .setPositive(activity.getString(R.string.m90_ok), listener)
                 .setNegative(activity.getString(R.string.m89_cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -171,24 +216,26 @@ public class CircleDialogUtils {
 
 
     /**
-     * 公共提示框
+     * 公共复选框
+     *
      * @param activity
      * @return
      */
-    public static DialogFragment showCommentDialog(FragmentActivity activity,String title,String text,View.OnClickListener listener){
-        DialogFragment inputDialog = new CircleDialog.Builder()
+    public static DialogFragment showCommentItemDialog(FragmentActivity activity, String title,List<String> items ,int gravity,OnLvItemClickListener listener) {
+        DialogFragment itemsSelectDialog = new CircleDialog.Builder()
                 .setTitle(title)
-                .setText(text)
-                .setGravity(Gravity.CENTER)
-                .setPositive(activity.getString(R.string.m90_ok),listener)
-                .setNegative(activity.getString(R.string.m89_cancel), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
+                .configTitle(params -> {
+                    params.styleText = Typeface.BOLD;
                 })
+                .setItems(items, listener)
+                .configItems(params -> {
+                    params.dividerHeight = 0;
+                    params.textColor = ContextCompat.getColor(activity, R.color.color_text_33);
+                })
+                .setGravity(gravity)
                 .show(activity.getSupportFragmentManager());
-        return inputDialog;
+
+        return itemsSelectDialog;
     }
 
 }

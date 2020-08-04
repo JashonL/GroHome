@@ -24,8 +24,20 @@ public class GlobalConstant {
     public static final String ACITION_KEY="action_key";
     //**************************场景*****************************
     public static final String SCENE_TYPE="scene_type";
+    public static final String SCENE_NAME="scene_name";
     public static final String SCENE_LUANCH_TAP_TO_RUN="luanch_tap_to_run";
     public static final String SCENE_SMART="smart";
+    public static final String SCENE_DEVICE_SELECT="scene_device_select";
+    public static final String SCENE_ADD_TASK="scene_task";
+    public static final String SCENE_ADD_CONDITION="scene_condition";
+    public static final String DEVICE_BEAN="device_bean";
+    public static final String SCENE_DEVICE_OPEN="open";
+    public static final String SCENE_DEVICE_SHUT="shut";
+    public static final String SCENE_CREATE_OR_EDIT="scene_create_or_edit";
+    public static final String SCENE_CREATE="scene_create";
+    public static final String SCENE_EDIT="scene_edit";
+    public static final String SCENE_TASK_BEAN="scene_task_bean";
+
 
     //************shareperferen保存常量********************************
     public static final String SP_USER_NAME="user_name";

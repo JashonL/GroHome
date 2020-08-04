@@ -20,6 +20,7 @@ import com.growatt.grohome.adapter.LinkageSceneAdapter;
 import com.growatt.grohome.adapter.LogsSceneAdapter;
 import com.growatt.grohome.adapter.SceneViewPagerAdapter;
 import com.growatt.grohome.base.BaseFragment;
+import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.module.device.DeviceTypeActivity;
 import com.growatt.grohome.module.scenes.presenter.ScenesPresenter;
@@ -156,10 +157,10 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_add_launch_background:
-               presenter.addSceneLaunchTap();
+               presenter.addScene(GlobalConstant.SCENE_LUANCH_TAP_TO_RUN);
                 break;
             case R.id.ll_add_linkage_background:
-                MyToastUtils.toast("点击一liandong");
+                presenter.addScene(GlobalConstant.SCENE_SMART);
                 break;
         }
     }

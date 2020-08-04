@@ -86,7 +86,7 @@ public class API {
         Observable<String> groHomeRegister(@Url String url, @Field("regUserName")String regUserName,@Field("regPassword")String regPassword,@Field("regTimeZone")String regTimeZone,@Field("regEmail")String regEmail,@Field("regCountry")String regCountry);
 
 
-        //---------------------------【   设备   】----------------------------------
+        //---------------------------【   收藏   】----------------------------------
 
         //收藏站内文章
         @POST("lg/collect/{id}/json")
@@ -126,6 +126,11 @@ public class API {
 
         @POST("tuya/removeDevice")
         Observable<String>removeDevice(@Body RequestBody body);
+
+
+        //---------------------------【   场景   】-----------------------------------
+        @POST("smartHome/")
+        Observable<String>createScene(@Body RequestBody body);
     }
 
 }

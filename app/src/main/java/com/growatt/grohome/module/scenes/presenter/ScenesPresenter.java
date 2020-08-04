@@ -16,9 +16,10 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
         super(context, baseView);
     }
 
-    public void addSceneLaunchTap(){
+    public void addScene(String type){
         Intent intent=new Intent(context, SceneAddActivity.class);
-        intent.putExtra(GlobalConstant.SCENE_TYPE,GlobalConstant.SCENE_LUANCH_TAP_TO_RUN);
+        intent.putExtra(GlobalConstant.SCENE_TYPE,type);
         ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
     }
+
 }
