@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_begin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/dp_10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/dp_10" />
+
+    <View
+        android:id="@+id/v_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_15"
+        app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+
+    <View
+        android:id="@+id/v_start_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_215"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/v_top" />
+
+
+    <ImageView
+        android:id="@+id/iv_time_start"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:padding="@dimen/dp_8"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_start"
+        app:layout_constraintLeft_toLeftOf="@+id/gl_begin"
+        app:layout_constraintRight_toLeftOf="@+id/tv_start"
+        app:layout_constraintTop_toTopOf="@+id/tv_start" />
+
+    <TextView
+        android:id="@+id/tv_start"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_15"
+        android:padding="@dimen/dp_5"
+        android:text="@string/m245_start_time"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_title_sp_14"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/iv_time_start"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_start_bg" />
+
+    <LinearLayout
+        android:id="@+id/timepicker_start"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/v_start_bg"
+        app:layout_constraintLeft_toLeftOf="@+id/gl_begin"
+        app:layout_constraintRight_toRightOf="@+id/gl_end"
+        app:layout_constraintTop_toBottomOf="@+id/tv_start">
+
+        <com.contrarywind.view.WheelView
+            android:id="@+id/wheel_start_hour"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            />
+
+        <com.contrarywind.view.WheelView
+            android:id="@+id/wheel_start_min"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            />
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/v_center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_15"
+        app:layout_constraintTop_toBottomOf="@+id/v_start_bg" />
+
+
+    <View
+        android:id="@+id/v_end_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_215"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/v_center" />
+
+
+    <ImageView
+        android:id="@+id/iv_time_end"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30"
+        android:padding="@dimen/dp_8"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_end"
+        app:layout_constraintLeft_toLeftOf="@+id/gl_begin"
+        app:layout_constraintRight_toLeftOf="@+id/tv_end"
+        app:layout_constraintTop_toTopOf="@+id/tv_end" />
+
+    <TextView
+        android:id="@+id/tv_end"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_15"
+        android:padding="@dimen/dp_5"
+        android:text="@string/m246_end_time"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_title_sp_14"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/iv_time_start"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/v_end_bg" />
+
+
+    <LinearLayout
+        android:id="@+id/timepicker_end"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/v_end_bg"
+        app:layout_constraintLeft_toLeftOf="@+id/gl_begin"
+        app:layout_constraintRight_toRightOf="@+id/gl_end"
+        app:layout_constraintTop_toBottomOf="@+id/tv_end">
+
+        <com.contrarywind.view.WheelView
+            android:id="@+id/wheel_end_hour"
+            android:layout_width="150dp"
+            android:layout_height="match_parent" />
+
+        <com.contrarywind.view.WheelView
+            android:id="@+id/wheel_end_min"
+            android:layout_width="150dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -145,10 +145,8 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                startActivity(new Intent(getContext(), DeviceTypeActivity.class));
-                break;
+        if (item.getItemId() == R.id.action_add) {
+            startActivity(new Intent(getContext(), DeviceTypeActivity.class));
         }
         return true;
     }

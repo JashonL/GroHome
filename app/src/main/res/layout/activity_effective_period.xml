@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/toobar_title" android:id="@+id/headerView"/>
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -24,17 +26,80 @@
         app:layout_constraintGuide_end="@dimen/dp_16"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <!--定时-->
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_timing"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:foreground="@drawable/card_foreground"
+        app:cardCornerRadius="@dimen/dp_12"
+        app:cardElevation="@dimen/dp_0"
+        app:layout_constraintLeft_toLeftOf="@+id/gl_start"
+        app:layout_constraintRight_toRightOf="@+id/gl_end"
+        app:layout_constraintTop_toBottomOf="@+id/headerView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_timing"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_10"
+                android:text="@string/m252_time"
+                android:textColor="@color/color_text_33"
+                android:textSize="@dimen/size_content_sp_14"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/iv_time_more"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_time_value"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/color_text_33"
+                android:textSize="@dimen/size_content_sp_12"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/iv_time_more"
+                app:layout_constraintTop_toBottomOf="@+id/tv_timing" />
+
+            <ImageView
+                android:id="@+id/iv_time_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:src="@drawable/icon_more"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <!--时间段-->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_time_period"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:foreground="@drawable/card_foreground"
         app:cardCornerRadius="@dimen/dp_12"
         app:cardElevation="@dimen/dp_0"
-        android:layout_marginTop="@dimen/dp_30"
         app:layout_constraintLeft_toLeftOf="@+id/gl_start"
         app:layout_constraintRight_toRightOf="@+id/gl_end"
-        app:layout_constraintTop_toBottomOf="@+id/headerView">
+        app:layout_constraintTop_toBottomOf="@+id/card_timing">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -85,15 +150,14 @@
     </androidx.cardview.widget.CardView>
 
 
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/card_repeat"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:foreground="@drawable/card_foreground"
         app:cardCornerRadius="@dimen/dp_12"
         app:cardElevation="@dimen/dp_0"
-        android:layout_marginTop="@dimen/dp_30"
         app:layout_constraintLeft_toLeftOf="@+id/gl_start"
         app:layout_constraintRight_toRightOf="@+id/gl_end"
         app:layout_constraintTop_toBottomOf="@+id/card_time_period">
@@ -119,7 +183,7 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_scene_name_value"
+                android:id="@+id/tv_loop_value"
                 android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"

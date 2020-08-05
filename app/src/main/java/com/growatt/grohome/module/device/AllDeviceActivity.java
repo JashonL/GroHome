@@ -18,6 +18,7 @@ import com.growatt.grohome.adapter.AllDeviceAdapter;
 import com.growatt.grohome.adapter.SceneConditionAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.GroDeviceBean;
+import com.growatt.grohome.bean.SceneConditionBean;
 import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.module.device.presenter.AllDevicePrensenter;
 import com.growatt.grohome.module.device.view.IAllDeviceView;
@@ -106,6 +107,11 @@ public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> impleme
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventScenes(@NonNull SceneTaskBean bean) {
+        finish();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventScenesConditionBean(@NonNull SceneConditionBean bean) {
         finish();
     }
 

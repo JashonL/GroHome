@@ -1,5 +1,6 @@
 package com.growatt.grohome.module.scenes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,10 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.SceneConditionAdapter;
 import com.growatt.grohome.adapter.SceneTaskAdapter;
 import com.growatt.grohome.base.BaseActivity;
+import com.growatt.grohome.bean.SceneConditionBean;
 import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.constants.GlobalVariable;
 import com.growatt.grohome.module.scenes.presenter.SceneAddPresenter;
 import com.growatt.grohome.module.scenes.view.ISceneAddView;
 import com.growatt.grohome.utils.MyToastUtils;
@@ -108,7 +111,7 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
 
         //条件列表
         rlvCondition.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mSceneConditionAdapter = new SceneConditionAdapter(R.layout.item_scene_task, new ArrayList<>());
+        mSceneConditionAdapter = new SceneConditionAdapter(R.layout.item_scene_condition, new ArrayList<>());
         View linkageEmpty = LayoutInflater.from(this).inflate(R.layout.device_empty_view, rlvCondition, false);
         TextView llAddConditionView = linkageEmpty.findViewById(R.id.tv_add);
         llAddConditionView.setOnClickListener(v -> {
@@ -160,7 +163,7 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
             tvTitle.setText(R.string.m234_smart);
             groupOnkey.setVisibility(View.GONE);
             groupCompose.setVisibility(View.VISIBLE);
-            cardEffectPeriod.setVisibility(View.VISIBLE);
+            cardEffectPeriod.setVisibility(View.GONE);
             ivConditionAdd.setVisibility(View.VISIBLE);
         }
     }
@@ -220,8 +223,66 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
         setRvDevice(bean);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventScenesConditionBean(@NonNull SceneConditionBean bean) {
+        setRvCondition(bean);
+    }
 
 
+    //执行条件
+
+    private void setRvCondition(SceneConditionBean conditionBean) {
+        if (GlobalVariable.filterEnable) {
+            List<SceneTaskBean> data = mSceneTaskAdapter.getData();
+            for (SceneTaskBean bean : data) {
+                if (!"time".equals(bean.getDevType())) {
+                    if (bean.getDevId().equals(conditionBean.getDevId())) {
+                        MyToastUtils.toast(R.string.m251_device_already_task);
+                        return;
+                    }
+                }
+            }
+        }
+        String devType = conditionBean.getDevType();
+        String devIdBack = conditionBean.getDevId();
+        List<SceneConditionBean> data = mSceneConditionAdapter.getData();
+        if (data.size() <= 0) {
+            mSceneConditionAdapter.addData(conditionBean);
+        }
+        if ("time".equals(devType)){
+            int index = -1;
+            for (int i = 0; i < data.size(); i++) {
+                if ("time".equals(data.get(i).getDevType())){
+                    index=i;
+                    break;
+                }
+            }
+            if (index == -1) {
+                mSceneConditionAdapter.addData(conditionBean);
+            }else {
+                data.set(index, conditionBean);
+                mSceneConditionAdapter.notifyDataSetChanged();
+            }
+        }else {
+            int index = -1;
+            for (int i = 0; i < data.size(); i++) {
+                String devId = data.get(i).getDevId();
+                if (devIdBack.equals(devId)) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index != -1) {
+                data.set(index, conditionBean);
+                mSceneConditionAdapter.notifyDataSetChanged();
+            } else {
+                mSceneConditionAdapter.addData(conditionBean);
+            }
+        }
+    }
+
+
+    //执行任务
     private void setRvDevice(SceneTaskBean deviceBean) {
         String devIdBack = deviceBean.getDevId();
         List<SceneTaskBean> data = mSceneTaskAdapter.getData();
@@ -245,6 +306,9 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
         }
     }
 
+
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -265,5 +329,21 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
             }
         }
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK){
+            if (requestCode==GlobalConstant.REQUEST_CODE_EDIT_SCENE_TIME){
+                SceneConditionBean scenesConditionBean=new SceneConditionBean();
+                scenesConditionBean.setLinkType(data.getStringExtra(GlobalConstant.TIME_LOOPTYPE));
+                scenesConditionBean.setLinkValue(data.getStringExtra(GlobalConstant.TIME_LOOPVALUE));
+                scenesConditionBean.setTimeValue(data.getStringExtra(GlobalConstant.TIME_VALUE));
+                scenesConditionBean.setDevType("time");
+                setRvCondition(scenesConditionBean);
+            }
+        }
     }
 }

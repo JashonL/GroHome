@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10"
     android:gravity="center"
-    android:text="@string/m102_ap_mode"
+    android:text="@string/m248_save"
     android:textSize="@dimen/size_content_sp_16"
     android:textColor="@color/color_text_33"
     android:clickable="true">

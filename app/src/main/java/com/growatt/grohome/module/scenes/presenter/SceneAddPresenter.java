@@ -23,6 +23,7 @@ import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.eventbus.FreshScenesMsg;
 import com.growatt.grohome.module.device.AllDeviceActivity;
+import com.growatt.grohome.module.scenes.EffectivePeriodActivity;
 import com.growatt.grohome.module.scenes.SceneTaskSettingActivity;
 import com.growatt.grohome.module.scenes.view.ISceneAddView;
 import com.growatt.grohome.utils.ActivityUtils;
@@ -79,12 +80,12 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
 
     public void addCondition(String deviceSelect) {
         String [] conditions=new String[]{context.getString(R.string.m146_timer),context.getString(R.string.m243_device_status_changes)};
-        CircleDialogUtils.showCommentItemDialog((FragmentActivity) context, "", Arrays.asList(conditions), Gravity.BOTTOM, new OnLvItemClickListener() {
+        CircleDialogUtils.showCommentItemDialog((FragmentActivity) context, context.getString(R.string.m244_add_new_condition), Arrays.asList(conditions), Gravity.BOTTOM, new OnLvItemClickListener() {
             @Override
             public boolean onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-
+                        selectTime(deviceSelect);
                         break;
                     case 1:
                         selectDevice(deviceSelect);
@@ -95,6 +96,17 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
         });
 
     }
+
+
+    public void selectTime(String deviceSelect) {
+        Intent intent = new Intent(context, EffectivePeriodActivity.class);
+        intent.putExtra(GlobalConstant.SCENE_DEVICE_SELECT, deviceSelect);
+        intent.putExtra(GlobalConstant.SET_TIMEVALUE_OR_TIMEPERIOD, GlobalConstant.SET_TIMEVALUE);
+        ActivityUtils.startActivityForResult((Activity) context, intent, GlobalConstant.REQUEST_CODE_EDIT_SCENE_TIME, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
+
+
 
 
     public void selectDevice(String deviceSelect) {

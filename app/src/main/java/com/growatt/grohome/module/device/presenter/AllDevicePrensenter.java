@@ -14,6 +14,7 @@ import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.HomeDeviceBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.view.IAllDeviceView;
+import com.growatt.grohome.module.scenes.SceneConditionActivity;
 import com.growatt.grohome.module.scenes.SceneTaskSettingActivity;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
@@ -97,7 +98,12 @@ public class AllDevicePrensenter extends BasePresenter<IAllDeviceView> {
     }
 
     private void setSceneCondition(GroDeviceBean deviceBean) {
-
+        if (deviceBean==null)return;
+        String bean =new Gson().toJson(deviceBean);
+        Intent intent = new Intent(context, SceneConditionActivity.class);
+        intent.putExtra(GlobalConstant.DEVICE_BEAN,bean);
+        intent.putExtra(GlobalConstant.SCENE_CREATE_OR_EDIT,GlobalConstant.SCENE_CREATE);
+        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
     }
 
 

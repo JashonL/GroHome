@@ -11,8 +11,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/dp_16"
+        app:layout_constraintBottom_toTopOf="@+id/btn_save"
         app:layout_constraintTop_toBottomOf="@+id/headerView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,17 +37,20 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_name"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/dp_12"
-                app:cardElevation="@dimen/dp_0"
+                app:cardCornerRadius="@dimen/dp_10"
+                app:cardElevation="@dimen/dp_1"
+                android:foreground="@drawable/card_foreground"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_begin"
                 app:layout_constraintRight_toRightOf="@+id/guideline_end"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_5">
 
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -69,11 +73,11 @@
                         android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:hint="@string/m233_please_entry_name"
                         android:padding="@dimen/dp_10"
+                        android:text="@string/m13_grohome"
                         android:textColor="@color/color_text_33"
                         android:textSize="@dimen/size_content_sp_12"
-                        android:text="@string/m13_grohome"
-                        android:hint="@string/m233_please_entry_name"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@+id/iv_name_more"
                         app:layout_constraintTop_toBottomOf="@+id/tv_scene_name_title" />
@@ -100,15 +104,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_16"
-                app:cardCornerRadius="@dimen/dp_12"
-                app:cardElevation="@dimen/dp_0"
+                app:cardCornerRadius="@dimen/dp_10"
+                app:cardElevation="@dimen/dp_1"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_begin"
                 app:layout_constraintRight_toRightOf="@+id/guideline_end"
                 app:layout_constraintTop_toBottomOf="@+id/card_view_name">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
 
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -116,7 +121,10 @@
                         android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:padding="@dimen/dp_10"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_20"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:paddingBottom="@dimen/dp_20"
                         android:text="@string/m212_condition_for_execution"
                         android:textColor="@color/color_text_33"
                         android:textSize="@dimen/size_content_sp_14"
@@ -143,6 +151,55 @@
                         app:barrierDirection="bottom"
                         app:constraint_referenced_ids="tv_scene_condition_execution,iv_condition_add" />
 
+                    <View
+                        android:id="@+id/v_condition_diver"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_0_1"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:background="@color/gray_eeeeeee"
+                        app:layout_constraintTop_toBottomOf="@+id/barrier_condition" />
+
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/condition_onkey_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        app:constraint_referenced_ids="iv_onekey,tv_onekey" />
+
+
+                    <ImageView
+                        android:id="@+id/iv_onekey"
+                        android:layout_width="@dimen/dp_50"
+                        android:layout_height="@dimen/dp_50"
+                        android:padding="@dimen/dp_10"
+                        android:src="@drawable/scenes_onekey"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/v_condition_diver" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_onekey"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/dp_10"
+                        android:text="@string/m81_launch_tap_to_run"
+                        android:textColor="@color/color_text_33"
+                        android:textSize="@dimen/size_content_sp_14"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/iv_onekey"
+                        app:layout_constraintLeft_toRightOf="@+id/iv_onekey"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/iv_onekey" />
+
+
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/condition_compose_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:constraint_referenced_ids="tv_execution_met,iv_execution_pull,rlv_condition" />
+
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_execution_met"
@@ -160,26 +217,20 @@
                         android:id="@+id/iv_execution_pull"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dp_0"
-                        android:src="@drawable/icon_home_add"
                         android:gravity="center"
+                        android:src="@drawable/icon_home_add"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_execution_met"
                         app:layout_constraintLeft_toRightOf="@+id/tv_execution_met"
                         app:layout_constraintTop_toTopOf="@+id/tv_execution_met" />
 
 
-                    <View
-                        android:id="@+id/v_condition_diver"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_0_1"
-                        android:background="@color/color_item_divider_99"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_execution_met" />
-
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rlv_condition"
                         android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/v_condition_diver" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_execution_met" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -192,8 +243,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_16"
-                app:cardCornerRadius="@dimen/dp_12"
-                app:cardElevation="@dimen/dp_0"
+                app:cardCornerRadius="@dimen/dp_10"
+                app:cardElevation="@dimen/dp_1"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_begin"
                 app:layout_constraintRight_toRightOf="@+id/guideline_end"
                 app:layout_constraintTop_toBottomOf="@+id/card_view_condition">
@@ -238,10 +289,13 @@
                         android:id="@+id/v_task_diver"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_0_1"
-                        android:background="@color/color_item_divider_99"
+                        android:layout_marginStart="@dimen/dp_20"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:background="@color/gray_eeeeeee"
                         app:layout_constraintTop_toBottomOf="@+id/barrier_task" />
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rlv_task_list"
                         android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -259,8 +313,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_30"
-                app:cardCornerRadius="@dimen/dp_12"
-                app:cardElevation="@dimen/dp_0"
+                app:cardCornerRadius="@dimen/dp_10"
+                app:cardElevation="@dimen/dp_1"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline_begin"
                 app:layout_constraintRight_toRightOf="@+id/guideline_end"
                 app:layout_constraintTop_toBottomOf="@+id/card_view_task">
@@ -290,6 +344,7 @@
                         android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:hint="@string/m236_set_effect_time"
                         android:padding="@dimen/dp_10"
                         android:textColor="@color/color_text_33"
                         android:textSize="@dimen/size_content_sp_12"
@@ -313,25 +368,13 @@
 
             </androidx.cardview.widget.CardView>
 
-            <Button
-                android:id="@+id/btn_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginStart="@dimen/dp_48"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_48"
-                android:layout_marginBottom="@dimen/dp_64"
-                android:background="@drawable/selector_button_rect"
-                android:minWidth="@dimen/dp_250"
-                android:padding="@dimen/dp_5"
-                android:text="@string/m90_ok"
-                android:textColor="@color/white"
-                android:textSize="@dimen/size_title_sp_14"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_effect_period"
-                app:layout_constraintVertical_bias="0.2" />
+
+            <View
+                android:id="@+id/v_space"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_3"
+                android:layout_marginTop="@dimen/dp_3"
+                app:layout_constraintTop_toBottomOf="@+id/card_effect_period" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -340,4 +383,23 @@
     </ScrollView>
 
 
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="@dimen/dp_48"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_48"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/selector_button_rect"
+        android:minWidth="@dimen/dp_250"
+        android:padding="@dimen/dp_5"
+        android:text="@string/m90_ok"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_title_sp_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

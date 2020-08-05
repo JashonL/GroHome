@@ -9,9 +9,8 @@
         android:id="@+id/card_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_5"
         android:foreground="@drawable/card_foreground"
-        app:cardCornerRadius="@dimen/dp_12"
+        app:cardCornerRadius="@dimen/dp_0"
         app:cardElevation="@dimen/dp_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -50,7 +49,7 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toTopOf="@+id/tv_device_task"
                 app:layout_constraintLeft_toRightOf="@+id/iv_device_icon"
-                app:layout_constraintRight_toLeftOf="@+id/iv_onoff"
+                app:layout_constraintRight_toLeftOf="@+id/iv_edit"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
 
@@ -71,16 +70,26 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/iv_device_icon"
-                app:layout_constraintRight_toLeftOf="@+id/iv_forward"
+                app:layout_constraintRight_toLeftOf="@+id/iv_edit"
                 app:layout_constraintTop_toBottomOf="@+id/tv_device_name" />
 
 
             <ImageView
-                android:id="@+id/iv_forward"
+                android:id="@+id/iv_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_22"
-                android:src="@drawable/icon_more"
+                android:src="@drawable/icon_edit"
+                android:padding="@dimen/dp_10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/iv_delete"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dev_del"
+                android:padding="@dimen/dp_10"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

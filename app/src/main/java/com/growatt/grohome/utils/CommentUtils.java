@@ -1,6 +1,7 @@
 package com.growatt.grohome.utils;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -13,11 +14,19 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
+import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -248,6 +257,20 @@ public class CommentUtils {
     }
 
 
+
+    public static List<String> getWeeks(Context context){
+        List<String>weeks=new ArrayList<>();
+        weeks.add(context.getString(R.string.m225_monday));
+        weeks.add(context.getString(R.string.m226_tuesday));
+        weeks.add(context.getString(R.string.m227_wednesday));
+        weeks.add(context.getString(R.string.m228_thursday));
+        weeks.add(context.getString(R.string.m229_friday));
+        weeks.add(context.getString(R.string.m230_saturday));
+        weeks.add(context.getString(R.string.m231_sunday));
+        return weeks;
+    }
+
+
     //隐藏虚拟键盘
     public static void hideKeyboard(View v) {
         InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -282,4 +305,7 @@ public class CommentUtils {
         }
         return null;
     }
+
+
+
 }

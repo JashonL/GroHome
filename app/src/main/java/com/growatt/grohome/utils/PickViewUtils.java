@@ -17,6 +17,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -81,6 +82,51 @@ public class PickViewUtils {
                 .build();
         pvOptions.setPicker(data);
         pvOptions.show();
+    }
+
+
+
+    /**
+     * 弹出时间选择器
+     */
+    public static void showTimePickView(Activity context, String selectDate,OnTimeSelectListener listener) throws Exception{
+        Calendar  selectedDate = Calendar.getInstance();
+        if (!TextUtils.isEmpty(selectDate)){
+            String[] split = selectDate.split("[\\D]");
+            if (split.length>1){
+                int hour = Integer.parseInt(split[0]);
+                int min = Integer.parseInt(split[1]);
+                selectedDate.set(Calendar.HOUR_OF_DAY,hour);
+                selectedDate.set(Calendar.MINUTE,min);
+                selectedDate.set(Calendar.SECOND,0);
+            }
+        }
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.DAY_OF_MONTH,-1);
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.DAY_OF_MONTH,1);
+        TimePickerView pvCustomTime = new TimePickerBuilder(context,listener)
+                .setType(new boolean[]{false, false, false, true, true, false})// 默认全部显示
+                .setCancelText(context.getString(R.string.m89_cancel))//取消按钮文字
+                .setSubmitText(context.getString(R.string.m90_ok))//确认按钮文字
+                .setContentTextSize(18)
+                .setTitleSize(20)//标题文字大小
+                .setTitleText(context.getString(R.string.m252_time))//标题文字
+                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+                .isCyclic(true)//是否循环滚动
+                .setTitleColor(ContextCompat.getColor(context,R.color.color_text_33))//标题文字颜色
+                .setSubmitColor(ContextCompat.getColor(context,R.color.color_text_33))//确定按钮文字颜色
+                .setCancelColor(ContextCompat.getColor(context,R.color.color_text_33))//取消按钮文字颜色
+                .setTitleBgColor(ContextCompat.getColor(context,R.color.white))//标题背景颜色 Night mode
+                .setBgColor(ContextCompat.getColor(context,R.color.white))//滚轮背景颜色 Night mode
+                .setTextColorCenter(ContextCompat.getColor(context,R.color.color_text_33))
+                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+                .setRangDate(startDate, endDate)//起始终止年月日设定
+                .setLabel("", "", "", context.getString(R.string.m249_hour), context.getString(R.string.m250_min), "")//默认设置为年月日时分秒
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .isDialog(false)//是否显示为对话框样式
+                .build();
+        pvCustomTime.show();
     }
 
 }

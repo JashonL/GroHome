@@ -108,6 +108,10 @@
 
         <activity android:name=".module.scenes.RepeatActivity"/>
 
+        <activity android:name=".module.scenes.PeriodCommentSetActivity"/>
+
+        <activity android:name=".module.scenes.SceneConditionActivity"/>
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

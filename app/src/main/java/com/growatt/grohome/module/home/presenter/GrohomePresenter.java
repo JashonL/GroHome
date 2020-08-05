@@ -13,6 +13,7 @@ import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.HomeDeviceBean;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.constants.GlobalVariable;
 import com.growatt.grohome.module.device.BulbActivity;
 import com.growatt.grohome.module.device.SwitchActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
@@ -79,6 +80,8 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                     obj = new JSONObject(bean);
                     int code = obj.getInt("code");
                     if (0 == code) {
+                        String filterEnable = obj.optString("filterEnable", "1");
+                        GlobalVariable.filterEnable = "1".equals(filterEnable);
                         HomeDeviceBean infoData = new Gson().fromJson(bean, HomeDeviceBean.class);
                         baseView.setAllDeviceSuccess(infoData);
                     }

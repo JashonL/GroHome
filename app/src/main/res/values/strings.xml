@@ -274,4 +274,22 @@
     <string name="m241_setting_temperature">Setting temperature</string>
     <string name="m242_please_set_task">Please set the task</string>
     <string name="m243_device_status_changes">Device status changes</string>
+    <string name="m244_add_new_condition">Add new condition</string>
+    <string name="m245_start_time">Start time</string>
+    <string name="m246_end_time">End Time</string>
+    <string name="m247_time_setting">Time Setting</string>
+
+    <string name="m248_save">Save</string>
+    <string name="m249_hour">Hour</string>
+    <string name="m250_min">Min</string>
+    <string name="m251_device_already_task">The device has been added to the list of executed devices and cannot be added as a condition for execution</string>
+    <string name="m252_time">Time</string>
+    <string name="m253_timed_execution">Timed execution</string>
+    <string name="m254_incomplete_settings">Incomplete settings</string>
+    <string name="m255_use_this_condition">Use this condition</string>
+    <string name="m256_choose_at_leat_one">Choose at least one condition</string>
+
+
+
+
 </resources>
