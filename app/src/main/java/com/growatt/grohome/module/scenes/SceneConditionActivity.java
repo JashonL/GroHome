@@ -39,7 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter> implements ISceneConditionView, BaseQuickAdapter.OnItemClickListener {
+public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter> implements ISceneConditionView, BaseQuickAdapter.OnItemChildClickListener {
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -145,7 +145,7 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
     protected void initListener() {
         super.initListener();
         toolbar.setNavigationOnClickListener(v -> finish());
-        mPanelAdapter.setOnItemClickListener(this);
+        mPanelAdapter.setOnItemChildClickListener(this);
     }
 
 
@@ -192,7 +192,9 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
             srlPull.setEnabled(true);
             rvPanelSetting.setVisibility(View.VISIBLE);
             gpSwitch.setVisibility(View.GONE);
+            gpSwitchStatus.setVisibility(View.GONE);
             gpTemp.setVisibility(View.GONE);
+
             //面板开关需要根据devid请求设备详情获取线路和名称
             try {
                 presenter.getDetailData();
@@ -202,6 +204,7 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
             typeName=getString(R.string.m37_panel_switch);
         } else {
             gpSwitch.setVisibility(View.VISIBLE);
+            gpSwitchStatus.setVisibility(View.VISIBLE);
             rvPanelSetting.setVisibility(View.GONE);
             gpTemp.setVisibility(View.GONE);
             typeName=getString(R.string.m39_bulb);
@@ -272,12 +275,29 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
     }
 
     @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        List<ScenesRoadBean> data = mPanelAdapter.getData();
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+      /*  List<ScenesRoadBean> data = mPanelAdapter.getData();
         ScenesRoadBean scenesRoadBean = data.get(position);
         int onOff = scenesRoadBean.getOnOff();
         scenesRoadBean.setOnOff(onOff == 0 ? 1 : 0);
         mPanelAdapter.notifyDataSetChanged();
+*/
+
+        List<ScenesRoadBean> data = mPanelAdapter.getData();
+        ScenesRoadBean swichBean = data.get(position);
+
+        switch (view.getId()){
+            case R.id.iv_switch_use:
+                boolean scenesConditionEnable = swichBean.isScenesConditionEnable();
+                swichBean.setScenesConditionEnable(!scenesConditionEnable);
+                mPanelAdapter.notifyDataSetChanged();
+                break;
+            case R.id.iv_switch_onoff:
+                int onOff = swichBean.getOnOff();
+                swichBean.setOnOff(onOff == 0?1:0);
+                mPanelAdapter.notifyDataSetChanged();
+                break;
+        }
     }
 
 

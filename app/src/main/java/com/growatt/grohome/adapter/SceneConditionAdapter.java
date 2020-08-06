@@ -104,7 +104,13 @@ public class SceneConditionAdapter extends BaseQuickAdapter<SceneConditionBean, 
                         for (int i = 0; i < charsTime.length; i++) {
                             if (String.valueOf(charsTime[i]).equals("1")) {
                                 String week = CommentUtils.getWeeks(mContext).get(i);
-                                setting.append(week).append(",");
+                                setting.append(week);
+                                if (i==charsTime.length-1){
+                                    setting.append(")");
+                                }else {
+                                    setting.append(",");
+                                }
+
                             }
                         }
                     }
@@ -114,7 +120,7 @@ public class SceneConditionAdapter extends BaseQuickAdapter<SceneConditionBean, 
 
         String s = setting.toString();
         if (s.endsWith(",")) {
-            s = s.substring(0, s.length() - 1)+")";
+            s = s.substring(0, s.length() - 1);
         }
         helper.setText(R.id.tv_device_task, s);
         helper.addOnClickListener(R.id.iv_edit);

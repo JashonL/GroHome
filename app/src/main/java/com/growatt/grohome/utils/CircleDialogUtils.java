@@ -238,4 +238,26 @@ public class CircleDialogUtils {
         return itemsSelectDialog;
     }
 
+
+    /**
+     * 公共自定义框
+     *
+     * @return
+     */
+    public static DialogFragment showCommentBodyView(Context context,View bodyView,String title, FragmentManager fragmentManager, OnCreateBodyViewListener listener,View.OnClickListener positiveListner) {
+        DialogFragment commentBodyDialog = new CircleDialog.Builder()
+                .setTitle(title)
+                .setBodyView(bodyView, listener)
+                .setGravity(Gravity.CENTER)
+                .setPositive(context.getString(R.string.m90_ok),positiveListner)
+                .setNegative(context.getString(R.string.m89_cancel), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .show(fragmentManager);
+        ;
+        return commentBodyDialog;
+    }
 }

@@ -24,6 +24,7 @@ public class GlobalConstant {
     public static final String ACITION_KEY = "action_key";
     //**************************场景*****************************
     public static final int REQUEST_CODE_EDIT_SCENE_TIME = 102;
+    public static final String SCENE_BEAN= "scene_bean";
     public static final String SCENE_TYPE = "scene_type";
     public static final String SCENE_NAME = "scene_name";
     public static final String SCENE_LUANCH_TAP_TO_RUN = "luanch_tap_to_run";
@@ -33,11 +34,14 @@ public class GlobalConstant {
     public static final String SCENE_ADD_CONDITION = "scene_condition";
     public static final String DEVICE_BEAN = "device_bean";
     public static final String SCENE_DEVICE_OPEN = "open";
+    public static final String SCENE_DEVICE_SET = "set";
     public static final String SCENE_DEVICE_SHUT = "shut";
     public static final String SCENE_CREATE_OR_EDIT = "scene_create_or_edit";
     public static final String SCENE_CREATE = "scene_create";
     public static final String SCENE_EDIT = "scene_edit";
     public static final String SCENE_TASK_BEAN = "scene_task_bean";
+    public static final String SCENE_CONDITION_BEAN = "scene_condition_bean";
+
     //*****************************时间********************************
     public static final int REQUEST_CODE_SELECT_TIME = 100;
     public static final String TIME_START = "start_time";
@@ -58,8 +62,9 @@ public class GlobalConstant {
     public static final String STRING_CHINA_CHINESE = "中国";
     public static final String STRING_CHINA_ENLISH = "china";
 
-
-
+    //**************************开关********************************
+    public static final int STATUS_ON = 1;
+    public static final int STATUS_OFF=0;
 
 
 }

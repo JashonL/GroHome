@@ -130,7 +130,7 @@ public class API {
 
         //---------------------------【   场景   】-----------------------------------
         @POST("smartHome/")
-        Observable<String>createScene(@Body RequestBody body);
+        Observable<String>smartHomeRequest(@Body RequestBody body);
     }
 
 }

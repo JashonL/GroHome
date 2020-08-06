@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:foreground="@drawable/card_foreground"
-        app:cardBackgroundColor="@color/color_scene_launch_background"
+        app:cardBackgroundColor="@color/gray_eeeeeee"
         app:cardCornerRadius="@dimen/dp_10">
 
 
@@ -38,7 +38,7 @@
                 android:maxLines="1"
                 android:padding="@dimen/dp_5"
                 android:text="@string/m83_logs"
-                android:textColor="@color/white"
+                android:textColor="@color/color_text_33"
                 android:textSize="@dimen/size_content_sp_14"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_right"
                 app:layout_constraintLeft_toLeftOf="parent"

@@ -1,6 +1,17 @@
 package com.growatt.grohome.module.scenes.view;
 
 import com.growatt.grohome.base.BaseView;
+import com.growatt.grohome.bean.ScenesBean;
+import com.growatt.grohome.eventbus.FreshScenesMsg;
+
+import java.util.List;
 
 public interface IScenesView extends BaseView {
+    void upDataLaunch(List<ScenesBean.DataBean> Data);
+
+    void upDataSmart(List<ScenesBean.DataBean> Data);
+
+    void launchTapToRunSuccess(ScenesBean.DataBean dataBean);
+
+    void updataSuccess(int position,ScenesBean.DataBean dataBean);
 }

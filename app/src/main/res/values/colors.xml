@@ -53,7 +53,8 @@
 
     <!--场景相关颜色-->
     <color name="color_scene_launch_background">#d48166</color>
-
+    <color name="color_scene_launch_off_background">#1A21435E</color>
+    <color name="color_smart_on_background">#708c73</color>
 
     <!-- 设备相关颜色-->
     <color name="color_white_mode_panel_title">#454752</color>

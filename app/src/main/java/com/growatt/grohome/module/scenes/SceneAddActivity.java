@@ -88,6 +88,8 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
     CardView cardEffectPeriod;
     @BindView(R.id.iv_condition_add)
     ImageView ivConditionAdd;
+    @BindView(R.id.tv_execution_met)
+    TextView tvEexecutionMet;
 
 
     private SceneTaskAdapter mSceneTaskAdapter;
@@ -149,6 +151,7 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
             }
         });
         mSceneTaskAdapter.setOnItemChildClickListener(this);
+        mSceneConditionAdapter.setOnItemChildClickListener(this);
     }
 
     @Override
@@ -189,6 +192,16 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
     }
 
     @Override
+    public void deleteCondition(int position) {
+        mSceneConditionAdapter.remove(position);
+    }
+
+    @Override
+    public List<SceneConditionBean> getConditionBean() {
+        return mSceneConditionAdapter.getData();
+    }
+
+    @Override
     public List<SceneTaskBean> getData() {
         return mSceneTaskAdapter.getData();
     }
@@ -198,8 +211,20 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
         MyToastUtils.toast(msg);
     }
 
+    @Override
+    public void setConditionMet(int satisfy) {
+        switch (satisfy){
+            case 0:
+                tvEexecutionMet.setText(R.string.m217_all_conditions_are_met);
+                break;
+            case 1:
+                tvEexecutionMet.setText(R.string.m218_any_conditions_is_met);
+                break;
+        }
+    }
 
-    @OnClick({R.id.card_view_name,R.id.iv_task_add,R.id.btn_save})
+
+    @OnClick({R.id.card_view_name,R.id.iv_task_add,R.id.btn_save,R.id.iv_condition_add,R.id.tv_execution_met})
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.card_view_name:
@@ -214,6 +239,13 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
                 break;
             case R.id.iv_task_add:
                 presenter.selectDevice(GlobalConstant.SCENE_ADD_TASK);
+                break;
+            case R.id.iv_condition_add:
+                presenter.addCondition(GlobalConstant.SCENE_ADD_CONDITION);
+                break;
+            case R.id.iv_execution_pull:
+            case R.id.tv_execution_met:
+                presenter.selectConditionMet();
                 break;
         }
     }
@@ -325,6 +357,18 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
                     break;
                 case R.id.iv_delete:
                     presenter.deleteDevice(position);
+                    break;
+            }
+        }
+
+        if (adapter==mSceneConditionAdapter){
+            SceneConditionBean conditionBean = mSceneConditionAdapter.getData().get(position);
+            switch (view.getId()) {
+                case R.id.iv_edit:
+                    presenter.toEditCondition(conditionBean);
+                    break;
+                case R.id.iv_delete:
+                    presenter.deleteCondition(position);
                     break;
             }
         }

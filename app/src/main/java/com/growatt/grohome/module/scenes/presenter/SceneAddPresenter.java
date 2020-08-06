@@ -19,11 +19,13 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.bean.SceneConditionBean;
 import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.eventbus.FreshScenesMsg;
 import com.growatt.grohome.module.device.AllDeviceActivity;
 import com.growatt.grohome.module.scenes.EffectivePeriodActivity;
+import com.growatt.grohome.module.scenes.SceneConditionActivity;
 import com.growatt.grohome.module.scenes.SceneTaskSettingActivity;
 import com.growatt.grohome.module.scenes.view.ISceneAddView;
 import com.growatt.grohome.utils.ActivityUtils;
@@ -47,6 +49,7 @@ import okhttp3.RequestBody;
 
 public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
     private String sceneType;
+    private int satisfy;
 
     public SceneAddPresenter(ISceneAddView baseView) {
         super(baseView);
@@ -80,7 +83,7 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
 
     public void addCondition(String deviceSelect) {
         String [] conditions=new String[]{context.getString(R.string.m146_timer),context.getString(R.string.m243_device_status_changes)};
-        CircleDialogUtils.showCommentItemDialog((FragmentActivity) context, context.getString(R.string.m244_add_new_condition), Arrays.asList(conditions), Gravity.BOTTOM, new OnLvItemClickListener() {
+        CircleDialogUtils.showCommentItemDialog((FragmentActivity) context, context.getString(R.string.m244_add_new_condition), Arrays.asList(conditions), Gravity.CENTER, new OnLvItemClickListener() {
             @Override
             public boolean onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
@@ -98,6 +101,21 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
     }
 
 
+    public void selectConditionMet() {
+        String [] conditions=new String[]{context.getString(R.string.m217_all_conditions_are_met),context.getString(R.string.m218_any_conditions_is_met)};
+        CircleDialogUtils.showCommentItemDialog((FragmentActivity) context, context.getString(R.string.m244_add_new_condition), Arrays.asList(conditions), Gravity.CENTER, new OnLvItemClickListener() {
+            @Override
+            public boolean onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                satisfy=position;
+                baseView.setConditionMet(satisfy);
+                return true;
+            }
+        });
+
+    }
+
+
+
     public void selectTime(String deviceSelect) {
         Intent intent = new Intent(context, EffectivePeriodActivity.class);
         intent.putExtra(GlobalConstant.SCENE_DEVICE_SELECT, deviceSelect);
@@ -107,14 +125,20 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
 
 
 
-
-
     public void selectDevice(String deviceSelect) {
         Intent intent = new Intent(context, AllDeviceActivity.class);
         intent.putExtra(GlobalConstant.SCENE_DEVICE_SELECT, deviceSelect);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
+    public void toEditCondition(SceneConditionBean sceneConditionBean) {
+        if (sceneConditionBean == null) return;
+        String bean = new Gson().toJson(sceneConditionBean);
+        Intent intent = new Intent(context, SceneConditionActivity.class);
+        intent.putExtra(GlobalConstant.SCENE_CONDITION_BEAN, bean);
+        intent.putExtra(GlobalConstant.SCENE_CREATE_OR_EDIT, GlobalConstant.SCENE_EDIT);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
+    }
 
     public void toEditConfig(SceneTaskBean sceneTaskBean) {
         if (sceneTaskBean == null) return;
@@ -136,6 +160,15 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
     }
 
 
+    public void deleteCondition(int pos) {
+        CircleDialogUtils.showCommentDialog((FragmentActivity) context, context.getString(R.string.m95_tips), context.getString(R.string.m210_delete_device), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                baseView.deleteCondition(pos);
+            }
+        });
+    }
+
     /**
      * 添加场景模式
      */
@@ -150,16 +183,35 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
             MyToastUtils.toast(R.string.m242_please_set_task);
             return;
         }
-        int isCondition = 0;
-        if (GlobalConstant.SCENE_SMART.equals(sceneType)) {
-            isCondition = 1;
-        }
         JSONObject requestJson = new JSONObject();
         requestJson.put("cmd", "updateSceneNew");
         requestJson.put("userId", App.getUserBean().getAccountName());
         requestJson.put("status", 0);
         requestJson.put("name", name);
         requestJson.put("onoff", 1);
+        int isCondition;
+        if (GlobalConstant.SCENE_SMART.equals(sceneType)) {
+            isCondition = 1;
+            List<SceneConditionBean> condition = baseView.getConditionBean();
+            if (condition.isEmpty()) {
+                MyToastUtils.toast(R.string.m242_please_set_task);
+                return;
+            }
+            if (condition.size()==1)satisfy=0;
+            requestJson.put("satisfy", satisfy);
+            JSONArray jsonArray1=new JSONArray();
+            if (condition.size()>0) {
+                for (SceneConditionBean bean : condition) {
+                    String json = new Gson().toJson(bean);
+                    JSONObject deviceJson = new JSONObject(json);
+                    jsonArray1.put(deviceJson);
+                }
+
+                requestJson.put("conditionconf", jsonArray1);
+            }
+        }else {
+            isCondition = 0;
+        }
         requestJson.put("isCondition", isCondition);
         requestJson.put("lan", CommentUtils.getLanguage());
         JSONArray jsonArray = new JSONArray();
@@ -174,7 +226,7 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
         }
         String jsonRequest = requestJson.toString().replace("\\/", "/");
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonRequest);
-        addDisposable(apiServer.createScene(body), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.smartHomeRequest(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
                 try {

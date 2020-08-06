@@ -74,25 +74,24 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
             if (TextUtils.isEmpty(beanJson)) return;
             groDeviceBean = new Gson().fromJson(beanJson, GroDeviceBean.class);
             devId = groDeviceBean.getDevId();
-            devName=groDeviceBean.getName();
-            devType=groDeviceBean.getDevType();
+            devName = groDeviceBean.getName();
+            devType = groDeviceBean.getDevType();
             deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
             baseView.setViewsByDevice(groDeviceBean);
         } else {
-            String taskJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.SCENE_TASK_BEAN);
+            String taskJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.SCENE_CONDITION_BEAN);
             if (TextUtils.isEmpty(taskJson)) return;
             mSceneCondition = new Gson().fromJson(taskJson, SceneConditionBean.class);
             linkType = mSceneCondition.getLinkType();
             roadset = mSceneCondition.getRoad();
             devId = mSceneCondition.getDevId();
-            devName=mSceneCondition.getDevName();
-            devType=mSceneCondition.getDevType();
+            devName = mSceneCondition.getDevName();
+            devType = mSceneCondition.getDevType();
             deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
             baseView.setViewsByTask(mSceneCondition);
         }
 
     }
-
 
 
     /**
@@ -141,15 +140,30 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                         for (int i = 0; i < road; i++) {
                             ScenesRoadBean swichBean = new ScenesRoadBean();
                             swichBean.setId(i + 1);
-                            String onOff="";
+                            String onOff;
                             if (deviceBean != null) {
                                 onOff = String.valueOf(deviceBean.getDps().get(String.valueOf(i + 1)));
+                                swichBean.setOnOff("true".equals(onOff) ? 1 : 0);
                             }
                             if (GlobalConstant.SCENE_EDIT.equals(createOrEdit)) {
-                                onOff = String.valueOf(roadset.charAt(i));
-                            }
-                            if (!TextUtils.isEmpty(onOff)) {
-                                swichBean.setOnOff("true".equals(onOff) ? 1 : 0);
+                                if (TextUtils.isEmpty(roadset) || i >= roadset.length()) {
+                                    return;
+                                }
+                                String switch_onOff = String.valueOf(roadset.charAt(i));
+                                switch (switch_onOff) {
+                                    case "1":
+                                        swichBean.setOnOff(1);
+                                        swichBean.setScenesConditionEnable(true);
+                                        break;
+                                    case "0":
+                                        swichBean.setOnOff(0);
+                                        swichBean.setScenesConditionEnable(true);
+                                        break;
+                                    case "2":
+                                        swichBean.setOnOff(0);
+                                        swichBean.setScenesConditionEnable(false);
+                                        break;
+                                }
                             }
                             String name = panelObject.getString("code" + swichBean.getId());
                             swichBean.setName(name);
@@ -196,11 +210,11 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
         switch (devType) {
             case DeviceTypeConstant.TYPE_THERMOSTAT:
             case DeviceTypeConstant.TYPE_AIRCONDITION:
-                if (!baseView.getSwitchChecked()&&!baseView.getTempChecked()){
+                if (!baseView.getSwitchChecked() && !baseView.getTempChecked()) {
                     MyToastUtils.toast(R.string.m256_choose_at_leat_one);
                     return;
                 }
-                if (baseView.getSwitchChecked()){
+                if (baseView.getSwitchChecked()) {
                     bean.setLinkType(linkType);
                 }
                 break;
@@ -209,18 +223,18 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 break;
             case DeviceTypeConstant.TYPE_PANELSWITCH:
                 StringBuilder road = new StringBuilder();
-                StringBuilder subSwitchName=new StringBuilder();
+                StringBuilder subSwitchName = new StringBuilder();
                 List<ScenesRoadBean> data = baseView.getData();
-                boolean isConditionSelect=false;
+                boolean isConditionSelect = false;
                 for (int i = 0; i < data.size(); i++) {
-                    if (data.get(i).isScenesConditionEnable()){
-                        isConditionSelect=true;
+                    if (data.get(i).isScenesConditionEnable()) {
+                        isConditionSelect = true;
                         if (data.get(i).getOnOff() == 1) {
                             road.append("1");
                         } else {
                             road.append("0");
                         }
-                    }else {
+                    } else {
                         road.append("2");
                     }
                     subSwitchName.append(data.get(i).getName()).append(",");
@@ -232,7 +246,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 bean.setSubSwitchName(s);
                 bean.setRoad(road.toString());
                 bean.setSwitchNameList(nameList);
-                if (!isConditionSelect){
+                if (!isConditionSelect) {
                     MyToastUtils.toast(R.string.m256_choose_at_leat_one);
                     return;
                 }
