@@ -231,6 +231,16 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     public void setColourMaskView(int color) {
     }
 
+    @Override
+    public BulbSceneBean getSceneBean() {
+        return mBulbSceneAdapter.getItem(mBulbSceneAdapter.getNowSelectPosition());
+    }
+
+    @Override
+    public void deviceOnline(boolean status) {
+
+    }
+
     public void showViewsByTab(String mode) {
         if (DeviceBulb.BULB_MODE_WHITE.equals(mode)) {//白光模式
             ivWhiteLight.setSelected(true);

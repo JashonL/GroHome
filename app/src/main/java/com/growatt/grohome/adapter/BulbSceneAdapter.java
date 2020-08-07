@@ -54,6 +54,10 @@ public class BulbSceneAdapter extends BaseQuickAdapter<BulbSceneBean, BaseViewHo
     }
 
 
+    public int getNowSelectPosition() {
+        return nowSelectPosition;
+    }
+
     public void setNowSelectPosition(int position) {
         if (position >= getItemCount()) return;
         //去除其他item选择

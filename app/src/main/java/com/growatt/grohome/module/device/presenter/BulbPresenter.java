@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.BulbSceneBean;
@@ -110,6 +111,12 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             ((Activity) context).finish();
             return;
         }
+        //设备不在线
+        if (!deviceNotOnline()){
+            baseView.deviceOnline(false);
+            return;
+        }
+
         //获取开关状态
         onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
         bright = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbBrightValue()));
@@ -121,7 +128,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         temp = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbTempValue()));
         baseView.setOnoff(onOff);
         baseView.setBright(bright);
-        if (!TextUtils.isEmpty(colour)) {
+        if (!CommentUtils.isStringEmpty(colour)) {
             int length = colour.length();
             if (length > 9) {
                 float[] hsv = new float[3];
@@ -336,8 +343,11 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
 
     public void toEditScene() {
+        BulbSceneBean sceneBean = baseView.getSceneBean();
+        if (sceneBean==null)return;
+        String beanJson=new Gson().toJson(sceneBean);
         Intent intent = new Intent(context, BulbSceneEditActivity.class);
-        intent.putExtra(DeviceBulb.BULB_SCENE_DATA,scene);
+        intent.putExtra(GlobalConstant.BULB_SCENE_BEAN,beanJson);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 

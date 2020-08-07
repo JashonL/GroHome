@@ -15,15 +15,11 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.google.gson.Gson;
 import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
-import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
-import com.growatt.grohome.base.BaseView;
 import com.growatt.grohome.bean.User;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.http.API;
-import com.growatt.grohome.module.device.BulbSceneEditActivity;
-import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.login.CountryListActivity;
 import com.growatt.grohome.module.login.view.IRegisterLoginView;
 import com.growatt.grohome.utils.ActivityUtils;
@@ -34,22 +30,15 @@ import com.growatt.grohome.utils.PickViewUtils;
 import com.growatt.grohome.utils.SharedPreferencesUnit;
 import com.hjq.toast.ToastUtils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import retrofit2.http.Field;
 
-import static com.growatt.grohome.module.config.DeviceLightStatusActivity.START_FOR_RESULT_CONFIG;
 
 public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
 

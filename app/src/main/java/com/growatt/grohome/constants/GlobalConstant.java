@@ -24,7 +24,7 @@ public class GlobalConstant {
     public static final String ACITION_KEY = "action_key";
     //**************************场景*****************************
     public static final int REQUEST_CODE_EDIT_SCENE_TIME = 102;
-    public static final String SCENE_BEAN= "scene_bean";
+    public static final String SCENE_BEAN = "scene_bean";
     public static final String SCENE_TYPE = "scene_type";
     public static final String SCENE_NAME = "scene_name";
     public static final String SCENE_LUANCH_TAP_TO_RUN = "luanch_tap_to_run";
@@ -50,9 +50,9 @@ public class GlobalConstant {
     public static final int REQUEST_CODE_SELECT_REPEAT = 101;
     public static final String TIME_LOOPTYPE = "start_looptype";
     public static final String TIME_LOOPVALUE = "start_loopvalue";
-    public static final String SET_TIMEVALUE_OR_TIMEPERIOD="set_timevalue_or_timeperiod";
-    public static final String SET_TIMEVALUE="timevalue";
-    public static final String SET_TIMEPERIOD="timeperiod";
+    public static final String SET_TIMEVALUE_OR_TIMEPERIOD = "set_timevalue_or_timeperiod";
+    public static final String SET_TIMEVALUE = "timevalue";
+    public static final String SET_TIMEPERIOD = "timeperiod";
 
     //************shareperferen保存常量********************************
     public static final String SP_USER_NAME = "user_name";
@@ -64,7 +64,8 @@ public class GlobalConstant {
 
     //**************************开关********************************
     public static final int STATUS_ON = 1;
-    public static final int STATUS_OFF=0;
-
+    public static final int STATUS_OFF = 0;
+    //***************************彩灯场景*******************************
+    public static final String BULB_SCENE_BEAN = "bulb_scene_bean";
 
 }

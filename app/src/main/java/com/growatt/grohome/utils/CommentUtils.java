@@ -306,6 +306,14 @@ public class CommentUtils {
         return null;
     }
 
+    /**
+     * 判断字符串是否是"null"
+     */
+
+
+    public static   boolean isStringEmpty(String s){
+        return "null".equals(s);
+    }
 
 
 }
