@@ -142,7 +142,7 @@ public class CommentUtils {
     }
 
 
-    //将int数值转成4位的16进制的字符串，不足的补0
+    //将16进制的字符串转成int数值，不足的补0
     public static int hexStringToInter(String value) {
         if (TextUtils.isEmpty(value)) return 0;
         return Integer.parseInt(value, 16);

@@ -51,7 +51,7 @@ public class CircleView extends View {
         mStrokePaint=new Paint();
         mStrokePaint.setAntiAlias(true);
         mStrokePaint.setStyle(Paint.Style.STROKE);
-        mStrokePaint.setColor(Color.RED);
+        mStrokePaint.setColor(Color.WHITE);
     }
 
     @Override
@@ -105,12 +105,19 @@ public class CircleView extends View {
 
 
     /**
+     * 绘制类型
+     */
+    public void setType(int type) {
+      this.type=type;
+    }
+
+
+    /**
      * 刷新颜色zhi
      *
      * @param color
      */
     public void setColor(int color) {
-        type = 1;
         mPaint.setColor(color);
         invalidate();
     }
@@ -126,7 +133,6 @@ public class CircleView extends View {
 
 
     public void setBitmap(Bitmap bitmap) {
-        type = 2;
         mBitmap = bitmap;
         invalidate();
     }

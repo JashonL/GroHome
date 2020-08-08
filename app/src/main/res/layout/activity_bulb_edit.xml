@@ -89,8 +89,11 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rlv_scene"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_5"
                     app:layout_constraintTop_toBottomOf="@+id/tv_colour_title" />
+
+
 
 
                 <View
@@ -101,16 +104,9 @@
                     android:background="@color/white"
                     app:layout_constraintTop_toBottomOf="@+id/rlv_scene" />
 
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/grop_colour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    app:constraint_referenced_ids="v_line_colour,iv_delete,iv_brightness_dark,seek_brightness,iv_brightness_bright,iv_temper_cold,seek_temper,seek_temper,iv_temper_hot,v_bottom" />
 
-
-                <RadioGroup
-                    android:id="@+id/rg_color_select"
+                <LinearLayout
+                    android:id="@+id/ll_color_select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
@@ -120,6 +116,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/v_line_colour">
 
                     <LinearLayout
+                        android:id="@+id/ll_colour"
                         android:layout_width="@dimen/dp_44"
                         android:layout_height="@dimen/dp_42"
                         android:background="@drawable/selector_radio_left"
@@ -127,34 +124,33 @@
                         android:orientation="vertical">
 
 
-                        <RadioButton
+                        <ImageView
                             android:id="@+id/iv_colour_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/colour"
-                            android:checked="true"
+                            android:src="@drawable/colour"
                             android:gravity="center" />
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_white"
                         android:layout_width="@dimen/dp_44"
                         android:layout_height="@dimen/dp_42"
                         android:background="@drawable/selector_radio_right"
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <RadioButton
+                        <ImageView
                             android:id="@+id/iv_white_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@drawable/white"
-                            android:checked="false"
+                            android:src="@drawable/white"
                             android:gravity="center" />
 
                     </LinearLayout>
 
-                </RadioGroup>
+                </LinearLayout>
 
 
                 <ImageView
@@ -164,16 +160,10 @@
                     android:layout_marginEnd="@dimen/dp_10"
                     android:padding="@dimen/dp_10"
                     android:src="@drawable/dev_del"
-                    app:layout_constraintBottom_toBottomOf="@+id/rg_color_select"
+                    app:layout_constraintBottom_toBottomOf="@+id/ll_color_select"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/rg_color_select" />
+                    app:layout_constraintTop_toTopOf="@+id/ll_color_select" />
 
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/gp_colour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="seek_colour,iv_brightness_dark,seek_brightness,iv_brightness_bright,iv_temper_cold,seek_temper,iv_temper_hot" />
 
 
                 <androidx.appcompat.widget.AppCompatSeekBar
@@ -188,7 +178,7 @@
                     android:thumb="@drawable/seek_colour_temp_thumb"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rg_color_select" />
+                    app:layout_constraintTop_toBottomOf="@+id/ll_color_select" />
 
 
                 <ImageView
@@ -260,13 +250,6 @@
                     app:layout_constraintLeft_toRightOf="@+id/seek_temper"
                     app:layout_constraintTop_toTopOf="@+id/seek_temper" />
 
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/gp_white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:constraint_referenced_ids="seek_white,iv_white_brightness_left,seek_white_brightness,iv_white_brightness_right" />
 
 
                 <androidx.appcompat.widget.AppCompatSeekBar

@@ -4,10 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.growatt.grohome.customview.CircleView
-        android:id="@+id/view_color"
+    <ImageView
+        android:id="@+id/iv_add"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
+        android:src="@drawable/icon_home_add"
         android:layout_gravity="center_vertical" />
 
 </LinearLayout>

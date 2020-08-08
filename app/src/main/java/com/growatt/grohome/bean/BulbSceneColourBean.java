@@ -1,8 +1,14 @@
 package com.growatt.grohome.bean;
 
-public class BulbSceneColourBean {
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
+public class BulbSceneColourBean implements MultiItemEntity {
+
     private int colour;
-    private boolean isDefalut;
+    private boolean isSelected;
+    private boolean isColour;
+    private float[] hsv;
+    private int itemType;
 
     public int getColour() {
         return colour;
@@ -12,11 +18,36 @@ public class BulbSceneColourBean {
         this.colour = colour;
     }
 
-    public boolean isDefalut() {
-        return isDefalut;
+    public boolean isSelected() {
+        return isSelected;
     }
 
-    public void setDefalut(boolean defalut) {
-        isDefalut = defalut;
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public boolean isColour() {
+        return isColour;
+    }
+
+    public void setColour(boolean colour) {
+        isColour = colour;
+    }
+
+    public float[] getHsv() {
+        return hsv;
+    }
+
+    public void setHsv(float[] hsv) {
+        this.hsv = hsv;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
+
+    @Override
+    public int getItemType() {
+        return itemType;
     }
 }

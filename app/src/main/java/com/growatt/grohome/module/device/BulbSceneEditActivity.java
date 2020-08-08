@@ -5,8 +5,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatSeekBar;
@@ -16,18 +15,18 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
-import com.growatt.grohome.adapter.BulbSceneAdapter;
 import com.growatt.grohome.adapter.BulbSceneColourAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.BulbSceneColourBean;
 import com.growatt.grohome.customview.CircleView;
-import com.growatt.grohome.customview.LinearDivider;
+import com.growatt.grohome.customview.GridDivider;
 import com.growatt.grohome.module.device.presenter.BulbScenePresenter;
 import com.growatt.grohome.module.device.view.IBulbSceneView;
+import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
 
 import java.util.ArrayList;
@@ -35,8 +34,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> implements IBulbSceneView {
+public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> implements IBulbSceneView, BaseQuickAdapter.OnItemClickListener {
 
 
     @BindView(R.id.tv_title)
@@ -55,18 +55,13 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     RecyclerView rlvScene;
     @BindView(R.id.v_line_colour)
     View vLineColour;
-    @BindView(R.id.grop_colour)
-    Group gropColour;
-    @BindView(R.id.iv_colour_button)
-    RadioButton ivColourButton;
-    @BindView(R.id.iv_white_button)
-    RadioButton ivWhiteButton;
-    @BindView(R.id.rg_color_select)
-    RadioGroup rgColorSelect;
+
+
+    @BindView(R.id.ll_color_select)
+    LinearLayout rgColorSelect;
     @BindView(R.id.iv_delete)
     ImageView ivDelete;
-    @BindView(R.id.gp_colour)
-    Group gpColour;
+
     @BindView(R.id.seek_colour)
     AppCompatSeekBar seekColour;
     @BindView(R.id.iv_brightness_dark)
@@ -81,8 +76,6 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     AppCompatSeekBar seekTemper;
     @BindView(R.id.iv_temper_hot)
     ImageView ivTemperHot;
-    @BindView(R.id.gp_white)
-    Group gpWhite;
     @BindView(R.id.seek_white)
     AppCompatSeekBar seekWhite;
     @BindView(R.id.iv_white_brightness_left)
@@ -117,6 +110,10 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     ImageView ivSpeedFast;
     @BindView(R.id.btn_next)
     Button btnNext;
+    @BindView(R.id.ll_colour)
+    LinearLayout llColour;
+    @BindView(R.id.ll_white)
+    LinearLayout llWhite;
 
 
     //头部
@@ -124,6 +121,10 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     private MenuItem switchItem;
 
 
+    //颜色编辑控件
+    private List<View> colorEditViews = new ArrayList<>();
+    private List<View> colourViews = new ArrayList<>();
+    private List<View> whiteViews = new ArrayList<>();
 
 
     //颜色
@@ -157,13 +158,68 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
 
         //场景颜色列表
         rlvScene.setLayoutManager(new GridLayoutManager(this, 6));
-        mBulbSceneColourAdapter = new BulbSceneColourAdapter(R.layout.item_bulb_scene, new ArrayList<>());
+        mBulbSceneColourAdapter = new BulbSceneColourAdapter(new ArrayList<>());
         rlvScene.setAdapter(mBulbSceneColourAdapter);
-        int div = CommentUtils.dip2px(this, 10);
-        rlvScene.addItemDecoration(new LinearDivider(this, LinearLayoutManager.HORIZONTAL, div, ContextCompat.getColor(this, R.color.nocolor)));
+        int div = CommentUtils.dip2px(this, 5);
+        rlvScene.addItemDecoration(new GridDivider(ContextCompat.getColor(this, R.color.nocolor), div, div));
 
-        gropColour.setVisibility(View.GONE);
+        //颜色编辑控件
+        colorEditViews.add(vLineColour);
+        colorEditViews.add(rgColorSelect);
+        colorEditViews.add(ivDelete);
+        colorEditViews.add(vBottom);
+        colourViews.add(seekColour);
+        colourViews.add(ivBrightnessDark);
+        colourViews.add(seekBrightness);
+        colourViews.add(ivBrightnessBright);
+        colourViews.add(ivTemperCold);
+        colourViews.add(seekTemper);
+        colourViews.add(ivTemperHot);
+        whiteViews.add(seekWhite);
+        whiteViews.add(ivWhiteBrightnessLeft);
+        whiteViews.add(ivWhiteBrightnessRight);
+        whiteViews.add(seekWhiteBrightness);
+        hideWhiteViews();
+        hideColourViews();
+        hideEditViews();
 
+    }
+
+    private void hideWhiteViews() {
+        for (int i = 0; i < whiteViews.size(); i++) {
+            whiteViews.get(i).setVisibility(View.GONE);
+        }
+    }
+
+    private void hideColourViews() {
+        for (int i = 0; i < colourViews.size(); i++) {
+            colourViews.get(i).setVisibility(View.GONE);
+        }
+    }
+
+    private void hideEditViews() {
+        for (int i = 0; i < colorEditViews.size(); i++) {
+            colorEditViews.get(i).setVisibility(View.GONE);
+        }
+    }
+
+
+    private void showWhiteViews() {
+        for (int i = 0; i < whiteViews.size(); i++) {
+            whiteViews.get(i).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void showColourViews() {
+        for (int i = 0; i < colourViews.size(); i++) {
+            colourViews.get(i).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void showEditViews() {
+        for (int i = 0; i < colorEditViews.size(); i++) {
+            colorEditViews.get(i).setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -178,10 +234,24 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     @Override
     protected void initListener() {
         super.initListener();
-
-
+        mBulbSceneColourAdapter.setOnItemClickListener(this);
     }
 
+
+    @OnClick({R.id.ll_colour, R.id.ll_white, R.id.iv_delete})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_colour:
+                setSelectChange(true);
+                break;
+            case R.id.ll_white:
+                setSelectChange(false);
+                break;
+            case R.id.iv_delete:
+                deleteColour();
+                break;
+        }
+    }
 
     @Override
     public void setViewById(int id) {
@@ -210,11 +280,94 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
         tvSceneName.setText(name);
     }
 
+    @Override
+    public void setMode(int mode) {
+
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+
+    }
+
+    @Override
+    public void setColous(List<BulbSceneColourBean> colourBeans) {
+        mBulbSceneColourAdapter.replaceData(colourBeans);
+    }
+
 
     private void setColorPick(CircleView view) {
         int color = view.getColor();
 
     }
 
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        BulbSceneColourBean bulbSceneColourBean = mBulbSceneColourAdapter.getData().get(position);
+        if (bulbSceneColourBean != null) {
+            if (position != mBulbSceneColourAdapter.getNowSelectPosition()) {
+                showEditViews();
+                boolean isColour = bulbSceneColourBean.isColour();
+                setSelectChange(isColour);
+            } else {
+                hideColourViews();
+                hideEditViews();
+                hideWhiteViews();
+            }
+            presenter.setCurrentColourBean(bulbSceneColourBean);
+            mBulbSceneColourAdapter.setNowSelectPosition(position);
+        }
+    }
+
+
+    private void setSelectChange(boolean isColour) {
+        if (isColour) {
+            showColourViews();
+            hideWhiteViews();
+            onCheckedChanged(R.id.ll_colour);
+        } else {
+            onCheckedChanged(R.id.ll_white);
+            showWhiteViews();
+            hideColourViews();
+        }
+    }
+
+
+    public void onCheckedChanged(int checkedId) {
+        switch (checkedId) {
+            case R.id.ll_colour:
+                llColour.setBackgroundResource(R.drawable.shape_radio_left_selected);
+                llWhite.setBackgroundResource(R.drawable.shape_radio_right_normal);
+                break;
+            case R.id.ll_white:
+                llColour.setBackgroundResource(R.drawable.shape_radio_left_normal);
+                llWhite.setBackgroundResource(R.drawable.shape_radio_right_selected);
+                break;
+        }
+    }
+
+
+    private void deleteColour() {
+        List<BulbSceneColourBean> data = mBulbSceneColourAdapter.getData();
+        int nowSelectPosition = mBulbSceneColourAdapter.getNowSelectPosition();
+        if (data.size() > nowSelectPosition) {
+            int currentFlashMode = presenter.getCurrentFlashMode();
+            if (currentFlashMode!=0){
+                if (nowSelectPosition==0||nowSelectPosition==1){
+                }else {
+
+                }
+            }else {
+                if (nowSelectPosition==0){
+
+                }else {
+
+                }
+            }
+
+
+        }
+    }
 
 }
