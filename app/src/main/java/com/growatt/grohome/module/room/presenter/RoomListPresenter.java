@@ -100,6 +100,8 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
             clazz = SwitchActivity.class;
         } else if (DeviceTypeConstant.TYPE_BULB.equals(devType)) {
             clazz = BulbActivity.class;
+        }else {
+            clazz = BulbActivity.class;
         }
         if (clazz == null) return;
         Intent intent = new Intent(context, clazz);

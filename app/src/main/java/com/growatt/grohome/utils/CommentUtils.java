@@ -129,11 +129,11 @@ public class CommentUtils {
     }
 
     //将int数值转成4位的16进制的字符串，不足的补0
-    public static String integerToHexstring(int value) {
+    public static String integerToHexstring(int value,int scale) {
         String hex = Integer.toHexString(value);
-        if (hex.length() < 4) {
+        if (hex.length() < scale) {
             StringBuilder suff = new StringBuilder();
-            for (int i = 0; i < 4 - hex.length(); i++) {
+            for (int i = 0; i < scale - hex.length(); i++) {
                 suff.append("0");
             }
             hex = suff.toString() + hex;

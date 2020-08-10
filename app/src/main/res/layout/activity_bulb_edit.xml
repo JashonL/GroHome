@@ -94,8 +94,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_colour_title" />
 
 
-
-
                 <View
                     android:id="@+id/v_line_colour"
                     android:layout_width="match_parent"
@@ -128,8 +126,8 @@
                             android:id="@+id/iv_colour_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/colour"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:src="@drawable/colour" />
 
                     </LinearLayout>
 
@@ -145,8 +143,8 @@
                             android:id="@+id/iv_white_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/white"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:src="@drawable/white" />
 
                     </LinearLayout>
 
@@ -165,27 +163,27 @@
                     app:layout_constraintTop_toTopOf="@+id/ll_color_select" />
 
 
-
-                <androidx.appcompat.widget.AppCompatSeekBar
+                <com.growatt.grohome.customview.ColorBarView
                     android:id="@+id/seek_colour"
-                    android:layout_width="@dimen/dp_250"
-                    android:layout_height="@dimen/dp_32"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20"
-                    android:max="990"
-                    android:padding="@dimen/dp_10"
-                    android:progress="20"
-                    android:progressDrawable="@drawable/seek_colour_temp"
-                    android:thumb="@drawable/seek_colour_temp_thumb"
+                    app:barHeight="@dimen/dp_10"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ll_color_select" />
+                    app:layout_constraintTop_toBottomOf="@+id/ll_color_select"
+                    app:thumbDrawable="@drawable/colour"
+                    app:thumbHeight="@dimen/dp_30" />
+
 
 
                 <ImageView
                     android:id="@+id/iv_brightness_dark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/dev_speed"
+                    android:src="@drawable/dev_brightness"
                     app:layout_constraintBottom_toBottomOf="@+id/seek_brightness"
                     app:layout_constraintRight_toLeftOf="@+id/seek_brightness"
                     app:layout_constraintTop_toTopOf="@+id/seek_brightness" />
@@ -210,7 +208,7 @@
                     android:id="@+id/iv_brightness_bright"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/dev_speed2"
+                    android:src="@drawable/dev_brightness2"
                     app:layout_constraintBottom_toBottomOf="@+id/seek_brightness"
                     app:layout_constraintLeft_toRightOf="@+id/seek_brightness"
                     app:layout_constraintTop_toTopOf="@+id/seek_brightness" />
@@ -220,7 +218,7 @@
                     android:id="@+id/iv_temper_cold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/dev_speed"
+                    android:src="@drawable/dev_saturation"
                     app:layout_constraintBottom_toBottomOf="@+id/seek_temper"
                     app:layout_constraintRight_toLeftOf="@+id/seek_temper"
                     app:layout_constraintTop_toTopOf="@+id/seek_temper" />
@@ -245,23 +243,24 @@
                     android:id="@+id/iv_temper_hot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/dev_speed2"
+                    android:src="@drawable/dev_saturation2"
                     app:layout_constraintBottom_toBottomOf="@+id/seek_temper"
                     app:layout_constraintLeft_toRightOf="@+id/seek_temper"
                     app:layout_constraintTop_toTopOf="@+id/seek_temper" />
 
 
-
                 <androidx.appcompat.widget.AppCompatSeekBar
                     android:id="@+id/seek_white"
-                    android:layout_width="@dimen/dp_250"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_32"
                     android:layout_marginTop="@dimen/dp_20"
-                    android:max="990"
-                    android:padding="@dimen/dp_10"
-                    android:progress="20"
-                    android:progressDrawable="@drawable/seek_colour_temp"
-                    android:thumb="@drawable/seek_colour_temp_thumb"
+                    android:max="100"
+                    android:progress="0"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:splitTrack="false"
+                    android:progressDrawable="@drawable/seek_white_temp"
+                    android:thumb="@drawable/seek_white_thumb"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/seek_temper" />
@@ -271,7 +270,7 @@
                     android:id="@+id/iv_white_brightness_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/dev_speed"
+                    android:src="@drawable/dev_brightness"
                     app:layout_constraintBottom_toBottomOf="@+id/seek_white_brightness"
                     app:layout_constraintRight_toLeftOf="@+id/seek_white_brightness"
                     app:layout_constraintTop_toTopOf="@+id/seek_white_brightness" />
@@ -282,11 +281,11 @@
                     android:layout_width="@dimen/dp_250"
                     android:layout_height="@dimen/dp_32"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:max="990"
+                    android:max="100"
                     android:padding="@dimen/dp_10"
-                    android:progress="20"
+                    android:progress="0"
                     android:progressDrawable="@drawable/seek_colour_temp"
-                    android:thumb="@drawable/seek_colour_temp_thumb"
+                    android:thumb="@drawable/seek_white_thumb"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/seek_white" />
@@ -296,7 +295,7 @@
                     android:id="@+id/iv_white_brightness_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/dev_speed2"
+                    android:src="@drawable/dev_brightness2"
                     app:layout_constraintBottom_toBottomOf="@+id/seek_white_brightness"
                     app:layout_constraintLeft_toRightOf="@+id/seek_white_brightness"
                     app:layout_constraintTop_toTopOf="@+id/seek_white_brightness" />
@@ -413,9 +412,9 @@
                 android:id="@+id/seek_speed"
                 android:layout_width="@dimen/dp_250"
                 android:layout_height="@dimen/dp_32"
-                android:max="990"
+                android:max="100"
                 android:padding="@dimen/dp_10"
-                android:progress="20"
+                android:progress="0"
                 android:progressDrawable="@drawable/seek_colour_temp"
                 android:thumb="@drawable/seek_colour_temp_thumb"
                 app:layout_constraintBottom_toBottomOf="@+id/v_colour_flash_speed"

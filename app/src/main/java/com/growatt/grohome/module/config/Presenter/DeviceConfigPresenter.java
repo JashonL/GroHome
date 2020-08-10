@@ -277,11 +277,11 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
      */
     public void addDevice(String pid,String devId) throws Exception {
         JSONObject requestJson=new JSONObject();
-        requestJson.put("userId", App.getUserBean().accountName);
+        requestJson.put("uid", App.getUserBean().accountName);
         requestJson.put("pid", pid);
         requestJson.put("devId", devId);
         requestJson.put("deviceServerAddress", 1);
-        requestJson.put("devType", DeviceTypeConstant.TYPE_PADDLE);
+        requestJson.put("devType", DeviceTypeConstant.TYPE_BULB);
         requestJson.put("lan",String.valueOf(CommentUtils.getLanguage()));
         String s = requestJson.toString();
         RequestBody body=RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);

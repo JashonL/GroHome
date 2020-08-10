@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatSeekBar;
@@ -22,8 +23,11 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.BulbSceneColourAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.BulbSceneColourBean;
+import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.customview.CircleView;
+import com.growatt.grohome.customview.ColorBarView;
 import com.growatt.grohome.customview.GridDivider;
+import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.presenter.BulbScenePresenter;
 import com.growatt.grohome.module.device.view.IBulbSceneView;
 import com.growatt.grohome.utils.CircleDialogUtils;
@@ -36,7 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> implements IBulbSceneView, BaseQuickAdapter.OnItemClickListener {
+public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> implements IBulbSceneView, BaseQuickAdapter.OnItemClickListener, SeekBar.OnSeekBarChangeListener, ColorBarView.OnColorChangeListener{
 
 
     @BindView(R.id.tv_title)
@@ -63,7 +67,7 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     ImageView ivDelete;
 
     @BindView(R.id.seek_colour)
-    AppCompatSeekBar seekColour;
+    ColorBarView seekColour;
     @BindView(R.id.iv_brightness_dark)
     ImageView ivBrightnessDark;
     @BindView(R.id.seek_brightness)
@@ -154,7 +158,7 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
         tvMenuRightText.setTextColor(ContextCompat.getColor(this, R.color.white));
         tvMenuRightText.setText(R.string.m162_reset);
         tvTitle.setText(R.string.m148_edit);
-
+        tvTitle.setTextColor(ContextCompat.getColor(this, R.color.white));
 
         //场景颜色列表
         rlvScene.setLayoutManager(new GridLayoutManager(this, 6));
@@ -235,10 +239,13 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     protected void initListener() {
         super.initListener();
         mBulbSceneColourAdapter.setOnItemClickListener(this);
+        seekWhite.setOnSeekBarChangeListener(this);
+        seekWhiteBrightness.setOnSeekBarChangeListener(this);
+        seekColour.setOnColorChangerListener(this);
     }
 
 
-    @OnClick({R.id.ll_colour, R.id.ll_white, R.id.iv_delete})
+    @OnClick({R.id.ll_colour, R.id.ll_white, R.id.iv_delete, R.id.v_colour_flash_mode})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_colour:
@@ -250,6 +257,11 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
             case R.id.iv_delete:
                 deleteColour();
                 break;
+            case R.id.v_colour_flash_mode:
+                presenter.setSceneMode();
+                break;
+
+
         }
     }
 
@@ -282,17 +294,38 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
 
     @Override
     public void setMode(int mode) {
-
+        switch (mode){
+            case 0:
+                gpSpeed.setVisibility(View.GONE);
+                tvFlashModeValue.setText(R.string.m163_static);
+                break;
+            case 1:
+                gpSpeed.setVisibility(View.VISIBLE);
+                tvFlashModeValue.setText(R.string.m164_flash);
+                break;
+            case 2:
+                gpSpeed.setVisibility(View.VISIBLE);
+                tvFlashModeValue.setText(R.string.m165_breath);
+                break;
+        }
     }
 
     @Override
     public void setSpeed(int speed) {
-
+        int max= DeviceBulb.getSpeedMax();
+        int min=DeviceBulb.getSpeedMin();
+        float progress = (float)(speed - min) / (float)(max - min)*100;
+        seekSpeed.setProgress((int) progress);
     }
 
     @Override
     public void setColous(List<BulbSceneColourBean> colourBeans) {
         mBulbSceneColourAdapter.replaceData(colourBeans);
+    }
+
+    @Override
+    public void updataSelected() {
+        mBulbSceneColourAdapter.notifyDataSetChanged();
     }
 
 
@@ -305,20 +338,50 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         BulbSceneColourBean bulbSceneColourBean = mBulbSceneColourAdapter.getData().get(position);
-        if (bulbSceneColourBean != null) {
-            if (position != mBulbSceneColourAdapter.getNowSelectPosition()) {
-                showEditViews();
-                boolean isColour = bulbSceneColourBean.isColour();
-                setSelectChange(isColour);
-            } else {
-                hideColourViews();
-                hideEditViews();
-                hideWhiteViews();
-            }
+        if (bulbSceneColourBean!=null){
             presenter.setCurrentColourBean(bulbSceneColourBean);
-            mBulbSceneColourAdapter.setNowSelectPosition(position);
+            int itemType = bulbSceneColourBean.getItemType();
+            if (itemType== GlobalConstant.STATUS_ITEM_DATA){//正常的选项
+                if (position != mBulbSceneColourAdapter.getNowSelectPosition()) {
+                    showEditViews();
+                    parserSceneColourBean(bulbSceneColourBean);
+                } else {
+                    hideColourViews();
+                    hideEditViews();
+                    hideWhiteViews();
+                }
+                mBulbSceneColourAdapter.setNowSelectPosition(position);
+            }else {//添加
+
+            }
         }
+
     }
+
+
+
+    private void parserSceneColourBean(BulbSceneColourBean bulbSceneColourBean){
+        boolean isColour = bulbSceneColourBean.isColour();
+        //设置彩光或者白光
+        setSelectChange(isColour);
+        float[] hsv = bulbSceneColourBean.getHsv();
+        if (isColour){
+            int colour = bulbSceneColourBean.getColour();
+            seekColour.setCurrentColor(colour);
+            int colourTempter= (int) (hsv[1]*100);
+            int colourBrightNess= (int) (hsv[2]*100);
+            seekTemper.setProgress(colourTempter);
+            seekBrightness.setProgress(colourBrightNess);
+
+        }else {
+            int whiteTempter= (int) (hsv[1]*100);
+            int whiteBrightNess= (int) (hsv[2]*100);
+            seekWhite.setProgress(100-whiteTempter);
+            seekWhiteBrightness.setProgress(whiteBrightNess);
+        }
+
+    }
+
 
 
     private void setSelectChange(boolean isColour) {
@@ -353,21 +416,66 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
         int nowSelectPosition = mBulbSceneColourAdapter.getNowSelectPosition();
         if (data.size() > nowSelectPosition) {
             int currentFlashMode = presenter.getCurrentFlashMode();
-            if (currentFlashMode!=0){
-                if (nowSelectPosition==0||nowSelectPosition==1){
-                }else {
-
-                }
-            }else {
-                if (nowSelectPosition==0){
-
-                }else {
-
-                }
+            int seletPos;
+            if (currentFlashMode == 0) {
+                seletPos = 1;
+            } else {
+                seletPos = 2;
             }
-
-
+            if (data.size() <= seletPos) {
+                CircleDialogUtils.showCommentDialog(this, getString(R.string.m95_tips), getString(R.string.m257_cannot_be_deleted), v -> {
+                });
+            } else {
+                mBulbSceneColourAdapter.setNowSelectPosition(nowSelectPosition - 1);
+                presenter.setCurrentColourBean(data.get(nowSelectPosition - 1));
+                mBulbSceneColourAdapter.remove(nowSelectPosition);
+            }
         }
     }
 
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        //温度调节
+        if (seekBar == seekWhite) {
+            int mProgree = seekWhite.getMax() - progress;
+            presenter.bulbTemper(mProgree);
+        }
+        //亮度调节
+        if (seekBar == seekWhiteBrightness) {
+            presenter.bulbLightness(progress);
+        }
+
+
+        //温度调节
+        if (seekBar == seekBrightness) {
+            presenter.bulbColourLightness(progress);
+        }
+        //亮度调节
+        if (seekBar == seekTemper) {
+            presenter.bulbColourTemper(progress);
+        }
+
+        //速率
+        if (seekBar == seekSpeed) {
+
+        }
+
+
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onColorChange(int color) {
+        presenter.bulbColour(color);
+    }
 }

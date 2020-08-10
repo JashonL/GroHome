@@ -247,9 +247,9 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         float mSat = mColourSatProgrees;
         float mVal = mColourValProgrees + 10;
         Log.i(TuyaApiUtils.TUYA_TAG, "mHue：" + mHue + "mStat" + mSat + "mVal" + mVal);
-        String angle = CommentUtils.integerToHexstring((int) mHue);
-        String s = CommentUtils.integerToHexstring((int) mSat);
-        String v = CommentUtils.integerToHexstring((int) mVal);
+        String angle = CommentUtils.integerToHexstring((int) mHue,4);
+        String s = CommentUtils.integerToHexstring((int) mSat,4);
+        String v = CommentUtils.integerToHexstring((int) mVal,4);
         colour = angle + s + v;
         mColor = color;
         Log.i(TuyaApiUtils.TUYA_TAG, colour);
@@ -270,9 +270,9 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         float mVal = mColourValProgrees + 10;
         mColourSatProgrees = progress;
         Log.i(TuyaApiUtils.TUYA_TAG, "mHue：" + mHue + "mStat" + (float) progress + "mVal" + mVal);
-        String angle = CommentUtils.integerToHexstring((int) mHue);
-        String s = CommentUtils.integerToHexstring((progress));
-        String v = CommentUtils.integerToHexstring((int) mVal);
+        String angle = CommentUtils.integerToHexstring((int) mHue,4);
+        String s = CommentUtils.integerToHexstring((progress),4);
+        String v = CommentUtils.integerToHexstring((int) mVal,4);
         colour = angle + s + v;
         Log.i(TuyaApiUtils.TUYA_TAG, colour);
 
@@ -298,9 +298,9 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         float mSat = mColourSatProgrees;
         mColourValProgrees = progress;
         Log.i(TuyaApiUtils.TUYA_TAG, "mHue：" + mHue + "mStat" + (float) progress + "mVal" + (float) progress);
-        String angle = CommentUtils.integerToHexstring((int) mHue);
-        String s = CommentUtils.integerToHexstring((int) mSat);
-        String v = CommentUtils.integerToHexstring(progress + 10);
+        String angle = CommentUtils.integerToHexstring((int) mHue,4);
+        String s = CommentUtils.integerToHexstring((int) mSat,4);
+        String v = CommentUtils.integerToHexstring((progress + 10),4);
         colour = angle + s + v;
 
         hsv[1] = mSat / 1000f;
@@ -348,6 +348,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         String beanJson=new Gson().toJson(sceneBean);
         Intent intent = new Intent(context, BulbSceneEditActivity.class);
         intent.putExtra(GlobalConstant.BULB_SCENE_BEAN,beanJson);
+        intent.putExtra(GlobalConstant.DEVICE_ID,deviceId);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 

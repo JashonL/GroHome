@@ -17,4 +17,6 @@ public interface IBulbSceneView extends BaseView {
 
     void setColous(List<BulbSceneColourBean> colourBeans);
 
+    void updataSelected();
+
 }

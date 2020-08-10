@@ -171,6 +171,8 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
             clazz = SwitchActivity.class;
         } else if (DeviceTypeConstant.TYPE_BULB.equals(devType)) {
             clazz = BulbActivity.class;
+        }else {
+            clazz = BulbActivity.class;
         }
         if (clazz == null) return;
         Intent intentThermostat = new Intent(context, clazz);

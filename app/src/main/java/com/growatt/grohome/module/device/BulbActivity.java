@@ -160,6 +160,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             String number = scene.substring(0, 2);
             int id = CommentUtils.hexStringToInter(number);
             mBulbSceneAdapter.setNowSelectPosition(id);
+            rlvScene.scrollToPosition(id);
             Integer integer = DeviceBulb.getSceneDefultPicRes().get(id);
             sceneBackGround.setBackgroundResource(integer);
         }

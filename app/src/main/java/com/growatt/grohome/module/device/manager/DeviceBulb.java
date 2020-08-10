@@ -1,11 +1,14 @@
 package com.growatt.grohome.module.device.manager;
 
 import com.growatt.grohome.R;
+import com.growatt.grohome.utils.CommentUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.http.PUT;
 
 public class DeviceBulb extends BaseDevice {
 
@@ -34,7 +37,13 @@ public class DeviceBulb extends BaseDevice {
     public static final String BULB_SCENE_RAINBOW="6";//rainbow
     public static final String BULB_SCENE_SHINE="7";//shine
     public static final String BULB_SCENE_GORGEOUS="8";//gorgeous
-
+    /**************************场景相关常量*********************************/
+    public static final String BULB_SCENE_WHITE_DEFAULT_SPEED="0e0d";
+    public static final String BULB_SCENE_WHITE_DEFAULT_SPACE="000000000000";
+    public static final String BULB_SCENE_COLOUR_DEFAULT_SPACE="00000000";
+    public static final String BULB_SCENE_WHITE_STATIC="00";
+    public static final String BULB_SCENE_SPEED_MAX="6464";
+    public static final String BULB_SCENE_SPEED_MIN="2828";
 
 
     @Override
@@ -217,4 +226,13 @@ public class DeviceBulb extends BaseDevice {
         return "07464602000003e803e800000000464602007803e803e80000000046460200f003e803e800000000464602003d03e803e80000000046460200ae03e803e800000000464602011303e803e800000000";
     }
 
+
+    public static int getSpeedMax(){
+        return CommentUtils.hexStringToInter(BULB_SCENE_SPEED_MAX);
+    }
+
+
+    public static int getSpeedMin(){
+        return CommentUtils.hexStringToInter(BULB_SCENE_SPEED_MIN);
+    }
 }
