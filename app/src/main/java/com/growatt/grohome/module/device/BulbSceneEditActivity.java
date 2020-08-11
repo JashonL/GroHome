@@ -239,6 +239,8 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     protected void initListener() {
         super.initListener();
         mBulbSceneColourAdapter.setOnItemClickListener(this);
+        seekTemper.setOnSeekBarChangeListener(this);
+        seekBrightness.setOnSeekBarChangeListener(this);
         seekWhite.setOnSeekBarChangeListener(this);
         seekWhiteBrightness.setOnSeekBarChangeListener(this);
         seekColour.setOnColorChangerListener(this);
@@ -447,11 +449,11 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
         }
 
 
-        //温度调节
+        //饱和度调节
         if (seekBar == seekBrightness) {
             presenter.bulbColourLightness(progress);
         }
-        //亮度调节
+        //温度调节
         if (seekBar == seekTemper) {
             presenter.bulbColourTemper(progress);
         }

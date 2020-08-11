@@ -67,7 +67,7 @@
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
                 android:background="@drawable/shape_corner_white"
-                app:layout_constraintTop_toBottomOf="@+id/iv_scene_edit">
+                app:layout_constraintTop_toBottomOf="@+id/tv_scene_name">
 
 
                 <TextView
@@ -194,9 +194,9 @@
                     android:layout_width="@dimen/dp_250"
                     android:layout_height="@dimen/dp_32"
                     android:layout_marginTop="@dimen/dp_20"
-                    android:max="990"
+                    android:max="100"
                     android:padding="@dimen/dp_10"
-                    android:progress="20"
+                    android:progress="0"
                     android:progressDrawable="@drawable/seek_colour_temp"
                     android:thumb="@drawable/seek_colour_temp_thumb"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -229,9 +229,9 @@
                     android:layout_width="@dimen/dp_250"
                     android:layout_height="@dimen/dp_32"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:max="990"
+                    android:max="100"
                     android:padding="@dimen/dp_10"
-                    android:progress="20"
+                    android:progress="0"
                     android:progressDrawable="@drawable/seek_colour_temp"
                     android:thumb="@drawable/seek_colour_temp_thumb"
                     app:layout_constraintLeft_toLeftOf="parent"

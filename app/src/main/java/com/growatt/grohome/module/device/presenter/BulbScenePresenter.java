@@ -136,8 +136,8 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
             int count = colours.length() / 26;
 
             List<BulbSceneColourBean> colourBeanList = new ArrayList<>();
-            float[] hsv = new float[3];
             for (int i = 0; i < count; i++) {
+                float[] hsv = new float[3];
                 BulbSceneColourBean bulbSceneColourBean = new BulbSceneColourBean();
                 String colorString = colours.substring(26 * i, (i + 1) * 26);
                 String hsvValue = colorString.substring(6, 18);
@@ -305,18 +305,22 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
 
     public void bulbColourTemper(int temper) {
         float[] hsv = mCurrentColourBean.getHsv();
-        hsv[0] = (float) temper;
-        int newColor = Color.HSVToColor(hsv);
+        hsv[1] = (float) (temper) / 100f;
+        float mHue = hsv[0];
+        float mSat = hsv[1];
+        float mVal = hsv[2];
+        int newColor = Color.HSVToColor(new float[]{hsv[0],  hsv[1], hsv[2]});
         mCurrentColourBean.setColour(newColor);
         mCurrentColourBean.setHsv(hsv);
+        Log.i(TuyaApiUtils.TUYA_TAG, "mHue：" + mHue + "mStat" + mSat + "mVal" + mVal);
+        String angle = CommentUtils.integerToHexstring((int) mHue, 4);
+        String s = CommentUtils.integerToHexstring((int) (mSat * 1000), 4);
+        String v = CommentUtils.integerToHexstring((int) (mVal * 1000), 4);
+        String colour = angle + s + v;
         baseView.updataSelected();
-        String whiteScene = CommentUtils.integerToHexstring(id, 2) + CommentUtils.integerToHexstring(mSpeed, 4) +
-                CommentUtils.integerToHexstring(mCurrentFlashMode, 2)
-                + CommentUtils.integerToHexstring((int) (hsv[0]), 4)
-                + CommentUtils.integerToHexstring((int) temper, 4)
-                + CommentUtils.integerToHexstring((int) (hsv[2] * 100), 4)
-                + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPACE;
-        Log.d(TuyaApiUtils.TUYA_TAG, whiteScene);
+        Log.i(TuyaApiUtils.TUYA_TAG, colour);
+        String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED+
+                DeviceBulb.BULB_SCENE_WHITE_STATIC + colour + DeviceBulb.BULB_SCENE_COLOUR_DEFAULT_SPACE;
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), whiteScene, mTuyaDevice, this);
         }
@@ -329,18 +333,22 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
 
     public void bulbColourLightness(int light) {
         float[] hsv = mCurrentColourBean.getHsv();
-        hsv[0] = (float) light;
-        int newColor = Color.HSVToColor(hsv);
+        hsv[2] = (float) light / 100f;
+        float mHue = hsv[0];
+        float mSat = hsv[1];
+        float mVal = hsv[2];
+        int newColor = Color.HSVToColor(new float[]{hsv[0],  hsv[1], hsv[2]});
         mCurrentColourBean.setColour(newColor);
         mCurrentColourBean.setHsv(hsv);
+        Log.i(TuyaApiUtils.TUYA_TAG, "mHue：" + mHue + "mStat" + mSat + "mVal" + mVal);
+        String angle = CommentUtils.integerToHexstring((int) mHue, 4);
+        String s = CommentUtils.integerToHexstring((int) (mSat * 1000), 4);
+        String v = CommentUtils.integerToHexstring((int) (mVal * 1000), 4);
+        String colour = angle + s + v;
         baseView.updataSelected();
-        String whiteScene = CommentUtils.integerToHexstring(id, 2) + CommentUtils.integerToHexstring(mSpeed, 4) +
-                CommentUtils.integerToHexstring(mCurrentFlashMode, 2)
-                + CommentUtils.integerToHexstring((int) hsv[0], 4)
-                + CommentUtils.integerToHexstring((int) (hsv[1] * 100), 4)
-                + CommentUtils.integerToHexstring(light, 4)
-                + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPACE;
-        Log.d(TuyaApiUtils.TUYA_TAG, whiteScene);
+        Log.i(TuyaApiUtils.TUYA_TAG, colour);
+        String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED+
+                DeviceBulb.BULB_SCENE_WHITE_STATIC + colour + DeviceBulb.BULB_SCENE_COLOUR_DEFAULT_SPACE;
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), whiteScene, mTuyaDevice, this);
         }
@@ -358,8 +366,6 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         float mSat = hsv[1];
         float mVal = hsv[2];
         hsv[0] = mHue;
-        hsv[1]=1;
-        hsv[2]=1;
         int newColor = Color.HSVToColor(new float[]{hsv[0],  hsv[1], hsv[2]});
         mCurrentColourBean.setColour(newColor);
         mCurrentColourBean.setHsv(hsv);
