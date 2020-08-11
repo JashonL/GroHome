@@ -37,13 +37,11 @@ import java.util.List;
 public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements SendDpListener {
 
 
-    private float[] defaultHsv1;
-    private float[] defaultHsv2;
-    private int defaultColor1;//默认颜色1
-    private int defaultColor2;//默认颜色2
-    private int defaultMode;//默认跳变颜色
-    private int defaultSpeed;//默认变化速率
+    private float[] defaultHsv;
+    private int defaultColor;//默认颜色
 
+    private float[] whiteHsv;
+    private int whiteColor;//默认颜色
 
     //当前选中颜色实例
     private BulbSceneColourBean mCurrentColourBean;
@@ -71,6 +69,12 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         super(context, baseView);
         deviceId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
         initDevice();
+        initColor();
+    }
+
+    private void initColor() {
+        whiteHsv = new float[]{42.3f, 1, 1};
+        whiteColor = Color.HSVToColor(whiteHsv);
     }
 
 
@@ -146,17 +150,24 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
                     hsv[0] = 42.3f;
                     hsv[1] = (float) CommentUtils.hexStringToInter(lightness.substring(4)) / 1000f;
                     hsv[2] = (float) CommentUtils.hexStringToInter(lightness.substring(0, 4)) / 1000f;
-                    bulbSceneColourBean.setColour(false);
+                    bulbSceneColourBean.setWhiteHsv(hsv);
+                    int color = Color.HSVToColor(hsv);
+                    bulbSceneColourBean.setWhiteColor(color);
+                    bulbSceneColourBean.setIsColour(false);
+                    bulbSceneColourBean.setHsv(defaultHsv);//设置一个默认的彩光
+                    bulbSceneColourBean.setColour(defaultColor);
                 } else {//彩光
                     hsv[0] = (float) CommentUtils.hexStringToInter(hsvValue.substring(0, 4));
                     hsv[1] = (float) CommentUtils.hexStringToInter(hsvValue.substring(4, 8)) / 1000f;
                     hsv[2] = (float) CommentUtils.hexStringToInter(hsvValue.substring(8)) / 1000f;
-                    bulbSceneColourBean.setColour(true);
+                    bulbSceneColourBean.setHsv(hsv);
+                    int color = Color.HSVToColor(hsv);
+                    bulbSceneColourBean.setColour(color);
+                    bulbSceneColourBean.setIsColour(true);
+                    bulbSceneColourBean.setWhiteHsv(whiteHsv);//设置一个默认的白光
+                    bulbSceneColourBean.setWhiteColor(whiteColor);
                 }
                 bulbSceneColourBean.setSelected(false);
-                bulbSceneColourBean.setHsv(hsv);
-                int color = Color.HSVToColor(hsv);
-                bulbSceneColourBean.setColour(color);
                 bulbSceneColourBean.setItemType(GlobalConstant.STATUS_ITEM_DATA);
                 colourBeanList.add(bulbSceneColourBean);
             }
@@ -167,13 +178,27 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
     }
 
 
-    private void dataDeal(List<BulbSceneColourBean> colourBeanList) {
+    public void dataDeal(List<BulbSceneColourBean> colourBeanList) {
         if (mCurrentFlashMode != 0 && colourBeanList.size() < 6) {
             BulbSceneColourBean addBean = new BulbSceneColourBean();
             addBean.setItemType(GlobalConstant.STATUS_ITEM_OTHER);
             colourBeanList.add(addBean);
         }
+    }
 
+
+    public void addData(List<BulbSceneColourBean> colourBeanList) {
+        BulbSceneColourBean addBean = new BulbSceneColourBean();
+        addBean.setItemType(GlobalConstant.STATUS_ITEM_DATA);
+        addBean.setHsv(defaultHsv);
+        addBean.setColour(defaultColor);
+        addBean.setIsColour(true);
+        addBean.setWhiteHsv(whiteHsv);//设置一个默认的白光
+        addBean.setWhiteColor(whiteColor);
+        addBean.setSelected(false);
+        addBean.setItemType(GlobalConstant.STATUS_ITEM_DATA);
+        colourBeanList.add(colourBeanList.size() - 1, addBean);
+        baseView.addDataDeal();
     }
 
 
@@ -185,54 +210,31 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
     private void setDefault(int id) {
         switch (id) {
             case 0:
-                defaultHsv1 = new float[]{42.3f, 0, 1};
-                defaultHsv2 = new float[]{15, 0, 1};
-                defaultMode = 0;
-                defaultSpeed = 2828;
+                defaultHsv = new float[]{230, 1, 1};
                 break;
             case 1:
-                defaultHsv1 = new float[]{30, 0, 1};
-                defaultHsv2 = new float[]{45, 0, 1};
-                defaultMode = 0;
-                defaultSpeed = 2828;
+                defaultHsv = new float[]{30, 1, 1};
                 break;
             case 2:
-                defaultHsv1 = new float[]{60, 0, 1};
-                defaultHsv2 = new float[]{75, 0, 1};
-                defaultMode = 0;
-                defaultSpeed = 2828;
+                defaultHsv = new float[]{60, 1, 1};
                 break;
             case 3:
-                defaultHsv1 = new float[]{90, 0, 1};
-                defaultHsv2 = new float[]{105, 0, 1};
-                defaultMode = 0;
-                defaultSpeed = 2828;
+                defaultHsv = new float[]{90, 1, 1};
                 break;
             case 4:
-                defaultHsv1 = new float[]{110, 0, 1};
-                defaultHsv2 = new float[]{125, 0, 1};
-                defaultMode = 0;
-                defaultSpeed = 2828;
+                defaultHsv = new float[]{110, 1, 1};
                 break;
             case 5:
-                defaultHsv1 = new float[]{140, 0, 1};
-                defaultHsv2 = new float[]{155, 0, 1};
-                defaultMode = 0;
-                defaultSpeed = 2828;
+                defaultHsv = new float[]{140, 1, 1};
                 break;
             case 6:
-                defaultHsv1 = new float[]{170, 0, 1};
-                defaultHsv2 = new float[]{185, 0, 1};
-                defaultMode = 0;
-                defaultSpeed = 2828;
+                defaultHsv = new float[]{170, 1, 1};
                 break;
             case 7:
-                defaultHsv1 = new float[]{200, 0, 1};
-                defaultHsv2 = new float[]{215, 0, 1};
-                defaultMode = 0;
-                defaultSpeed = 2828;
+                defaultHsv = new float[]{200, 1, 1};
                 break;
         }
+        defaultColor = Color.HSVToColor(defaultHsv);
     }
 
 
@@ -250,6 +252,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
 
     public void setCurrentFlashMode(int mCurrentFlashMode) {
         this.mCurrentFlashMode = mCurrentFlashMode;
+        baseView.setMode(mCurrentFlashMode);
     }
 
 
@@ -260,11 +263,11 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
      */
 
     public void bulbTemper(int temper) {
-        float[] hsv = mCurrentColourBean.getHsv();
+        float[] hsv = mCurrentColourBean.getWhiteHsv();
         hsv[1] = (float) (temper) / 100f;
         int newColor = Color.HSVToColor(new float[]{hsv[0], 1f - hsv[1], hsv[2]});
-        mCurrentColourBean.setColour(newColor);
-        mCurrentColourBean.setHsv(hsv);
+        mCurrentColourBean.setWhiteColor(newColor);
+        mCurrentColourBean.setWhiteHsv(hsv);
         baseView.updataSelected();
         String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED +
                 DeviceBulb.BULB_SCENE_WHITE_STATIC + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPACE +
@@ -281,11 +284,11 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
      */
 
     public void bulbLightness(int light) {
-        float[] hsv = mCurrentColourBean.getHsv();
+        float[] hsv = mCurrentColourBean.getWhiteHsv();
         hsv[2] = (float) light / 100f;
         int newColor = Color.HSVToColor(new float[]{hsv[0], 1f - hsv[1], hsv[2]});
-        mCurrentColourBean.setColour(newColor);
-        mCurrentColourBean.setHsv(hsv);
+        mCurrentColourBean.setWhiteColor(newColor);
+        mCurrentColourBean.setWhiteHsv(hsv);
         baseView.updataSelected();
         String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED +
                 DeviceBulb.BULB_SCENE_WHITE_STATIC + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPACE
@@ -309,7 +312,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         float mHue = hsv[0];
         float mSat = hsv[1];
         float mVal = hsv[2];
-        int newColor = Color.HSVToColor(new float[]{hsv[0],  hsv[1], hsv[2]});
+        int newColor = Color.HSVToColor(new float[]{hsv[0], hsv[1], hsv[2]});
         mCurrentColourBean.setColour(newColor);
         mCurrentColourBean.setHsv(hsv);
         Log.i(TuyaApiUtils.TUYA_TAG, "mHue：" + mHue + "mStat" + mSat + "mVal" + mVal);
@@ -319,7 +322,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         String colour = angle + s + v;
         baseView.updataSelected();
         Log.i(TuyaApiUtils.TUYA_TAG, colour);
-        String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED+
+        String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED +
                 DeviceBulb.BULB_SCENE_WHITE_STATIC + colour + DeviceBulb.BULB_SCENE_COLOUR_DEFAULT_SPACE;
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), whiteScene, mTuyaDevice, this);
@@ -337,7 +340,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         float mHue = hsv[0];
         float mSat = hsv[1];
         float mVal = hsv[2];
-        int newColor = Color.HSVToColor(new float[]{hsv[0],  hsv[1], hsv[2]});
+        int newColor = Color.HSVToColor(new float[]{hsv[0], hsv[1], hsv[2]});
         mCurrentColourBean.setColour(newColor);
         mCurrentColourBean.setHsv(hsv);
         Log.i(TuyaApiUtils.TUYA_TAG, "mHue：" + mHue + "mStat" + mSat + "mVal" + mVal);
@@ -347,7 +350,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         String colour = angle + s + v;
         baseView.updataSelected();
         Log.i(TuyaApiUtils.TUYA_TAG, colour);
-        String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED+
+        String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED +
                 DeviceBulb.BULB_SCENE_WHITE_STATIC + colour + DeviceBulb.BULB_SCENE_COLOUR_DEFAULT_SPACE;
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), whiteScene, mTuyaDevice, this);
@@ -366,7 +369,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         float mSat = hsv[1];
         float mVal = hsv[2];
         hsv[0] = mHue;
-        int newColor = Color.HSVToColor(new float[]{hsv[0],  hsv[1], hsv[2]});
+        int newColor = Color.HSVToColor(new float[]{hsv[0], hsv[1], hsv[2]});
         mCurrentColourBean.setColour(newColor);
         mCurrentColourBean.setHsv(hsv);
         Log.i(TuyaApiUtils.TUYA_TAG, "mHue：" + mHue + "mStat" + mSat + "mVal" + mVal);
@@ -376,11 +379,61 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         String colour = angle + s + v;
         baseView.updataSelected();
         Log.i(TuyaApiUtils.TUYA_TAG, colour);
-        String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED+
+        String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED +
                 DeviceBulb.BULB_SCENE_WHITE_STATIC + colour + DeviceBulb.BULB_SCENE_COLOUR_DEFAULT_SPACE;
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), whiteScene, mTuyaDevice, this);
         }
+    }
+
+
+    /**
+     * 设置场景
+     */
+    public void setScene() {
+        List<BulbSceneColourBean> data = baseView.getData();
+        StringBuilder scenes = new StringBuilder(CommentUtils.integerToHexstring(id, 2));
+        if (data != null) {
+            String currentSpeed;
+            if (mCurrentFlashMode == 0) {//静态
+                currentSpeed = DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED;
+            } else {//动态
+                currentSpeed = CommentUtils.integerToHexstring(mSpeed, 4);
+            }
+            for (int i = 0; i < data.size(); i++) {
+                scenes.append(currentSpeed).append(CommentUtils.integerToHexstring(mCurrentFlashMode, 2));
+                BulbSceneColourBean bulbSceneColourBean = data.get(i);
+                float[] hsv = bulbSceneColourBean.getHsv();
+                float[] whiteHsv = bulbSceneColourBean.getWhiteHsv();
+                boolean colour = bulbSceneColourBean.isColour();
+                if (colour) {
+                    String angle = CommentUtils.integerToHexstring((int) hsv[0],4);
+                    String s = CommentUtils.integerToHexstring((int) (hsv[1]*1000),4);
+                    String v = CommentUtils.integerToHexstring((int) (hsv[2]*1000),4);
+                    scenes.append(angle).append(s).append(v).append(DeviceBulb.BULB_SCENE_COLOUR_DEFAULT_SPACE);
+                } else {
+                    String s = CommentUtils.integerToHexstring((int) (whiteHsv[1]*1000),4);
+                    String v = CommentUtils.integerToHexstring((int) (whiteHsv[2]*1000),4);
+                    scenes.append(DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPACE).append(s).append(v);
+                }
+            }
+        }
+        Log.d(TuyaApiUtils.TUYA_TAG,"场景设置"+scenes.toString());
+        if (deviceNotOnline()) {
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), scenes.toString(), mTuyaDevice, this);
+        }
+    }
+
+
+    /**
+     * 设置速率
+     */
+
+    public void setFlashSpeed(int progress) {
+        int max = DeviceBulb.getSpeedMax();
+        int min = DeviceBulb.getSpeedMin();
+        mSpeed = (int) ((float) progress / 100 * (max - min) + min);
+        Log.d(TuyaApiUtils.TUYA_TAG, "速度" + mSpeed);
     }
 
 
@@ -404,15 +457,18 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
             public boolean onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
+                        setCurrentFlashMode(0);
                         break;
                     case 1:
+                        setCurrentFlashMode(1);
                         break;
                     case 2:
+                        setCurrentFlashMode(2);
                         break;
                     case 3:
                         break;
                 }
-                return false;
+                return true;
             }
         });
     }

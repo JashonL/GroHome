@@ -39,7 +39,13 @@ public class BulbSceneColourAdapter extends BaseMultiItemQuickAdapter<BulbSceneC
             }else {
                 view.setType(CircleView.CIRCLE_VIEW_TYPE_SOLID);
             }
-            view.setColor(item.getColour());
+            boolean colour = item.isColour();
+            if (colour){
+                view.setColor(item.getColour());
+            }else {
+                view.setColor(item.getWhiteColor());
+
+            }
         }
     }
 

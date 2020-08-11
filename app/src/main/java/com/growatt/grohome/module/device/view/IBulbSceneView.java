@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface IBulbSceneView extends BaseView {
 
-    void setViewById(int id);
-
     void setSceneName(String name);
 
     void setMode(int mode);
@@ -17,6 +15,10 @@ public interface IBulbSceneView extends BaseView {
 
     void setColous(List<BulbSceneColourBean> colourBeans);
 
+    List<BulbSceneColourBean> getData();
+
     void updataSelected();
+
+    void addDataDeal();
 
 }

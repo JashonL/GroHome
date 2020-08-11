@@ -125,7 +125,7 @@ public class CircleDialogUtils {
                     params.styleText = Typeface.BOLD;
                 })
                 .setItems(modes, listener)
-                .setGravity(Gravity.CENTER)
+                .setGravity(Gravity.BOTTOM)
                 .show(activity.getSupportFragmentManager());
         return flashModeDialog;
     }
