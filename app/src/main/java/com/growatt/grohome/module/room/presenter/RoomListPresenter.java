@@ -268,7 +268,6 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
 
     @Override
     public void onDpUpdate(String devId, String dpStr) {
-        Log.i(TuyaApiUtils.TUYA_TAG, "deviceId:" + devId + "responed:" + dpStr + "time：" + System.currentTimeMillis());
         try {
             List<GroDeviceBean> data = baseView.getData();
             GroDeviceBean allDeviceBean = new GroDeviceBean();

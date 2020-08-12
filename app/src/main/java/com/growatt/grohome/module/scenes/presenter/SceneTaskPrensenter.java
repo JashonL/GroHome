@@ -110,7 +110,6 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
             @Override
             public void onSuccess(String bean) {
                 baseView.freshStop();
-                Log.i(TuyaApiUtils.TUYA_TAG, "请求成功：" + bean);
                 JSONObject jsonObject;
                 try {
                     jsonObject = new JSONObject(bean);

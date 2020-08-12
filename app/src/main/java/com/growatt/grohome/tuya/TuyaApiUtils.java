@@ -22,8 +22,6 @@ import java.util.Map;
 
 public class TuyaApiUtils {
 
-    public static final String TUYA_TAG="tuya_log";
-
     /**
      * 注册到涂鸦
      *

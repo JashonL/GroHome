@@ -35,18 +35,10 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tv_page_title)
-    TextView tvPageTitle;
     @BindView(R.id.tv_sub_title)
     TextView tvSubTitle;
     @BindView(R.id.v_background)
     ImageView vBackground;
-    @BindView(R.id.tv_config_tip)
-    TextView tvConfigTip;
-    @BindView(R.id.tv_device_reset)
-    TextView tvDeviceReset;
-    @BindView(R.id.iv_toguide)
-    ImageView ivToguide;
     @BindView(R.id.cb_flash_status)
     CheckBox cbFlashStatus;
     @BindView(R.id.tv_light_flash)

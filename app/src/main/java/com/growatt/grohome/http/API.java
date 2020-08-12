@@ -104,10 +104,14 @@ public class API {
 
 
         //---------------------------【   设备   】-----------------------------------
-        @POST("/tuya/addDevice")
+        @POST("tuya/addDevice")
         Observable<String> addDevice(@Body RequestBody body);
-        @POST("/tuya/switchInfo")
+        @POST("tuya/switchInfo")
         Observable<String> getSwitchDetail(@Body RequestBody body);
+        @POST("tuya/editBulbInfo")
+        Observable<String> editBulbInfo(@Body RequestBody body);
+        @POST("tuya/getBulbInfo")
+        Observable<String> getBulbInfo(@Body RequestBody body);
 
         //---------------------------【   房间   】-----------------------------------
 

@@ -104,14 +104,12 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
         @Override
         public void onSuccess(User user) {
             //登录成功处理
-            Log.i(TuyaApiUtils.TUYA_TAG,"涂鸦登录成功");
             isNeedCreateHome();
         }
 
         @Override
         public void onError(String code, String error) {
             //登录失败处理
-            Log.i(TuyaApiUtils.TUYA_TAG,"涂鸦登录失败----"+code+"------------"+error);
 
         }
     };
@@ -170,12 +168,10 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
             @Override
             public void onSuccess(HomeBean homeBean) {
                 TuyaApiUtils.setIsHomeInit(true);
-                Log.i(TuyaApiUtils.TUYA_TAG,"房间初始化成功");
             }
 
             @Override
             public void onError(String s, String s1) {
-                Log.i(TuyaApiUtils.TUYA_TAG,"房间初始化失败----"+s+"------------"+s1);
             }
         });
     }

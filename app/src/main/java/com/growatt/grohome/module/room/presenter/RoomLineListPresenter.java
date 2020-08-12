@@ -57,7 +57,6 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
         addDisposable(apiServer.roomRequest(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
-                Log.i(TuyaApiUtils.TUYA_TAG, "请求成功：" + bean);
                 try {
                     JSONObject obj = new JSONObject(bean);
                     int code = obj.getInt("code");
@@ -106,7 +105,6 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
         addDisposable(apiServer.roomRequest(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
-                Log.i(TuyaApiUtils.TUYA_TAG, "请求成功：" + bean);
                 try {
                     JSONObject obj = new JSONObject(bean);
                     int code = obj.getInt("code");

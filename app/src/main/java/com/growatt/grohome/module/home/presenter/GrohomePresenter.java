@@ -74,8 +74,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         addDisposable(apiServer.getAllDevice(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
-                Log.i(TuyaApiUtils.TUYA_TAG, "请求成功：" + bean);
-                JSONObject obj = null;
+                JSONObject obj;
                 try {
                     obj = new JSONObject(bean);
                     int code = obj.getInt("code");
@@ -115,7 +114,6 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         addDisposable(apiServer.roomRequest(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
-                Log.i(TuyaApiUtils.TUYA_TAG, "请求成功：" + bean);
                 try {
                     JSONObject obj = new JSONObject(bean);
                     int code = obj.getInt("code");
@@ -166,7 +164,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
      */
     public void jumpTodevice(HomeDeviceBean.DataBean bean) {
         String devType = bean.getDevType();
-        Class clazz = null;
+        Class clazz;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {
             clazz = SwitchActivity.class;
         } else if (DeviceTypeConstant.TYPE_BULB.equals(devType)) {
@@ -315,7 +313,6 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
 
     @Override
     public void onDpUpdate(String devId, String dpStr) {
-        Log.i(TuyaApiUtils.TUYA_TAG, "deviceId:" + devId + "responed:" + dpStr + "time：" + System.currentTimeMillis());
         try {
             List<HomeDeviceBean.DataBean> deviceList = baseView.getDeviceList();
             HomeDeviceBean.DataBean allDeviceBean = new HomeDeviceBean.DataBean();

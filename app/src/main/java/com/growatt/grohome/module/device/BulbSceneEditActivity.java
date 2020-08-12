@@ -1,9 +1,7 @@
 package com.growatt.grohome.module.device;
 
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -12,7 +10,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,7 +21,6 @@ import com.growatt.grohome.adapter.BulbSceneColourAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.BulbSceneColourBean;
 import com.growatt.grohome.constants.GlobalConstant;
-import com.growatt.grohome.customview.CircleView;
 import com.growatt.grohome.customview.ColorBarView;
 import com.growatt.grohome.customview.GridDivider;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
@@ -37,10 +33,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> implements IBulbSceneView, BaseQuickAdapter.OnItemClickListener, SeekBar.OnSeekBarChangeListener, ColorBarView.OnColorChangeListener {
+public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> implements IBulbSceneView, BaseQuickAdapter.OnItemClickListener,
+        SeekBar.OnSeekBarChangeListener, ColorBarView.OnColorChangeListener, Toolbar.OnMenuItemClickListener {
 
 
     @BindView(R.id.tv_title)
@@ -51,10 +47,6 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     ImageView ivSceneIcon;
     @BindView(R.id.tv_scene_name)
     TextView tvSceneName;
-    @BindView(R.id.iv_scene_edit)
-    ImageView ivSceneEdit;
-    @BindView(R.id.tv_colour_title)
-    TextView tvColourTitle;
     @BindView(R.id.rlv_scene)
     RecyclerView rlvScene;
     @BindView(R.id.v_line_colour)
@@ -90,30 +82,12 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     ImageView ivWhiteBrightnessRight;
     @BindView(R.id.v_bottom)
     View vBottom;
-    @BindView(R.id.ctl_scence_color)
-    ConstraintLayout ctlScenceColor;
-    @BindView(R.id.v_colour_flash_mode)
-    View vColourFlashMode;
-    @BindView(R.id.tv_flash_mode_title)
-    TextView tvFlashModeTitle;
-    @BindView(R.id.iv_arrow)
-    ImageView ivArrow;
     @BindView(R.id.tv_flash_mode_value)
     TextView tvFlashModeValue;
     @BindView(R.id.gp_speed)
     Group gpSpeed;
-    @BindView(R.id.v_colour_flash_speed)
-    View vColourFlashSpeed;
-    @BindView(R.id.tv_flash_speed_title)
-    TextView tvFlashSpeedTitle;
-    @BindView(R.id.iv_speed_slowly)
-    ImageView ivSpeedSlowly;
     @BindView(R.id.seek_speed)
     AppCompatSeekBar seekSpeed;
-    @BindView(R.id.iv_speed_fast)
-    ImageView ivSpeedFast;
-    @BindView(R.id.btn_next)
-    Button btnNext;
     @BindView(R.id.ll_colour)
     LinearLayout llColour;
     @BindView(R.id.ll_white)
@@ -161,7 +135,7 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
         tvMenuRightText.setText(R.string.m162_reset);
         tvTitle.setText(R.string.m148_edit);
         tvTitle.setTextColor(ContextCompat.getColor(this, R.color.white));
-
+        toolbar.setOnMenuItemClickListener(this);
         //场景颜色列表
         rlvScene.setLayoutManager(new GridLayoutManager(this, 6));
         mBulbSceneColourAdapter = new BulbSceneColourAdapter(new ArrayList<>());
@@ -247,10 +221,24 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
         seekWhiteBrightness.setOnSeekBarChangeListener(this);
         seekColour.setOnColorChangerListener(this);
         seekSpeed.setOnSeekBarChangeListener(this);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.resetScene();
+                finish();
+            }
+        });
+
+        tvMenuRightText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.resetScene();
+            }
+        });
     }
 
 
-    @OnClick({R.id.ll_colour, R.id.ll_white, R.id.iv_delete, R.id.v_colour_flash_mode,R.id.btn_next})
+    @OnClick({R.id.ll_colour, R.id.ll_white, R.id.iv_delete, R.id.v_colour_flash_mode, R.id.btn_next, R.id.iv_scene_edit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_colour:
@@ -268,6 +256,9 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
             case R.id.btn_next:
                 presenter.setScene();
                 break;
+            case R.id.iv_scene_edit:
+                presenter.editName();
+                break;
         }
     }
 
@@ -278,17 +269,22 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     }
 
     @Override
+    public String getSceneName() {
+        return tvSceneName.getText().toString();
+    }
+
+    @Override
     public void setMode(int mode) {
         switch (mode) {
             case 0:
                 gpSpeed.setVisibility(View.GONE);
                 tvFlashModeValue.setText(R.string.m163_static);
-                List<BulbSceneColourBean> data =mBulbSceneColourAdapter.getData();
-                List<BulbSceneColourBean> newList=new ArrayList<>();
+                List<BulbSceneColourBean> data = mBulbSceneColourAdapter.getData();
+                List<BulbSceneColourBean> newList = new ArrayList<>();
                 for (int i = 0; i < data.size(); i++) {
-                    if (i==0){
+                    if (i == 0) {
                         newList.add(data.get(i));
-                    }else {
+                    } else {
                         removeBeans.add(data.get(i));
                     }
                 }
@@ -301,17 +297,28 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
             case 1:
                 gpSpeed.setVisibility(View.VISIBLE);
                 tvFlashModeValue.setText(R.string.m164_flash);
-                if (removeBeans!=null&&removeBeans.size()>0){
-                    mBulbSceneColourAdapter.addData(removeBeans);
-                    removeBeans.clear();
+                if (mBulbSceneColourAdapter.getData().size() > 0) {
+                    if (removeBeans != null && removeBeans.size() > 0) {
+                        mBulbSceneColourAdapter.addData(removeBeans);
+                        removeBeans.clear();
+                    } else {
+                        presenter.modeChange(mBulbSceneColourAdapter.getData());
+                        mBulbSceneColourAdapter.notifyDataSetChanged();
+                    }
                 }
+
                 break;
             case 2:
                 gpSpeed.setVisibility(View.VISIBLE);
                 tvFlashModeValue.setText(R.string.m165_breath);
-                if (removeBeans!=null&&removeBeans.size()>0){
-                    mBulbSceneColourAdapter.addData(removeBeans);
-                    removeBeans.clear();
+                if (mBulbSceneColourAdapter.getData().size() > 0) {
+                    if (removeBeans != null && removeBeans.size() > 0) {
+                        mBulbSceneColourAdapter.addData(removeBeans);
+                        removeBeans.clear();
+                    } else {
+                        presenter.modeChange(mBulbSceneColourAdapter.getData());
+                        mBulbSceneColourAdapter.notifyDataSetChanged();
+                    }
                 }
                 break;
         }
@@ -357,6 +364,36 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
         presenter.setCurrentColourBean(bulbSceneColourBean);
         showEditViews();
         parserSceneColourBean(bulbSceneColourBean);
+    }
+
+    @Override
+    public void setViewsById(int id) {
+        switch (id) {
+            case 0:
+                ivSceneIcon.setImageResource(R.drawable.sence_night);
+                break;
+            case 1:
+                ivSceneIcon.setImageResource(R.drawable.sence_read);
+                break;
+            case 2:
+                ivSceneIcon.setImageResource(R.drawable.sence_meeting);
+                break;
+            case 3:
+                ivSceneIcon.setImageResource(R.drawable.sence_leisure);
+                break;
+            case 4:
+                ivSceneIcon.setImageResource(R.drawable.sence_soft);
+                break;
+            case 5:
+                ivSceneIcon.setImageResource(R.drawable.sence_rainbow);
+                break;
+            case 6:
+                ivSceneIcon.setImageResource(R.drawable.sence_shine);
+                break;
+            case 7:
+                ivSceneIcon.setImageResource(R.drawable.sence_gorgeous);
+                break;
+        }
     }
 
 
@@ -549,5 +586,11 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     @Override
     public void onColorChange(int color) {
         presenter.bulbColour(color);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+
+        return false;
     }
 }

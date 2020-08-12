@@ -4,12 +4,11 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.growatt.grohome.bean.User;
+import com.growatt.grohome.utils.LogUtil;
 import com.hjq.toast.ToastUtils;
 import com.mylhyl.circledialog.res.values.CircleColor;
-import com.mylhyl.circledialog.res.values.CircleDimen;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.yechaoa.yutils.ActivityUtil;
-import com.yechaoa.yutils.LogUtil;
 import com.yechaoa.yutils.YUtils;
 
 import java.lang.ref.WeakReference;
@@ -37,8 +36,6 @@ public class App extends Application {
 
         //初始化
         YUtils.initialize(this);
-        //设置打印开关
-        LogUtil.setIsLog(true);
         //注册Activity生命周期
         registerActivityLifecycleCallbacks(ActivityUtil.getActivityLifecycleCallbacks());
         //初始化涂鸦
@@ -46,6 +43,8 @@ public class App extends Application {
         TuyaHomeSdk.setDebugMode(true);
         //全局初始化弹框
         initCirclerDialog();
+
+        LogUtil.setIsLog(true);
     }
 
 

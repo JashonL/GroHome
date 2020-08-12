@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -19,6 +20,7 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.BulbSceneAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.BulbSceneBean;
+import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.customview.colorpicker.BlurMaskCircularView;
 import com.growatt.grohome.customview.colorpicker.CircleBackgroundView;
@@ -26,9 +28,13 @@ import com.growatt.grohome.customview.colorpicker.ColorPicker;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.presenter.BulbPresenter;
 import com.growatt.grohome.module.device.view.IBulbView;
-import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,11 +110,17 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
         List<BulbSceneBean> bulbSceneBeans = presenter.initScene();
         mBulbSceneAdapter.replaceData(bulbSceneBeans);
         sceneBackGround.setBackgroundResource(R.drawable.sence_night);//默认选中第一个
         presenter.initDevice();
-
+        //从服务器获取场景
+        try {
+            presenter.requestBulbScene();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -130,7 +142,6 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         if (!TextUtils.isEmpty(bright)) {
             try {
                 int brightValue = Integer.parseInt(bright) - 10;
-                Log.i(TuyaApiUtils.TUYA_TAG,"白光亮度："+brightValue);
                 seekBrightnessWhite.setProgress(brightValue);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
@@ -176,7 +187,6 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         if (!TextUtils.isEmpty(temp)) {
             try {
                 int brightValue = Integer.parseInt(temp);
-                Log.i(TuyaApiUtils.TUYA_TAG,"白光冷暖值："+brightValue);
                 int mProgree = seekTempWhite.getMax() - brightValue;
                 seekTempWhite.setProgress(mProgree);
             } catch (NumberFormatException e) {
@@ -240,6 +250,16 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     @Override
     public void deviceOnline(boolean status) {
 
+    }
+
+    @Override
+    public void upDataSceneList(List<BulbSceneBean> sceneList) {
+        mBulbSceneAdapter.replaceData(sceneList);
+    }
+
+    @Override
+    public List<BulbSceneBean> getSceneList() {
+        return mBulbSceneAdapter.getData();
     }
 
     public void showViewsByTab(String mode) {
@@ -351,9 +371,17 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         presenter.bulbScene(bulbSceneBean.getSceneValue());
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventUpdataScenes(@NonNull List<BulbSceneBean> sceneList) {
+        upDataSceneList(sceneList);
+    }
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         presenter.destroyTuya();
+        EventBus.getDefault().unregister(this);
     }
 }

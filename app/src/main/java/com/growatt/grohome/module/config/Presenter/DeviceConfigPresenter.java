@@ -288,7 +288,6 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         addDisposable(apiServer.addDevice(body), new BaseObserver<String>(baseView,true) {
             @Override
             public void onSuccess(String bean) {
-                Log.i(TuyaApiUtils.TUYA_TAG,"请求成功："+bean);
                 JSONObject obj = null;
                 try {
 

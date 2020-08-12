@@ -67,6 +67,7 @@ public class GlobalConstant {
     public static final int STATUS_OFF = 0;
     //***************************彩灯场景*******************************
     public static final String BULB_SCENE_BEAN = "bulb_scene_bean";
+    public static final String BULB_SCENE_BEAN_LIST = "bulb_scene_list";
 
     //**************************item类型添加或是其他********************************
     public static final int STATUS_ITEM_DATA= 1;

@@ -2,6 +2,7 @@ package com.growatt.grohome.http.parser;
 
 import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.base.BaseException;
+import com.growatt.grohome.utils.LogUtil;
 
 import org.json.JSONObject;
 
@@ -25,6 +26,7 @@ public class StringResponseBodyConverter implements Converter<ResponseBody, Stri
                 //异常处理
                 throw new BaseException(code, data);
             }*/
+            LogUtil.json(jsonString);
             return jsonString;
         } catch (Exception e){
             //数据解析异常即json格式有变动

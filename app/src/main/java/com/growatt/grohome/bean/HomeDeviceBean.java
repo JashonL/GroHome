@@ -27,18 +27,6 @@ public class HomeDeviceBean {
 
 
     public static class DataBean implements MultiItemEntity {
-        /**
-         * devId : 012003622c3ae8410c14
-         * devType : socket
-         * current : 0
-         * name : BS 2
-         * online : 1
-         * power : 0
-         * roomId : 15
-         * roomName : dg房间4
-         * onoff : 1
-         * voltage : 225
-         */
 
         //socket
         private String devId;
@@ -358,5 +346,6 @@ public class HomeDeviceBean {
             return onoff;
         }
     }
+
 
 }

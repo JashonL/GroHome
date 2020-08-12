@@ -29,14 +29,14 @@ public class DeviceBulb extends BaseDevice {
     public static final String BULB_MODE_MUSIC="music";//音乐
 
     /************************场景序号****************************/
-    public static final String BULB_SCENE_NIGHT="1";//night
-    public static final String BULB_SCENE_READ="2";//read
-    public static final String BULB_SCENE_MEETING="3";//meeting
-    public static final String BULB_SCENE_LEISURE="4";//leisure
-    public static final String BULB_SCENE_SOFT="5";//soft
-    public static final String BULB_SCENE_RAINBOW="6";//rainbow
-    public static final String BULB_SCENE_SHINE="7";//shine
-    public static final String BULB_SCENE_GORGEOUS="8";//gorgeous
+    public static final String BULB_SCENE_NIGHT="0";//night
+    public static final String BULB_SCENE_READ="1";//read
+    public static final String BULB_SCENE_MEETING="2";//meeting
+    public static final String BULB_SCENE_LEISURE="3";//leisure
+    public static final String BULB_SCENE_SOFT="4";//soft
+    public static final String BULB_SCENE_RAINBOW="5";//rainbow
+    public static final String BULB_SCENE_SHINE="6";//shine
+    public static final String BULB_SCENE_GORGEOUS="7";//gorgeous
     /**************************场景相关常量*********************************/
     public static final String BULB_SCENE_WHITE_DEFAULT_SPEED="0e0d";
     public static final String BULB_SCENE_WHITE_DEFAULT_SPACE="000000000000";

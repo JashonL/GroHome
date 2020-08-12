@@ -9,6 +9,8 @@ public interface IBulbSceneView extends BaseView {
 
     void setSceneName(String name);
 
+    String getSceneName();
+
     void setMode(int mode);
 
     void setSpeed(int speed);
@@ -20,5 +22,7 @@ public interface IBulbSceneView extends BaseView {
     void updataSelected();
 
     void addDataDeal();
+
+    void setViewsById(int id);
 
 }

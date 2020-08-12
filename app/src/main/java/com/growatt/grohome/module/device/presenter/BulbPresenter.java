@@ -5,31 +5,41 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.growatt.grohome.R;
+import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.BulbSceneBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.BulbSceneEditActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
+import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.IBulbView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
+import com.growatt.grohome.utils.LogUtil;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+
 
 public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListener, SendDpListener {
 
@@ -91,6 +101,9 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     }
 
 
+
+
+
     /**
      * 获取到设备操作类
      * 并获取数据，进行初始化
@@ -144,7 +157,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                 mColor = Color.HSVToColor(hsv);
                 mColourSatProgrees = mSat;
                 mColourValProgrees = mVal - 10;
-                Log.i(TuyaApiUtils.TUYA_TAG, "mColourSatProgrees：" + mColourSatProgrees + "mColourValProgrees" + mColourValProgrees);
             }
         }
         baseView.setSatProgress(mColourSatProgrees);
@@ -167,6 +179,66 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         baseView.setWhiteMaskView(mWhiteColor);
         baseView.setWhiteBgColor(mWhiteColor);
     }
+
+
+    /**
+     * 服务器获取场景
+     */
+    public void requestBulbScene() throws JSONException {
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("devId",deviceId);
+        requestJson.put("devType", DeviceTypeConstant.TYPE_BULB);
+        requestJson.put("lan", CommentUtils.getLanguage());
+        String s = requestJson.toString();
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        addDisposable(apiServer.getBulbInfo(body), new BaseObserver<String>(baseView, true) {
+            @Override
+            public void onSuccess(String bean) {
+                try {
+                    JSONObject obj = new JSONObject(bean);
+                    int code = obj.getInt("code");
+                    List<BulbSceneBean> sceneList=new ArrayList<>();
+                    if (code == 0) {
+                        JSONObject data = obj.getJSONObject("data");
+                        JSONArray modeArray = data.getJSONArray("mode");
+                        for (int i = 0; i < modeArray.length(); i++) {
+                            BulbSceneBean sceneBean=new BulbSceneBean();
+                            JSONObject modeObjcte = modeArray.getJSONObject(i);
+                            sceneBean.setId(modeObjcte.optString("numb",""));
+                            sceneBean.setName(modeObjcte.optString("name",""));
+                            sceneBean.setSelected(false);
+                            sceneBean.setSceneValue(modeObjcte.optString("color",""));
+                            sceneList.add(sceneBean);
+                        }
+                    }
+                    if (sceneList.size()>0){
+                        if (!TextUtils.isEmpty(scene)){
+                            String number = scene.substring(0, 2);
+                            int id = Integer.parseInt(number);
+                            sceneList.get(id).setSceneValue(scene);
+                        }
+                        Collections.sort(sceneList, new Comparator<BulbSceneBean>() {
+                            @Override
+                            public int compare(BulbSceneBean o1, BulbSceneBean o2) {
+                                return Integer.parseInt(o1.getId())-Integer.parseInt(o2.getId());
+                            }
+                        });
+                        baseView.upDataSceneList(sceneList);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+    }
+
 
 
     /**
@@ -240,19 +312,16 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * 设置彩光
      */
     public void bulbColour(int color) {
-        Log.i(TuyaApiUtils.TUYA_TAG, "颜色值：" + color);
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
         float mHue = hsv[0];
         float mSat = mColourSatProgrees;
         float mVal = mColourValProgrees + 10;
-        Log.i(TuyaApiUtils.TUYA_TAG, "mHue：" + mHue + "mStat" + mSat + "mVal" + mVal);
         String angle = CommentUtils.integerToHexstring((int) mHue,4);
         String s = CommentUtils.integerToHexstring((int) mSat,4);
         String v = CommentUtils.integerToHexstring((int) mVal,4);
         colour = angle + s + v;
         mColor = color;
-        Log.i(TuyaApiUtils.TUYA_TAG, colour);
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
         }
@@ -263,18 +332,15 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * 设置彩光饱亮度
      */
     public void bulbColourSat(int progress) {
-        Log.i(TuyaApiUtils.TUYA_TAG, "颜色值：" + mColor);
         float[] hsv = new float[3];
         Color.colorToHSV(mColor, hsv);
         float mHue = hsv[0];
         float mVal = mColourValProgrees + 10;
         mColourSatProgrees = progress;
-        Log.i(TuyaApiUtils.TUYA_TAG, "mHue：" + mHue + "mStat" + (float) progress + "mVal" + mVal);
         String angle = CommentUtils.integerToHexstring((int) mHue,4);
         String s = CommentUtils.integerToHexstring((progress),4);
         String v = CommentUtils.integerToHexstring((int) mVal,4);
         colour = angle + s + v;
-        Log.i(TuyaApiUtils.TUYA_TAG, colour);
 
         hsv[1] = (float) progress / 1000f;
         hsv[2] = mVal / (1000);
@@ -291,13 +357,11 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * 设置彩光亮度
      */
     public void bulbColourVal(int progress) {
-        Log.i(TuyaApiUtils.TUYA_TAG, "颜色值：" + mColor);
         float[] hsv = new float[3];
         Color.colorToHSV(mColor, hsv);
         float mHue = hsv[0];
         float mSat = mColourSatProgrees;
         mColourValProgrees = progress;
-        Log.i(TuyaApiUtils.TUYA_TAG, "mHue：" + mHue + "mStat" + (float) progress + "mVal" + (float) progress);
         String angle = CommentUtils.integerToHexstring((int) mHue,4);
         String s = CommentUtils.integerToHexstring((int) mSat,4);
         String v = CommentUtils.integerToHexstring((progress + 10),4);
@@ -308,7 +372,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         int newColor = Color.HSVToColor(hsv);
         baseView.setCenterColor(newColor);
 
-        Log.i(TuyaApiUtils.TUYA_TAG, colour);
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
         }
@@ -344,10 +407,13 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     public void toEditScene() {
         BulbSceneBean sceneBean = baseView.getSceneBean();
+        List<BulbSceneBean> sceneList = baseView.getSceneList();
         if (sceneBean==null)return;
         String beanJson=new Gson().toJson(sceneBean);
+        String beanListJson = new Gson().toJson(sceneList);
         Intent intent = new Intent(context, BulbSceneEditActivity.class);
         intent.putExtra(GlobalConstant.BULB_SCENE_BEAN,beanJson);
+        intent.putExtra(GlobalConstant.BULB_SCENE_BEAN_LIST,beanListJson);
         intent.putExtra(GlobalConstant.DEVICE_ID,deviceId);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
@@ -355,7 +421,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     @Override
     public void onDpUpdate(String devId, String dpStr) {
-        Log.i(TuyaApiUtils.TUYA_TAG, "deviceId:" + devId + "responed:" + dpStr + "time：" + System.currentTimeMillis());
+        LogUtil.d(dpStr);
         if (devId.equals(deviceId)) {
             try {
                 JSONObject object = new JSONObject(dpStr);

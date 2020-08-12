@@ -99,7 +99,6 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
         addDisposable(apiServer.getSwitchDetail(body), new BaseObserver<String>(baseView,true) {
             @Override
             public void onSuccess(String bean) {
-                Log.i(TuyaApiUtils.TUYA_TAG,"请求成功："+bean);
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(bean);

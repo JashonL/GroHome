@@ -3,6 +3,8 @@ package com.growatt.grohome.module.device.view;
 import com.growatt.grohome.base.BaseView;
 import com.growatt.grohome.bean.BulbSceneBean;
 
+import java.util.List;
+
 public interface IBulbView extends BaseView {
     void setDeviceTitle(String devName);
 
@@ -46,4 +48,8 @@ public interface IBulbView extends BaseView {
     BulbSceneBean getSceneBean();
 
     void deviceOnline(boolean status);
+
+    void upDataSceneList(List<BulbSceneBean> sceneList);
+
+    List<BulbSceneBean> getSceneList();
 }
