@@ -1,5 +1,6 @@
 package com.growatt.grohome.module.device;
 
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -592,5 +593,14 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     public boolean onMenuItemClick(MenuItem item) {
 
         return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            presenter.resetScene();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
