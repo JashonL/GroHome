@@ -29,14 +29,14 @@ public class CircleDialogUtils {
      *
      * @return
      */
-    public static DialogFragment showBulbWhiteMode(View bodyView, FragmentManager fragmentManager, OnCreateBodyViewListener listener) {
-        DialogFragment bulbWhiteMode = new CircleDialog.Builder()
+    public static DialogFragment showCommentBodyDialog(View bodyView, FragmentManager fragmentManager, OnCreateBodyViewListener listener) {
+        DialogFragment bulbBodyDialog = new CircleDialog.Builder()
                 .setBodyView(bodyView, listener)
                 .setGravity(Gravity.BOTTOM)
                 .setYoff(20)
                 .show(fragmentManager);
         ;
-        return bulbWhiteMode;
+        return bulbBodyDialog;
     }
 
     /**

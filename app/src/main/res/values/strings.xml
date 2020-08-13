@@ -290,6 +290,7 @@
     <string name="m256_choose_at_leat_one">Choose at least one condition</string>
 
     <string name="m257_cannot_be_deleted">The built-in scene cannot be deleted</string>
+    <string name="m258_current_status">Current status</string>
 
 
 

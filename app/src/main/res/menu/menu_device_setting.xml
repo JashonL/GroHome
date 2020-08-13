@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_add"
-        android:icon="@drawable/icon_home_add"
+        android:id="@+id/action_set"
+        android:icon="@drawable/icon_set"
         app:showAsAction="always"
         android:title="TODO" />
 

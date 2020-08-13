@@ -77,14 +77,12 @@
         <com.contrarywind.view.WheelView
             android:id="@+id/wheel_start_hour"
             android:layout_width="150dp"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
 
         <com.contrarywind.view.WheelView
             android:id="@+id/wheel_start_min"
             android:layout_width="150dp"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

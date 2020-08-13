@@ -2,6 +2,7 @@ package com.growatt.grohome.module.device;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -20,7 +21,6 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.BulbSceneAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.BulbSceneBean;
-import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.customview.colorpicker.BlurMaskCircularView;
 import com.growatt.grohome.customview.colorpicker.CircleBackgroundView;
@@ -42,7 +42,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbView, SeekBar.OnSeekBarChangeListener, ColorPicker.OnColorChangedListener, ColorPicker.OnColorSelectedListener , BaseQuickAdapter.OnItemClickListener {
+public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbView, SeekBar.OnSeekBarChangeListener, ColorPicker.OnColorChangedListener, ColorPicker.OnColorSelectedListener, BaseQuickAdapter.OnItemClickListener, Toolbar.OnMenuItemClickListener {
 
     @BindView(R.id.status_bar_view)
     View statusBarView;
@@ -74,6 +74,8 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     View colourClude;
     @BindView(R.id.layout_scene)
     View sceneClude;
+    @BindView(R.id.layout_offline)
+    View layoutOffline;
     @BindView(R.id.color_picker)
     ColorPicker colorPicker;
     @BindView(R.id.white_mask_view)
@@ -82,6 +84,14 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     RecyclerView rlvScene;
     @BindView(R.id.v_bulb_background_scene)
     View sceneBackGround;
+    @BindView(R.id.v_bulb_backgroud_offline)
+    CircleBackgroundView vBulbOffline;
+    @BindView(R.id.tv_left_time_value)
+    TextView tvLeftTimeValue;
+    @BindView(R.id.tv_left_time_title)
+    TextView tvLeftTimeTitle;
+    @BindView(R.id.tv_leftdown)
+    TextView tvLeftDown;
 
     private BulbSceneAdapter mBulbSceneAdapter;
 
@@ -104,17 +114,26 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     @Override
     protected void initViews() {
         //设置头部
-        toolbar.setNavigationIcon(R.drawable.icon_return);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.nocolor));
-        tvTitle.setTextColor(ContextCompat.getColor(this,R.color.white));
+        toolbar.setNavigationIcon(R.drawable.icon_return_w);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.nocolor));
+        toolbar.inflateMenu(R.menu.menu_device_setting);
+        tvTitle.setTextColor(ContextCompat.getColor(this, R.color.white));
         showViewsByTab(DeviceBulb.BULB_MODE_WHITE);
         ivSwitch.setImageResource(R.drawable.icon_on);
+
+
         //场景列表
-        rlvScene.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        mBulbSceneAdapter=new BulbSceneAdapter(R.layout.item_bulb_scene,new ArrayList<>());
+        rlvScene.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mBulbSceneAdapter = new BulbSceneAdapter(R.layout.item_bulb_scene, new ArrayList<>());
         rlvScene.setAdapter(mBulbSceneAdapter);
-        int div=CommentUtils.dip2px(this,24);
+        int div = CommentUtils.dip2px(this, 24);
         rlvScene.addItemDecoration(new LinearDivider(this, LinearLayoutManager.HORIZONTAL, div, ContextCompat.getColor(this, R.color.nocolor)));
+
+
+        //底部控件
+        tvLeftTimeValue.setVisibility(View.GONE);
+        tvLeftTimeTitle.setVisibility(View.GONE);
+        tvLeftDown.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -124,12 +143,6 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         mBulbSceneAdapter.replaceData(bulbSceneBeans);
         sceneBackGround.setBackgroundResource(R.drawable.sence_night);//默认选中第一个
         presenter.initDevice();
-        //从服务器获取场景
-        try {
-            presenter.requestBulbScene();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -170,13 +183,27 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setCuntDown(String countdown) {
+        if (!TextUtils.isEmpty(countdown) && !"0".equals(countdown)) {
+            tvLeftTimeTitle.setVisibility(View.VISIBLE);
+            tvLeftTimeValue.setVisibility(View.VISIBLE);
+            tvLeftDown.setVisibility(View.GONE);
 
+            int time = Integer.parseInt(countdown);
+            int hour = time /(60*60);
+            int min = (time % (60*60))/ (60);
+            countdown = hour + " h " + min+" min ";
+            tvLeftTimeValue.setText(countdown);
+        }else {
+            tvLeftTimeTitle.setVisibility(View.GONE);
+            tvLeftTimeValue.setVisibility(View.GONE);
+            tvLeftDown.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void setScene(String scene) {
         //解析返回的场景设置ui
-        if (!TextUtils.isEmpty(scene)&&scene.length()>2){
+        if (!TextUtils.isEmpty(scene) && scene.length() > 2) {
             String number = scene.substring(0, 2);
             int id = CommentUtils.hexStringToInter(number);
             mBulbSceneAdapter.setNowSelectPosition(id);
@@ -258,7 +285,17 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void deviceOnline(boolean status) {
-
+        if (!status) {//不在线
+            ivWhiteLight.setSelected(false);
+            ivColourLight.setSelected(false);
+            ivScenecLight.setSelected(false);
+            whiteClude.setVisibility(View.GONE);
+            colourClude.setVisibility(View.GONE);
+            sceneClude.setVisibility(View.GONE);
+            layoutOffline.setVisibility(View.VISIBLE);
+            vBulbOffline.setColor(ContextCompat.getColor(this, R.color.white_1a));
+            ivSwitch.setImageResource(R.drawable.icon_off);
+        }
     }
 
     @Override
@@ -279,6 +316,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             whiteClude.setVisibility(View.VISIBLE);
             colourClude.setVisibility(View.GONE);
             sceneClude.setVisibility(View.GONE);
+            layoutOffline.setVisibility(View.GONE);
         } else if (DeviceBulb.BULB_MODE_COLOUR.equals(mode)) {//彩光模式
             ivWhiteLight.setSelected(false);
             ivColourLight.setSelected(true);
@@ -286,6 +324,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             whiteClude.setVisibility(View.GONE);
             colourClude.setVisibility(View.VISIBLE);
             sceneClude.setVisibility(View.GONE);
+            layoutOffline.setVisibility(View.GONE);
         } else {
             ivWhiteLight.setSelected(false);
             ivColourLight.setSelected(false);
@@ -293,11 +332,12 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             whiteClude.setVisibility(View.GONE);
             colourClude.setVisibility(View.GONE);
             sceneClude.setVisibility(View.VISIBLE);
+            layoutOffline.setVisibility(View.GONE);
         }
     }
 
 
-    @OnClick({R.id.iv_white_light, R.id.iv_colour_light, R.id.iv_scenec_light, R.id.iv_switch,R.id.iv_edit,R.id.tv_edit})
+    @OnClick({R.id.iv_white_light, R.id.iv_colour_light, R.id.iv_scenec_light, R.id.iv_switch, R.id.iv_edit, R.id.tv_edit, R.id.tv_leftdown,R.id.tv_left_time_value,R.id.tv_left_time_title})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_white_light:
@@ -315,6 +355,11 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             case R.id.iv_edit:
             case R.id.tv_edit:
                 presenter.toEditScene();
+                break;
+            case R.id.tv_leftdown:
+            case R.id.tv_left_time_title:
+            case R.id.tv_left_time_value:
+                presenter.bulbCountdown();
                 break;
         }
     }
@@ -380,6 +425,14 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         presenter.bulbScene(bulbSceneBean.getSceneValue());
     }
 
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.action_set) {
+
+        }
+        return true;
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventUpdataScenes(@NonNull List<BulbSceneBean> sceneList) {

@@ -64,7 +64,12 @@
 
         <include
             android:id="@+id/layout_scene"
-            layout="@layout/bulb_scene_set" android:visibility="gone"/>
+            layout="@layout/bulb_scene_set"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/layout_offline"
+            layout="@layout/bulb_offline" />
 
     </FrameLayout>
 
@@ -95,6 +100,39 @@
         app:layout_constraintLeft_toLeftOf="@+id/v_bottom_background"
         app:layout_constraintRight_toLeftOf="@+id/iv_switch"
         app:layout_constraintTop_toTopOf="@+id/v_bottom_background" />
+
+
+    <TextView
+        android:id="@+id/tv_left_time_value"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/m145_left_time"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_content_sp_14"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@+id/v_bottom_background"
+        app:layout_constraintRight_toLeftOf="@+id/iv_switch"
+        app:layout_constraintBottom_toTopOf="@+id/tv_left_time_title"
+        app:layout_constraintTop_toTopOf="@+id/v_bottom_background"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+
+    <TextView
+        android:id="@+id/tv_left_time_title"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_13"
+        android:gravity="center"
+        android:text="@string/m145_left_time"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_content_sp_14"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/v_bottom_background"
+        app:layout_constraintTop_toBottomOf="@+id/tv_left_time_value"
+        app:layout_constraintLeft_toLeftOf="@+id/v_bottom_background"
+        app:layout_constraintRight_toLeftOf="@+id/iv_switch" />
+
 
     <ImageView
         android:id="@+id/iv_switch"

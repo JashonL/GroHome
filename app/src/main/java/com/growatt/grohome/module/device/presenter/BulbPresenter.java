@@ -1,11 +1,21 @@
 package com.growatt.grohome.module.device.presenter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.CheckBox;
 
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
+
+import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
+import com.contrarywind.view.WheelView;
 import com.google.gson.Gson;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseObserver;
@@ -19,9 +29,11 @@ import com.growatt.grohome.module.device.view.IBulbView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
+import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.LogUtil;
 import com.growatt.grohome.utils.MyToastUtils;
+import com.growatt.grohome.utils.TimePickUtils;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;
@@ -66,6 +78,9 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     //白光
     private int mWhiteColor;
+    private DialogFragment dialogFragment;
+
+
 
 
     public BulbPresenter(IBulbView baseView) {
@@ -174,6 +189,13 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         mWhiteColor = Color.HSVToColor(hsv);
         baseView.setWhiteMaskView(mWhiteColor);
         baseView.setWhiteBgColor(mWhiteColor);
+
+        //从服务器获取场景
+        try {
+            requestBulbScene();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -399,6 +421,81 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     }
 
 
+    /**
+     * 设置倒计时
+     */
+    public void bulbCountdown() {
+        View bodyView = LayoutInflater.from(context).inflate(R.layout.bulb_dialog_time_select, null, false);
+         dialogFragment = CircleDialogUtils.showCommentBodyDialog(bodyView, ((FragmentActivity) context).getSupportFragmentManager(), view -> {
+            List<String> hours = new ArrayList<>();
+            List<String> mins = new ArrayList<>();
+            for (int hour = 0; hour < 24; hour++) {
+                if (hour < 10) hours.add("0" + hour);
+                else hours.add(String.valueOf(hour));
+            }
+            for (int hour = 0; hour < 60; hour++) {
+                if (hour < 10) mins.add("0" + hour);
+                else mins.add(String.valueOf(hour));
+            }
+            WheelView wheelHour = view.findViewById(R.id.wheel_hour);
+            WheelView wheelMin = view.findViewById(R.id.wheel_min);
+            CheckBox cbStatus = view.findViewById(R.id.cb_checked);
+            cbStatus.setChecked(true);
+            int hour = 0;
+            int min = 0;
+             if (!TextUtils.isEmpty(countdown) && !"0".equals(countdown)) {
+                 int time = Integer.parseInt(countdown);
+                  hour = time /(60*60);
+                  min = (time % (60*60))/ (60);
+             }
+
+            //初始化时间选择器
+            wheelHour.setCyclic(true);
+            wheelHour.isCenterLabel(true);
+            wheelHour.setAdapter(new ArrayWheelAdapter<>(hours));
+            wheelHour.setCurrentItem(hour);
+            wheelHour.setTextColorCenter(ContextCompat.getColor(context, R.color.white));
+            wheelMin.setCyclic(true);
+            wheelMin.isCenterLabel(true);
+            wheelMin.setAdapter(new ArrayWheelAdapter<>(mins));
+            wheelMin.setCurrentItem(min);
+            wheelMin.setTextColorCenter(ContextCompat.getColor(context, R.color.white));
+
+            view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogFragment.dismiss();
+                }
+            });
+
+            view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (cbStatus.isChecked()){
+                        int hour = wheelHour.getCurrentItem();
+                        int min = wheelMin.getCurrentItem();
+                        countdown=String.valueOf(hour*3600+min*60);
+                        dialogFragment.dismiss();
+                    }else {
+                        countdown=String.valueOf(0);
+                    }
+                    bulbCountDown();
+                }
+            });
+        });
+    }
+
+
+    /**
+     * 倒计时
+     *
+     */
+    private void bulbCountDown() {
+        if (deviceNotOnline()) {
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbCountdown(), Integer.parseInt(countdown), mTuyaDevice, this);
+        }
+    }
+
     public void toEditScene() {
         BulbSceneBean sceneBean = baseView.getSceneBean();
         List<BulbSceneBean> sceneList = baseView.getSceneList();
@@ -434,6 +531,9 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                     } else if (key.equals(DeviceBulb.getBulbSceneData())) {
                         this.scene = object.optString(DeviceBulb.getBulbSceneData());
                         baseView.setScene(scene);
+                    }else if (key.equals(DeviceBulb.getBulbCountdown())){
+                        this.countdown = object.optString(DeviceBulb.getBulbCountdown());
+                        baseView.setCuntDown(countdown);
                     }
                 }
 

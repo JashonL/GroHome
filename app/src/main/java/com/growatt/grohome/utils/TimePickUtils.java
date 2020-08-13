@@ -12,6 +12,8 @@ import android.widget.DatePicker;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
+import com.growatt.grohome.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -314,7 +316,7 @@ public class TimePickUtils {
     public static void showTimerPickerDialog(Context context, boolean themeLight, String title, int hourOfDay, int minute, boolean is24HourView, final OnTimerPickerListener onTimerPickerListener) {
         int themeId = AlertDialog.THEME_HOLO_LIGHT;//默认白色背景
         if (!themeLight) {
-            themeId = AlertDialog.THEME_HOLO_DARK;//黑色背景
+            themeId = AlertDialog.THEME_DEVICE_DEFAULT_LIGHT;//黑色背景
         }
         showTimerPickerDialog(context, themeId, title, hourOfDay, minute, is24HourView, onTimerPickerListener);
     }
@@ -330,7 +332,7 @@ public class TimePickUtils {
      * 显示时间选择器
      */
     public static void showTimerPickerDialog(Context context, int themeId, String title, int hourOfDay, int minute, boolean is24HourView, final OnTimerPickerListener onTimerPickerListener) {
-        TimePickerDialog dialog = new TimePickerDialog(context, themeId, new TimePickerDialog.OnTimeSetListener() {
+       TimePickerDialog dialog = new TimePickerDialog(context, themeId, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 if (onTimerPickerListener != null) {
