@@ -125,6 +125,8 @@
 
         <activity android:name=".module.scenes.SceneConditionActivity"/>
 
+        <activity android:name=".module.device.DeviceTimingActivity"/>
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
