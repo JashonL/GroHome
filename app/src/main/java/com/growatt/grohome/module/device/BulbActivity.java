@@ -43,6 +43,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbView, SeekBar.OnSeekBarChangeListener, ColorPicker.OnColorChangedListener, ColorPicker.OnColorSelectedListener , BaseQuickAdapter.OnItemClickListener {
+
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -90,6 +93,12 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     @Override
     protected int getLayoutId() {
         return R.layout.activity_bulb;
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarView(statusBarView).init();
     }
 
     @Override

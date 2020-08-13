@@ -37,3 +37,7 @@
 
 -keep class com.tuya.**{*;}
 -dontwarn com.tuya.**
+
+
+ -keep class com.gyf.immersionbar.* {*;}
+ -dontwarn com.gyf.immersionbar.**

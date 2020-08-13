@@ -21,6 +21,7 @@ import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.login.presenter.RegisterLoginPresenter;
 import com.growatt.grohome.module.login.view.IRegisterLoginView;
 import com.growatt.grohome.utils.CommentUtils;
+import com.gyf.immersionbar.ImmersionBar;
 import com.hjq.toast.ToastUtils;
 
 import java.util.Map;
@@ -69,6 +70,12 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_register_login;
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true).init();
     }
 
     @Override

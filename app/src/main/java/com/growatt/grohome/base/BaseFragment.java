@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.growatt.grohome.R;
+import com.gyf.immersionbar.ImmersionBar;
 import com.yechaoa.yutils.ActivityUtil;
 import com.yechaoa.yutils.YUtils;
 
@@ -44,6 +45,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     protected Toolbar mToolBar;
 
+    protected ImmersionBar mImmersionBar;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         mContext = ActivityUtil.getCurrentActivity();
         presenter = createPresenter();
         initView();
+        initImmersionBar();
         initData();
         return view;
     }
@@ -85,7 +89,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
             mToolBar = (Toolbar) contentView.findViewById(R.id.toolbar);
             if (mToolBar == null) {
             } else {
-                mToolBar.setTitleTextColor(ContextCompat.getColor(getContext(),R.color.color_text_00));
+                mToolBar.setTitleTextColor(ContextCompat.getColor(getContext(), R.color.color_text_00));
             }
         }
     }
@@ -176,5 +180,24 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         YUtils.dismissLoading();
     }
 
+
+    /**
+     * 初始化沉浸式
+     * Init immersion bar.
+     */
+    protected void initImmersionBar() {
+        //设置共同沉浸式样式
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.statusBarDarkFont(true, 0.2f)//设置状态栏图片为深色，(如果android 6.0以下就是半透明)
+                .statusBarColor(R.color.white)//这里的颜色，你可以自定义。
+                .init();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden && mImmersionBar != null)
+            mImmersionBar.init();
+    }
 
 }

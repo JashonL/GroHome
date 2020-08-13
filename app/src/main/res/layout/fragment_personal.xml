@@ -5,13 +5,17 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
+
     <View
         android:id="@+id/v_background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_120"
         android:background="@drawable/shape_me_background"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/headerView" />
 
 
     <ImageView
@@ -46,10 +50,10 @@
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_100"
         android:scrollbars="none"
-        android:layout_marginTop="@dimen/dp_110"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/v_background">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

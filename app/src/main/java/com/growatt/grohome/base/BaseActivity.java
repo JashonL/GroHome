@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
+import com.gyf.immersionbar.ImmersionBar;
 import com.yechaoa.yutils.LogUtil;
 import com.yechaoa.yutils.YUtils;
 
@@ -40,6 +41,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected Toolbar mToolBar;
 
+    protected ImmersionBar mImmersionBar;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,9 +52,22 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         App.getInstance().addActivityList(new WeakReference<>(this));
         presenter = createPresenter();
         initViews();
+        //初始化沉浸式
+        initImmersionBar();
         initData();
     }
-
+    /**
+     * 初始化沉浸式
+     * Init immersion bar.
+     */
+    protected void initImmersionBar() {
+        //设置共同沉浸式样式
+        mImmersionBar=  ImmersionBar.with(this);
+        mImmersionBar.statusBarDarkFont(true, 0.2f)//设置状态栏图片为深色，(如果android 6.0以下就是半透明)
+                .fitsSystemWindows(true)
+                .statusBarColor(R.color.nocolor)//这里的颜色，你可以自定义。
+                .init();
+    }
 
     @Override
     protected void onResume() {
@@ -220,4 +236,5 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             this.onPermissionsGranted(requestCode, null);
         }
     }
+
 }

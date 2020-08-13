@@ -54,6 +54,8 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
 
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tab_title)
@@ -88,6 +90,13 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_scenes;
+    }
+
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.white).statusBarDarkFont(true,0.2f).init();
     }
 
     @Override
