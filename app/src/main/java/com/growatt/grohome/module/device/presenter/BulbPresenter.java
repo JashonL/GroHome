@@ -119,7 +119,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * 并获取数据，进行初始化
      */
     public void initDevice() {
-      /*  //先干掉之前的在重新获取，避免多次回调
+        //先干掉之前的在重新获取，避免多次回调
         if (mTuyaDevice != null) {
             mTuyaDevice.unRegisterDevListener();
             mTuyaDevice.onDestroy();
@@ -194,7 +194,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             requestBulbScene();
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
 
@@ -505,9 +505,9 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      */
     public void jumpTiming() {
         Intent timingIntent = new Intent(context, DeviceTimingListActivity.class);
-        timingIntent.putExtra("devId", deviceId);
-        timingIntent.putExtra("devName", devName);
-        timingIntent.putExtra("deviceType", DeviceTypeConstant.TYPE_BULB);
+        timingIntent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+        timingIntent.putExtra(GlobalConstant.DEVICE_NAME, devName);
+        timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_BULB);
         ActivityUtils.startActivity((Activity) context,timingIntent,ActivityUtils.ANIMATE_FORWARD,false);
     }
 

@@ -129,6 +129,8 @@
 
         <activity android:name=".module.device.DeviceTimingSetActivity"/>
 
+        <activity android:name=".module.device.DeviceSettingActivity"/>
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

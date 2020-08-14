@@ -90,4 +90,6 @@ public class GlobalConstant {
     public static final String ACTION="action";
     //**************************定时***********************************
     public static final String TIMING_BEAN="timing_bean";
+    //***********************名字集合*********************
+    public static final String NAME_LIST="name_list";
 }

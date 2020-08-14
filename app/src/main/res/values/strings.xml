@@ -298,5 +298,10 @@
     <string name="m262_repeat_not_set">Repeat type not set</string>
     <string name="m263_on">No execution task set</string>
     <string name="m264_state_not_set">Switch state is not set</string>
+    <string name="m265_device_room">Device Room</string>
+    <string name="m266_sn">sn</string>
+    <string name="m267_check_firmware_version">Check firmware version</string>
+    <string name="m268_reconfigure">Reconfigure</string>
+    <string name="m269_add_to_the_following">Add to the following</string>
 
 </resources>

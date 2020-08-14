@@ -44,7 +44,6 @@ public class DeviceTimingPresenter extends BasePresenter<IDeviceTimingView> {
     private String devType;
     private String tempUnit;//当前温标
     private String mode;//当前模式
-    private boolean config = false;
     private String roomId;
     private String roomName;
 
@@ -55,14 +54,13 @@ public class DeviceTimingPresenter extends BasePresenter<IDeviceTimingView> {
 
     public DeviceTimingPresenter(Context context, IDeviceTimingView baseView) {
         super(context, baseView);
-        mDevName = ((Activity) context).getIntent().getStringExtra("devName");
-        mDevId = ((Activity) context).getIntent().getStringExtra("devId");
-        devType = ((Activity) context).getIntent().getStringExtra("deviceType");
-        tempUnit = ((Activity) context).getIntent().getStringExtra("unit");
-        mode = ((Activity) context).getIntent().getStringExtra("mode");
-        config = ((Activity) context).getIntent().getBooleanExtra("config", false);
-        roomId = ((Activity) context).getIntent().getStringExtra("roomId");
-        roomName = ((Activity) context).getIntent().getStringExtra("roomName");
+        mDevName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_NAME);
+        mDevId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
+        devType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
+        tempUnit = ((Activity) context).getIntent().getStringExtra(GlobalConstant.TEMP_UNIT);
+        mode = ((Activity) context).getIntent().getStringExtra(GlobalConstant.TEMP_MODE);
+        roomId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_ID);
+        roomName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_NAME);
         if (TextUtils.isEmpty(tempUnit)) tempUnit = GlobalConstant.TEMP_UNIT_CELSIUS;
         if (TextUtils.isEmpty(mode)) mode = GlobalConstant.MODE_SMART;
     }

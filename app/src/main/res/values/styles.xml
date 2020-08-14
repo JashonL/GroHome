@@ -134,4 +134,41 @@
     </style>
 
 
+    <!--设备设置-->
+    <style name="style_device_setting_linearlayout_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_45</item>
+        <item name="android:background">@drawable/selector_list_item_click</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">@dimen/dp_9</item>
+        <item name="android:paddingRight">@dimen/dp_9</item>
+    </style>
+
+    <style name="style_device_setting_tittle_item">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/size_title_sp_14</item>
+        <item name="android:textColor">@color/color_text_00</item>
+    </style>
+
+
+    <style name="style_device_setting_text_item">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_vertical|end</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/size_content_sp_14</item>
+        <item name="android:textColor">@color/color_text_66</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+
+
+    <style name="style_device_setting_imageview_item">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/dp_16</item>
+    </style>
+
 </resources>
