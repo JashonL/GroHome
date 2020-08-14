@@ -337,7 +337,8 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     }
 
 
-    @OnClick({R.id.iv_white_light, R.id.iv_colour_light, R.id.iv_scenec_light, R.id.iv_switch, R.id.iv_edit, R.id.tv_edit, R.id.tv_leftdown,R.id.tv_left_time_value,R.id.tv_left_time_title})
+    @OnClick({R.id.iv_white_light, R.id.iv_colour_light, R.id.iv_scenec_light, R.id.iv_switch, R.id.iv_edit, R.id.tv_edit,
+            R.id.tv_leftdown,R.id.tv_left_time_value,R.id.tv_left_time_title,R.id.tv_timer})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_white_light:
@@ -360,6 +361,9 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             case R.id.tv_left_time_title:
             case R.id.tv_left_time_value:
                 presenter.bulbCountdown();
+                break;
+            case R.id.tv_timer:
+                presenter.jumpTiming();
                 break;
         }
     }

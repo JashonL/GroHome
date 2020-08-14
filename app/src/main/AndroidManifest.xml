@@ -125,7 +125,9 @@
 
         <activity android:name=".module.scenes.SceneConditionActivity"/>
 
-        <activity android:name=".module.device.DeviceTimingActivity"/>
+        <activity android:name=".module.device.DeviceTimingListActivity"/>
+
+        <activity android:name=".module.device.DeviceTimingSetActivity"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

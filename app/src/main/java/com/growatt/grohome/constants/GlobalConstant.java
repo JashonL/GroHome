@@ -73,4 +73,21 @@ public class GlobalConstant {
     public static final int STATUS_ITEM_DATA= 1;
     public static final int STATUS_ITEM_OTHER = 0;
 
+    //******************************温度符号******************************
+    public static final String TEMP_UNIT = "temp_unit";
+    public static final String TEMP_UNIT_CELSIUS = "℃";
+    public static final String TEMP_UNIT_FAHRENHEIT = "℉";
+
+    //**************************温控器场景*********************************
+    public static final String TEMP_MODE="temp_mode";
+    public static final String MODE_HOLIDAY="holiday";
+    public static final String MODE_SMART="smart";
+    public static final String MODE_HOLD="hold";
+
+    //*************************添加还是编辑******************************
+    public static final String EDIT="edit";
+    public static final String ADD="add";
+    public static final String ACTION="action";
+    //**************************定时***********************************
+    public static final String TIMING_BEAN="timing_bean";
 }

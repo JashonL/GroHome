@@ -291,7 +291,12 @@
 
     <string name="m257_cannot_be_deleted">The built-in scene cannot be deleted</string>
     <string name="m258_current_status">Current status</string>
+    <string name="m259_add">Add</string>
 
-
+    <string name="m260_no_data">No data</string>
+    <string name="m261_timing_not_set">Timing not set</string>
+    <string name="m262_repeat_not_set">Repeat type not set</string>
+    <string name="m263_on">No execution task set</string>
+    <string name="m264_state_not_set">Switch state is not set</string>
 
 </resources>

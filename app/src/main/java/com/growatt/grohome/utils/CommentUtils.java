@@ -129,7 +129,7 @@ public class CommentUtils {
     }
 
     //将int数值转成4位的16进制的字符串，不足的补0
-    public static String integerToHexstring(int value,int scale) {
+    public static String integerToHexstring(int value, int scale) {
         String hex = Integer.toHexString(value);
         if (hex.length() < scale) {
             StringBuilder suff = new StringBuilder();
@@ -257,9 +257,8 @@ public class CommentUtils {
     }
 
 
-
-    public static List<String> getWeeks(Context context){
-        List<String>weeks=new ArrayList<>();
+    public static List<String> getWeeks(Context context) {
+        List<String> weeks = new ArrayList<>();
         weeks.add(context.getString(R.string.m225_monday));
         weeks.add(context.getString(R.string.m226_tuesday));
         weeks.add(context.getString(R.string.m227_wednesday));
@@ -287,7 +286,6 @@ public class CommentUtils {
     }
 
 
-
     /**
      * [获取应用程序包名称信息]
      *
@@ -311,8 +309,33 @@ public class CommentUtils {
      */
 
 
-    public static   boolean isStringEmpty(String s){
+    public static boolean isStringEmpty(String s) {
         return "null".equals(s);
+    }
+
+
+    /**
+     * 获取24小时
+     */
+    public static List<String> getHours() {
+        List<String> hours = new ArrayList<>();
+        for (int hour = 0; hour < 24; hour++) {
+            if (hour < 10) hours.add("0" + hour);
+            else hours.add(String.valueOf(hour));
+        }
+        return hours;
+    }
+
+    /**
+     * 获取60分钟
+     */
+    public static List<String> getMins() {
+        List<String> getMins = new ArrayList<>();
+        for (int min = 0; min < 24; min++) {
+            if (min < 10) getMins.add("0" + min);
+            else getMins.add(String.valueOf(min));
+        }
+        return getMins;
     }
 
 

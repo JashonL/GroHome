@@ -23,6 +23,7 @@ import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.BulbSceneBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.BulbSceneEditActivity;
+import com.growatt.grohome.module.device.DeviceTimingListActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.IBulbView;
@@ -81,8 +82,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     private DialogFragment dialogFragment;
 
 
-
-
     public BulbPresenter(IBulbView baseView) {
         super(baseView);
     }
@@ -120,7 +119,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * 并获取数据，进行初始化
      */
     public void initDevice() {
-        //先干掉之前的在重新获取，避免多次回调
+      /*  //先干掉之前的在重新获取，避免多次回调
         if (mTuyaDevice != null) {
             mTuyaDevice.unRegisterDevListener();
             mTuyaDevice.onDestroy();
@@ -195,7 +194,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             requestBulbScene();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 
@@ -426,28 +425,20 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      */
     public void bulbCountdown() {
         View bodyView = LayoutInflater.from(context).inflate(R.layout.bulb_dialog_time_select, null, false);
-         dialogFragment = CircleDialogUtils.showCommentBodyDialog(bodyView, ((FragmentActivity) context).getSupportFragmentManager(), view -> {
-            List<String> hours = new ArrayList<>();
-            List<String> mins = new ArrayList<>();
-            for (int hour = 0; hour < 24; hour++) {
-                if (hour < 10) hours.add("0" + hour);
-                else hours.add(String.valueOf(hour));
-            }
-            for (int hour = 0; hour < 60; hour++) {
-                if (hour < 10) mins.add("0" + hour);
-                else mins.add(String.valueOf(hour));
-            }
+        dialogFragment = CircleDialogUtils.showCommentBodyDialog(bodyView, ((FragmentActivity) context).getSupportFragmentManager(), view -> {
+            List<String> hours = CommentUtils.getHours();
+            List<String> mins = CommentUtils.getMins();
             WheelView wheelHour = view.findViewById(R.id.wheel_hour);
             WheelView wheelMin = view.findViewById(R.id.wheel_min);
             CheckBox cbStatus = view.findViewById(R.id.cb_checked);
             cbStatus.setChecked(true);
             int hour = 0;
             int min = 0;
-             if (!TextUtils.isEmpty(countdown) && !"0".equals(countdown)) {
-                 int time = Integer.parseInt(countdown);
-                  hour = time /(60*60);
-                  min = (time % (60*60))/ (60);
-             }
+            if (!TextUtils.isEmpty(countdown) && !"0".equals(countdown)) {
+                int time = Integer.parseInt(countdown);
+                hour = time / (60 * 60);
+                min = (time % (60 * 60)) / (60);
+            }
 
             //初始化时间选择器
             wheelHour.setCyclic(true);
@@ -471,13 +462,13 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (cbStatus.isChecked()){
+                    if (cbStatus.isChecked()) {
                         int hour = wheelHour.getCurrentItem();
                         int min = wheelMin.getCurrentItem();
-                        countdown=String.valueOf(hour*3600+min*60);
+                        countdown = String.valueOf(hour * 3600 + min * 60);
                         dialogFragment.dismiss();
-                    }else {
-                        countdown=String.valueOf(0);
+                    } else {
+                        countdown = String.valueOf(0);
                     }
                     bulbCountDown();
                 }
@@ -488,7 +479,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     /**
      * 倒计时
-     *
      */
     private void bulbCountDown() {
         if (deviceNotOnline()) {
@@ -509,6 +499,17 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
+
+    /**
+     * 跳转到定时
+     */
+    public void jumpTiming() {
+        Intent timingIntent = new Intent(context, DeviceTimingListActivity.class);
+        timingIntent.putExtra("devId", deviceId);
+        timingIntent.putExtra("devName", devName);
+        timingIntent.putExtra("deviceType", DeviceTypeConstant.TYPE_BULB);
+        ActivityUtils.startActivity((Activity) context,timingIntent,ActivityUtils.ANIMATE_FORWARD,false);
+    }
 
     @Override
     public void onDpUpdate(String devId, String dpStr) {
@@ -531,7 +532,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                     } else if (key.equals(DeviceBulb.getBulbSceneData())) {
                         this.scene = object.optString(DeviceBulb.getBulbSceneData());
                         baseView.setScene(scene);
-                    }else if (key.equals(DeviceBulb.getBulbCountdown())){
+                    } else if (key.equals(DeviceBulb.getBulbCountdown())) {
                         this.countdown = object.optString(DeviceBulb.getBulbCountdown());
                         baseView.setCuntDown(countdown);
                     }
