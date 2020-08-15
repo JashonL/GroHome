@@ -131,6 +131,8 @@
 
         <activity android:name=".module.device.DeviceSettingActivity"/>
 
+        <activity android:name=".module.device.DeviceUpdataActivity"/>
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

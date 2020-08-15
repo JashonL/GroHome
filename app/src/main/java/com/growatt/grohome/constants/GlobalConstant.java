@@ -41,6 +41,9 @@ public class GlobalConstant {
     public static final String SCENE_EDIT = "scene_edit";
     public static final String SCENE_TASK_BEAN = "scene_task_bean";
     public static final String SCENE_CONDITION_BEAN = "scene_condition_bean";
+    public static final int SCENE_TYPE_LUANCH = 0;
+    public static final int SCENE_TYPE_SMART= 1;
+
 
     //*****************************时间********************************
     public static final int REQUEST_CODE_SELECT_TIME = 100;

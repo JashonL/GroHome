@@ -580,7 +580,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
 
 
     /**
-     * 重置场景
+     * 场景改名
      */
     public void editName() {
         CircleDialogUtils.showCommentInputDialog((FragmentActivity) context, context.getString(R.string.m148_edit), name,

@@ -303,5 +303,9 @@
     <string name="m267_check_firmware_version">Check firmware version</string>
     <string name="m268_reconfigure">Reconfigure</string>
     <string name="m269_add_to_the_following">Add to the following</string>
-
+    <string name="m270_latest_version">Already the latest version</string>
+    <string name="m271_current_version">Current version</string>
+    <string name="m271_new_version">New version</string>
+    <string name="m272_firmware_update">Firmware update</string>
+    <string name="m273_time_out">Time out</string>
 </resources>

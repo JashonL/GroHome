@@ -23,6 +23,7 @@ import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.BulbSceneBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.BulbSceneEditActivity;
+import com.growatt.grohome.module.device.DeviceSettingActivity;
 import com.growatt.grohome.module.device.DeviceTimingListActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
@@ -510,6 +511,21 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_BULB);
         ActivityUtils.startActivity((Activity) context,timingIntent,ActivityUtils.ANIMATE_FORWARD,false);
     }
+
+
+
+    /**
+     * 跳转到设置
+     */
+    public void jumpSetting() {
+        Intent timingIntent = new Intent(context, DeviceSettingActivity.class);
+        timingIntent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+        timingIntent.putExtra(GlobalConstant.DEVICE_NAME, devName);
+        timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_BULB);
+        ActivityUtils.startActivity((Activity) context,timingIntent,ActivityUtils.ANIMATE_FORWARD,false);
+    }
+
+
 
     @Override
     public void onDpUpdate(String devId, String dpStr) {

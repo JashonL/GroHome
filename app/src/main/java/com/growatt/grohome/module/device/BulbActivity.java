@@ -433,7 +433,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (item.getItemId() == R.id.action_set) {
-
+            presenter.jumpSetting();
         }
         return true;
     }
