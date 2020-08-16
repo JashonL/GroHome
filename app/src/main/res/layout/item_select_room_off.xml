@@ -7,13 +7,13 @@
     <LinearLayout
         android:layout_width="@dimen/dp_120"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_circle_darkred">
+        android:background="@drawable/shape_circle_gray">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_room_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/white"
+            android:textColor="@color/color_text_33"
             android:textSize="@dimen/size_content_sp_12" />
 
     </LinearLayout>

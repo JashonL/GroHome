@@ -1,5 +1,7 @@
 package com.growatt.grohome.bean;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,10 @@ import java.util.List;
  * Description:智慧家庭
  */
 
-public class HomeRoomBean {
+public class HomeRoomBean implements MultiItemEntity {
+
+    private int itemType;
+
     //是否选中
     private boolean isSelect;
     //房间id
@@ -21,6 +26,7 @@ public class HomeRoomBean {
     private String cdn;
     //房间设备
     private List<GroDeviceBean>devList;
+
 
     public boolean isSelect() {
         return isSelect;
@@ -68,5 +74,14 @@ public class HomeRoomBean {
 
     public void setDevList(List<GroDeviceBean> devList) {
         this.devList = devList;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
+
+    @Override
+    public int getItemType() {
+        return itemType;
     }
 }

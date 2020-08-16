@@ -22,6 +22,8 @@ import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.room.RoomListActivity;
 import com.growatt.grohome.module.home.view.IGrohomeView;
+import com.growatt.grohome.module.room.RoomManager;
+import com.growatt.grohome.tuya.FamilyManager;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
@@ -125,6 +127,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                             HomeRoomBean roomBean = new Gson().fromJson(jsonObject.toString(), HomeRoomBean.class);
                             roomList.add(roomBean);
                         }
+                        RoomManager.getInstance().setHoomRoomList(roomList);
                         baseView.setRoomListSuccess(roomList);
                     }
                 } catch (Exception e) {

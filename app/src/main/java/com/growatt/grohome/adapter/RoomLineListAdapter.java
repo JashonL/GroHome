@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.growatt.grohome.R;
 import com.growatt.grohome.bean.HomeRoomBean;
-import com.growatt.grohome.bean.SelectRoomBean;
 
 import java.util.List;
 
