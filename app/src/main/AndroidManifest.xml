@@ -133,6 +133,8 @@
 
         <activity android:name=".module.device.DeviceUpdataActivity"/>
 
+        <activity android:name=".module.device.SwitchTimingActivity"/>
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

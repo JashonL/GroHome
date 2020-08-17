@@ -96,7 +96,7 @@ public class RoomEditActivity extends BaseActivity<RoomEditPresenter> implements
 
     @Override
     protected void initData() {
-
+        presenter.getData();
     }
 
     @Override
@@ -111,10 +111,10 @@ public class RoomEditActivity extends BaseActivity<RoomEditPresenter> implements
         if (adapter == mRoomEditDevAdapter) {
             switch (view.getId()) {
                 case R.id.tvDelete:
-                   presenter.deleteDevice(groDeviceBean.getDevId(),groDeviceBean.getDevType());
+                    presenter.deleteDevice(groDeviceBean.getDevId(), groDeviceBean.getDevType());
                     break;
                 case R.id.tvTransfer:
-                    presenter.transferDevice(groDeviceBean.getDevId(),groDeviceBean.getDevType());
+                    presenter.transferDevice(groDeviceBean.getDevId(), groDeviceBean.getDevType());
                     break;
             }
         }
@@ -157,7 +157,7 @@ public class RoomEditActivity extends BaseActivity<RoomEditPresenter> implements
     }
 
 
-    @OnClick({R.id.viewName,R.id.ivAddDevice, R.id.btnDelete,R.id.viewImg})
+    @OnClick({R.id.viewName, R.id.ivAddDevice, R.id.btnDelete, R.id.viewImg})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivAddDevice:

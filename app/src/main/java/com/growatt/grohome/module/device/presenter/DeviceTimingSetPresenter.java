@@ -83,36 +83,58 @@ public class DeviceTimingSetPresenter extends BasePresenter<IDeviceTimingSetView
         Intent intent = ((Activity) context).getIntent();
         mAction = intent.getStringExtra(GlobalConstant.ACTION);
         baseView.showViews(mAction);
+        deviceType = intent.getStringExtra(GlobalConstant.DEVICE_TYPE);
         if (GlobalConstant.ADD.equals(mAction)) {
-            deviceType = intent.getStringExtra(GlobalConstant.DEVICE_TYPE);
             name = intent.getStringExtra(GlobalConstant.DEVICE_NAME);
             mDevId = intent.getStringExtra(GlobalConstant.DEVICE_ID);
             tempUnit = intent.getStringExtra(GlobalConstant.TEMP_UNIT);
             mode = intent.getStringExtra(GlobalConstant.TEMP_MODE);
+            road = intent.getStringExtra(GlobalConstant.DEVICE_ROAD);
             initResource();
             baseView.initViews(deviceType);
         } else {
-            String timingBean = intent.getStringExtra(GlobalConstant.TIMING_BEAN);
-            if (!TextUtils.isEmpty(timingBean)) {
-                DeviceTimingBean deviceTimingBean = new Gson().fromJson(timingBean, DeviceTimingBean.class);
-                cid = deviceTimingBean.getCid();
-                cKey = deviceTimingBean.getCKey();
-                mDevId = deviceTimingBean.getDevId();
-                deviceType = deviceTimingBean.getDevType();
-                name = deviceTimingBean.getName();
-                road = deviceTimingBean.getRoad();
-                timeValue = deviceTimingBean.getTimeValue();
-                loopType = deviceTimingBean.getLoopType();
-                loopValue = deviceTimingBean.getLoopValue();
-                cValue = deviceTimingBean.getcValue();
-                tempUnit = intent.getStringExtra(GlobalConstant.TEMP_UNIT);
-                mode = intent.getStringExtra(GlobalConstant.TEMP_MODE);
-                initResource();
-                setOnoffUI();
-                baseView.setTimeValue(timeValue);
-                baseView.initViews(deviceType);
-                setRepeatUI();
+            if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)){
+                String timingBean = intent.getStringExtra(GlobalConstant.TIMING_BEAN);
+                if (!TextUtils.isEmpty(timingBean)) {
+                    DeviceTimingBean deviceTimingBean = new Gson().fromJson(timingBean, DeviceTimingBean.class);
+                    cid = deviceTimingBean.getCid();
+                    cKey = deviceTimingBean.getCKey();
+                    mDevId = deviceTimingBean.getDevId();
+                    deviceType = deviceTimingBean.getDevType();
+                    name = deviceTimingBean.getName();
+                    road = deviceTimingBean.getRoad();
+                    timeValue = deviceTimingBean.getTimeValue();
+                    loopType = deviceTimingBean.getLoopType();
+                    loopValue = deviceTimingBean.getLoopValue();
+                    cValue = deviceTimingBean.getcValue();
+                    tempUnit = intent.getStringExtra(GlobalConstant.TEMP_UNIT);
+                    mode = intent.getStringExtra(GlobalConstant.TEMP_MODE);
+                    initResource();
+                    setOnoffUI();
+                    baseView.setTimeValue(timeValue);
+                    baseView.initViews(deviceType);
+                    setRepeatUI();
+                }
+            }else {
+                String switchTimingJson = intent.getStringExtra(GlobalConstant.SWTICH_TIMING_BEAN);
+                if (!TextUtils.isEmpty(switchTimingJson)) {
+                    SwitchTimingBean switchTimingBean = new Gson().fromJson(switchTimingJson, SwitchTimingBean.class);
+                    cKey = switchTimingBean.getcKey();
+                    name = switchTimingBean.getName();
+                    road = switchTimingBean.getRoad();
+                    timeValue = switchTimingBean.getTimeValue();
+                    loopType = switchTimingBean.getLoopType();
+                    loopValue = switchTimingBean.getLoopValue();
+                    cValue = switchTimingBean.getcValue();
+                    tempUnit = intent.getStringExtra(GlobalConstant.TEMP_UNIT);
+                    mode = intent.getStringExtra(GlobalConstant.TEMP_MODE);
+                    setOnoffUI();
+                    baseView.setTimeValue(timeValue);
+                    baseView.initViews(deviceType);
+                    setRepeatUI();
+                }
             }
+
         }
 
     }
@@ -335,19 +357,32 @@ public class DeviceTimingSetPresenter extends BasePresenter<IDeviceTimingSetView
             MyToastUtils.toast(R.string.m264_state_not_set);
             return;
         }
-        if (GlobalConstant.SCENE_EDIT.equals(mAction)) {
-            try {
-                editTiming();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                addTiming();
-            } catch (JSONException e) {
-                e.printStackTrace();
+        if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)){
+            Intent intent=new Intent();
+            intent.putExtra(GlobalConstant.DEVICE_ROAD,road);
+            intent.putExtra(GlobalConstant.TIME_VALUE,timeValue);
+            intent.putExtra(GlobalConstant.TIME_LOOPTYPE,loopType);
+            intent.putExtra(GlobalConstant.TIME_LOOPVALUE,loopValue);
+            intent.putExtra(GlobalConstant.TIMING_CKEY,cKey);
+            intent.putExtra(GlobalConstant.DEVICE_NAME,name);
+            ((Activity)context).setResult(Activity.RESULT_OK,intent);
+            ((Activity)context).finish();
+        }else {
+            if (GlobalConstant.EDIT.equals(mAction)) {
+                try {
+                    editTiming();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    addTiming();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
     }
 
 

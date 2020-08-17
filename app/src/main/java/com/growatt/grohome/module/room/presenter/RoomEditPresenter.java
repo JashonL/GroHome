@@ -56,14 +56,19 @@ public class RoomEditPresenter extends BasePresenter<IRoomEditView> {
 
     public RoomEditPresenter(Context context, IRoomEditView baseView) {
         super(context, baseView);
+
+    }
+
+
+    public void getData(){
         roomJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_BEAN);
         if (!TextUtils.isEmpty(roomJson)) {
             this.mRoomBean = new Gson().fromJson(roomJson,HomeRoomBean.class);
             baseView.upRoomData(mRoomBean);
             roomName=mRoomBean.getName();
         }
-
     }
+
 
 
     public void editRoomName(){

@@ -160,7 +160,7 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
     @Override
     public void freshStatus(int switchId, boolean onOff) {
         PanelSwitchBean.SwichBean swichBean = mSwitchAdapter.getData().get(switchId);
-        swichBean.setOnOff(onOff?1:0);
+        swichBean.setOnOff(onOff ? 1 : 0);
         mSwitchAdapter.notifyDataSetChanged();
         setAllOnOff();
     }
@@ -204,7 +204,7 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
     }
 
 
-    @OnClick({R.id.llAllOpen, R.id.llAllClose})
+    @OnClick({R.id.llAllOpen, R.id.llAllClose, R.id.llTiming})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.llAllOpen:
@@ -212,6 +212,9 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
                 break;
             case R.id.llAllClose:
                 presenter.allOnoff(false);
+                break;
+            case R.id.llTiming:
+                presenter.jumpTiming();
                 break;
         }
     }

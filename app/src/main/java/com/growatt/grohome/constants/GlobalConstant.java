@@ -22,6 +22,7 @@ public class GlobalConstant {
     public static final String ROOM_NAME = "room_name";
     public static final String ACITION_DEVICE_TRANSFER = "device_transfer";
     public static final String ACITION_KEY = "action_key";
+    public static final String DEVICE_ROAD = "road";
     //**************************场景*****************************
     public static final int REQUEST_CODE_EDIT_SCENE_TIME = 102;
     public static final String SCENE_BEAN = "scene_bean";
@@ -93,6 +94,9 @@ public class GlobalConstant {
     public static final String ACTION="action";
     //**************************定时***********************************
     public static final String TIMING_BEAN="timing_bean";
+    public static final String SWTICH_TIMING_BEAN="switch_timing_bean";
+    public static final String TIMING_CKEY="timing_ckey";
+
     //***********************名字集合*********************
     public static final String NAME_LIST="name_list";
 }

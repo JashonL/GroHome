@@ -2,6 +2,7 @@ package com.growatt.grohome.module.device.presenter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Message;
 import android.text.TextUtils;
@@ -13,9 +14,12 @@ import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.PanelSwitchBean;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.module.device.DeviceTimingListActivity;
+import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.ISwitchView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
+import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
@@ -159,6 +163,18 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
             }
         });
 
+    }
+
+
+    /**
+     * 跳转到定时
+     */
+    public void jumpTiming() {
+        Intent timingIntent = new Intent(context, DeviceTimingListActivity.class);
+        timingIntent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+        timingIntent.putExtra(GlobalConstant.DEVICE_NAME, devName);
+        timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_PANELSWITCH);
+        ActivityUtils.startActivity((Activity) context,timingIntent,ActivityUtils.ANIMATE_FORWARD,false);
     }
 
 

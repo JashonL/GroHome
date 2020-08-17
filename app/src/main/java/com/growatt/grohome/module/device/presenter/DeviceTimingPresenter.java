@@ -18,6 +18,7 @@ import com.growatt.grohome.bean.SwitchTimingBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.eventbus.DeviceTimingMsg;
 import com.growatt.grohome.module.device.DeviceTimingSetActivity;
+import com.growatt.grohome.module.device.SwitchTimingActivity;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.IDeviceTimingView;
 import com.growatt.grohome.utils.ActivityUtils;
@@ -113,12 +114,18 @@ public class DeviceTimingPresenter extends BasePresenter<IDeviceTimingView> {
      * 名字，定时时间，重复，开关，设备id,是否设置了定时
      */
     public void jumpToSwitchTimgSet() {
-        Intent intent = new Intent(context, DeviceTimingSetActivity.class);
+        Class clazz;
+        if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {
+            clazz = SwitchTimingActivity.class;
+        } else {
+            clazz = DeviceTimingSetActivity.class;
+        }
+        Intent intent = new Intent(context,clazz);
         intent.putExtra(GlobalConstant.ACTION, GlobalConstant.ADD);
         intent.putExtra(GlobalConstant.DEVICE_NAME, mDevName);
         intent.putExtra(GlobalConstant.DEVICE_ID, mDevId);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, devType);
-        intent.putExtra(GlobalConstant.TEMP_MODE,mode);
+        intent.putExtra(GlobalConstant.TEMP_MODE, mode);
         intent.putExtra(GlobalConstant.TEMP_UNIT, tempUnit);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
@@ -133,11 +140,18 @@ public class DeviceTimingPresenter extends BasePresenter<IDeviceTimingView> {
         if (bean != null) {
             timingBean = new Gson().toJson(bean);
         }
-        Intent intent = new Intent(context, DeviceTimingSetActivity.class);
+        Class clazz;
+        if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {
+            clazz = SwitchTimingActivity.class;
+        } else {
+            clazz = DeviceTimingSetActivity.class;
+        }
+        Intent intent = new Intent(context, clazz);
         intent.putExtra(GlobalConstant.ACTION, GlobalConstant.EDIT);
-        intent.putExtra(GlobalConstant.DEVICE_NAME,mDevName);
-        intent.putExtra(GlobalConstant.TEMP_MODE,mode);
+        intent.putExtra(GlobalConstant.DEVICE_NAME, mDevName);
+        intent.putExtra(GlobalConstant.TEMP_MODE, mode);
         intent.putExtra(GlobalConstant.TEMP_UNIT, tempUnit);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, devType);
         intent.putExtra(GlobalConstant.TIMING_BEAN, timingBean);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
@@ -146,7 +160,7 @@ public class DeviceTimingPresenter extends BasePresenter<IDeviceTimingView> {
     public void editTiming(DeviceTimingBean bean) throws JSONException {
         JSONObject requestJson = new JSONObject();
         requestJson.put("cid", bean.getCid());
-        requestJson.put("userId",App.getUserBean().getAccountName());
+        requestJson.put("userId", App.getUserBean().getAccountName());
         requestJson.put("devId", mDevId);
         requestJson.put("devType", bean.getDevType());
         requestJson.put("loopType", bean.getLoopType());
@@ -157,12 +171,12 @@ public class DeviceTimingPresenter extends BasePresenter<IDeviceTimingView> {
         requestJson.put("cmd", "updateSmartTask");
         requestJson.put("lan", CommentUtils.getLanguage());
         requestJson.put("road", bean.getRoad());
-        if (!TextUtils.isEmpty(bean.getcValue())){
+        if (!TextUtils.isEmpty(bean.getcValue())) {
             requestJson.put("cValue", bean.getcValue());
         }
         JSONArray jsonArray = new JSONArray();
         List<SwitchTimingBean> conf = bean.getConf();
-        if (conf.size()>0) {
+        if (conf.size() > 0) {
             for (SwitchTimingBean bean1 : conf) {
                 String json = new Gson().toJson(bean1);
                 JSONObject deviceJson = new JSONObject(json);

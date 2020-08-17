@@ -308,4 +308,5 @@
     <string name="m271_new_version">New version</string>
     <string name="m272_firmware_update">Firmware update</string>
     <string name="m273_time_out">Time out</string>
+    <string name="m274_single_channel_timing">Single channel timing</string>
 </resources>
