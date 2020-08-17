@@ -31,10 +31,11 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_username"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
         android:paddingStart="@dimen/dp_16"
         android:text="@string/m75_alexa"
+        android:gravity="center_vertical"
         android:textColor="@color/white"
         android:textSize="@dimen/size_content_sp_16"
         app:autoSizeMaxTextSize="@dimen/size_content_sp_16"

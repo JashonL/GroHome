@@ -16,6 +16,7 @@ import com.growatt.grohome.module.personal.presenter.PersonalPresenter;
 import com.growatt.grohome.module.personal.view.IPersonalFragmentView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class PersonalFragment extends BaseFragment<PersonalPresenter> implements IPersonalFragmentView {
 
@@ -105,7 +106,7 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
 
     @Override
     protected PersonalPresenter createPresenter() {
-        return new PersonalPresenter(this);
+        return new PersonalPresenter(getContext(),this);
     }
 
     @Override
@@ -116,10 +117,23 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
     @Override
     protected void initView() {
         toolbar.setVisibility(View.GONE);
+        //头像和昵称
+
+
     }
 
     @Override
     protected void initData() {
 
+    }
+
+    @OnClick({R.id.iv_avatar, R.id.tv_username})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_avatar:
+            case R.id.tv_username:
+                presenter.toUsercenter();
+                break;
+        }
     }
 }

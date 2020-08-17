@@ -311,4 +311,10 @@
     <string name="m274_single_channel_timing">Single channel timing</string>
     <string name="m275_function_is_not_ready">Function is not ready</string>
     <string name="m276_name">Name</string>
+    <string name="m277_my_information">My information</string>
+    <string name="m278_old_password">Old password</string>
+    <string name="m279_new_password">New password</string>
+    <string name="m280_repeat_password">Repeate password</string>
+    <string name="m281_change_password">Change password</string>
+
 </resources>

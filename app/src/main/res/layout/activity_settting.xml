@@ -57,7 +57,7 @@
                     style="@style/style_mine_tittle_item"
                     android:text="@string/m7_username" />
 
-                <TextView style="@style/style_mine_text_item" />
+                <TextView style="@style/style_mine_text_item" android:id="@+id/tv_username"/>
 
                 <ImageView
                     android:id="@+id/iv_user_more"
@@ -161,22 +161,14 @@
                 android:id="@+id/login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginStart="@dimen/dp_48"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_30"
-                android:layout_marginEnd="@dimen/dp_48"
                 android:layout_marginBottom="@dimen/dp_64"
                 android:background="@drawable/selector_button_rect"
-                android:enabled="false"
                 android:minWidth="@dimen/dp_250"
-                android:padding="@dimen/dp_5"
                 android:text="@string/m24_log_out"
                 android:textColor="@color/white"
-                android:textSize="@dimen/size_title_sp_14"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_password"
-                app:layout_constraintVertical_bias="0.2" />
+                android:textSize="@dimen/size_title_sp_14" />
 
         </LinearLayout>
 
