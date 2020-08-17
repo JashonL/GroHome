@@ -29,6 +29,9 @@ import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.mylhyl.circledialog.view.listener.OnInputClickListener;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.sdk.api.IResultCallback;
+import com.tuya.smart.sdk.api.ITuyaDevice;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -37,6 +40,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -48,6 +52,8 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
     private List<String> nameList;
     private int used;
     private int roomId;
+
+    private ITuyaDevice mTuyaDevice;
 
     public DeviceSettingPresenter(IDeviceSettingView baseView) {
         super(baseView);
@@ -65,10 +71,12 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
         name = intent.getStringExtra(GlobalConstant.DEVICE_NAME);
         deviceType = intent.getStringExtra(GlobalConstant.DEVICE_TYPE);
         devId = intent.getStringExtra(GlobalConstant.DEVICE_ID);
+        mTuyaDevice = TuyaHomeSdk.newDeviceInstance(devId);
         roomName = intent.getStringExtra(GlobalConstant.ROOM_NAME);
         roomId = intent.getIntExtra(GlobalConstant.ROOM_ID, -1);
-        if (deviceType.equals(DeviceTypeConstant.TYPE_PANELSWITCH))
+        if (deviceType.equals(DeviceTypeConstant.TYPE_PANELSWITCH)){
             nameList = intent.getStringArrayListExtra(GlobalConstant.NAME_LIST);
+        }
         baseView.setViewsByType(deviceType);
     }
 
@@ -84,8 +92,8 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
                         try {
 
                             if (!TextUtils.isEmpty(text)) {
+                                editNameByTuya(text);
                                 baseView.setDeviceName(text);
-
                             }
 
                         } catch (Exception e) {
@@ -95,6 +103,73 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
                     }
                 });
     }
+
+
+    /**
+     * 通过涂鸦修改设备名称
+     */
+    private void editNameByTuya(String name) {
+        if (TextUtils.isEmpty(name)) return;
+        mTuyaDevice.renameDevice(name, new IResultCallback() {
+            @Override
+            public void onError(String s, String s1) {
+                MyToastUtils.toast(R.string.m201_fail);
+            }
+
+            @Override
+            public void onSuccess() {
+                try {
+                    editNameByServer(name);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+
+
+    public void editNameByServer(String reName) throws JSONException {
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("devId", devId);
+        requestJson.put("devType", deviceType);
+        requestJson.put("name", reName);
+        requestJson.put("lan", CommentUtils.getLanguage());
+        String s = requestJson.toString();
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        Observable<String> stringObservable;
+        if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)) {
+            stringObservable = apiServer.updateSwitchName(body);
+        } else {
+            stringObservable = apiServer.editDevName(body);
+        }
+        addDisposable(stringObservable, new BaseObserver<String>(baseView, true) {
+            @Override
+            public void onSuccess(String jsonBean) {
+                try {
+                    JSONObject object = new JSONObject(jsonBean);
+                    int code = object.getInt("code");
+                    if (code == 0) {
+                        baseView.setDeviceName(reName);
+                        MyToastUtils.toast(R.string.m200_success);
+                    } else {
+                        MyToastUtils.toast(R.string.m201_fail);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+    }
+
+
 
 
     /**
@@ -242,4 +317,12 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mTuyaDevice != null) {
+            mTuyaDevice.onDestroy();
+        }
+    }
 }

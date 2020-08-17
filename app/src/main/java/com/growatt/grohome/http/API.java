@@ -117,6 +117,15 @@ public class API {
 
         @POST("tuya/removeDevice")
         Observable<String> deleteDevice(@Body RequestBody body);
+
+        @POST("tuya/editDevName")
+        Observable<String> editDevName(@Body RequestBody body);
+
+        @POST("tuya/updateSwitchName")
+        Observable<String> updateSwitchName(@Body RequestBody body);
+
+        @POST("/tuya/updateOnoffName")
+        Observable<String> updateOnoffName(@Body RequestBody body);
         //---------------------------【   房间   】-----------------------------------
 
         //获取房间列表

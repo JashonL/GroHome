@@ -192,7 +192,10 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
+        PanelSwitchBean.SwichBean swichBean = mSwitchAdapter.getData().get(position);
+        if (view.getId() == R.id.cl_setting) {
+            presenter.jumpEditName(swichBean.getId());
+        }
     }
 
     @Override

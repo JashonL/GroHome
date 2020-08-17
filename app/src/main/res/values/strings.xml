@@ -309,4 +309,6 @@
     <string name="m272_firmware_update">Firmware update</string>
     <string name="m273_time_out">Time out</string>
     <string name="m274_single_channel_timing">Single channel timing</string>
+    <string name="m275_function_is_not_ready">Function is not ready</string>
+    <string name="m276_name">Name</string>
 </resources>

@@ -224,4 +224,10 @@ public class DeviceSettingActivity extends BaseActivity<DeviceSettingPresenter> 
         ScenesBean.DataBean dataBean = mSceneGridAdapter.getData().get(position);
         presenter.toSceneDetail(dataBean);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+    }
 }

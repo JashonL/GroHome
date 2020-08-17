@@ -1,6 +1,8 @@
 package com.growatt.grohome.module.config.Presenter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -12,25 +14,42 @@ import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.HomeRoomBean;
+import com.growatt.grohome.bean.ScenesBean;
+import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.config.view.IConfigSuccessView;
+import com.growatt.grohome.module.device.BulbActivity;
+import com.growatt.grohome.module.device.SwitchActivity;
+import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.room.RoomManager;
+import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
+import com.growatt.grohome.utils.MyToastUtils;
 import com.mylhyl.circledialog.view.listener.OnInputClickListener;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.sdk.api.IResultCallback;
+import com.tuya.smart.sdk.api.ITuyaDevice;
+import com.tuya.smart.sdk.bean.DeviceBean;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
 
     private String deviceName;
+    private String deviceType;
+    private String deviceId;
 
+    private ITuyaDevice mTuyaDevice;
 
     public ConfigSuccePresenter(IConfigSuccessView baseView) {
         super(baseView);
@@ -38,13 +57,14 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
 
     public ConfigSuccePresenter(Context context, IConfigSuccessView baseView) {
         super(context, baseView);
+        deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
+        deviceId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
+        deviceName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_NAME);
+        mTuyaDevice = TuyaHomeSdk.newDeviceInstance(deviceId);
     }
 
-
-
-
     /**
-     * 场景改名
+     * 设备改名
      */
     public void editName() {
         CircleDialogUtils.showCommentInputDialog((FragmentActivity) context, context.getString(R.string.m148_edit), deviceName,
@@ -53,7 +73,7 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
                     public boolean onClick(String text, View v) {
                         try {
                             if (!TextUtils.isEmpty(text)) {
-                                baseView.setDeviceName(text);
+                                editNameByTuya(text);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -64,22 +84,105 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
     }
 
 
+    /**
+     * 通过涂鸦修改设备名称
+     */
+    private void editNameByTuya(String name) {
+        if (TextUtils.isEmpty(name)) return;
+        mTuyaDevice.renameDevice(name, new IResultCallback() {
+            @Override
+            public void onError(String s, String s1) {
+                MyToastUtils.toast(R.string.m201_fail);
+            }
 
-    public void getRoomList(){
+            @Override
+            public void onSuccess() {
+                try {
+                    editNameByServer(name);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+
+    public void editNameByServer(String reName) throws JSONException {
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("devId", deviceId);
+        requestJson.put("devType", deviceType);
+        requestJson.put("name", reName);
+        requestJson.put("lan", CommentUtils.getLanguage());
+        String s = requestJson.toString();
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        Observable<String> stringObservable;
+        if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)) {
+            stringObservable = apiServer.updateSwitchName(body);
+        } else {
+            stringObservable = apiServer.editDevName(body);
+        }
+        addDisposable(stringObservable, new BaseObserver<String>(baseView, true) {
+            @Override
+            public void onSuccess(String jsonBean) {
+                try {
+                    JSONObject object = new JSONObject(jsonBean);
+                    int code = object.getInt("code");
+                    if (code == 0) {
+                        deviceName = reName;
+                        baseView.setDeviceName(reName);
+                        MyToastUtils.toast(R.string.m200_success);
+                    } else {
+                        MyToastUtils.toast(R.string.m201_fail);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+    }
+
+
+    public void jumpToDeviceDetail() {
+        if (TextUtils.isEmpty(deviceType)) return;
+        switch (deviceType) {
+            case DeviceTypeConstant.TYPE_PANELSWITCH:
+                Intent intent1 = new Intent(context, SwitchActivity.class);
+                intent1.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+                intent1.putExtra(GlobalConstant.DEVICE_NAME, deviceName);
+                ActivityUtils.startActivity((Activity) context, intent1, ActivityUtils.ANIMATE_FORWARD, true);
+                break;
+            case DeviceTypeConstant.TYPE_BULB:
+                Intent intent2 = new Intent(context, BulbActivity.class);
+                intent2.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+                intent2.putExtra(GlobalConstant.DEVICE_NAME, deviceName);
+                ActivityUtils.startActivity((Activity) context, intent2, ActivityUtils.ANIMATE_FORWARD, true);
+                break;
+            default:
+                MyToastUtils.toast(R.string.m275_function_is_not_ready);
+                break;
+        }
+    }
+
+
+    public void getRoomList() {
         List<HomeRoomBean> homeRoomList = RoomManager.getInstance().getHomeRoomList();
-        if (homeRoomList==null){
+        if (homeRoomList == null) {
             baseView.upRoomList(homeRoomList);
-        }else {
+        } else {
             try {
                 getRoomListByServer();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-
     }
-
 
 
     /**
@@ -115,7 +218,41 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
                     e.printStackTrace();
                 }
 
+            }
 
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+    }
+
+
+
+    /**
+     * 转移设备
+     *
+     * @throws Exception
+     */
+    public void transferDevice(String roomId) throws Exception {
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("roomId", roomId);
+        requestJson.put("cmd", "updateDeviceRoom");
+        requestJson.put("devId", deviceId);
+        requestJson.put("lan", CommentUtils.getLanguage());
+        requestJson.put("devType",deviceType);
+        String s = requestJson.toString();
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        addDisposable(apiServer.roomRequest(body), new BaseObserver<String>(baseView, true) {
+            @Override
+            public void onSuccess(String bean) {
+                try {
+                    JSONObject obj = new JSONObject(bean);
+                    int code = obj.getInt("code");
+                    jumpToDeviceDetail();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -126,4 +263,11 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mTuyaDevice != null) {
+            mTuyaDevice.onDestroy();
+        }
+    }
 }

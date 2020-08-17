@@ -105,6 +105,18 @@ public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> im
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_done:
+                int nowSelectPosition = mSelectRoomAdapter.getNowSelectPosition();
+                if (-1!=nowSelectPosition){
+                    HomeRoomBean roomBean = mSelectRoomAdapter.getData().get(nowSelectPosition);
+                    int cid = roomBean.getCid();
+                    try {
+                        presenter.transferDevice(String.valueOf(cid));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    presenter.jumpToDeviceDetail();
+                }
                 break;
             case R.id.v_edit_name_background:
                 presenter.editName();
@@ -122,5 +134,11 @@ public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> im
         if (!TextUtils.isEmpty(deviceName)){
             tvDeviceName.setText(deviceName);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 }

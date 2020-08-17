@@ -13,6 +13,7 @@ public class GlobalConstant {
     //*********************Activity跳转传值**************************
     public static final String DEVICE_ID = "device_id";
     public static final String DEVICE_NAME = "device_name";
+    public static final String DEVICE_SWITCH_ID = "device_switch_id";
     public static final String DEVICE_TYPE = "device_type";
     public static final String COUNTRY = "country";
     public static final String ROOM_LIST = "room_list";

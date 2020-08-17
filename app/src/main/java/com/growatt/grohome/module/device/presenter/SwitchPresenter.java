@@ -15,6 +15,7 @@ import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.PanelSwitchBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.DeviceTimingListActivity;
+import com.growatt.grohome.module.device.EditNameActivity;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.ISwitchView;
 import com.growatt.grohome.tuya.SendDpListener;
@@ -177,6 +178,18 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
         ActivityUtils.startActivity((Activity) context,timingIntent,ActivityUtils.ANIMATE_FORWARD,false);
     }
 
+
+    /**
+     * 跳转到修改名字
+     */
+    public void jumpEditName(int switchId) {
+        Intent timingIntent = new Intent(context, EditNameActivity.class);
+        timingIntent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+        timingIntent.putExtra(GlobalConstant.DEVICE_NAME, devName);
+        timingIntent.putExtra(GlobalConstant.DEVICE_SWITCH_ID, switchId);
+        timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_PANELSWITCH);
+        ActivityUtils.startActivity((Activity) context,timingIntent,ActivityUtils.ANIMATE_FORWARD,false);
+    }
 
     /**
      * 操作所有开关

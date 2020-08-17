@@ -16,7 +16,10 @@ import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.HomeDeviceBean;
+import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.module.config.ConfigErrorActivity;
+import com.growatt.grohome.module.config.ConfigSuccessActivity;
 import com.growatt.grohome.module.config.DeviceConfigActivity;
 import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
@@ -29,6 +32,7 @@ import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
+import com.growatt.grohome.utils.MyToastUtils;
 import com.mylhyl.circledialog.CircleDialog;
 import com.tuya.smart.android.device.utils.WiFiUtil;
 import com.tuya.smart.android.mvp.bean.Result;
@@ -36,6 +40,7 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.ITuyaActivatorGetToken;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import okhttp3.MediaType;
@@ -44,12 +49,13 @@ import okhttp3.RequestBody;
 public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
     private static final int MESSAGE_SHOW_SUCCESS_PAGE = 1001;
     private static final int MESSAGE_CONFIG_WIFI_OUT_OF_TIME = 0x16;
-    private  String deviceType;
-    private  String ssid;
-    private  String password;
-    private  String tuyaToken;
+    private String deviceType;
+    private String ssid;
+    private String password;
+    private String tuyaToken;
+    private String deviceName;
 
-    private  int mConfigMode;
+    private int mConfigMode;
     private DeviceBindModel mModel;
     private boolean mBindDeviceSuccess;
     private int mTime;
@@ -93,7 +99,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
 
             @Override
             public void onFailure(String s, String s1) {
-                baseView.getTokenFail(s,s1);
+                baseView.getTokenFail(s, s1);
             }
         });
     }
@@ -124,16 +130,14 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
     }
 
 
-
-
     @Override
     public boolean handleMessage(Message msg) {
         switch (msg.what) {
             case MESSAGE_SHOW_SUCCESS_PAGE:
                 String devId = msg.getData().getString("devId");
                 String pId = msg.getData().getString("pId");
-                String deviceName=msg.getData().getString("devName");
-                baseView.showSuccessPage(devId,pId,deviceName);
+                deviceName = msg.getData().getString("devName");
+                baseView.showSuccessPage(devId, pId, deviceName);
                 break;
             case MESSAGE_CONFIG_WIFI_OUT_OF_TIME:
                 checkLoop();
@@ -172,10 +176,10 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
             case DeviceBindModel.WHAT_AP_ACTIVE_SUCCESS:  //AP激活成功
                 DeviceBean bean = (DeviceBean) ((Result) (msg.obj)).getObj();
                 String deviceId = bean.getDevId();
-                String productId=bean.getProductId();
-                String devName=bean.getName();
+                String productId = bean.getProductId();
+                String devName = bean.getName();
                 stopSearch();
-                configSuccess(deviceId,productId,devName);
+                configSuccess(deviceId, productId, devName);
                 break;
 
             case DeviceBindModel.WHAT_DEVICE_FIND:
@@ -207,7 +211,6 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
     }
 
 
-
     private void checkLoop() {
         if (mStop) return;
         if (mTime >= 100) {
@@ -221,7 +224,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
 
 
     //配网成功
-    private void configSuccess(String devId,String pId,String devName) {
+    private void configSuccess(String devId, String pId, String devName) {
         stopSearch();
         baseView.showConfigSuccessTip();
         baseView.setConnectProgress(100, 800);
@@ -229,14 +232,12 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         msg.what = MESSAGE_SHOW_SUCCESS_PAGE;
         Bundle bundle = new Bundle();
         bundle.putString("devId", devId);
-        bundle.putString("pId",pId);
-        bundle.putString("devName",devName);
+        bundle.putString("pId", pId);
+        bundle.putString("devName", devName);
         msg.setData(bundle);
         handler.sendMessage(msg);
 //        mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_SUCCESS_PAGE, 1000);
     }
-
-
 
 
     //暂停配网
@@ -257,9 +258,8 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         intent.putExtra("ssid", ssid);
         intent.putExtra("password", password);
         intent.putExtra(SelectConfigTypeActivity.CONFIG_MODE, mConfigMode);
-        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,true);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, true);
     }
-
 
 
     public void cancel() {
@@ -268,29 +268,44 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
             public void onClick(View v) {
                 ((FragmentActivity) context).finish();
             }
-        }, v -> {});
+        }, v -> {
+        });
     }
 
     /**
      * 向服务器请求添加设备
+     *
      * @throws Exception
      */
-    public void addDevice(String pid,String devId) throws Exception {
-        JSONObject requestJson=new JSONObject();
+    public void addDevice(String pid, String devId) throws Exception {
+        JSONObject requestJson = new JSONObject();
         requestJson.put("uid", App.getUserBean().accountName);
         requestJson.put("pid", pid);
         requestJson.put("devId", devId);
         requestJson.put("deviceServerAddress", 1);
         requestJson.put("devType", DeviceTypeConstant.TYPE_BULB);
-        requestJson.put("lan",String.valueOf(CommentUtils.getLanguage()));
+        requestJson.put("lan", String.valueOf(CommentUtils.getLanguage()));
         String s = requestJson.toString();
-        RequestBody body=RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.addDevice(body), new BaseObserver<String>(baseView,true) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        addDisposable(apiServer.addDevice(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
-                JSONObject obj = null;
                 try {
-
+                    JSONObject object = new JSONObject(bean);
+                    int code = object.getInt("code");
+                    if (code == 0) {
+                        DeviceAddOrDelMsg deviceAddOrDelMsg = new DeviceAddOrDelMsg();
+                        deviceAddOrDelMsg.setDevType(deviceType);
+                        deviceAddOrDelMsg.setType(DeviceAddOrDelMsg.ADD_DEV);
+                        EventBus.getDefault().post(deviceAddOrDelMsg);
+                        Intent intent = new Intent(context, ConfigSuccessActivity.class);
+                        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+                        intent.putExtra(GlobalConstant.DEVICE_ID, devId);
+                        intent.putExtra(GlobalConstant.DEVICE_NAME, deviceName);
+                        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, true);
+                    }
+                    String data = object.getString("data");
+                    MyToastUtils.toast(data);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
