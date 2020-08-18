@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.tuya.smart.android.user.api.ILoginCallback;
+import com.tuya.smart.android.user.api.ILogoutCallback;
 import com.tuya.smart.android.user.api.IRegisterCallback;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
@@ -109,7 +110,22 @@ public class TuyaApiUtils {
         TuyaApiUtils.isHomeInit = isHomeInit;
     }
 
+    /**
+     * 涂鸦退出登录
+     */
+    public static void logoutTuya() {
+        TuyaHomeSdk.getUserInstance().logout(new ILogoutCallback() {
+            @Override
+            public void onSuccess() {
 
+            }
+
+            @Override
+            public void onError(String errorCode, String errorMsg) {
+
+            }
+        });
+    }
 
     /**
      * 指令下发

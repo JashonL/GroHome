@@ -107,7 +107,7 @@ public class RoomAddPresenter extends BasePresenter<IRoomAddView> {
 
 
     public void takePicture() throws IOException {
-        imageUri = PhotoUtil.getImageUri((FragmentActivity) context, PhotoUtil.getFile(true));
+        imageUri = PhotoUtil.getImageUri((FragmentActivity) context, PhotoUtil.getFile());
         PhotoUtil.takePicture((FragmentActivity) context, imageUri, CODE_CAMERA_REQUEST);
     }
 
@@ -128,7 +128,7 @@ public class RoomAddPresenter extends BasePresenter<IRoomAddView> {
                 cropImageUri = PhotoUtil.startCropImageAct((FragmentActivity) context, data.getData());
             }
         } else if (resultCode == RESULT_OK && requestCode == CODE_CAMERA_REQUEST) {//拍照
-            cropImageUri = Uri.fromFile(PhotoUtil.getFile(true));
+            cropImageUri = Uri.fromFile(PhotoUtil.getFile());
             try {
                 UCrop.of(imageUri, cropImageUri)
                         .withAspectRatio(710, 351)

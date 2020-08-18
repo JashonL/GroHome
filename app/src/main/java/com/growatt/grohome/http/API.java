@@ -36,6 +36,14 @@ public class API {
 
     public static final String VERIFICATION_CODE = "/newTwoRegisterAPI.do?action=sendEmailVerification";
 
+    public static final String UPDATE_USER_PASSWORD = "/newUserAPI.do?op=updateUserPassword";
+
+    public static final String VERIDATE="/newLoginAPI.do?op=validate";
+
+    public static final String UPDATE_VALIDATE="/newLoginAPI.do?op=updateValidate";
+
+    public static final String UPDATEUSER="/newUserAPI.do?op=updateUser";
+
     public static final String TEST_URL = "http://192.168.3.214:8082/eic_web/";
 
 
@@ -85,6 +93,23 @@ public class API {
         Observable<String> groHomeRegister(@Url String url, @Field("regUserName") String regUserName, @Field("regPassword") String regPassword, @Field("regTimeZone") String regTimeZone, @Field("regEmail") String regEmail, @Field("regCountry") String regCountry);
 
 
+        @FormUrlEncoded
+        @POST
+        Observable<String> updateUserPassword(@Url String url, @Field("accountName") String accountName, @Field("passwordOld") String passwordOld, @Field("passwordNew") String passwordNew);
+
+        @FormUrlEncoded
+        @POST
+        Observable<String> validate(@Url String url, @Field("type") String type, @Field("content") String content);
+
+
+        @FormUrlEncoded
+        @POST
+        Observable<String> updateValidate(@Url String url, @Field("userName") String userName, @Field("content") String content);
+
+
+        @FormUrlEncoded
+        @POST
+        Observable<String> updateUser(@Url String url, @Field("accountName") String accountName, @Field("email") String email);
         //---------------------------【   收藏   】----------------------------------
 
         //收藏站内文章

@@ -63,6 +63,7 @@
                     android:id="@+id/iv_user_more"
                     android:layout_width="@dimen/dp_7"
                     android:layout_height="@dimen/dp_14"
+                    android:visibility="invisible"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/icon_sign_more" />
             </LinearLayout>
@@ -124,7 +125,7 @@
                     style="@style/style_mine_tittle_item"
                     android:text="@string/m15_email" />
 
-                <TextView style="@style/style_mine_text_item" />
+                <TextView style="@style/style_mine_text_item" android:id="@+id/tv_email" />
 
                 <ImageView
                     android:id="@+id/iv_email_more"
@@ -158,7 +159,7 @@
 
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/btn_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

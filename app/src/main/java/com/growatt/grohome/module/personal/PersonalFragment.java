@@ -1,5 +1,7 @@
 package com.growatt.grohome.module.personal;
 
+import android.os.Environment;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -11,9 +13,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 
 import com.growatt.grohome.R;
+import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseFragment;
+import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.personal.presenter.PersonalPresenter;
 import com.growatt.grohome.module.personal.view.IPersonalFragmentView;
+import com.growatt.grohome.utils.GlideUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -117,9 +122,19 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
     @Override
     protected void initView() {
         toolbar.setVisibility(View.GONE);
+
+        //用户名
+        String name = App.getUserBean().getAccountName();
+        if (!TextUtils.isEmpty(name)) {
+            tvUsername.setText(name);
+        }
         //头像和昵称
-
-
+        try {
+            String path = Environment.getExternalStorageDirectory() + "/" + GlobalConstant.IMAGE_FILE_LOCATION;
+            GlideUtils.showImageActNoCache(getActivity(), R.drawable.avatar, R.drawable.avatar, path, ivAvatar);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

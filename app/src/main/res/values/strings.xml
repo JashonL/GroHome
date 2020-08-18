@@ -261,7 +261,7 @@
     <string name="m229_friday">Friday</string>
     <string name="m230_saturday">Saturday</string>
     <string name="m231_sunday">Sunday</string>
-     
+
     <string name="m232_click_to_add">Click to Add</string>
     <string name="m233_please_entry_name">Please Enter name</string>
     <string name="m234_smart">Smart</string>
@@ -316,5 +316,12 @@
     <string name="m279_new_password">New password</string>
     <string name="m280_repeat_password">Repeate password</string>
     <string name="m281_change_password">Change password</string>
+    <string name="m282_password_must_six_characters">Password must be 6 or more characters</string>
+    <string name="m283_enter_the_same_password">Please enter the same password</string>
+    <string name="m284_password_incorrect">Password incorrect</string>
+    <string name="m285_not_have_permission">Your account does not have permission to operate</string>
+    <string name="m286_fail_connect_server">Failed to connect to server</string>
+    <string name="m287_verification_message_failed">Send verification code message failed</string>
+    <string name="m288_sign_out">Sign out?</string>
 
 </resources>

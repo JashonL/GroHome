@@ -31,6 +31,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class RoomListActivity extends BaseActivity<RoomListPresenter> implements IRoomListView, Toolbar.OnMenuItemClickListener, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener, TabLayout.OnTabSelectedListener {
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -46,6 +48,12 @@ public class RoomListActivity extends BaseActivity<RoomListPresenter> implements
 
     private List<HomeRoomBean> mRoomList = new ArrayList<>();
     private RoomDevListAdapter mRoomDevListAdapter;
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView) .statusBarColor(R.color.white).init();
+    }
 
     @Override
     protected RoomListPresenter createPresenter() {

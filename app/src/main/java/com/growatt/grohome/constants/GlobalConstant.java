@@ -100,4 +100,9 @@ public class GlobalConstant {
 
     //***********************名字集合*********************
     public static final String NAME_LIST="name_list";
+
+    //**************请求修改邮箱********************************
+    public static final int REQUEST_CODE_EDIT_EMAIL = 103;
+
+    public static final String IMAGE_FILE_LOCATION = "grohome/avatar.png";
 }

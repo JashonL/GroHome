@@ -16,6 +16,7 @@ import com.growatt.grohome.module.personal.view.IUpdatePwdView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class UpdatepwdActivity extends BaseActivity<UpdatePwdPresenter> implements IUpdatePwdView {
 
@@ -73,5 +74,32 @@ public class UpdatepwdActivity extends BaseActivity<UpdatePwdPresenter> implemen
                 finish();
             }
         });
+    }
+
+
+
+    @OnClick(R.id.btn_ok)
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.btn_ok:
+                presenter.changePassword();
+                break;
+        }
+
+    }
+
+    @Override
+    public String getOldPassWord() {
+        return etOldPassword.getText().toString();
+    }
+
+    @Override
+    public String getNewPassWord() {
+        return etNewPassword.getText().toString();
+    }
+
+    @Override
+    public String getRepeatePassWord() {
+        return etRepeatPassword.getText().toString();
     }
 }

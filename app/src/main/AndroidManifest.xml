@@ -2,19 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.growatt.grohome">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--位置权限-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 位置权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 访问网络，网络定位需要上网 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
-
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".app.App"
@@ -32,16 +30,12 @@
         <meta-data
             android:name="TUYA_SMART_SECRET"
             android:value="p5exhqm5maetnxgjrfry3h7xvgy74grj" />
-
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" />
-
-        <!--适配华为（huawei）刘海屏-->
+            android:value="2.4" /> <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true"/>
-        <!--适配小米（xiaomi）刘海屏-->
+            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
@@ -63,83 +57,45 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
-
-        <activity android:name=".module.room.RoomListActivity"/>
-
-        <activity android:name=".module.device.DeviceTypeActivity"/>
-
-        <activity android:name=".module.config.WiFiOptionsActivity"/>
-
-        <activity android:name=".module.config.DeviceLightStatusActivity"/>
-
-        <activity android:name=".module.config.DeviceConfigActivity"/>
-
-        <activity android:name=".module.config.ConnectHotsPotActivity"/>
-
-        <activity android:name=".module.config.DeviceEZLightActivity"/>
-
-        <activity android:name=".module.config.DeviceAPLightActivity"/>
-
-        <activity android:name=".module.config.WiFiSetGuideActivity"/>
-
-        <activity android:name=".module.config.SelectConfigTypeActivity"/>
-
-        <activity android:name=".module.config.ConfigErrorActivity"/>
-
-        <activity android:name=".module.config.ConfigSuccessActivity"/>
-
-        <activity android:name=".module.device.BulbActivity"/>
-
-        <activity android:name=".module.device.BulbSceneEditActivity"/>
-
-        <activity android:name=".module.device.SwitchActivity"/>
-
-        <activity android:name=".module.login.CountryListActivity"/>
-
-        <activity android:name=".module.room.RoomAddActivity"/>
-
-        <activity android:name=".module.room.RoomEditActivity"/>
-
-        <activity android:name=".module.room.RoomImageActivity"/>
-
-        <activity android:name=".module.room.RoomLineListActivity"/>
-
-        <activity android:name=".module.scenes.SceneAddActivity"/>
-
-        <activity android:name=".module.device.AllDeviceActivity"/>
-
-        <activity android:name=".module.scenes.SceneTaskSettingActivity"/>
-
-        <activity android:name=".module.scenes.SceneCustomizeActivity"/>
-
-        <activity android:name=".module.scenes.SceneDetailActivity"/>
-
-        <activity android:name=".module.scenes.EffectivePeriodActivity"/>
-
-        <activity android:name=".module.scenes.RepeatActivity"/>
-
-        <activity android:name=".module.scenes.PeriodCommentSetActivity"/>
-
-        <activity android:name=".module.scenes.SceneConditionActivity"/>
-
-        <activity android:name=".module.device.DeviceTimingListActivity"/>
-
-        <activity android:name=".module.device.DeviceTimingSetActivity"/>
-
-        <activity android:name=".module.device.DeviceSettingActivity"/>
-
-        <activity android:name=".module.device.DeviceUpdataActivity"/>
-
-        <activity android:name=".module.device.SwitchTimingActivity"/>
-
-        <activity android:name=".module.device.EditNameActivity"/>
-
-        <activity android:name=".module.personal.SetttingActivity"/>
-
-        <activity android:name=".module.personal.UpdatepwdActivity"/>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".module.room.RoomListActivity" />
+        <activity android:name=".module.device.DeviceTypeActivity" />
+        <activity android:name=".module.config.WiFiOptionsActivity" />
+        <activity android:name=".module.config.DeviceLightStatusActivity" />
+        <activity android:name=".module.config.DeviceConfigActivity" />
+        <activity android:name=".module.config.ConnectHotsPotActivity" />
+        <activity android:name=".module.config.DeviceEZLightActivity" />
+        <activity android:name=".module.config.DeviceAPLightActivity" />
+        <activity android:name=".module.config.WiFiSetGuideActivity" />
+        <activity android:name=".module.config.SelectConfigTypeActivity" />
+        <activity android:name=".module.config.ConfigErrorActivity" />
+        <activity android:name=".module.config.ConfigSuccessActivity" />
+        <activity android:name=".module.device.BulbActivity" />
+        <activity android:name=".module.device.BulbSceneEditActivity" />
+        <activity android:name=".module.device.SwitchActivity" />
+        <activity android:name=".module.login.CountryListActivity" />
+        <activity android:name=".module.room.RoomAddActivity" />
+        <activity android:name=".module.room.RoomEditActivity" />
+        <activity android:name=".module.room.RoomImageActivity" />
+        <activity android:name=".module.room.RoomLineListActivity" />
+        <activity android:name=".module.scenes.SceneAddActivity" />
+        <activity android:name=".module.device.AllDeviceActivity" />
+        <activity android:name=".module.scenes.SceneTaskSettingActivity" />
+        <activity android:name=".module.scenes.SceneCustomizeActivity" />
+        <activity android:name=".module.scenes.SceneDetailActivity" />
+        <activity android:name=".module.scenes.EffectivePeriodActivity" />
+        <activity android:name=".module.scenes.RepeatActivity" />
+        <activity android:name=".module.scenes.PeriodCommentSetActivity" />
+        <activity android:name=".module.scenes.SceneConditionActivity" />
+        <activity android:name=".module.device.DeviceTimingListActivity" />
+        <activity android:name=".module.device.DeviceTimingSetActivity" />
+        <activity android:name=".module.device.DeviceSettingActivity" />
+        <activity android:name=".module.device.DeviceUpdataActivity" />
+        <activity android:name=".module.device.SwitchTimingActivity" />
+        <activity android:name=".module.device.EditNameActivity" />
+        <activity android:name=".module.personal.SetttingActivity" />
+        <activity android:name=".module.personal.UpdatepwdActivity" />
+        <activity android:name=".module.personal.NewEmailActivity"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

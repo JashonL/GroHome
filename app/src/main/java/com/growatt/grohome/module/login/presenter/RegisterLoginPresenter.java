@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 
 
-
 public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
 
     //跳转选择国家
@@ -50,6 +49,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     private int count = TOTAL_TIME;
     private String registerUrl;
     private String verificationCode;
+    private String userUrl;//用户所属服务器
 
 
     public RegisterLoginPresenter(IRegisterLoginView baseView) {
@@ -75,26 +75,27 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     int result = jsonObject.getInt("result");
-                    String errorMsg="";
-                    switch (result){
+                    String errorMsg = "";
+                    switch (result) {
                         case 0://失败
-                            errorMsg=context.getString(R.string.m3_bad_network_msg);
+                            errorMsg = context.getString(R.string.m3_bad_network_msg);
                             baseView.loginError(errorMsg);
                             break;
                         case 1:
                             JSONObject obj = jsonObject.getJSONObject("obj");
                             //用户类型
                             int userType = obj.getInt("userType");
+                            userUrl = obj.getString("userServerUrl");
                             String userServerUrl = "http://" + obj.getString("userServerUrl") + "/newTwoLoginAPI.do";
                             if (userType == 0) {//监控用户
                                 userLogin(userServerUrl, username, password);
                             }
                             break;
-                      default:
-                            errorMsg=context.getString(R.string.m221_username_password_error);
+                        default:
+                            errorMsg = context.getString(R.string.m221_username_password_error);
                             break;
                     }
-                    if (result!=1){
+                    if (result != 1) {
                         baseView.loginError(errorMsg);
                     }
 
@@ -123,16 +124,17 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                 try {
                     JSONObject jsonObject = new JSONObject(bean);
                     JSONObject result = jsonObject.getJSONObject("back");
-                    if (result.optString("success").equals("true")){
+                    if (result.optString("success").equals("true")) {
                         JSONObject user = result.getJSONObject("user");
                         //用户解析
                         User userInfo = new Gson().fromJson(user.toString(), User.class);
+                        userInfo.setUrl(userUrl);
                         savaUserInfo(username, password, userInfo);
-                    }else {
-                        String msg=context.getString(R.string.m221_username_password_error);
+                        baseView.loginSuccess(bean);
+                    } else {
+                        String msg = context.getString(R.string.m221_username_password_error);
                         baseView.loginError(msg);
                     }
-                    baseView.loginSuccess(bean);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -157,16 +159,16 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     /**
      * 选择时区
      */
-    public void setZone(){
+    public void setZone() {
         List<String> zones = CommentUtils.getZones();
-        PickViewUtils.showPickView((Activity) context,zones,new OnOptionsSelectListener(){
+        PickViewUtils.showPickView((Activity) context, zones, new OnOptionsSelectListener() {
 
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 String zone = zones.get(options1);
                 baseView.setZone(zone);
             }
-        },App.getInstance().getString(R.string.m185_zone));
+        }, App.getInstance().getString(R.string.m185_zone));
 
     }
 
@@ -175,7 +177,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
      * 根据国家获取服务器
      */
     public void getServerByCountry(String country) {
-        if (GlobalConstant.STRING_CHINA_CHINESE.equals(country)||   country.toLowerCase().equals(GlobalConstant.STRING_CHINA_ENLISH)) {
+        if (GlobalConstant.STRING_CHINA_CHINESE.equals(country) || country.toLowerCase().equals(GlobalConstant.STRING_CHINA_ENLISH)) {
             country = "China";
         }
         if (!TextUtils.isEmpty(country)) {
@@ -189,11 +191,11 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                             if (success.equals("true")) {
                                 registerUrl = jsonObject.getString("server");
                             } else {
-                                registerUrl=API.USER_URL;
+                                registerUrl = API.USER_URL;
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            registerUrl=API.USER_URL;
+                            registerUrl = API.USER_URL;
                         }
                     }
 
@@ -209,34 +211,34 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     }
 
 
-    public void getVerificationCode(View vKeyWord){
+    public void getVerificationCode(View vKeyWord) {
         CommentUtils.hideKeyboard(vKeyWord);
         String email = baseView.getEmail();
-        if (TextUtils.isEmpty(baseView.getEmail())){
+        if (TextUtils.isEmpty(baseView.getEmail())) {
             ToastUtils.show(R.string.m176_enter_email);
             return;
         }
 
-        if (TextUtils.isEmpty(registerUrl)){
+        if (TextUtils.isEmpty(registerUrl)) {
             ToastUtils.show(R.string.m177_select_country);
             return;
         }
-        String url="http://"+registerUrl+API.VERIFICATION_CODE;
+        String url = "http://" + registerUrl + API.VERIFICATION_CODE;
         baseView.getCodeStart();
         //发送消息
         handler.sendEmptyMessageDelayed(MESSAGE_SHOW_TIMING, 1000);
-        addDisposable(apiServer.getVerificationCode(url, email, email, String.valueOf(CommentUtils.getLanguage())), new BaseObserver<String>(baseView,true) {
+        addDisposable(apiServer.getVerificationCode(url, email, email, String.valueOf(CommentUtils.getLanguage())), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String result) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String success = jsonObject.optString("success");
-                    if ("true".equals(success)){
-                        verificationCode=jsonObject.optString("msg");
+                    if ("true".equals(success)) {
+                        verificationCode = jsonObject.optString("msg");
                         MyToastUtils.toast(R.string.m178_verification_send_email);
-                    }else {
+                    } else {
                         String s = jsonObject.optString("msg");
-                        if (!TextUtils.isEmpty(s)){
+                        if (!TextUtils.isEmpty(s)) {
                             MyToastUtils.toast(s);
                         }
                     }
@@ -253,39 +255,38 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     }
 
 
-
-    public void register(String regUserName, String regPassword,String repeatePassword, String regTimeZone,String regEmail, String regCountry,String verificationCode){
-        if (TextUtils.isEmpty(regCountry)){
+    public void register(String regUserName, String regPassword, String repeatePassword, String regTimeZone, String regEmail, String regCountry, String verificationCode) {
+        if (TextUtils.isEmpty(regCountry)) {
             MyToastUtils.toast(R.string.m177_select_country);
             return;
         }
-        if (TextUtils.isEmpty(regTimeZone)){
+        if (TextUtils.isEmpty(regTimeZone)) {
             MyToastUtils.toast(R.string.m179_select_time_zone);
             return;
         }
 
-        if (TextUtils.isEmpty(regPassword)){
+        if (TextUtils.isEmpty(regPassword)) {
             MyToastUtils.toast(R.string.m180_enter_password);
             return;
         }
 
-        if (TextUtils.isEmpty(repeatePassword)){
+        if (TextUtils.isEmpty(repeatePassword)) {
             MyToastUtils.toast(R.string.m180_enter_password);
             return;
         }
 
 
-        if (TextUtils.isEmpty(regEmail)){
+        if (TextUtils.isEmpty(regEmail)) {
             MyToastUtils.toast(R.string.m176_enter_email);
             return;
         }
 
-        if (TextUtils.isEmpty(verificationCode)||!this.verificationCode.equals(verificationCode)){
+        if (TextUtils.isEmpty(verificationCode) || !this.verificationCode.equals(verificationCode)) {
             MyToastUtils.toast(R.string.m181_verificationcode_error);
             return;
         }
 
-        addDisposable(apiServer.groHomeRegister(registerUrl, regUserName, regPassword, regTimeZone,regEmail,regCountry), new BaseObserver<String>(baseView,true) {
+        addDisposable(apiServer.groHomeRegister(registerUrl, regUserName, regPassword, regTimeZone, regEmail, regCountry), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String result) {
                 try {
@@ -300,7 +301,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                         if (msg.equals("503")) {
                             MyToastUtils.toast(R.string.m183_registered_name);
 
-                        }else {
+                        } else {
                             MyToastUtils.toast(R.string.m184_register_error);
                         }
                     }
