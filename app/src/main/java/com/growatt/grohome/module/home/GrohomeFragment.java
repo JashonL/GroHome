@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
@@ -51,6 +52,8 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     RecyclerView rlvDevice;
     @BindView(R.id.iv_switch_devlist)
     ImageView ivSwitchDevList;
+    @BindView(R.id.srl_pull)
+    SwipeRefreshLayout srlPull;
 
 
     /*房间部分*/
@@ -81,7 +84,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
-        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.white).statusBarDarkFont(true,0.2f).init();
+        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.white).statusBarDarkFont(true, 0.2f).init();
     }
 
     @Override
@@ -89,7 +92,8 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         //头部toolBar
         tvTitle.setVisibility(View.GONE);
         toolbar.setTitle(R.string.m34_welcome_groHome);
-        toolbar.inflateMenu(R.menu.menu_grohome);
+        toolbar.setOverflowIcon(ContextCompat.getDrawable(getContext(),R.drawable.icon_home_add));
+        toolbar.inflateMenu(R.menu.men_grohome_home);
         toolbar.setOnMenuItemClickListener(this);
         //房间列表初始化
         mRoomAdapter = new RoomAdapter(R.layout.item_room_view, new ArrayList<>());
@@ -99,6 +103,8 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
 
         //设备列表初始化
         setGridAdapter();
+        //下拉刷新
+        srlPull.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.color_theme_green));
     }
 
     @Override
@@ -219,7 +225,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         HomeDeviceBean.DataBean bean = new HomeDeviceBean.DataBean();
         bean.setDevId(devId);
         int homeAllDevice = data.indexOf(bean);
-        if (homeAllDevice!=-1){
+        if (homeAllDevice != -1) {
             data.get(homeAllDevice).setOnoff(Integer.parseInt(value));
         }
         if (mLayoutType == TYPE_GRID) {
@@ -237,19 +243,19 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean) adapter.getData().get(position);
-        String deviceType=bean.getDevType();
-          switch (view.getId()){
-              case R.id.card_item:
-                  presenter.jumpTodevice(bean);
-                  break;
-              case R.id.iv_onoff:
-                  if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)){
-                      presenter.deviceSwitch(bean.getDevId(),bean.getRoad(),bean.getOnoff());
-                  }else {
-                      presenter.deviceSwitch(bean.getDevId(),bean.getDevType());
-                  }
-                  break;
-          }
+        String deviceType = bean.getDevType();
+        switch (view.getId()) {
+            case R.id.card_item:
+                presenter.jumpTodevice(bean);
+                break;
+            case R.id.iv_onoff:
+                if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)) {
+                    presenter.deviceSwitch(bean.getDevId(), bean.getRoad(), bean.getOnoff());
+                } else {
+                    presenter.deviceSwitch(bean.getDevId(), bean.getDevType());
+                }
+                break;
+        }
     }
 
     @Override
@@ -258,7 +264,20 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         presenter.jumpTodevice(bean);
     }
 
-    @OnClick({R.id.rl_switch_click,R.id.cl_all_room})
+    @Override
+    public void initListener() {
+        super.initListener();
+        srlPull.setOnRefreshListener(() -> {
+            try {
+                presenter.getRoomList();
+                presenter.getAlldevice();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @OnClick({R.id.rl_switch_click, R.id.cl_all_room})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_switch_click:
@@ -266,7 +285,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
                 break;
             case R.id.cl_all_room:
                 String roomlist = new Gson().toJson(mRoomAdapter.getData());
-                presenter.jumpToRoom(roomlist,0);
+                presenter.jumpToRoom(roomlist, 0);
                 break;
         }
     }
@@ -275,5 +294,13 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     public void onDestroyView() {
         super.onDestroyView();
         presenter.onDestroy();
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        if (srlPull != null && srlPull.isRefreshing()) {
+            srlPull.setRefreshing(false);
+        }
     }
 }

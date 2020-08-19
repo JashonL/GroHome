@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.Guideline;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
@@ -27,32 +25,14 @@ public class EffectivePeriodActivity extends BaseActivity<EffectivePeriodPresent
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.gl_start)
-    Guideline glStart;
-    @BindView(R.id.gl_end)
-    Guideline glEnd;
-    @BindView(R.id.tv_time_period)
-    AppCompatTextView tvTimePeriod;
     @BindView(R.id.tv_time_period_value)
     AppCompatTextView tvTimePeriodValue;
-    @BindView(R.id.iv_time_period_more)
-    ImageView ivTimePeriodMore;
     @BindView(R.id.card_time_period)
     CardView cardTimePeriod;
-    @BindView(R.id.tv_repeat_title)
-    AppCompatTextView tvRepeatTitle;
     @BindView(R.id.tv_loop_value)
     AppCompatTextView tvLoopValue;
-    @BindView(R.id.iv_repeat_more)
-    ImageView ivRepeatMore;
-    @BindView(R.id.card_repeat)
-    CardView cardRepeat;
-    @BindView(R.id.tv_timing)
-    AppCompatTextView tvTiming;
     @BindView(R.id.tv_time_value)
     AppCompatTextView tvTimeValue;
-    @BindView(R.id.iv_time_more)
-    ImageView ivTimeMore;
     @BindView(R.id.card_timing)
     CardView cardTiming;
 

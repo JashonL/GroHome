@@ -1,8 +1,8 @@
 package com.growatt.grohome.http;
 
+import com.growatt.grohome.app.App;
 import com.growatt.grohome.http.cookie.CookiesManager;
 import com.growatt.grohome.http.parser.StringConvertFactory;
-import com.yechaoa.yutils.YUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -75,7 +75,7 @@ public class RetrofitService {
                 //设置超时时间
                 .connectTimeout(15, TimeUnit.SECONDS)
                 //设置Cookie持久化
-                .cookieJar(new CookiesManager(YUtils.getApplication()))
+                .cookieJar(new CookiesManager(App.getInstance()))
                 .build();
 
         //关联okHttp并加上rxJava和Gson的配置和baseUrl

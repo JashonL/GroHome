@@ -21,7 +21,6 @@ import com.growatt.grohome.module.personal.PersonalFragment;
 import com.growatt.grohome.module.scenes.ScenesFragment;
 import com.growatt.grohome.module.service.ServiceFragment;
 import com.growatt.grohome.utils.MyToastUtils;
-import com.yechaoa.yutils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,12 +120,10 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
 
     @Override
     public void showArticleError(String errorMessage) {
-        ToastUtil.showToast(errorMessage);
     }
 
     @Override
     public void showCollectSuccess(String successMessage) {
-        ToastUtil.showToast(successMessage);
         mArticles.get(mPosition).collect = true;
         //因为收藏成功，所以要刷新界面，以显示小红心
         mArticleAdapter.notifyDataSetChanged();
@@ -134,13 +131,11 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
 
     @Override
     public void showCollectError(String errorMessage) {
-        ToastUtil.showToast(errorMessage);
 
     }
 
     @Override
     public void showUncollectSuccess(String successMessage) {
-        ToastUtil.showToast(successMessage);
         mArticles.get(mPosition).collect = false;
         //因为取消收藏成功，所以要刷新界面，以取消显示小红心
         mArticleAdapter.notifyDataSetChanged();
@@ -148,7 +143,6 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
 
     @Override
     public void showUncollectError(String errorMessage) {
-        ToastUtil.showToast(errorMessage);
     }
 
     @Override

@@ -10,6 +10,7 @@
         layout="@layout/toobar_title" />
 
     <com.growatt.grohome.customview.MySwipeRefreshLayout
+        android:id="@+id/srl_pull"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
         app:layout_constraintBottom_toBottomOf="parent"

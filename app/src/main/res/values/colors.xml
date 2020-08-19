@@ -18,6 +18,7 @@
     <color name="gray_eeeeeee">#eeeeee</color>
     <color name="gray_aaaaaa">#aaaaaa</color>
     <color name="color_theme_green_light">#708c73</color>
+    <color name="mask_view_color">#40000000</color>
 
     <!--主色-->
     <color name="color_app_main">#D5080A</color>

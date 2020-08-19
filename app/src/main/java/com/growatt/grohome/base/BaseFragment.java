@@ -13,9 +13,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.growatt.grohome.R;
+import com.growatt.grohome.utils.Mydialog;
 import com.gyf.immersionbar.ImmersionBar;
-import com.yechaoa.yutils.ActivityUtil;
-import com.yechaoa.yutils.YUtils;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -53,7 +52,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         View view = inflater.inflate(getLayoutId(), container, false);
         unbinder = ButterKnife.bind(this, view);
         //得到context,在后面的子类Fragment中都可以直接调用
-        mContext = ActivityUtil.getCurrentActivity();
+        mContext = getActivity();
         presenter = createPresenter();
         initView();
         initImmersionBar();
@@ -162,6 +161,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     @Override
     public void onErrorCode(BaseBean bean) {
+        Mydialog.dissmiss();
     }
 
     /**
@@ -169,7 +169,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      */
     @Override
     public void showLoading() {
-        YUtils.showLoading(ActivityUtil.getCurrentActivity(), "加载中");
+        Mydialog.show(mContext,"");
     }
 
     /**
@@ -177,7 +177,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      */
     @Override
     public void hideLoading() {
-        YUtils.dismissLoading();
+        Mydialog.dissmiss();
     }
 
 

@@ -95,7 +95,8 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
      */
     public void loginTuya(Context context){
         String accountName = App.getUserBean().getAccountName();
-        TuyaApiUtils.autoLogin(context,"86", App.getUserBean().getAccountName(), MD5andKL.encryptPassword(accountName),loginCallback);
+        String code = App.getUserBean().getUserTuyaCode();
+        TuyaApiUtils.autoLogin(context,code, App.getUserBean().getAccountName(), MD5andKL.encryptPassword(accountName),loginCallback);
     }
 
     private ILoginCallback loginCallback=new ILoginCallback() {

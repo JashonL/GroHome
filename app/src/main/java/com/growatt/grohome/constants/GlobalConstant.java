@@ -113,5 +113,8 @@ public class GlobalConstant {
     public static final String LIGHT_BULB_WEB="https://www.amazon.com/dp/B08F4VBGZY";
     public static final String WEB_URL="web_url";
 
+    //***********************区号***********************
+    public static final String CHINA_AREA_CODE = "86";
+    public static final String EUROPE_AREA_CODE = "33";
 
 }

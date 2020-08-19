@@ -99,6 +99,9 @@ public class LinkageSceneAdapter extends BaseMultiItemQuickAdapter<ScenesBean.Da
                     case DeviceTypeConstant.TYPE_THERMOSTAT:
                         res= DeviceThermostat.getCloseIcon(2);
                         break;
+                    case DeviceTypeConstant.TYPE_TIME:
+                        res= R.drawable.scenes_timer;
+                        break;
                 }
                 if (i==5){
                     setTextview(mContext,llTaskGroup);

@@ -44,7 +44,7 @@ public class EffectivePeriodPresenter extends BasePresenter<IEffectivePeriodView
         endTime = ((Activity) context).getIntent().getStringExtra(GlobalConstant.TIME_END);
         timeValue = ((Activity) context).getIntent().getStringExtra(GlobalConstant.TIME_VALUE);
         baseView.upTimePeriod(startTime,endTime);
-
+        baseView.upTimeValue(timeValue);
         //获取已设置的重复
         loopType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.TIME_LOOPTYPE);
         loopValue = ((Activity) context).getIntent().getStringExtra(GlobalConstant.TIME_LOOPVALUE);

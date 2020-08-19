@@ -11,6 +11,7 @@ public class User {
     public String accountName;
     public String url;
     public String email;
+    public String userTuyaCode;//用户的国家区号，只有国内和法国，不能变
 
 
     public String getAccountName() {
@@ -59,5 +60,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUserTuyaCode() {
+        return userTuyaCode;
+    }
+
+    public void setUserTuyaCode(String userTuyaCode) {
+        this.userTuyaCode = userTuyaCode;
     }
 }

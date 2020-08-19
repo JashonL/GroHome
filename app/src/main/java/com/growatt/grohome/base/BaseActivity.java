@@ -1,5 +1,6 @@
 package com.growatt.grohome.base;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,8 +16,8 @@ import androidx.core.content.ContextCompat;
 import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
+import com.growatt.grohome.utils.Mydialog;
 import com.gyf.immersionbar.ImmersionBar;
-import com.yechaoa.yutils.YUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -26,6 +27,8 @@ import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView, EasyPermissions.PermissionCallbacks {
+
+    public Context mContext;
 
     protected P presenter;
 
@@ -48,6 +51,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         setContentView(LayoutInflater.from(this).inflate(getLayoutId(), null));
         ButterKnife.bind(this);
         App.getInstance().addActivityList(new WeakReference<>(this));
+        mContext=this;
         presenter = createPresenter();
         initViews();
         //初始化沉浸式
@@ -177,17 +181,17 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     public void showLoading() {
-        YUtils.showLoading("");
+        Mydialog.show(mContext,"");
     }
 
     @Override
     public void hideLoading() {
-        YUtils.dismissLoading();
+        Mydialog.dissmiss();
     }
 
     @Override
     public void onErrorCode(BaseBean bean) {
-        YUtils.dismissLoading();
+        Mydialog.dissmiss();
     }
 
 

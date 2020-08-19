@@ -19,7 +19,7 @@ import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.module.config.Presenter.DeviceLightStatusPresenter;
 import com.growatt.grohome.module.config.view.IDeviceLightStatusView;
-import com.yechaoa.yutils.YUtils;
+import com.growatt.grohome.utils.Mydialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -175,12 +175,12 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
 
     @Override
     public void showDialog() {
-        YUtils.showLoading("");
+        Mydialog.show(this,"");
     }
 
     @Override
     public void dissmissDialog() {
-        YUtils.dismissLoading();
+        Mydialog.dissmiss();
     }
 
     @Override

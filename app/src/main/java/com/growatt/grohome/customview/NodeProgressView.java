@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.growatt.grohome.R;
-import com.yechaoa.yutils.YUtils;
+import com.growatt.grohome.utils.CommentUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,25 +132,25 @@ public class NodeProgressView extends View {
         mTextPaint.setStyle(Paint.Style.STROKE);
         mTextPaint.setColor(mTextColor);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
-        mTextPaint.setTextSize(YUtils.dp2px(12));
+        mTextPaint.setTextSize(CommentUtils.dip2px(context,12));
 
         mTextProgressPaint = new Paint();
         mTextProgressPaint.setAntiAlias(true);
         mTextProgressPaint.setStyle(Paint.Style.STROKE);
         mTextProgressPaint.setColor(mTextProgressColor);
         mTextProgressPaint.setTextAlign(Paint.Align.CENTER);
-        mTextProgressPaint.setTextSize(YUtils.dp2px(12));
+        mTextProgressPaint.setTextSize(CommentUtils.dip2px(context,12));
 
 
         mLinePaint = new Paint();
         mLinePaint.setAntiAlias(true);
-        mLinePaint.setStrokeWidth(YUtils.dp2px( 0.5f));
+        mLinePaint.setStrokeWidth(CommentUtils.dip2px(context,0.5f));
         mLinePaint.setStyle(Paint.Style.FILL);
         mLinePaint.setColor(mLineColor);
 
         mLineProgressPaint = new Paint();
         mLineProgressPaint.setAntiAlias(true);
-        mLineProgressPaint.setStrokeWidth(YUtils.dp2px(0.5f));
+        mLineProgressPaint.setStrokeWidth(CommentUtils.dip2px(context,0.5f));
         mLineProgressPaint.setStyle(Paint.Style.FILL);
         mLineProgressPaint.setColor(mLineProgressColor);
 

@@ -239,7 +239,7 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
 
     @Override
     public void timing(int second) {
-        tvGetCode.setText(second);
+        tvGetCode.setText(second+"s");
     }
 
     @Override

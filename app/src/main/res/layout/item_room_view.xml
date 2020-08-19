@@ -1,61 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/dp_300"
-    android:layout_height="@dimen/dp_140">
+    android:layout_height="@dimen/dp_140"
+    android:foreground="@drawable/card_foreground"
+    app:cardCornerRadius="@dimen/dp_12"
+    app:cardElevation="@dimen/dp_0">
 
-
-    <ImageView
-        android:id="@+id/iv_room_pic"
-        android:src="@drawable/home_keting"
-        android:scaleType="fitXY"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/tv_room_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_10"
-        android:gravity="center|start"
-        android:padding="@dimen/dp_2"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="@dimen/size_title_sp_16"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/iv_room_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/home_keting" />
 
 
-    <LinearLayout
-        android:id="@+id/ll_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginRight="@dimen/dp_10"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_count"
-        app:layout_constraintTop_toTopOf="@+id/tv_count"
-        app:layout_constraintRight_toLeftOf="@+id/tv_count" />
+        <View
+            android:id="@+id/pic_mask_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/mask_view_color" />
+
+        <TextView
+            android:id="@+id/tv_room_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center|start"
+            android:padding="@dimen/dp_2"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_title_sp_16"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_count"
-        android:layout_width="@dimen/dp_24"
-        android:layout_height="@dimen/dp_24"
-        android:layout_marginEnd="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10"
-        android:background="@drawable/shape_circle_solid_gray"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="1"
-        android:textColor="@color/white"
-        android:textSize="@dimen/size_content_sp_12"
-        app:autoSizeMaxTextSize="@dimen/size_content_sp_12"
-        app:autoSizeMinTextSize="@dimen/size_content_sp_8"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        <LinearLayout
+            android:id="@+id/ll_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_count"
+            app:layout_constraintRight_toLeftOf="@+id/tv_count"
+            app:layout_constraintTop_toTopOf="@+id/tv_count" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_count"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/shape_circle_solid_gray"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_content_sp_12"
+            app:autoSizeMaxTextSize="@dimen/size_content_sp_12"
+            app:autoSizeMinTextSize="@dimen/size_content_sp_8"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

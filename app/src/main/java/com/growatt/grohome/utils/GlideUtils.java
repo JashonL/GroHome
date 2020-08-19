@@ -39,7 +39,7 @@ public class GlideUtils {
     }
 
     public static void showImageActNoCache(Activity act, int placeholderRes, int errorRes, String path, ImageView iv) {
-        Glide.with(act).load(path).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(placeholderRes).error(errorRes).dontAnimate().into(iv);
+        Glide.with(act).load(path).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(placeholderRes).error(errorRes).dontAnimate().into(iv);
     }
 
     public static void showImageAct(Activity act, int placeholderRes, int errorRes, int resId, ImageView iv) {

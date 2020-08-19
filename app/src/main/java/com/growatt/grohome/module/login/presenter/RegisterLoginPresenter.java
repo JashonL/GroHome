@@ -127,6 +127,8 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                         //用户解析
                         User userInfo = new Gson().fromJson(user.toString(), User.class);
                         userInfo.setUrl(userUrl);
+                        if (userUrl.contains("-cn")) userInfo.setUserTuyaCode(GlobalConstant.CHINA_AREA_CODE);
+                        else userInfo.setUserTuyaCode(GlobalConstant.EUROPE_AREA_CODE);
                         savaUserInfo(username, password, userInfo);
                         baseView.loginSuccess(bean);
                     } else {
@@ -222,9 +224,8 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
             return;
         }
         String url = "http://" + registerUrl + API.VERIFICATION_CODE;
-        baseView.getCodeStart();
         //发送消息
-        handler.sendEmptyMessageDelayed(MESSAGE_SHOW_TIMING, 1000);
+        handler.sendEmptyMessage(MESSAGE_SHOW_TIMING);
         addDisposable(apiServer.getVerificationCode(url, email, email, String.valueOf(CommentUtils.getLanguage())), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String result) {
@@ -234,6 +235,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                     if ("true".equals(success)) {
                         verificationCode = jsonObject.optString("msg");
                         MyToastUtils.toast(R.string.m178_verification_send_email);
+                        baseView.getCodeStart();
                     } else {
                         String s = jsonObject.optString("msg");
                         if (!TextUtils.isEmpty(s)) {
@@ -337,16 +339,14 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
 
     @Override
     public boolean handleMessage(@NonNull Message msg) {
-        switch (msg.what) {
-            case MESSAGE_SHOW_TIMING://倒计时
-                count--;
-                if (count <= 0) {
-                    handler.sendEmptyMessageDelayed(MESSAGE_SHOW_TIMING, 1000);
-                    baseView.timing(count);
-                } else {
-                    baseView.getCodeEnd();
-                }
-                break;
+        if (msg.what == MESSAGE_SHOW_TIMING) {//倒计时
+            count--;
+            if (count > 0) {
+                baseView.timing(count);
+                handler.sendEmptyMessageDelayed(MESSAGE_SHOW_TIMING, 1000);
+            } else {
+                baseView.getCodeEnd();
+            }
         }
         return super.handleMessage(msg);
     }

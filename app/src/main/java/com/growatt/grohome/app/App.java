@@ -8,8 +8,6 @@ import com.growatt.grohome.utils.LogUtil;
 import com.hjq.toast.ToastUtils;
 import com.mylhyl.circledialog.res.values.CircleColor;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.yechaoa.yutils.ActivityUtil;
-import com.yechaoa.yutils.YUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -34,10 +32,6 @@ public class App extends Application {
         /*吐司提示*/
         ToastUtils.init(this);
 
-        //初始化
-        YUtils.initialize(this);
-        //注册Activity生命周期
-        registerActivityLifecycleCallbacks(ActivityUtil.getActivityLifecycleCallbacks());
         //初始化涂鸦
         TuyaHomeSdk.init(this);
         TuyaHomeSdk.setDebugMode(true);

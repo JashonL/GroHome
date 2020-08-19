@@ -4,12 +4,8 @@ package com.growatt.grohome.module.personal;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,30 +48,6 @@ public class SetttingActivity extends BaseActivity<SettingPresenter> implements 
     Toolbar toolbar;
     @BindView(R.id.ivPhoto)
     CircleImageView ivPhoto;
-    @BindView(R.id.ll_personal_photo)
-    LinearLayout llPersonalPhoto;
-    @BindView(R.id.iv_user_more)
-    ImageView ivUserMore;
-    @BindView(R.id.ll_username)
-    LinearLayout llUsername;
-    @BindView(R.id.iv_passwor_more)
-    ImageView ivPassworMore;
-    @BindView(R.id.ll_edit_password)
-    LinearLayout llEditPassword;
-    @BindView(R.id.iv_phone_more)
-    ImageView ivPhoneMore;
-    @BindView(R.id.ll_phone)
-    LinearLayout llPhone;
-    @BindView(R.id.iv_email_more)
-    ImageView ivEmailMore;
-    @BindView(R.id.ll_email)
-    LinearLayout llEmail;
-    @BindView(R.id.iv_code_more)
-    ImageView ivCodeMore;
-    @BindView(R.id.ll_code)
-    LinearLayout llCode;
-    @BindView(R.id.btn_logout)
-    Button login;
     @BindView(R.id.tv_username)
     TextView tvUsername;
     @BindView(R.id.tv_email)
@@ -115,7 +87,7 @@ public class SetttingActivity extends BaseActivity<SettingPresenter> implements 
         }
         //头像
         try {
-            String path = Environment.getExternalStorageDirectory() + "/" + GlobalConstant.IMAGE_FILE_LOCATION;
+            String path = App.getInstance().getFilesDir().getPath() + "/" + GlobalConstant.IMAGE_FILE_LOCATION;
             GlideUtils.showImageActNoCache(this, R.drawable.avatar, R.drawable.avatar, path, ivPhoto);
         } catch (Exception e) {
             e.printStackTrace();
@@ -211,9 +183,11 @@ public class SetttingActivity extends BaseActivity<SettingPresenter> implements 
     public void saveBitmap(String path) {
         Bitmap bitmap = ImagePathUtil.decodeBitmapFromResource(path, ivPhoto.getWidth(), ivPhoto.getHeight());
         File f = new File(
-                Environment.getExternalStorageDirectory(),
+                App.getInstance().getFilesDir().getPath(),
                 GlobalConstant.IMAGE_FILE_LOCATION);
-        if (f.exists()) {
+        if (!f.exists()){
+            f.mkdirs();
+        }else {
             f.delete();
         }
         try {

@@ -10,5 +10,7 @@ public class DeviceTypeConstant {
     public static final String TYPE_AMETER = "ameter";
     public static final String TYPE_BULB = "bulb";
     public static final String TYPE_STRIP_LIGHTS = "stripLights";
+    public static final String TYPE_TIME = "time";
+
 
 }

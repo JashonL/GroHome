@@ -15,8 +15,8 @@ import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.module.config.Presenter.DeviceAPLightPresenter;
 import com.growatt.grohome.module.config.view.IDeviceAPLightView;
 import com.growatt.grohome.utils.GlideUtils;
+import com.growatt.grohome.utils.Mydialog;
 import com.growatt.grohome.utils.SpanableStringUtils;
-import com.yechaoa.yutils.YUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -126,12 +126,12 @@ public class DeviceAPLightActivity extends BaseActivity<DeviceAPLightPresenter> 
 
     @Override
     public void showDialog() {
-        YUtils.showLoading("");
+        Mydialog.show(this,"");
     }
 
     @Override
     public void dissmissDialog() {
-        YUtils.dismissLoading();
+        Mydialog.dissmiss();
     }
 
     @Override

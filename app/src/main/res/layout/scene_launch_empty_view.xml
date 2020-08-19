@@ -85,6 +85,7 @@
         android:textColor="@color/color_text_00"
         android:textSize="@dimen/size_content_sp_16"
         android:textStyle="bold"
+        android:visibility="gone"
         app:autoSizeMaxTextSize="@dimen/size_content_sp_14"
         app:autoSizeMinTextSize="@dimen/size_content_sp_8"
         app:autoSizeTextType="uniform"
@@ -99,6 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginBottom="@dimen/dp_30"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
