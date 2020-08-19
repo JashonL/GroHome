@@ -11,7 +11,6 @@ import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.module.config.Presenter.WiFiSetGuidePresenter;
 import com.growatt.grohome.module.config.view.IWiFiSetGuideView;
 
-
 import butterknife.BindView;
 
 public class WiFiSetGuideActivity extends BaseActivity<WiFiSetGuidePresenter> implements IWiFiSetGuideView {

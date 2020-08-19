@@ -1,11 +1,11 @@
 package com.growatt.grohome;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 import com.growatt.grohome.adapter.ArticleAdapter;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseActivity;
-import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.bean.Article;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.home.GrohomeFragment;

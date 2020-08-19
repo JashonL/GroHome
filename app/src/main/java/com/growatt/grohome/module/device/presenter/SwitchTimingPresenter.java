@@ -19,10 +19,7 @@ import com.growatt.grohome.bean.PanelSwitchBean;
 import com.growatt.grohome.bean.SwitchTimingBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.eventbus.DeviceTimingMsg;
-import com.growatt.grohome.eventbus.FreshScenesMsg;
 import com.growatt.grohome.module.device.DeviceTimingSetActivity;
-import com.growatt.grohome.module.device.SwitchTimingActivity;
-import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.ISwitchTimingView;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;
@@ -31,14 +28,11 @@ import com.growatt.grohome.utils.MyToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

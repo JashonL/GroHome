@@ -11,7 +11,6 @@ import com.growatt.grohome.module.config.ConnectHotsPotActivity;
 import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.view.IDeviceAPLightView;
-import com.growatt.grohome.module.config.view.IDeviceEZLightView;
 import com.growatt.grohome.module.device.presenter.DeviceTypePresenter;
 import com.growatt.grohome.tuya.FamilyManager;
 import com.growatt.grohome.utils.ActivityUtils;

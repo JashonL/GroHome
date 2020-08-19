@@ -1,13 +1,11 @@
 package com.growatt.grohome.module.login;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
@@ -21,11 +19,9 @@ import com.growatt.grohome.adapter.CountryAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.CountryBean;
 import com.growatt.grohome.constants.GlobalConstant;
-import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.customview.MyLetterView;
 import com.growatt.grohome.module.login.presenter.CountryListPresenter;
 import com.growatt.grohome.module.login.view.ICountryListView;
-import com.growatt.grohome.utils.CommentUtils;
 
 import java.util.ArrayList;
 import java.util.List;

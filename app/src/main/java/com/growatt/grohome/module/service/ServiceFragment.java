@@ -15,7 +15,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
-import com.growatt.grohome.adapter.RoomLineListAdapter;
 import com.growatt.grohome.adapter.ServiceCommondityAdapter;
 import com.growatt.grohome.base.BaseFragment;
 import com.growatt.grohome.bean.CommondityBean;

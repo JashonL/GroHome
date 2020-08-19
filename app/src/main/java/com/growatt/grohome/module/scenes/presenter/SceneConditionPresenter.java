@@ -3,7 +3,6 @@ package com.growatt.grohome.module.scenes.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.growatt.grohome.R;
@@ -12,16 +11,13 @@ import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.PanelSwitchBean;
 import com.growatt.grohome.bean.SceneConditionBean;
-import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.bean.ScenesRoadBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.scenes.view.ISceneConditionView;
-import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.bean.scene.SceneCondition;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
 import org.greenrobot.eventbus.EventBus;

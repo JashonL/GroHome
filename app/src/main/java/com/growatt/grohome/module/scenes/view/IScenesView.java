@@ -2,7 +2,6 @@ package com.growatt.grohome.module.scenes.view;
 
 import com.growatt.grohome.base.BaseView;
 import com.growatt.grohome.bean.ScenesBean;
-import com.growatt.grohome.eventbus.FreshScenesMsg;
 
 import java.util.List;
 

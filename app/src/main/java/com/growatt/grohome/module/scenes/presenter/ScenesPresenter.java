@@ -4,42 +4,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import com.google.gson.Gson;
-import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
-import com.growatt.grohome.bean.HomeRoomBean;
-import com.growatt.grohome.bean.PanelSwitchBean;
-import com.growatt.grohome.bean.SceneConditionBean;
-import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.constants.GlobalConstant;
-import com.growatt.grohome.eventbus.FreshScenesMsg;
 import com.growatt.grohome.module.scenes.SceneAddActivity;
 import com.growatt.grohome.module.scenes.SceneDetailActivity;
 import com.growatt.grohome.module.scenes.view.IScenesView;
-import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
-import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
-import com.mylhyl.circledialog.CircleDialog;
-import com.mylhyl.circledialog.res.drawable.CircleDrawable;
-import com.mylhyl.circledialog.res.values.CircleColor;
-import com.mylhyl.circledialog.res.values.CircleDimen;
 
-import org.greenrobot.eventbus.EventBus;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import okhttp3.MediaType;

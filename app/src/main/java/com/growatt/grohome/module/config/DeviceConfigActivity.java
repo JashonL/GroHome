@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.config;
 
-import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.growatt.grohome.module.config.Presenter.DeviceConfigPresenter;
 import com.growatt.grohome.module.config.view.IDeviceConfigView;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.MyToastUtils;
-import com.hjq.toast.ToastUtils;
 
 import butterknife.BindView;
 

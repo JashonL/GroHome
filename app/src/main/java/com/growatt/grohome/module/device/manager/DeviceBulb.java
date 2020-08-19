@@ -4,11 +4,7 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.utils.CommentUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import retrofit2.http.PUT;
 
 public class DeviceBulb extends BaseDevice {
 

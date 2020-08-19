@@ -1,7 +1,6 @@
 package com.growatt.grohome.module.room;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +23,6 @@ import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RoomImageActivity extends BaseActivity<RoomImagePresenter> implements IRoomImageView, Toolbar.OnMenuItemClickListener {

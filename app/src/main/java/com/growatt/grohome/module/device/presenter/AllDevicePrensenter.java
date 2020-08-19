@@ -3,24 +3,19 @@ package com.growatt.grohome.module.device.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.GroDeviceBean;
-import com.growatt.grohome.bean.HomeDeviceBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.view.IAllDeviceView;
 import com.growatt.grohome.module.scenes.SceneConditionActivity;
 import com.growatt.grohome.module.scenes.SceneTaskSettingActivity;
-import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

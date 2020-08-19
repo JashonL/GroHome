@@ -1,7 +1,6 @@
 package com.growatt.grohome.module.scenes;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements ISceneAddView, BaseQuickAdapter.OnItemChildClickListener {

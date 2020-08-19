@@ -14,14 +14,9 @@ import com.google.android.material.tabs.TabLayout;
 import com.growatt.grohome.MainActivity;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
-import com.growatt.grohome.base.BaseBean;
-import com.growatt.grohome.bean.User;
 import com.growatt.grohome.constants.GlobalConstant;
-import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.login.presenter.RegisterLoginPresenter;
 import com.growatt.grohome.module.login.view.IRegisterLoginView;
-import com.growatt.grohome.utils.CommentUtils;
-import com.gyf.immersionbar.ImmersionBar;
 import com.hjq.toast.ToastUtils;
 
 import java.util.Map;

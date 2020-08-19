@@ -14,20 +14,13 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
-import com.growatt.grohome.module.config.model.DeviceBindModel;
-import com.growatt.grohome.module.personal.NewEmailActivity;
 import com.growatt.grohome.module.personal.view.INewEmailView;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
-import com.tuya.smart.android.device.utils.WiFiUtil;
-import com.tuya.smart.android.mvp.bean.Result;
-import com.tuya.smart.sdk.bean.DeviceBean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Map;
 
 public class NewEmailPresenter extends BasePresenter<INewEmailView> {
 

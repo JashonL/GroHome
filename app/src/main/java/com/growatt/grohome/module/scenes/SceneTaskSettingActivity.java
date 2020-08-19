@@ -1,14 +1,10 @@
 package com.growatt.grohome.module.scenes;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -29,15 +25,10 @@ import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.scenes.presenter.SceneTaskPrensenter;
 import com.growatt.grohome.module.scenes.view.ISceneTaskSettingView;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> implements ISceneTaskSettingView , BaseQuickAdapter.OnItemClickListener{

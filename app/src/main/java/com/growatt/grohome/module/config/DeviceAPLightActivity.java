@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.config;
 
-import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +23,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DeviceAPLightActivity extends BaseActivity<DeviceAPLightPresenter> implements IDeviceAPLightView {

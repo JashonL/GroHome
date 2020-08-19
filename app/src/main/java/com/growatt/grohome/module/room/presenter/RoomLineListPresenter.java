@@ -2,8 +2,6 @@ package com.growatt.grohome.module.room.presenter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.growatt.grohome.app.App;
@@ -12,7 +10,6 @@ import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.room.view.IRoomLineListView;
-import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.CommentUtils;
 
 import org.json.JSONArray;

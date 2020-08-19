@@ -13,12 +13,9 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
-import com.growatt.grohome.bean.DeviceTimingBean;
 import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.constants.GlobalConstant;
-import com.growatt.grohome.eventbus.DeviceTimingMsg;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
-import com.growatt.grohome.module.device.DeviceSettingActivity;
 import com.growatt.grohome.module.device.DeviceUpdataActivity;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.IDeviceSettingView;
@@ -33,11 +30,9 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;

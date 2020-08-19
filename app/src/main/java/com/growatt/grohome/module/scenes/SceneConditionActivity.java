@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.scenes;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -20,12 +19,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
-import com.growatt.grohome.adapter.ScenesPanelAdapter;
 import com.growatt.grohome.adapter.ScenesPanelConditionAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.SceneConditionBean;
-import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.bean.ScenesRoadBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
@@ -36,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter> implements ISceneConditionView, BaseQuickAdapter.OnItemChildClickListener {

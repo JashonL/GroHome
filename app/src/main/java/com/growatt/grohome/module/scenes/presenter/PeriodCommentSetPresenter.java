@@ -8,8 +8,6 @@ import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.scenes.view.IPeriodCommentSetView;
 
-import org.greenrobot.eventbus.EventBus;
-
 public class PeriodCommentSetPresenter extends BasePresenter<IPeriodCommentSetView> {
     public PeriodCommentSetPresenter(IPeriodCommentSetView baseView) {
         super(baseView);

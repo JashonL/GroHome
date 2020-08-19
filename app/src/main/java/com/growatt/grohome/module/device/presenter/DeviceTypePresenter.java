@@ -6,7 +6,6 @@ import android.content.Intent;
 
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
-import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.IDeviceTypeView;
 import com.growatt.grohome.utils.ActivityUtils;
 

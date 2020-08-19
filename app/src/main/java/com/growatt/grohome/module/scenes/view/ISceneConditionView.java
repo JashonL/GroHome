@@ -3,7 +3,6 @@ package com.growatt.grohome.module.scenes.view;
 import com.growatt.grohome.base.BaseView;
 import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.SceneConditionBean;
-import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.bean.ScenesRoadBean;
 
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.device;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,17 +13,14 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
-import com.growatt.grohome.adapter.DeviceTimingAdapter;
 import com.growatt.grohome.adapter.SceneGridAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.customview.GridDivider;
-import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.module.device.manager.DeviceAirCon;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
@@ -40,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DeviceSettingActivity extends BaseActivity<DeviceSettingPresenter> implements IDeviceSettingView , BaseQuickAdapter.OnItemClickListener {

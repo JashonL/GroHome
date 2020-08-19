@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import androidx.annotation.NonNull;
-
 import com.tuya.smart.android.common.utils.SafeHandler;
 
 import java.lang.ref.WeakReference;

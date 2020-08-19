@@ -14,7 +14,6 @@ import com.growatt.grohome.module.scenes.view.IEffectivePeriodView;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.growatt.grohome.utils.PickViewUtils;
-import com.growatt.grohome.utils.TimePickUtils;
 
 import java.text.SimpleDateFormat;
 

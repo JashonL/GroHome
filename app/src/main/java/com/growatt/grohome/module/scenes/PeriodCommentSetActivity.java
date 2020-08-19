@@ -1,23 +1,15 @@
 package com.growatt.grohome.module.scenes;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.Guideline;
 
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.contrarywind.view.WheelView;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
-import com.growatt.grohome.module.device.DeviceTypeActivity;
 import com.growatt.grohome.module.scenes.presenter.PeriodCommentSetPresenter;
 import com.growatt.grohome.module.scenes.view.IPeriodCommentSetView;
 
@@ -25,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class PeriodCommentSetActivity extends BaseActivity<PeriodCommentSetPresenter> implements IPeriodCommentSetView, Toolbar.OnMenuItemClickListener {
     @BindView(R.id.tv_title)

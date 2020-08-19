@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.personal;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +14,6 @@ import com.growatt.grohome.module.personal.presenter.UpdatePwdPresenter;
 import com.growatt.grohome.module.personal.view.IUpdatePwdView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class UpdatepwdActivity extends BaseActivity<UpdatePwdPresenter> implements IUpdatePwdView {

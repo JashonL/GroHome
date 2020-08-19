@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.device;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,16 +24,11 @@ import com.growatt.grohome.customview.GridDivider;
 import com.growatt.grohome.module.device.presenter.SwitchPresenter;
 import com.growatt.grohome.module.device.view.ISwitchView;
 import com.growatt.grohome.utils.CommentUtils;
-import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.sdk.bean.DeviceBean;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISwitchView, Toolbar.OnMenuItemClickListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener {

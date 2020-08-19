@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.scenes;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class RepeatActivity extends BaseActivity<RepeatPresenter> implements IRepeatActivityView, Toolbar.OnMenuItemClickListener {
     @BindView(R.id.tv_title)

@@ -1,7 +1,6 @@
 package com.growatt.grohome.module.device.presenter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -35,7 +34,6 @@ import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.LogUtil;
 import com.growatt.grohome.utils.MyToastUtils;
-import com.growatt.grohome.utils.TimePickUtils;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;

@@ -4,13 +4,9 @@ package com.growatt.grohome.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -25,7 +21,6 @@ import com.mylhyl.circledialog.view.listener.OnCreateBodyViewListener;
 import com.mylhyl.circledialog.view.listener.OnInputClickListener;
 import com.mylhyl.circledialog.view.listener.OnLvItemClickListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CircleDialogUtils {

@@ -1,7 +1,6 @@
 package com.growatt.grohome.module.config;
 
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +14,6 @@ import com.growatt.grohome.module.config.Presenter.SelectConfigPresenter;
 import com.growatt.grohome.module.config.view.ISelectConfigView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 

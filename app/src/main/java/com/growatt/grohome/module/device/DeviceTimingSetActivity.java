@@ -1,7 +1,6 @@
 package com.growatt.grohome.module.device;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +19,6 @@ import com.growatt.grohome.module.device.presenter.DeviceTimingSetPresenter;
 import com.growatt.grohome.module.device.view.IDeviceTimingSetView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DeviceTimingSetActivity extends BaseActivity<DeviceTimingSetPresenter> implements IDeviceTimingSetView {

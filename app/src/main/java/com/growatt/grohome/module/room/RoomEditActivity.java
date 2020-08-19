@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.room;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;

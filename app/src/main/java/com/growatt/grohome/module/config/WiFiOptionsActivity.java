@@ -1,15 +1,10 @@
 package com.growatt.grohome.module.config;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.provider.Settings;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -20,13 +15,10 @@ import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.module.config.Presenter.WiFiOptionsPresenter;
 import com.growatt.grohome.module.config.view.IWiFiOptionsView;
 import com.growatt.grohome.utils.ActivityUtils;
-import com.growatt.grohome.utils.CommentUtils;
-import com.growatt.grohome.utils.MyToastUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class WiFiOptionsActivity extends BaseActivity<WiFiOptionsPresenter> implements IWiFiOptionsView {

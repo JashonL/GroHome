@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -25,7 +24,6 @@ import com.growatt.grohome.module.device.AllDeviceActivity;
 import com.growatt.grohome.module.scenes.EffectivePeriodActivity;
 import com.growatt.grohome.module.scenes.SceneConditionActivity;
 import com.growatt.grohome.module.scenes.SceneTaskSettingActivity;
-import com.growatt.grohome.module.scenes.view.ISceneAddView;
 import com.growatt.grohome.module.scenes.view.ISceneDetailView;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;

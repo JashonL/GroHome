@@ -2,13 +2,11 @@ package com.growatt.grohome;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
-import com.growatt.grohome.tuya.FamilyManager;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MD5andKL;

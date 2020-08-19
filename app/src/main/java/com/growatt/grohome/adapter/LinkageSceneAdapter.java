@@ -10,10 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.growatt.grohome.R;
-import com.growatt.grohome.bean.LinkageSceneBean;
 import com.growatt.grohome.bean.SceneConditionBean;
 import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.bean.ScenesBean;

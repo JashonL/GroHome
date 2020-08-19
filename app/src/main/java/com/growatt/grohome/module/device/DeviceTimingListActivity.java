@@ -1,10 +1,8 @@
 package com.growatt.grohome.module.device;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -30,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class DeviceTimingListActivity extends BaseActivity<DeviceTimingPresenter> implements IDeviceTimingView , BaseQuickAdapter.OnItemClickListener,
         BaseQuickAdapter.OnItemChildClickListener{

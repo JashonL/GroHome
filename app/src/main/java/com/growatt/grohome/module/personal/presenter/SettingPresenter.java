@@ -24,7 +24,6 @@ import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.PhotoUtil;
-import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.view.listener.OnLvItemClickListener;
 
 import java.io.IOException;

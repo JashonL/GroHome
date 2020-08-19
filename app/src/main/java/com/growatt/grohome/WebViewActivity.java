@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.DownloadListener;
@@ -21,7 +20,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.growatt.grohome.base.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class WebViewActivity extends BaseActivity<WebViewPresenter> implements IWebViewView {
     @BindView(R.id.status_bar_view)

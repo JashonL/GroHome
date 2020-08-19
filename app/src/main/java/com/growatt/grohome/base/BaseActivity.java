@@ -12,12 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-
 import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
 import com.gyf.immersionbar.ImmersionBar;
-import com.yechaoa.yutils.LogUtil;
 import com.yechaoa.yutils.YUtils;
 
 import java.lang.ref.WeakReference;

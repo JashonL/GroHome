@@ -3,20 +3,15 @@ package com.growatt.grohome.module.device.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.growatt.grohome.adapter.DeviceTimingAdapter;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.DeviceTimingBean;
-import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.bean.SwitchTimingBean;
 import com.growatt.grohome.constants.GlobalConstant;
-import com.growatt.grohome.eventbus.DeviceTimingMsg;
 import com.growatt.grohome.module.device.DeviceTimingSetActivity;
 import com.growatt.grohome.module.device.SwitchTimingActivity;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
@@ -25,15 +20,12 @@ import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

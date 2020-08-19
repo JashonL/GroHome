@@ -1,9 +1,7 @@
 package com.growatt.grohome.utils;
 
 import android.graphics.Bitmap;
-import android.os.Environment;
 import android.util.Log;
-
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

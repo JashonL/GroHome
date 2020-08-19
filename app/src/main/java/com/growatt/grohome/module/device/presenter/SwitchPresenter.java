@@ -3,13 +3,9 @@ package com.growatt.grohome.module.device.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.growatt.grohome.R;
-import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.PanelSwitchBean;

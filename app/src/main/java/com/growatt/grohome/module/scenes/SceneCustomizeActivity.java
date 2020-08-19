@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.scenes;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +16,6 @@ import com.growatt.grohome.module.scenes.presenter.SceneCustomPresenter;
 import com.growatt.grohome.module.scenes.view.ISceneCustomizeView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SceneCustomizeActivity extends BaseActivity<SceneCustomPresenter> implements ISceneCustomizeView {

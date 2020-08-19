@@ -30,16 +30,13 @@ import com.growatt.grohome.utils.PhotoUtil;
 import com.mylhyl.circledialog.view.listener.OnLvItemClickListener;
 import com.yalantis.ucrop.UCrop;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -48,7 +45,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
-import static com.growatt.grohome.utils.CommentUtils.getLanguage;
 
 public class RoomImagePresenter extends BasePresenter<IRoomImageView> {
 

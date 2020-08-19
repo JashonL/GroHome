@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
-import com.growatt.grohome.module.device.DeviceUpdataActivity;
 import com.growatt.grohome.module.login.RegisterLoginActivity;
 import com.growatt.grohome.module.personal.view.IUpdatePwdView;
 import com.growatt.grohome.utils.ActivityUtils;

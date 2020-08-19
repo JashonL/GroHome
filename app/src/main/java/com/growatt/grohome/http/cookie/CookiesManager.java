@@ -2,8 +2,6 @@ package com.growatt.grohome.http.cookie;
 
 import android.content.Context;
 
-import com.growatt.grohome.http.cookie.PersistentCookieStore;
-
 import java.util.List;
 
 import okhttp3.Cookie;

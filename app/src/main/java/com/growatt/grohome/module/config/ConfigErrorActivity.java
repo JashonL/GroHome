@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.config;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,7 +13,6 @@ import com.growatt.grohome.module.config.Presenter.ConfigErrorPresenter;
 import com.growatt.grohome.module.config.view.IConfigErrorView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ConfigErrorActivity extends BaseActivity<ConfigErrorPresenter> implements IConfigErrorView {

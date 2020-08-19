@@ -3,7 +3,6 @@ package com.growatt.grohome.http.gson;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
-import com.growatt.grohome.http.gson.BaseResponseBodyConverter;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;

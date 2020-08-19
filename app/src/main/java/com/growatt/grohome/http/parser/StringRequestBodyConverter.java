@@ -3,13 +3,11 @@ package com.growatt.grohome.http.parser;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-
-import okio.Buffer;
-
 import java.nio.charset.Charset;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import okio.Buffer;
 import retrofit2.Converter;
 
 public class StringRequestBodyConverter implements Converter<String, RequestBody> {

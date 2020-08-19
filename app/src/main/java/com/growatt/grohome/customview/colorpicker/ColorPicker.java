@@ -16,7 +16,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.growatt.grohome.R;
-import com.growatt.grohome.utils.CommentUtils;
 
 public class ColorPicker extends View {
 

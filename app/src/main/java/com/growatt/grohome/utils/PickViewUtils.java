@@ -1,7 +1,6 @@
 package com.growatt.grohome.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -17,10 +16,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class PickViewUtils {

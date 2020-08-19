@@ -3,7 +3,6 @@ package com.growatt.grohome.module.device.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -11,7 +10,6 @@ import androidx.fragment.app.FragmentActivity;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.constants.GlobalConstant;
-import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.IDeviceUpdataView;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.mylhyl.circledialog.CircleDialog;

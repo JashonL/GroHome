@@ -1,7 +1,6 @@
 package com.growatt.grohome.module.scenes;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +20,6 @@ import com.growatt.grohome.utils.CommentUtils;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class EffectivePeriodActivity extends BaseActivity<EffectivePeriodPresenter> implements IEffectivePeriodView, Toolbar.OnMenuItemClickListener {

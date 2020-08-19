@@ -14,7 +14,6 @@ import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.HomeRoomBean;
-import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.config.view.IConfigSuccessView;
 import com.growatt.grohome.module.device.BulbActivity;
@@ -29,9 +28,7 @@ import com.mylhyl.circledialog.view.listener.OnInputClickListener;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.api.ITuyaDevice;
-import com.tuya.smart.sdk.bean.DeviceBean;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

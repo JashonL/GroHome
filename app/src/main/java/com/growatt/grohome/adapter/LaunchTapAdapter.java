@@ -1,22 +1,17 @@
 package com.growatt.grohome.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.growatt.grohome.R;
-import com.growatt.grohome.bean.GroDeviceBean;
-import com.growatt.grohome.bean.LaunchSceneBean;
 import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.constants.GlobalConstant;

@@ -1,7 +1,6 @@
 package com.growatt.grohome.module.device;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,7 +33,6 @@ import com.growatt.grohome.utils.MyToastUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;

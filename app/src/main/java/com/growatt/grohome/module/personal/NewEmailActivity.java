@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.personal;
 
-import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -20,7 +19,6 @@ import com.growatt.grohome.module.personal.presenter.NewEmailPresenter;
 import com.growatt.grohome.module.personal.view.INewEmailView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class NewEmailActivity extends BaseActivity<NewEmailPresenter> implements INewEmailView {

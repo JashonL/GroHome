@@ -1,7 +1,6 @@
 package com.growatt.grohome.customview.colorpicker;
 
 import android.content.Context;
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;

@@ -1,13 +1,6 @@
 package com.growatt.grohome.module.room;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
 import com.growatt.grohome.bean.HomeRoomBean;
-import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
-import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 
 import java.util.List;
 

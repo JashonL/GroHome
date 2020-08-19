@@ -1,9 +1,7 @@
 package com.growatt.grohome.module.device;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -15,7 +13,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.AllDeviceAdapter;
-import com.growatt.grohome.adapter.SceneConditionAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.SceneConditionBean;
@@ -31,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> implements IAllDeviceView , BaseQuickAdapter.OnItemClickListener {
 

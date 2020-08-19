@@ -1,9 +1,5 @@
 package com.growatt.grohome.module.personal;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.base.BasePresenter;

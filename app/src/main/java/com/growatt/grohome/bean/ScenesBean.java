@@ -1,8 +1,5 @@
 package com.growatt.grohome.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;

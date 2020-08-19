@@ -19,9 +19,6 @@ import com.growatt.grohome.module.room.view.IRoomAddView;
 import com.growatt.grohome.utils.GlideUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 

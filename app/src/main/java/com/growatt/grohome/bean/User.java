@@ -1,7 +1,5 @@
 package com.growatt.grohome.bean;
 
-import java.util.List;
-
 /**
  * Describe :
  */

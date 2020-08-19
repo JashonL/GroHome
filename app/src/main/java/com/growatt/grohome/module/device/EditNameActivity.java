@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.device;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.growatt.grohome.module.device.view.IEditNameView;
 import org.json.JSONException;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class EditNameActivity extends BaseActivity<EditNamePresenter> implements IEditNameView ,Toolbar.OnMenuItemClickListener{
     @BindView(R.id.status_bar_view)

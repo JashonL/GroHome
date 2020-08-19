@@ -16,11 +16,9 @@ import androidx.core.content.ContextCompat;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
-import com.growatt.grohome.constants.AllPermissionRequestCode;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.module.config.Presenter.DeviceLightStatusPresenter;
 import com.growatt.grohome.module.config.view.IDeviceLightStatusView;
-import com.growatt.grohome.utils.ActivityUtils;
 import com.yechaoa.yutils.YUtils;
 
 import org.greenrobot.eventbus.EventBus;

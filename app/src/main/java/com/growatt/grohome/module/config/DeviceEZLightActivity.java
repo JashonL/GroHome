@@ -1,9 +1,7 @@
 package com.growatt.grohome.module.config;
 
-import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,7 +16,6 @@ import com.growatt.grohome.utils.GlideUtils;
 import com.growatt.grohome.utils.SpanableStringUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DeviceEZLightActivity extends BaseActivity<DeviceEZLightPresenter> implements IDeviceEZLightView {
