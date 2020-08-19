@@ -20,6 +20,7 @@ import com.growatt.grohome.module.device.manager.DevicePlug;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.home.view.IGrohomeView;
+import com.growatt.grohome.module.room.RoomAddActivity;
 import com.growatt.grohome.module.room.RoomListActivity;
 import com.growatt.grohome.module.room.RoomManager;
 import com.growatt.grohome.tuya.SendDpListener;
@@ -60,6 +61,16 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     public GrohomePresenter(Context context, IGrohomeView baseView) {
         super(context, baseView);
     }
+
+
+    /**
+     * 添加房间
+     */
+    public void addRoom() {
+        Intent intent = new Intent(context, RoomAddActivity.class);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
 
 
     public void getAlldevice() throws Exception {

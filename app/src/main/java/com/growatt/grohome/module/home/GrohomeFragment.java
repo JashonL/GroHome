@@ -175,12 +175,11 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_add:
+            case R.id.action_add_room:
+                presenter.addRoom();
+                break;
+            case R.id.action_add_device:
                 startActivity(new Intent(getContext(), DeviceTypeActivity.class));
-           /*     View bodyView=LayoutInflater.from(getActivity()).inflate(R.layout.bulb_dialog_white_mode,null,false);
-                CircleDialogUtils.showBulbWhiteMode(bodyView, GrohomeFragment.this.getFragmentManager(), view -> {
-
-                });*/
                 break;
         }
         return true;
