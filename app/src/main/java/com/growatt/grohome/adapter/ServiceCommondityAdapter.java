@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.growatt.grohome.R;
 import com.growatt.grohome.bean.CommondityBean;
 
 import java.util.List;
@@ -24,6 +25,6 @@ public class ServiceCommondityAdapter extends BaseQuickAdapter<CommondityBean, B
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, CommondityBean item) {
-
+        helper.setText(R.id.tv_detail,item.getDetail());
     }
 }

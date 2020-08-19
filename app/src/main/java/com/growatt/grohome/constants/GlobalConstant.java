@@ -105,4 +105,13 @@ public class GlobalConstant {
     public static final int REQUEST_CODE_EDIT_EMAIL = 103;
 
     public static final String IMAGE_FILE_LOCATION = "grohome/avatar.png";
+
+    //*********************http***************************
+    public static final String HTTP_PREFIX = "http://";
+    //***********************设备相关网页******************************
+    public static final String SWITCH_PANEL_WEB="https://www.amazon.com/dp/B08BLCJB2C";
+    public static final String LIGHT_BULB_WEB="https://www.amazon.com/dp/B08F4VBGZY";
+    public static final String WEB_URL="web_url";
+
+
 }

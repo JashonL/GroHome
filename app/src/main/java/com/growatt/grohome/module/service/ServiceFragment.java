@@ -6,19 +6,34 @@ import android.widget.ImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
+import com.growatt.grohome.adapter.RoomLineListAdapter;
 import com.growatt.grohome.adapter.ServiceCommondityAdapter;
 import com.growatt.grohome.base.BaseFragment;
+import com.growatt.grohome.bean.CommondityBean;
+import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.module.service.presenter.ServicePresenter;
 import com.growatt.grohome.module.service.view.IServiceFragmentView;
+import com.growatt.grohome.utils.CommentUtils;
 import com.youth.banner.Banner;
+import com.youth.banner.adapter.BannerImageAdapter;
+import com.youth.banner.holder.BannerImageHolder;
+import com.youth.banner.indicator.CircleIndicator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
-public class ServiceFragment extends BaseFragment<ServicePresenter> implements IServiceFragmentView {
+public class ServiceFragment extends BaseFragment<ServicePresenter> implements IServiceFragmentView , BaseQuickAdapter.OnItemClickListener {
 
 
     @BindView(R.id.status_bar_view)
@@ -43,12 +58,14 @@ public class ServiceFragment extends BaseFragment<ServicePresenter> implements I
     ConstraintLayout clFaq;
     @BindView(R.id.tv_selection)
     AppCompatTextView tvSelection;
+    @BindView(R.id.rlv_device)
+    RecyclerView rlvDevice;
 
     private ServiceCommondityAdapter mServiceCommondityAdapter;
 
     @Override
     protected ServicePresenter createPresenter() {
-        return new ServicePresenter(this);
+        return new ServicePresenter(getActivity(),this);
     }
 
     @Override
@@ -59,17 +76,62 @@ public class ServiceFragment extends BaseFragment<ServicePresenter> implements I
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
-        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.white).statusBarDarkFont(true,0.2f).init();
+        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.white).statusBarDarkFont(true, 0.2f).init();
     }
 
     @Override
     protected void initView() {
-        mServiceCommondityAdapter = new ServiceCommondityAdapter(R.layout.item_commodity, new ArrayList<>());
         toolbar.setVisibility(View.GONE);
+        //设备列表
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rlvDevice.setLayoutManager(layoutManager);
+        mServiceCommondityAdapter = new ServiceCommondityAdapter(R.layout.item_service_commondity, new ArrayList<>());
+        rlvDevice.setAdapter(mServiceCommondityAdapter);
+        int div = CommentUtils.dip2px(getActivity(), 20);
+        rlvDevice.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, div, ContextCompat.getColor(getActivity(), R.color.nocolor)));
+
     }
 
     @Override
     protected void initData() {
+        presenter.getAdvertisingList();
+        List<CommondityBean> newList = presenter.getNewList();
+        mServiceCommondityAdapter.replaceData(newList);
+    }
 
+
+    @Override
+    public void initListener() {
+        super.initListener();
+        mServiceCommondityAdapter.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void setBannerList(List<String> bannerList) {
+        banner.setAdapter(new BannerImageAdapter<String>(bannerList) {
+            @Override
+            public void onBindView(BannerImageHolder holder, String path, int position, int size) {
+                //图片加载自己实现
+                Glide.with(holder.itemView)
+                        .load(path)
+                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(30)))
+                        .into(holder.imageView);
+            }
+        })
+                .addBannerLifecycleObserver(this)//添加生命周期观察者
+                .setIndicator(new CircleIndicator(getActivity()));
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        CommondityBean commondityBean = mServiceCommondityAdapter.getData().get(position);
+        String url = commondityBean.getUrl();
+        presenter.openWebView(url);
     }
 }

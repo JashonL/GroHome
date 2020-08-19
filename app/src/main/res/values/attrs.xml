@@ -74,4 +74,6 @@
         <!-- 设置滑块图标高度，宽度会根据高度等比适应-->
         <attr name="thumbHeight" format="dimension" />
     </declare-styleable>
+
+
 </resources>

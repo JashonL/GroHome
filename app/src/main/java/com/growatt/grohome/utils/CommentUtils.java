@@ -221,6 +221,26 @@ public class CommentUtils {
     }
 
 
+
+    public static int getLocale() {
+        Locale locale = App.getInstance().getResources().getConfiguration().locale;
+        String language = locale.getLanguage().toLowerCase();
+        int a;
+        if (language.contains("cn") || language.contains("zh")) {
+            a = 0;
+            if (!locale.getCountry().toLowerCase().equals("cn")){
+                a = 2;
+            }
+        } else if (language.contains("en")) {
+            a = 1;
+
+        } else {
+            a = 2;
+        }
+        return a;
+    }
+
+
     /**
      * 获取新语言
      *
@@ -338,5 +358,8 @@ public class CommentUtils {
         return getMins;
     }
 
-
+    public static int dp2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
 }

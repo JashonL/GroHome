@@ -15,7 +15,6 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
-        android:background="@drawable/image_banner"
         app:layout_constraintTop_toBottomOf="@+id/headerView" />
 
 
@@ -115,6 +114,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rlv_device"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

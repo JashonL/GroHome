@@ -17,8 +17,9 @@ public class StringResponseBodyConverter implements Converter<ResponseBody, Stri
     public String convert(ResponseBody value) throws IOException {
         String jsonString = value.string();
         try {
+             /*
             JSONObject object = new JSONObject(jsonString);
-         /*   int code = object.optInt("result");
+          int code = object.optInt("result");
             if (0 == code) {//失败
                 String data;
                 //错误信息

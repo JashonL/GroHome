@@ -70,10 +70,10 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
 
     /*banner*/
-    implementation 'com.youth.banner:banner:2.0.12'
+    implementation 'com.youth.banner:banner:2.1.0'
 
     /*mpforandroid*/
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+//    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     /*circleDialog*/
     implementation 'com.mylhyl:circleDialog:5.2.0'
