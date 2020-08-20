@@ -119,7 +119,7 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
 
     @Override
     protected void initData() {
-
+        presenter.getCurrentZone();
     }
 
 
@@ -148,7 +148,7 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
 
     }
 
-    @OnClick({R.id.btn_login, R.id.btn_register,R.id.iv_passwor_view,R.id.ll_country,R.id.tv_get_code,R.id.ll_zone})
+    @OnClick({R.id.btn_login, R.id.btn_register,R.id.iv_passwor_view,R.id.ll_country,R.id.tv_get_code,R.id.ll_zone,R.id.tv_forgot_pwd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
@@ -168,7 +168,11 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
                 break;
             case R.id.btn_register:
                 String country = tvCountry.getText().toString();
+                if (GlobalConstant.STRING_CHINA_CHINESE.equals(country) || country.toLowerCase().equals(GlobalConstant.STRING_CHINA_ENLISH)) {
+                    country = "China";
+                }
                 String zone = tvZone.getText().toString();
+                zone=zone.replace("GMT","");
                 String rePassword = etPassword.getText().toString();
                 String rePasswordRepeat = tvRepeatPwd.getText().toString();
                 String email = tvEmail.getText().toString();
@@ -186,6 +190,9 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
                 break;
             case R.id.ll_zone:
                 presenter.setZone();
+                break;
+            case R.id.tv_forgot_pwd:
+                presenter.resetPassword();
                 break;
         }
     }

@@ -19,6 +19,7 @@ import com.growatt.grohome.bean.User;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.http.API;
 import com.growatt.grohome.module.login.CountryListActivity;
+import com.growatt.grohome.module.login.ForgotpasswordActivity;
 import com.growatt.grohome.module.login.view.IRegisterLoginView;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
@@ -26,6 +27,7 @@ import com.growatt.grohome.utils.MD5andKL;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.growatt.grohome.utils.PickViewUtils;
 import com.growatt.grohome.utils.SharedPreferencesUnit;
+import com.growatt.grohome.utils.UrlUtil;
 import com.hjq.toast.ToastUtils;
 
 import org.json.JSONException;
@@ -83,8 +85,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                             JSONObject obj = jsonObject.getJSONObject("obj");
                             //用户类型
                             int userType = obj.getInt("userType");
-                            userUrl = obj.getString("userServerUrl");
-                            String userServerUrl = "http://" + obj.getString("userServerUrl") + "/newTwoLoginAPI.do";
+                            String userServerUrl = obj.getString("userServerUrl");
                             if (userType == 0) {//监控用户
                                 userLogin(userServerUrl, username, password);
                             }
@@ -115,8 +116,10 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
      * 登录
      */
     public void userLogin(String url, String username, String password) {
+        userUrl = UrlUtil.replaceUrl(url);
+        String userServerUrl = GlobalConstant.HTTP_PREFIX + userUrl + API.NEWTWOLOGINAPI;
         //正式登录
-        addDisposable(apiServer.login(url, username, MD5andKL.encryptPassword(password)), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.login(userServerUrl, username, MD5andKL.encryptPassword(password)), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
                 try {
@@ -127,7 +130,8 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                         //用户解析
                         User userInfo = new Gson().fromJson(user.toString(), User.class);
                         userInfo.setUrl(userUrl);
-                        if (userUrl.contains("-cn")) userInfo.setUserTuyaCode(GlobalConstant.CHINA_AREA_CODE);
+                        if (userUrl.contains("-cn"))
+                            userInfo.setUserTuyaCode(GlobalConstant.CHINA_AREA_CODE);
                         else userInfo.setUserTuyaCode(GlobalConstant.EUROPE_AREA_CODE);
                         savaUserInfo(username, password, userInfo);
                         baseView.loginSuccess(bean);
@@ -166,12 +170,22 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 String zone = zones.get(options1);
+                zone = "GMT" + zone;
                 baseView.setZone(zone);
             }
         }, App.getInstance().getString(R.string.m185_zone));
 
     }
 
+
+    /**
+     * 重置密码
+     */
+    public void resetPassword() {
+        Intent intent = new Intent(context, ForgotpasswordActivity.class);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
+
+    }
 
     /**
      * 根据国家获取服务器
@@ -189,13 +203,13 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                             JSONObject jsonObject = new JSONObject(bean);
                             String success = jsonObject.get("success").toString();
                             if (success.equals("true")) {
-                                registerUrl = jsonObject.getString("server");
+                                registerUrl = UrlUtil.replaceUrl(jsonObject.getString("server"));
                             } else {
-                                registerUrl = API.USER_URL;
+                                registerUrl = API.URL_HOST;
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            registerUrl = API.USER_URL;
+                            registerUrl = API.URL_HOST;
                         }
                     }
 
@@ -223,7 +237,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
             ToastUtils.show(R.string.m177_select_country);
             return;
         }
-        String url = "http://" + registerUrl + API.VERIFICATION_CODE;
+        String url = GlobalConstant.HTTP_PREFIX + registerUrl + API.VERIFICATION_CODE;
         //发送消息
         handler.sendEmptyMessage(MESSAGE_SHOW_TIMING);
         addDisposable(apiServer.getVerificationCode(url, email, email, String.valueOf(CommentUtils.getLanguage())), new BaseObserver<String>(baseView, true) {
@@ -286,7 +300,8 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
             return;
         }
 
-        addDisposable(apiServer.groHomeRegister(registerUrl, regUserName, regPassword, regTimeZone, regEmail, regCountry), new BaseObserver<String>(baseView, true) {
+        String url = GlobalConstant.HTTP_PREFIX + registerUrl + API.CREATACCOUNT;
+        addDisposable(apiServer.groHomeRegister(url, regUserName, regPassword, regTimeZone, regEmail, regCountry), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String result) {
                 try {
@@ -336,6 +351,17 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
         userInfo.put(GlobalConstant.SP_USER_PASSWORD, password);
         return userInfo;
     }
+
+
+    public void getCurrentZone() {
+        String currentTimeZone = CommentUtils.getCurrentTimeZone();
+        int index = currentTimeZone.indexOf(":");
+        if (index != -1) {
+            currentTimeZone = currentTimeZone.substring(0, index);
+        }
+        baseView.setZone(currentTimeZone);
+    }
+
 
     @Override
     public boolean handleMessage(@NonNull Message msg) {

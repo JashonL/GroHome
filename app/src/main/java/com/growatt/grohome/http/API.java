@@ -44,6 +44,16 @@ public class API {
 
     public static final String GET_ADVERTISING_LIST = "/newPlantAPI.do?op=getAdvertisingList&language=";
 
+    public static final String URL_HOST = "server-api.growatt.com";//注册时用
+    public static final String URL_CN_HOST = "server-cn-api.growatt.com";//注册时用
+    //根据用户名或者采集器序列号获取服务器
+    public static final String GET_SERVER_URLBY_PARAM = "/newForgetAPI.do?op=getServerUrlByParam";
+    public static final String SEND_RESET_EMAIL_BY_ACCOUNT = "/newForgetAPI.do?op=sendResetEmailByAccount";
+
+    public static final String CREATACCOUNT ="/newTwoRegisterAPI.do?op=creatAccount";
+    public static final String NEWTWOLOGINAPI ="/newTwoLoginAPI.do";
+
+
 
     public interface WAZApi {
 
@@ -109,7 +119,15 @@ public class API {
         @POST
         Observable<String> updateUser(@Url String url, @Field("accountName") String accountName, @Field("email") String email);
 
+        //忘记密码
+        @FormUrlEncoded
+        @POST
+        Observable<String> resetPassWord(@Url String url, @Field("type") String type, @Field("param") String param, @Field("param2") String param2);
 
+        //邮箱找回
+        @FormUrlEncoded
+        @POST
+        Observable<String> sendResetEmailByAccount(@Url String url, @Field("accountName") String accountName);
 
         //---------------------------【   收藏   】----------------------------------
 

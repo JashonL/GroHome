@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.TimeZone;
 
 public class CommentUtils {
     //判断WiFi是否打开
@@ -214,6 +215,41 @@ public class CommentUtils {
 
 
 
+    public static String getCurrentTimeZone() {
+        TimeZone tz = TimeZone.getDefault();
+        return createGmtOffsetString(true, true, tz.getRawOffset());
+    }
+
+    public static String createGmtOffsetString(boolean includeGmt, boolean includeMinuteSeparator, int offsetMillis) {
+        int offsetMinutes = offsetMillis / 60000;
+        char sign = '+';
+        if (offsetMinutes < 0) {
+            sign = '-';
+            offsetMinutes = -offsetMinutes;
+        }
+        StringBuilder builder = new StringBuilder(9);
+        if (includeGmt) {
+            builder.append("GMT");
+        }
+        builder.append(sign);
+        appendNumber(builder, 2, offsetMinutes / 60);
+        if (includeMinuteSeparator) {
+            builder.append(':');
+        }
+        appendNumber(builder, 2, offsetMinutes % 60);
+        return builder.toString();
+    }
+
+    private static void appendNumber(StringBuilder builder, int count, int value) {
+        String string = Integer.toString(value);
+        for (int i = 0; i < count - string.length(); i++) {
+            builder.append('0');
+        }
+        builder.append(string);
+    }
+
+
+
     public static int getLocale() {
         Locale locale = App.getInstance().getResources().getConfiguration().locale;
         String language = locale.getLanguage().toLowerCase();
@@ -253,18 +289,18 @@ public class CommentUtils {
         zones.add("-2");
         zones.add("-1");
         zones.add("0");
-        zones.add("1");
-        zones.add("2");
-        zones.add("3");
-        zones.add("4");
-        zones.add("5");
-        zones.add("6");
-        zones.add("7");
-        zones.add("8");
-        zones.add("9");
-        zones.add("10");
-        zones.add("11");
-        zones.add("12");
+        zones.add("+1");
+        zones.add("+2");
+        zones.add("+3");
+        zones.add("+4");
+        zones.add("+5");
+        zones.add("+6");
+        zones.add("+7");
+        zones.add("+8");
+        zones.add("+9");
+        zones.add("+10");
+        zones.add("+11");
+        zones.add("+12");
         return zones;
     }
 

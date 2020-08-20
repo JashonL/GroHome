@@ -115,6 +115,7 @@
         <activity android:name=".module.personal.SetttingActivity" />
         <activity android:name=".module.personal.UpdatepwdActivity" />
         <activity android:name=".module.personal.NewEmailActivity" />
+        <activity android:name=".module.login.ForgotpasswordActivity"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

@@ -140,6 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_5"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:text="@string/m28_forget_password"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/size_title_sp_12"
