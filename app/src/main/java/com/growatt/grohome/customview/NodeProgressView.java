@@ -129,14 +129,14 @@ public class NodeProgressView extends View {
 
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setStyle(Paint.Style.STROKE);
+        mTextPaint.setStyle(Paint.Style.FILL);
         mTextPaint.setColor(mTextColor);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTextSize(CommentUtils.dip2px(context,12));
 
         mTextProgressPaint = new Paint();
         mTextProgressPaint.setAntiAlias(true);
-        mTextProgressPaint.setStyle(Paint.Style.STROKE);
+        mTextProgressPaint.setStyle(Paint.Style.FILL);
         mTextProgressPaint.setColor(mTextProgressColor);
         mTextProgressPaint.setTextAlign(Paint.Align.CENTER);
         mTextProgressPaint.setTextSize(CommentUtils.dip2px(context,12));

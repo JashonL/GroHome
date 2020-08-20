@@ -43,7 +43,7 @@
         android:id="@+id/v_scan_background"
         android:layout_width="@dimen/dp_300"
         android:layout_height="@dimen/dp_300"
-        app:layout_constraintBottom_toTopOf="@+id/node_progress"
+        app:layout_constraintBottom_toTopOf="@+id/tv_current_progress"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_sub_title" />
@@ -53,13 +53,12 @@
         android:id="@+id/tv_current_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_15"
         android:gravity="center"
         android:padding="@dimen/dp_5"
         android:textColor="@color/color_text_33"
         android:textSize="@dimen/size_content_sp_14"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/v_scan_background" />
+        app:layout_constraintBottom_toTopOf="@+id/node_progress" />
 
 
     <com.growatt.grohome.customview.NodeProgressView

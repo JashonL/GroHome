@@ -158,7 +158,7 @@
                 android:layout_marginTop="@dimen/dp_30"
                 android:layout_marginRight="@dimen/dp_18"
                 android:background="@drawable/selector_button_rect"
-                android:text="@string/m67_fast_flashing_to_next"
+                android:text="@string/m47_next"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_content_sp_14"
                 app:layout_constraintTop_toBottomOf="@+id/iv_config_three" />

@@ -38,6 +38,7 @@ public class SelectRoomAdapter extends BaseMultiItemQuickAdapter<HomeRoomBean, B
     }
 
     public void setNowSelectPosition(int position) {
+        if (position==-1)return;
         if (position >= getItemCount()) return;
         //去除其他item选择
         try {

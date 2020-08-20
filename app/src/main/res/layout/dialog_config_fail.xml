@@ -16,7 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/dp_30"
+            android:padding="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
             android:src="@drawable/net_image_failed"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -81,49 +82,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btn_cancel" />
 
-
-      <!--  <TextView
-            android:id="@+id/white_colour_temp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:padding="@dimen/dp_10"
-            android:text="@string/m92_colour_temp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/size_content_sp_14"
-            app:layout_constraintTop_toBottomOf="@+id/seek_bright_ness" />-->
-
-
-
-
-     <!--   <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="@dimen/dp_150"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_20"
-            android:background="@drawable/shape_dialog_cancel"
-            android:text="@string/m89_cancel"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/btn_ok"
-            app:layout_constraintTop_toBottomOf="@+id/seek_colour_temp" />
-
-        <Button
-            android:id="@+id/btn_ok"
-            android:layout_width="@dimen/dp_150"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_dialog_ok"
-            android:text="@string/m90_ok"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toRightOf="@+id/btn_cancel"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_cancel" />
-
-        <View
-            android:id="@+id/v_padding_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_15"
-            app:layout_constraintTop_toBottomOf="@+id/btn_cancel" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -370,6 +370,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     protected void initListener() {
         super.initListener();
         toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setOnMenuItemClickListener(this);
         seekTempWhite.setOnSeekBarChangeListener(this);
         seekBrightnessWhite.setOnSeekBarChangeListener(this);
         seekBrightnessColour.setOnSeekBarChangeListener(this);

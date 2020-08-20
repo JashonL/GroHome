@@ -74,7 +74,7 @@ public class DeviceAPLightActivity extends BaseActivity<DeviceAPLightPresenter> 
     @Override
     protected void initViews() {
         //初始化头部
-        tvTitle.setVisibility(View.GONE);
+        tvTitle.setText(R.string.m102_ap_mode);
         toolbar.setNavigationIcon(R.drawable.icon_return);
 
         tvContent.setText(R.string.m122_ez_config_detail);

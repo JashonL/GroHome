@@ -58,6 +58,7 @@ public class CommentUtils {
             if (mWifiManager != null) {
                 WifiInfo connectionInfo = mWifiManager.getConnectionInfo();
                 int networkId = connectionInfo.getNetworkId();
+                ssid = connectionInfo.getSSID();
                 List<WifiConfiguration> configuredNetworks = mWifiManager.getConfiguredNetworks();
                 for (WifiConfiguration wificonf : configuredNetworks) {
                     if (wificonf.networkId == networkId) {

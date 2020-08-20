@@ -18,10 +18,9 @@ import androidx.fragment.app.FragmentManager;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
+import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.config.DeviceLightStatusActivity;
-import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.view.IWiFiOptionsView;
-import com.growatt.grohome.module.device.presenter.DeviceTypePresenter;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
@@ -39,11 +38,11 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
 
     public WiFiOptionsPresenter(Context context, IWiFiOptionsView baseView) {
         super(context, baseView);
-        deviceType = ((Activity) context).getIntent().getStringExtra(DeviceTypePresenter.DEVICE_TYPE);
+        deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
     }
 
 
-    public void registerBroadcastReceiver(){
+    public void registerBroadcastReceiver() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
@@ -76,7 +75,7 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
 
 
     public void checkWifiNetworkStatus() {
-        String ssid="";
+        String ssid = "";
         try {
             if (CommentUtils.isWiFi(context)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//8.1
@@ -103,8 +102,8 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
     }
 
 
-     public void showNoNetworkDialog(FragmentManager fragmentManager) {
-         CircleDialogUtils.showSetWifiDialog(context,fragmentManager);
+    public void showNoNetworkDialog(FragmentManager fragmentManager) {
+        CircleDialogUtils.showSetWifiDialog(context, fragmentManager);
     }
 
 
@@ -123,41 +122,39 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
     }
 
 
-    public void goNext(){
+    public void goNext() {
         String password = baseView.getWifiPassWord();
         String ssid = baseView.getWifissid();
+        if (TextUtils.isEmpty(password)) {
+            MyToastUtils.toast(R.string.m98_enter_wifi_password);
+            return;
+        }
         if (TextUtils.isEmpty(ssid)) {
             MyToastUtils.toast(R.string.m45_enter_wifi_name);
             return;
         }
         try {
             if (!CommentUtils.isWiFi(context)) {
-                showNoNetworkDialog(((FragmentActivity)context).getSupportFragmentManager());
+                showNoNetworkDialog(((FragmentActivity) context).getSupportFragmentManager());
                 return;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         if (CommentUtils.is5GHz(ssid, context)) {
-            show5gNetworkDialog(((FragmentActivity)context).getSupportFragmentManager());
-            return;
-        }
-        if (TextUtils.isEmpty(password)) {
-            MyToastUtils.toast(R.string.m98_enter_wifi_password);
+            show5gNetworkDialog(((FragmentActivity) context).getSupportFragmentManager());
             return;
         }
         toConfig();
     }
 
 
-
-
     public void toConfig() {
         Intent intent = new Intent(context, DeviceLightStatusActivity.class);
-        intent.putExtra(WiFiOptionsActivity.CONFIG_SSID, baseView.getWifissid());
-        intent.putExtra(WiFiOptionsActivity.CONFIG_PASSWORD, baseView.getWifiPassWord());
-        intent.putExtra(DeviceTypePresenter.DEVICE_TYPE,deviceType);
-        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+        intent.putExtra(GlobalConstant.WIFI_SSID, baseView.getWifissid());
+        intent.putExtra(GlobalConstant.WIFI_PASSWORD, baseView.getWifiPassWord());
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 }

@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.SelectRoomAdapter;
 import com.growatt.grohome.base.BaseActivity;
@@ -27,7 +28,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> implements IConfigSuccessView {
+public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> implements IConfigSuccessView, BaseQuickAdapter.OnItemClickListener {
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -65,20 +68,27 @@ public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> im
     }
 
     @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
+
+    @Override
     protected void initViews() {
         tvTitle.setTextColor(ContextCompat.getColor(this, R.color.white));
         tvTitle.setText(R.string.m200_success);
         toolbar.setNavigationIcon(R.drawable.icon_return);
         //房间列表初始化
-        mSelectRoomAdapter=new SelectRoomAdapter(new ArrayList<>());
-        rlvRoom.setLayoutManager(new GridLayoutManager(this, 6));
+        mSelectRoomAdapter = new SelectRoomAdapter(new ArrayList<>());
+        rlvRoom.setLayoutManager(new GridLayoutManager(this, 3));
         rlvRoom.setAdapter(mSelectRoomAdapter);
         int div = CommentUtils.dip2px(this, 10);
-        rlvRoom.addItemDecoration( new GridDivider(ContextCompat.getColor(this, R.color.nocolor), div, div));
+        rlvRoom.addItemDecoration(new GridDivider(ContextCompat.getColor(this, R.color.nocolor), div, div));
     }
 
     @Override
     protected void initData() {
+        presenter.getDeviceData();
         presenter.getRoomList();
     }
 
@@ -91,16 +101,16 @@ public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> im
                 finish();
             }
         });
+        mSelectRoomAdapter.setOnItemClickListener(this);
     }
 
 
-
-    @OnClick({R.id.btn_done,R.id.v_edit_name_background})
+    @OnClick({R.id.btn_done, R.id.v_edit_name_background})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_done:
                 int nowSelectPosition = mSelectRoomAdapter.getNowSelectPosition();
-                if (-1!=nowSelectPosition){
+                if (-1 != nowSelectPosition) {
                     HomeRoomBean roomBean = mSelectRoomAdapter.getData().get(nowSelectPosition);
                     int cid = roomBean.getCid();
                     try {
@@ -108,7 +118,7 @@ public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> im
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }else {
+                } else {
                     presenter.jumpToDeviceDetail();
                 }
                 break;
@@ -118,6 +128,17 @@ public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> im
         }
     }
 
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        HomeRoomBean roomBean = mSelectRoomAdapter.getData().get(position);
+        if (roomBean != null) {
+            mSelectRoomAdapter.setNowSelectPosition(position);
+        }
+
+    }
+
+
     @Override
     public void upRoomList(List<HomeRoomBean> homeRoomList) {
         mSelectRoomAdapter.replaceData(homeRoomList);
@@ -125,8 +146,8 @@ public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> im
 
     @Override
     public void setDeviceName(String deviceName) {
-        if (!TextUtils.isEmpty(deviceName)){
-            tvDeviceName.setText(deviceName);
+        if (!TextUtils.isEmpty(deviceName)) {
+            tvEditName.setText(deviceName);
         }
     }
 

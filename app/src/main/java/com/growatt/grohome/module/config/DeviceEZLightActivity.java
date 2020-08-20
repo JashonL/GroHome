@@ -19,6 +19,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class DeviceEZLightActivity extends BaseActivity<DeviceEZLightPresenter> implements IDeviceEZLightView {
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -49,9 +51,15 @@ public class DeviceEZLightActivity extends BaseActivity<DeviceEZLightPresenter> 
     }
 
     @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
+
+    @Override
     protected void initViews() {
         //初始化头部
-        tvTitle.setVisibility(View.GONE);
+        tvTitle.setText(R.string.m105_ez_mode);
         toolbar.setNavigationIcon(R.drawable.icon_return);
 
         tvContent.setText(R.string.m122_ez_config_detail);

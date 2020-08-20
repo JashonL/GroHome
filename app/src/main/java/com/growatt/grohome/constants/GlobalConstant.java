@@ -13,6 +13,7 @@ public class GlobalConstant {
     //*********************Activity跳转传值**************************
     public static final String DEVICE_ID = "device_id";
     public static final String DEVICE_NAME = "device_name";
+    public static final String DEVICE_PID= "device_pid";
     public static final String DEVICE_SWITCH_ID = "device_switch_id";
     public static final String DEVICE_TYPE = "device_type";
     public static final String COUNTRY = "country";
@@ -116,5 +117,8 @@ public class GlobalConstant {
     //***********************区号***********************
     public static final String CHINA_AREA_CODE = "86";
     public static final String EUROPE_AREA_CODE = "33";
-
+    //***********************wifi***********************
+    public static final String WIFI_SSID = "wifi_ssid";
+    public static final String WIFI_PASSWORD = "wifi_password";
+    public static final String WIFI_TOKEN = "wifi_token";
 }

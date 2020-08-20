@@ -25,12 +25,18 @@ import com.growatt.grohome.bean.HomeDeviceBean;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.customview.GridDivider;
 import com.growatt.grohome.customview.LinearDivider;
+import com.growatt.grohome.eventbus.DevEditNameBean;
+import com.growatt.grohome.eventbus.TransferDevMsg;
 import com.growatt.grohome.module.device.DeviceTypeActivity;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.home.presenter.GrohomePresenter;
 import com.growatt.grohome.module.home.view.IGrohomeView;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.CommentUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +98,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         //头部toolBar
         tvTitle.setVisibility(View.GONE);
         toolbar.setTitle(R.string.m34_welcome_groHome);
-        toolbar.setOverflowIcon(ContextCompat.getDrawable(getContext(),R.drawable.icon_home_add));
+        toolbar.setOverflowIcon(ContextCompat.getDrawable(getContext(), R.drawable.icon_home_add));
         toolbar.inflateMenu(R.menu.men_grohome_home);
         toolbar.setOnMenuItemClickListener(this);
         //房间列表初始化
@@ -109,6 +115,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
         //获取列表设备列表
         try {
             presenter.getRoomList();
@@ -150,6 +157,12 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         rlvDevice.addItemDecoration(new GridDivider(ContextCompat.getColor(getActivity(), R.color.nocolor), div, div));
         //设置空布局
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_empty_view, rlvDevice, false);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), DeviceTypeActivity.class));
+            }
+        });
         mGrohomeGridAdapter.setEmptyView(view);
         mGrohomeGridAdapter.setOnItemChildClickListener(this);
         mGrohomeGridAdapter.setOnItemClickListener(this);
@@ -166,6 +179,12 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         ivSwitchDevList.setImageResource(R.drawable.icon_list);
         //设置空布局
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_empty_view, rlvDevice, false);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), DeviceTypeActivity.class));
+            }
+        });
         mGroHomeDevLineAdapter.setEmptyView(view);
         mGroHomeDevLineAdapter.setOnItemChildClickListener(this);
         mGroHomeDevLineAdapter.setOnItemClickListener(this);
@@ -239,6 +258,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         mRoomAdapter.replaceData(roomList);
     }
 
+
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean) adapter.getData().get(position);
@@ -259,8 +279,13 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean) adapter.getData().get(position);
-        presenter.jumpTodevice(bean);
+        if (adapter==mRoomAdapter){
+            String roomlist = new Gson().toJson(mRoomAdapter.getData());
+            presenter.jumpToRoom(roomlist, position);
+        }else {
+            HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean) adapter.getData().get(position);
+            presenter.jumpTodevice(bean);
+        }
     }
 
     @Override
@@ -274,6 +299,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
                 e.printStackTrace();
             }
         });
+        mRoomAdapter.setOnItemClickListener(this);
     }
 
     @OnClick({R.id.rl_switch_click, R.id.cl_all_room})
@@ -289,10 +315,63 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         }
     }
 
+
+    /*修改设备名称*/
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showEditSuccess(DevEditNameBean msg) {
+        if (msg != null) {
+            String devId = msg.getDevId();
+            List<HomeDeviceBean.DataBean> data;
+            //布局切换方法
+            if (mLayoutType == TYPE_LINE) {
+                data = mGrohomeGridAdapter.getData();
+            } else {
+                data = mGroHomeDevLineAdapter.getData();
+            }
+            for (HomeDeviceBean.DataBean bean : data) {
+                String deviceId = bean.getDevId();
+                if (deviceId.equals(devId)) {
+                    bean.setName(msg.getName());
+                    break;
+                }
+            }
+
+            if (mLayoutType == TYPE_LINE) {
+                mGrohomeGridAdapter.notifyDataSetChanged();
+            } else {
+                mGroHomeDevLineAdapter.notifyDataSetChanged();
+            }
+
+            //获取列表设备列表
+            try {
+                presenter.getRoomList();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventDevTransferBean(TransferDevMsg bean) {
+        if (bean != null) {
+            //获取列表设备列表
+            try {
+                presenter.getRoomList();
+                presenter.getAlldevice();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         presenter.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

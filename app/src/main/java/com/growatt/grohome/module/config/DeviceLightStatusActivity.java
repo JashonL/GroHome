@@ -31,6 +31,8 @@ import butterknife.OnClick;
 public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPresenter> implements IDeviceLightStatusView, Toolbar.OnMenuItemClickListener, CompoundButton.OnCheckedChangeListener {
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_sub_title)
@@ -65,6 +67,14 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
         return R.layout.activity_device_light_status;
     }
 
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
+
+
     @Override
     protected void initViews() {
         //初始化头部
@@ -73,7 +83,7 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
         toolbar.inflateMenu(R.menu.menu_device_light_status);
         switchItem = toolbar.getMenu().findItem(R.id.action_switch_text);
         switchItem.setActionView(R.layout.menu_config_switch);
-        tvSwitchItem=switchItem.getActionView().findViewById(R.id.tv_config_mode);
+        tvSwitchItem = switchItem.getActionView().findViewById(R.id.tv_config_mode);
         toolbar.setOnMenuItemClickListener(this);
         //默认不勾选
         cbFlashStatus.setChecked(false);
@@ -123,7 +133,6 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
     }
 
 
-
     @OnClick({R.id.tv_device_reset, R.id.iv_toguide, R.id.btn_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -144,7 +153,6 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
                 break;
         }
     }
-
 
 
     private void showAnim() {
@@ -175,7 +183,7 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
 
     @Override
     public void showDialog() {
-        Mydialog.show(this,"");
+        Mydialog.show(this, "");
     }
 
     @Override
@@ -197,8 +205,8 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == START_FOR_RESULT_CONFIG) {
-                if (resultCode == RESULT_OK) {
+        if (requestCode == START_FOR_RESULT_CONFIG) {
+            if (resultCode == RESULT_OK) {
                 ecMode = data.getIntExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.EC_MODE);
                 showAnim();
             }

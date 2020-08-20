@@ -102,7 +102,7 @@ public class CircleDialogUtils {
 
 
     /**
-     * 跳转到连接5G提示
+     * 取消配网
      */
     public static DialogFragment showCancelConfigDialog(Context context, FragmentManager fragmentManager, View.OnClickListener onNegativeListener, View.OnClickListener onPositiveListner) {
         DialogFragment cancelConfigDialog = new CircleDialog.Builder()

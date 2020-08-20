@@ -15,6 +15,7 @@ import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.eventbus.DevEditNameBean;
 import com.growatt.grohome.module.config.view.IConfigSuccessView;
 import com.growatt.grohome.module.device.BulbActivity;
 import com.growatt.grohome.module.device.SwitchActivity;
@@ -29,6 +30,7 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +61,16 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
         deviceName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_NAME);
         mTuyaDevice = TuyaHomeSdk.newDeviceInstance(deviceId);
     }
+
+
+    /**
+     * 设备改名
+     */
+    public void getDeviceData() {
+       baseView.setDeviceName(deviceName);
+    }
+
+
 
     /**
      * 设备改名
@@ -128,6 +140,10 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
                     if (code == 0) {
                         deviceName = reName;
                         baseView.setDeviceName(reName);
+                        DevEditNameBean bean = new DevEditNameBean();
+                        bean.setDevId(deviceId);
+                        bean.setName(reName);
+                        EventBus.getDefault().post(bean);
                         MyToastUtils.toast(R.string.m200_success);
                     } else {
                         MyToastUtils.toast(R.string.m201_fail);
@@ -170,7 +186,7 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
 
     public void getRoomList() {
         List<HomeRoomBean> homeRoomList = RoomManager.getInstance().getHomeRoomList();
-        if (homeRoomList == null) {
+        if (homeRoomList != null) {
             baseView.upRoomList(homeRoomList);
         } else {
             try {

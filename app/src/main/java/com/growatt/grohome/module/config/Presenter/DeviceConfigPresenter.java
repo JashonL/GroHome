@@ -21,8 +21,6 @@ import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.model.DeviceBindModel;
 import com.growatt.grohome.module.config.view.IDeviceConfigView;
-import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
-import com.growatt.grohome.module.device.presenter.DeviceTypePresenter;
 import com.growatt.grohome.tuya.FamilyManager;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;
@@ -64,9 +62,9 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         initHandler(context);
         mModel = new DeviceBindModel(context, handler);
         mConfigMode = ((Activity) context).getIntent().getIntExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.EC_MODE);
-        deviceType = ((Activity) context).getIntent().getStringExtra(DeviceTypePresenter.DEVICE_TYPE);
-        ssid = ((Activity) context).getIntent().getStringExtra(WiFiOptionsActivity.CONFIG_SSID);
-        password = ((Activity) context).getIntent().getStringExtra(WiFiOptionsActivity.CONFIG_PASSWORD);
+        deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
+        ssid = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_SSID);
+        password = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_PASSWORD);
     }
 
 
@@ -128,9 +126,9 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
     public boolean handleMessage(Message msg) {
         switch (msg.what) {
             case MESSAGE_SHOW_SUCCESS_PAGE:
-                String devId = msg.getData().getString("devId");
-                String pId = msg.getData().getString("pId");
-                deviceName = msg.getData().getString("devName");
+                String devId = msg.getData().getString(GlobalConstant.DEVICE_ID);
+                String pId = msg.getData().getString(GlobalConstant.DEVICE_PID);
+                deviceName = msg.getData().getString(GlobalConstant.DEVICE_NAME);
                 baseView.showSuccessPage(devId, pId, deviceName);
                 break;
             case MESSAGE_CONFIG_WIFI_OUT_OF_TIME:
@@ -225,9 +223,9 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         Message msg = new Message();
         msg.what = MESSAGE_SHOW_SUCCESS_PAGE;
         Bundle bundle = new Bundle();
-        bundle.putString("devId", devId);
-        bundle.putString("pId", pId);
-        bundle.putString("devName", devName);
+        bundle.putString(GlobalConstant.DEVICE_ID, devId);
+        bundle.putString(GlobalConstant.DEVICE_PID, pId);
+        bundle.putString(GlobalConstant.DEVICE_NAME, devName);
         msg.setData(bundle);
         handler.sendMessage(msg);
 //        mHandler.sendEmptyMessageDelayed(MESSAGE_SHOW_SUCCESS_PAGE, 1000);
@@ -247,12 +245,20 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
      */
     public void dialogFail() {
         Intent intent = new Intent(context, ConfigErrorActivity.class);
-        intent.putExtra("type", deviceType);
-        intent.putExtra("token", tuyaToken);
-        intent.putExtra("ssid", ssid);
-        intent.putExtra("password", password);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        intent.putExtra(GlobalConstant.WIFI_TOKEN, tuyaToken);
+        intent.putExtra(GlobalConstant.WIFI_SSID, ssid);
+        intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
         intent.putExtra(SelectConfigTypeActivity.CONFIG_MODE, mConfigMode);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, true);
+    }
+
+    public void reTryConfig() {
+        Intent intent = new Intent(context, WiFiOptionsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        context.startActivity(intent);
+        ((FragmentActivity)context).finish();
     }
 
 
@@ -260,9 +266,10 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         CircleDialogUtils.showCancelConfigDialog(context, ((FragmentActivity) context).getSupportFragmentManager(), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((FragmentActivity) context).finish();
+
             }
         }, v -> {
+            ((FragmentActivity) context).finish();
         });
     }
 
@@ -276,8 +283,12 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         requestJson.put("uid", App.getUserBean().accountName);
         requestJson.put("pid", pid);
         requestJson.put("devId", devId);
-        requestJson.put("deviceServerAddress", 1);
-        requestJson.put("devType", DeviceTypeConstant.TYPE_BULB);
+        int serverId = 1;
+        if (App.getUserBean().getUserTuyaCode().equals(GlobalConstant.CHINA_AREA_CODE)) {
+            serverId = 0;
+        }
+        requestJson.put("deviceServerAddress", serverId);
+        requestJson.put("devType", deviceType);
         requestJson.put("lan", String.valueOf(CommentUtils.getLanguage()));
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);

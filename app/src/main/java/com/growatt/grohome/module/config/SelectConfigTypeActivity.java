@@ -18,8 +18,8 @@ import butterknife.OnClick;
 
 
 public class SelectConfigTypeActivity extends BaseActivity<SelectConfigPresenter> implements ISelectConfigView {
-
-
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -52,6 +52,13 @@ public class SelectConfigTypeActivity extends BaseActivity<SelectConfigPresenter
     @Override
     protected int getLayoutId() {
         return R.layout.activity_select_config;
+    }
+
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
     }
 
     @Override

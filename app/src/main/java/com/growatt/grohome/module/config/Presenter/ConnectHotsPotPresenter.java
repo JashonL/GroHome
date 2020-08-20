@@ -10,11 +10,10 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.config.DeviceConfigActivity;
 import com.growatt.grohome.module.config.SelectConfigTypeActivity;
-import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.view.IConnectHotsPotView;
-import com.growatt.grohome.module.device.presenter.DeviceTypePresenter;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.BindDeviceUtils;
 
@@ -31,9 +30,10 @@ public class ConnectHotsPotPresenter extends BasePresenter<IConnectHotsPotView> 
 
     public ConnectHotsPotPresenter(Context context, IConnectHotsPotView baseView) {
         super(context, baseView);
-        deviceType = ((Activity) context).getIntent().getStringExtra(DeviceTypePresenter.DEVICE_TYPE);
-        ssid = ((Activity) context).getIntent().getStringExtra(WiFiOptionsActivity.CONFIG_SSID);
-        password = ((Activity) context).getIntent().getStringExtra(WiFiOptionsActivity.CONFIG_PASSWORD);
+        deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
+        ssid = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_SSID);
+        password = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_PASSWORD);
+        tuyaToken= ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_TOKEN);
     }
 
 
@@ -72,9 +72,10 @@ public class ConnectHotsPotPresenter extends BasePresenter<IConnectHotsPotView> 
 
     public void toEcbindConfig() {
         Intent intent = new Intent(context, DeviceConfigActivity.class);
-        intent.putExtra("ssid", ssid);
-        intent.putExtra("password", password);
-        intent.putExtra("token", tuyaToken);
+        intent.putExtra(GlobalConstant.WIFI_SSID, ssid);
+        intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
+        intent.putExtra(GlobalConstant.WIFI_TOKEN, tuyaToken);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         intent.putExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.AP_MODE);
         ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
     }

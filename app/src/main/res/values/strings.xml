@@ -330,5 +330,5 @@
     <string name="m293_email_sending_failed">Email sending failed</string>
     <string name="m293_user_does_not_exist">User does not exist</string>
     <string name="m294_new_password_registered">The new password will be sent to the registered email. Please check it.</string>
-
+    <string name="m294_transfer_device">Transfer device</string>
 </resources>

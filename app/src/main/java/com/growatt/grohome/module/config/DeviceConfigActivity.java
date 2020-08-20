@@ -22,7 +22,8 @@ import butterknife.BindView;
 
 public class DeviceConfigActivity extends BaseActivity<DeviceConfigPresenter> implements IDeviceConfigView {
 
-
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -52,12 +53,18 @@ public class DeviceConfigActivity extends BaseActivity<DeviceConfigPresenter> im
     }
 
     @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
+
+    @Override
     protected void initViews() {
         //初始化头部
         tvTitle.setVisibility(View.GONE);
         toolbar.setNavigationIcon(R.drawable.icon_return);
         //开始动画
-        vScanBackground.setBackgroundResource(R.drawable.config_device_scanning);
+        vScanBackground.setBackgroundResource(R.drawable.net_image_scan);
         animation = AnimationUtils.loadAnimation(this, R.anim.scaning_rote);
         vScanBackground.startAnimation(animation);
     }
@@ -77,7 +84,7 @@ public class DeviceConfigActivity extends BaseActivity<DeviceConfigPresenter> im
             view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {//回到选择wifi界面
-
+                    presenter.reTryConfig();
                 }
             });
         });

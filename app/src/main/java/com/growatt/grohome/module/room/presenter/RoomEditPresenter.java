@@ -159,7 +159,7 @@ public class RoomEditPresenter extends BasePresenter<IRoomEditView> {
      */
 
     public void transferDevice(String deviceId,String deviceType){
-        CircleDialogUtils.showCommentDialog((FragmentActivity) context, context.getString(R.string.m208_note), context.getString(R.string.m210_delete_device), new View.OnClickListener() {
+        CircleDialogUtils.showCommentDialog((FragmentActivity) context, context.getString(R.string.m208_note), context.getString(R.string.m294_transfer_device), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {

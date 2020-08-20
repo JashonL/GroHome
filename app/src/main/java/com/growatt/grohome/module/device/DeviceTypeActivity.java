@@ -16,9 +16,6 @@ import com.growatt.grohome.bean.DeviceTypeBean;
 import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
-import com.growatt.grohome.module.device.manager.DevicePlug;
-import com.growatt.grohome.module.device.manager.DeviceStripLights;
-import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.presenter.DeviceTypePresenter;
 import com.growatt.grohome.module.device.view.IDeviceTypeView;
@@ -29,6 +26,8 @@ import java.util.List;
 import butterknife.BindView;
 
 public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implements IDeviceTypeView , BaseQuickAdapter.OnItemChildClickListener {
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -49,6 +48,13 @@ public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implem
         return R.layout.activity_device_type;
     }
 
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
+
     @Override
     protected void initViews() {
         //头部toolBar
@@ -65,8 +71,10 @@ public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implem
     @Override
     protected void initData() {
         List<DeviceTypeBean> newList = new ArrayList<>();
-        String[] typeArray = new String[]{DeviceTypeConstant.TYPE_PADDLE, DeviceTypeConstant.TYPE_PANELSWITCH, DeviceTypeConstant.TYPE_THERMOSTAT, DeviceTypeConstant.TYPE_BULB, DeviceTypeConstant.TYPE_STRIP_LIGHTS};
-        String[] nameArray = new String[]{getString(DevicePlug.getNameRes()), getString(DevicePanel.getNameRes()), getString(DeviceThermostat.getNameRes()), getString(DeviceBulb.getNameRes()), getString(DeviceStripLights.getNameRes())};
+//        String[] typeArray = new String[]{DeviceTypeConstant.TYPE_PADDLE, DeviceTypeConstant.TYPE_PANELSWITCH, DeviceTypeConstant.TYPE_THERMOSTAT, DeviceTypeConstant.TYPE_BULB, DeviceTypeConstant.TYPE_STRIP_LIGHTS};
+        String[] typeArray = new String[]{DeviceTypeConstant.TYPE_PANELSWITCH,DeviceTypeConstant.TYPE_BULB};
+//        String[] nameArray = new String[]{getString(DevicePlug.getNameRes()), getString(DevicePanel.getNameRes()), getString(DeviceThermostat.getNameRes()), getString(DeviceBulb.getNameRes()), getString(DeviceStripLights.getNameRes())};
+        String[] nameArray = new String[]{getString(DevicePanel.getNameRes()),  getString(DeviceBulb.getNameRes())};
         for (int i = 0; i < typeArray.length; i++) {
             DeviceTypeBean bean = new DeviceTypeBean();
             bean.setBluethooth(false);

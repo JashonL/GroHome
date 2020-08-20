@@ -12,9 +12,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
+import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.module.config.Presenter.WiFiOptionsPresenter;
 import com.growatt.grohome.module.config.view.IWiFiOptionsView;
 import com.growatt.grohome.utils.ActivityUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -24,6 +29,8 @@ import butterknife.OnClick;
 public class WiFiOptionsActivity extends BaseActivity<WiFiOptionsPresenter> implements IWiFiOptionsView {
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.edt_ssid)
@@ -36,8 +43,7 @@ public class WiFiOptionsActivity extends BaseActivity<WiFiOptionsPresenter> impl
 
     private boolean passwordOn = false;
 
-    public static final String  CONFIG_PASSWORD="wifi_password";
-    public static final String  CONFIG_SSID="wifi_ssid";
+
 
 
     @Override
@@ -50,6 +56,13 @@ public class WiFiOptionsActivity extends BaseActivity<WiFiOptionsPresenter> impl
         return R.layout.acitivity_wifi_options;
     }
 
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView) .statusBarColor(R.color.white).init();
+    }
+
     @Override
     protected void initViews() {
         //初始化头部
@@ -60,7 +73,7 @@ public class WiFiOptionsActivity extends BaseActivity<WiFiOptionsPresenter> impl
 
     @Override
     protected void initData() {
-
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -149,6 +162,17 @@ public class WiFiOptionsActivity extends BaseActivity<WiFiOptionsPresenter> impl
         if (etPassword.getText().length() > 0) {
             etPassword.setSelection(etPassword.getText().length());
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventDevList(DeviceAddOrDelMsg msg) {
+        if (msg.getType() == DeviceAddOrDelMsg.ADD_DEV) finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
 }
