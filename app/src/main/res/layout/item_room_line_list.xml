@@ -1,18 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_45"
-    android:orientation="vertical">
+    android:layout_height="@dimen/dp_150"
+    app:cardCornerRadius="@dimen/dp_12"
+    android:layout_margin="@dimen/dp_10"
+    app:cardElevation="@dimen/dp_0">
 
-    <TextView
-        android:id="@+id/tv_room_name"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:padding="@dimen/dp_5"
-        android:gravity="center"
-        android:textSize="@dimen/size_content_sp_12"
-        android:text="@string/m141_select_room"
-        android:textColor="@color/color_text_33" />
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/iv_room_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/home_keting"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/v_now"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_30"
+            android:background="@drawable/shape_solid_alpha4d"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_room_img"
+            app:layout_constraintLeft_toLeftOf="@+id/v_left"
+            app:layout_constraintRight_toRightOf="@+id/v_right"
+            app:layout_constraintTop_toTopOf="@+id/iv_room_img" />
+
+        <View
+            android:id="@+id/v_left"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_room_img"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="@+id/iv_room_img"
+            app:layout_constraintRight_toLeftOf="@+id/iv_now_icon"
+            app:layout_constraintTop_toTopOf="@+id/iv_room_img" />
+
+        <ImageView
+            android:id="@+id/iv_now_icon"
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="@dimen/dp_15"
+            android:src="@drawable/icon_sign_check"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_room_img"
+            app:layout_constraintLeft_toRightOf="@+id/v_left"
+            app:layout_constraintRight_toLeftOf="@+id/tv_now_text"
+            app:layout_constraintTop_toTopOf="@+id/iv_room_img" />
+
+        <TextView
+            android:id="@+id/tv_now_text"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:maxWidth="@dimen/dp_150"
+            android:text="@string/m258_current_status"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_room_img"
+            app:layout_constraintLeft_toRightOf="@+id/iv_now_icon"
+            app:layout_constraintRight_toLeftOf="@+id/v_right"
+            app:layout_constraintTop_toTopOf="@+id/iv_room_img" />
+
+        <View
+            android:id="@+id/v_right"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_room_img"
+            app:layout_constraintLeft_toRightOf="@+id/tv_now_text"
+            app:layout_constraintRight_toRightOf="@+id/iv_room_img"
+            app:layout_constraintTop_toTopOf="@+id/iv_room_img" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

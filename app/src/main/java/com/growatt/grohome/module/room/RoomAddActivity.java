@@ -26,6 +26,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements IRoomAddView,Toolbar.OnMenuItemClickListener {
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -48,6 +50,12 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
     ImageView ivRoomImg3;
     @BindView(R.id.etNameValue)
     EditText etNameValue;
+    @BindView(R.id.tvNote4)
+    TextView tvNote4;
+    @BindView(R.id.ivRoomImg4)
+    ImageView ivRoomImg4;
+    @BindView(R.id.viewImg6)
+    View viewImg6;
 
     @Override
     protected RoomAddPresenter createPresenter() {
@@ -58,6 +66,13 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
     protected int getLayoutId() {
         return R.layout.activity_room_add;
     }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView) .statusBarColor(R.color.white).init();
+    }
+
 
     @Override
     protected void initViews() {
@@ -71,9 +86,13 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
         tvNote2.setText(default2);
         String default3 = getString(R.string.m192_default_picture) + "3";
         tvNote3.setText(default3);
-        GlideUtils.showImageAct(this, R.drawable.home_keting, R.drawable.home_keting, R.drawable.home_keting, ivRoomImg1);
-        GlideUtils.showImageAct(this, R.drawable.home_woshi, R.drawable.home_woshi, R.drawable.home_woshi, ivRoomImg2);
-        GlideUtils.showImageAct(this, R.drawable.home_chufang, R.drawable.home_chufang, R.drawable.home_chufang, ivRoomImg3);
+        String default4 = getString(R.string.m192_default_picture) + "4";
+        tvNote4.setText(default4);
+
+        GlideUtils.showImageAct(this, R.drawable.bathroom_m, R.drawable.bathroom_m, R.drawable.bathroom_m, ivRoomImg1);
+        GlideUtils.showImageAct(this, R.drawable.bedroom_m, R.drawable.bedroom_m, R.drawable.bedroom_m, ivRoomImg2);
+        GlideUtils.showImageAct(this, R.drawable.kitchen_m, R.drawable.kitchen_m, R.drawable.kitchen_m, ivRoomImg3);
+        GlideUtils.showImageAct(this, R.drawable.liveroom_m, R.drawable.liveroom_m, R.drawable.liveroom_m, ivRoomImg4);
     }
 
     @Override
@@ -89,20 +108,23 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
     }
 
 
-    @OnClick({R.id.ivRoomImgSelect, R.id.ivRoomImg1, R.id.ivRoomImg2, R.id.ivRoomImg3})
+    @OnClick({R.id.ivRoomImgSelect, R.id.ivRoomImg1, R.id.ivRoomImg2, R.id.ivRoomImg3,R.id.ivRoomImg4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ivRoomImgSelect:
                 presenter.changeImgDialog();
                 break;
             case R.id.ivRoomImg1:
-                setImageView(R.drawable.home_keting);
+                setImageView(R.drawable.bathroom_m);
                 break;
             case R.id.ivRoomImg2:
-                setImageView(R.drawable.home_woshi);
+                setImageView(R.drawable.bedroom_m);
                 break;
             case R.id.ivRoomImg3:
-                setImageView(R.drawable.home_chufang);
+                setImageView(R.drawable.kitchen_m);
+                break;
+            case R.id.ivRoomImg4:
+                setImageView(R.drawable.liveroom_m);
                 break;
         }
     }
@@ -126,7 +148,7 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
 
     private void setImageView(int res){
         tvDefauted.setVisibility(View.GONE);
-        GlideUtils.showImageAct(this, res, res, res, ivRoomImgSelect);
+        GlideUtils.showImageAct(this, R.drawable.liveroom_m, R.drawable.liveroom_m, R.drawable.liveroom_m, ivRoomImgSelect);
         presenter.savePic(res);
     }
 

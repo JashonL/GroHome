@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -26,6 +27,9 @@ import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.customview.GridDivider;
 import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.eventbus.DevEditNameBean;
+import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
+import com.growatt.grohome.eventbus.HomeRoomEvent;
+import com.growatt.grohome.eventbus.HomeRoomStatusBean;
 import com.growatt.grohome.eventbus.TransferDevMsg;
 import com.growatt.grohome.module.device.DeviceTypeActivity;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
@@ -365,6 +369,54 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             }
         }
     }
+
+
+    /**
+     * 刷新房间
+     *
+     * @param bean
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventRoomBean(@NonNull HomeRoomStatusBean bean) {
+        try {
+            presenter.getRoomList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 接收房间名称修改
+     *
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventRoomEventBean(HomeRoomEvent bean) {
+        if (bean != null) {
+            //获取列表设备列表
+            try {
+                presenter.getRoomList();
+                presenter.getAlldevice();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventUpdata(DeviceAddOrDelMsg bean) {
+        if (bean != null) {
+            //获取列表设备列表
+            try {
+                presenter.getRoomList();
+                presenter.getAlldevice();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 
     @Override

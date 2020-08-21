@@ -19,9 +19,14 @@ import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.customview.LinearDivider;
+import com.growatt.grohome.eventbus.TransferDevMsg;
 import com.growatt.grohome.module.room.presenter.RoomEditPresenter;
 import com.growatt.grohome.module.room.view.IRoomEditView;
 import com.growatt.grohome.utils.MyToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +70,8 @@ public class RoomEditActivity extends BaseActivity<RoomEditPresenter> implements
 
     private RoomEditDevAdapter mRoomEditDevAdapter;
 
+
+
     @Override
     protected RoomEditPresenter createPresenter() {
         return new RoomEditPresenter(this, this);
@@ -88,7 +95,6 @@ public class RoomEditActivity extends BaseActivity<RoomEditPresenter> implements
         tvTitle.setText(R.string.m148_edit);
         toolbar.setNavigationIcon(R.drawable.icon_return);
 
-
         //设备列表
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -103,6 +109,7 @@ public class RoomEditActivity extends BaseActivity<RoomEditPresenter> implements
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
         presenter.getData();
     }
 
@@ -126,6 +133,20 @@ public class RoomEditActivity extends BaseActivity<RoomEditPresenter> implements
             }
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventDevTransferBean(TransferDevMsg bean) {
+        if (bean != null) {
+            //获取列表设备列表
+            try {
+                mRoomEditDevAdapter.remove(presenter.getmTransPosition());
+                mRoomEditDevAdapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -160,7 +181,15 @@ public class RoomEditActivity extends BaseActivity<RoomEditPresenter> implements
 
     @Override
     public void deleteDeviceSuccess(String deviceId) {
-
+        List<GroDeviceBean> data = mRoomEditDevAdapter.getData();
+        for (int i = 0; i < data.size(); i++) {
+            String id = data.get(i).getDevId();
+            if(deviceId.equals(id)){
+                mRoomEditDevAdapter.remove(i);
+                mRoomEditDevAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
     }
 
 
@@ -180,5 +209,11 @@ public class RoomEditActivity extends BaseActivity<RoomEditPresenter> implements
                 presenter.updateImage();
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

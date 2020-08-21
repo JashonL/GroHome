@@ -20,6 +20,7 @@ import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.eventbus.HomeRoomEvent;
 import com.growatt.grohome.module.room.view.IRoomImageView;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
@@ -30,6 +31,7 @@ import com.growatt.grohome.utils.PhotoUtil;
 import com.mylhyl.circledialog.view.listener.OnLvItemClickListener;
 import com.yalantis.ucrop.UCrop;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -153,6 +155,10 @@ public class RoomImagePresenter extends BasePresenter<IRoomImageView> {
                         baseView.updateImageSuccess();
                         File file = new File(imagePath);
                         if (file.exists()) file.delete();
+                        HomeRoomEvent roomEvent = new HomeRoomEvent();
+                        roomEvent.setRoomId(mRoomBean.getCid());
+                        EventBus.getDefault().postSticky(roomEvent);
+                        ((Activity)context).finish();
                     }else {
                         baseView.updateImageFail(data);
                     }

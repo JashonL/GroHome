@@ -17,6 +17,7 @@ import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
+import com.growatt.grohome.eventbus.HomeRoomStatusBean;
 import com.growatt.grohome.module.room.view.IRoomAddView;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
@@ -27,6 +28,7 @@ import com.growatt.grohome.utils.PhotoUtil;
 import com.mylhyl.circledialog.view.listener.OnLvItemClickListener;
 import com.yalantis.ucrop.UCrop;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -212,6 +214,8 @@ public class RoomAddPresenter extends BasePresenter<IRoomAddView> {
                      baseView.createRoomSuccess();
                         File file = new File(imagePath);
                         if (file.exists()) file.delete();
+                        HomeRoomStatusBean bean = new HomeRoomStatusBean();
+                        EventBus.getDefault().post(bean);
                     }else {
                         baseView.createRoomFail(data);
                     }

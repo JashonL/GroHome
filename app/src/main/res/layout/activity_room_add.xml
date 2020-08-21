@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_10"
-                android:background="@drawable/shape_corner_white"
+                android:background="@color/white"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -101,7 +101,7 @@
             <ImageView
                 android:id="@+id/ivRoomImgSelect"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_125"
+                android:layout_height="@dimen/dp_150"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_14"
@@ -149,7 +149,7 @@
             <ImageView
                 android:id="@+id/ivRoomImg1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_125"
+                android:layout_height="@dimen/dp_150"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_14"
@@ -182,7 +182,7 @@
             <ImageView
                 android:id="@+id/ivRoomImg2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_125"
+                android:layout_height="@dimen/dp_150"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_14"
@@ -215,7 +215,7 @@
             <ImageView
                 android:id="@+id/ivRoomImg3"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_125"
+                android:layout_height="@dimen/dp_150"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_14"
@@ -231,6 +231,40 @@
                 android:layout_height="@dimen/dp_25"
                 android:layout_marginTop="@dimen/dp_5"
                 app:layout_constraintTop_toBottomOf="@+id/ivRoomImg3" />
+
+
+            <TextView
+                android:id="@+id/tvNote4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_42"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:text="@string/m192_default_picture"
+                android:textColor="@color/color_text_66"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewImg5" />
+
+            <ImageView
+                android:id="@+id/ivRoomImg4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_150"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_14"
+                android:scaleType="fitXY"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvNote4" />
+
+
+            <View
+                android:id="@+id/viewImg6"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_25"
+                android:layout_marginTop="@dimen/dp_5"
+                app:layout_constraintTop_toBottomOf="@+id/ivRoomImg4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
