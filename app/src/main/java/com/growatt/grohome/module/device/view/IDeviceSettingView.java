@@ -12,4 +12,8 @@ public interface IDeviceSettingView extends BaseView {
     void setDeviceName(String deviceName);
 
     void updataList( List<ScenesBean.DataBean> data);
+
+    void setRoomName(String roomName);
+
+    void setDeviceId(String deviceId);
 }

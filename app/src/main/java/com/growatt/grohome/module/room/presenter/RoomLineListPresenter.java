@@ -40,13 +40,10 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
 
     public RoomLineListPresenter(Context context, IRoomLineListView baseView) {
         super(context, baseView);
-        DeviceId= ((Activity)context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
-        deviceType= ((Activity)context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
-        currentRoomId= ((Activity)context).getIntent().getStringExtra(GlobalConstant.ROOM_ID);
-
+        DeviceId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
+        deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
+        currentRoomId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_ID);
     }
-
-
 
 
     public void getRoomList() {
@@ -56,7 +53,7 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
                 HomeRoomBean roomBean = homeRoomList.get(i);
                 int cid = roomBean.getCid();
                 roomBean.setSelect(false);
-                if (currentRoomId .equals(String.valueOf(cid))) {
+                if (String.valueOf(cid).equals(currentRoomId)) {
                     roomBean.setSelect(true);
                 }
             }
@@ -69,7 +66,6 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
             }
         }
     }
-
 
 
     /**
@@ -98,7 +94,7 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
                             HomeRoomBean roomBean = new Gson().fromJson(jsonObject.toString(), HomeRoomBean.class);
                             int cid = roomBean.getCid();
                             roomBean.setSelect(false);
-                            if (currentRoomId .equals(String.valueOf(cid))) {
+                            if (currentRoomId.equals(String.valueOf(cid))) {
                                 roomBean.setSelect(true);
                             }
                             roomList.add(roomBean);
@@ -121,16 +117,14 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
     }
 
 
-
-
     /**
      * 转移设备
      *
      * @throws Exception
      */
-    public void transferDevice(String roomId) throws Exception {
-        if (roomId.equals(currentRoomId)){
-            ((Activity)context).finish();
+    public void transferDevice(String roomId,String roomName) throws Exception {
+        if (roomId.equals(currentRoomId)) {
+            ((Activity) context).finish();
             return;
         }
         JSONObject requestJson = new JSONObject();
@@ -138,7 +132,7 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
         requestJson.put("cmd", "updateDeviceRoom");
         requestJson.put("devId", DeviceId);
         requestJson.put("lan", CommentUtils.getLanguage());
-        requestJson.put("devType",deviceType);
+        requestJson.put("devType", deviceType);
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
         addDisposable(apiServer.roomRequest(body), new BaseObserver<String>(baseView, true) {
@@ -150,10 +144,11 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
                     if (code == 0) {
                         TransferDevMsg transferBean = new TransferDevMsg();
                         transferBean.setRoomId(currentRoomId);
-                        EventBus.getDefault().post(bean);
+                        transferBean.setRoomName(roomName);
+                        EventBus.getDefault().post(transferBean);
                         baseView.transferSuccess();
-                    }else {
-                        String data=obj.getString("data");
+                    } else {
+                        String data = obj.getString("data");
                         baseView.transferFail(data);
                     }
                 } catch (Exception e) {

@@ -20,7 +20,9 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.BulbSceneBean;
+import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.eventbus.TransferDevMsg;
 import com.growatt.grohome.module.device.BulbSceneEditActivity;
 import com.growatt.grohome.module.device.DeviceSettingActivity;
 import com.growatt.grohome.module.device.DeviceTimingListActivity;
@@ -55,8 +57,12 @@ import okhttp3.RequestBody;
 
 public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListener, SendDpListener {
 
+
+    private GroDeviceBean mGroDeviceBean;
     private String deviceId;
     private String devName;
+    private String roomId;
+    private String roomName;
     private ITuyaDevice mTuyaDevice;
     private String onOff;
     private String bright;
@@ -89,10 +95,21 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         super(context, baseView);
         deviceId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
         devName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_NAME);
+        roomId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_ID);
+        roomName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_NAME);
+        String deviceJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_BEAN);
+        if (!TextUtils.isEmpty(deviceJson)) {
+            mGroDeviceBean = new Gson().fromJson(deviceJson, GroDeviceBean.class);
+            deviceId = mGroDeviceBean.getDevId();
+            devName = mGroDeviceBean.getName();
+            roomId = String.valueOf(mGroDeviceBean.getRoomId());
+            roomName = mGroDeviceBean.getRoomName();
+        }
         if (!TextUtils.isEmpty(devName)) {
             baseView.setDeviceTitle(devName);
         }
     }
+
 
 
     public List<BulbSceneBean> initScene() {
@@ -507,22 +524,43 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         timingIntent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
         timingIntent.putExtra(GlobalConstant.DEVICE_NAME, devName);
         timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_BULB);
-        ActivityUtils.startActivity((Activity) context,timingIntent,ActivityUtils.ANIMATE_FORWARD,false);
+        ActivityUtils.startActivity((Activity) context, timingIntent, ActivityUtils.ANIMATE_FORWARD, false);
     }
-
 
 
     /**
      * 跳转到设置
      */
     public void jumpSetting() {
-        Intent timingIntent = new Intent(context, DeviceSettingActivity.class);
-        timingIntent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
-        timingIntent.putExtra(GlobalConstant.DEVICE_NAME, devName);
-        timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_BULB);
-        ActivityUtils.startActivity((Activity) context,timingIntent,ActivityUtils.ANIMATE_FORWARD,false);
+        Intent intent = new Intent(context, DeviceSettingActivity.class);
+        intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+        intent.putExtra(GlobalConstant.DEVICE_NAME, devName);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_BULB);
+        String deviceJson = new Gson().toJson(mGroDeviceBean);
+        intent.putExtra(GlobalConstant.DEVICE_BEAN,deviceJson);
+        intent.putExtra(GlobalConstant.ROOM_ID, roomId);
+        intent.putExtra(GlobalConstant.ROOM_NAME, roomName);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
+
+
+
+    public void setDevName(String name) {
+        devName = name;
+        if (mGroDeviceBean!=null){
+            mGroDeviceBean.setName(name);
+        }
+    }
+
+    public void setRoomInfo(TransferDevMsg bean) {
+        roomName = bean.getRoomName();
+        roomId=bean.getRoomId();
+        if (mGroDeviceBean!=null){
+            mGroDeviceBean.setRoomId(Integer.parseInt(bean.getRoomId()));
+            mGroDeviceBean.setRoomName(bean.getRoomName());
+        }
+    }
 
 
     @Override

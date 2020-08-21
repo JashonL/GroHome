@@ -328,9 +328,9 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             List<HomeDeviceBean.DataBean> data;
             //布局切换方法
             if (mLayoutType == TYPE_LINE) {
-                data = mGrohomeGridAdapter.getData();
-            } else {
                 data = mGroHomeDevLineAdapter.getData();
+            } else {
+                data = mGrohomeGridAdapter.getData();
             }
             for (HomeDeviceBean.DataBean bean : data) {
                 String deviceId = bean.getDevId();
@@ -341,9 +341,9 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             }
 
             if (mLayoutType == TYPE_LINE) {
-                mGrohomeGridAdapter.notifyDataSetChanged();
-            } else {
                 mGroHomeDevLineAdapter.notifyDataSetChanged();
+            } else {
+                mGrohomeGridAdapter.notifyDataSetChanged();
             }
 
             //获取列表设备列表

@@ -155,7 +155,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
      */
     public void jumpTodevice(GroDeviceBean bean) {
         String devType = bean.getDevType();
-        Class clazz = null;
+        Class clazz;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {
             clazz = SwitchActivity.class;
         } else if (DeviceTypeConstant.TYPE_BULB.equals(devType)) {
@@ -163,10 +163,11 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
         }else {
             clazz = BulbActivity.class;
         }
-        if (clazz == null) return;
         Intent intent = new Intent(context, clazz);
         intent.putExtra(GlobalConstant.DEVICE_ID, bean.getDevId());
         intent.putExtra(GlobalConstant.DEVICE_NAME, bean.getName());
+        String deviceBean = new Gson().toJson(bean);
+        intent.putExtra(GlobalConstant.DEVICE_BEAN,deviceBean);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 

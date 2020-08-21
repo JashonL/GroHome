@@ -35,7 +35,7 @@ public class RoomAdapter extends BaseQuickAdapter<HomeRoomBean, BaseViewHolder> 
         deviceTypeGroup.setTag(getParentPosition(item));
         //设置图片信息
         String imgPath = item.getCdn();
-        GlideUtils.showImageContext(mContext, R.drawable.home_keting, R.drawable.home_keting, imgPath, helper.getView(R.id.iv_room_pic));
+        GlideUtils.showImageContext(mContext, R.drawable.bathroom_m, R.drawable.bathroom_m, imgPath, helper.getView(R.id.iv_room_pic));
         List<GroDeviceBean> devList = item.getDevList();
         deviceTypeGroup.removeAllViews();
         if (devList != null && devList.size() > 0) {

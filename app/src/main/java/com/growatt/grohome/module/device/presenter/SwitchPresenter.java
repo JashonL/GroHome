@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.PanelSwitchBean;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.eventbus.TransferDevMsg;
+import com.growatt.grohome.module.device.DeviceSettingActivity;
 import com.growatt.grohome.module.device.DeviceTimingListActivity;
 import com.growatt.grohome.module.device.EditNameActivity;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
@@ -34,9 +38,13 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
-public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevListener , SendDpListener {
+public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevListener, SendDpListener {
+
+    private GroDeviceBean mGroDeviceBean;
     private String deviceId;
     private String devName;
+    private String roomId;
+    private String roomName;
 
     private PanelSwitchBean panelSwitchBean;
     private ITuyaDevice mTuyaDevice;
@@ -51,11 +59,37 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
         super(context, baseView);
         deviceId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
         devName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_NAME);
+        roomId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_ID);
+        roomName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_NAME);
+        String deviceJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_BEAN);
+        if (!TextUtils.isEmpty(deviceJson)) {
+            mGroDeviceBean = new Gson().fromJson(deviceJson, GroDeviceBean.class);
+            deviceId = mGroDeviceBean.getDevId();
+            devName = mGroDeviceBean.getName();
+            roomId = String.valueOf(mGroDeviceBean.getRoomId());
+            roomName = mGroDeviceBean.getRoomName();
+        }
         if (!TextUtils.isEmpty(devName)) {
             baseView.setTitle(devName);
         }
     }
 
+
+    public void setDevName(String name) {
+        devName = name;
+        if (mGroDeviceBean != null) {
+            mGroDeviceBean.setName(name);
+        }
+    }
+
+    public void setRoomInfo(TransferDevMsg bean) {
+        roomName = bean.getRoomName();
+        roomId = bean.getRoomId();
+        if (mGroDeviceBean != null) {
+            mGroDeviceBean.setRoomId(Integer.parseInt(bean.getRoomId()));
+            mGroDeviceBean.setRoomName(bean.getRoomName());
+        }
+    }
 
 
     /**
@@ -86,18 +120,18 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
     }
 
 
-
     /**
      * 获取面板详情
+     *
      * @throws Exception
      */
     public void getDetailData() throws Exception {
-        JSONObject requestJson=new JSONObject();
+        JSONObject requestJson = new JSONObject();
         requestJson.put("devId", deviceId);
-        requestJson.put("lan",String.valueOf(CommentUtils.getLanguage()));
+        requestJson.put("lan", String.valueOf(CommentUtils.getLanguage()));
         String s = requestJson.toString();
-        RequestBody body=RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.getSwitchDetail(body), new BaseObserver<String>(baseView,true) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        addDisposable(apiServer.getSwitchDetail(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
                 JSONObject jsonObject = null;
@@ -133,8 +167,8 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
                             PanelSwitchBean.SwichBean swichBean = new PanelSwitchBean.SwichBean();
                             swichBean.setId(i + 1);
                             if (deviceBean != null) {
-                                String onOff = String.valueOf(deviceBean.getDps().get(String.valueOf(i+1)));
-                                if (!TextUtils.isEmpty(onOff)){
+                                String onOff = String.valueOf(deviceBean.getDps().get(String.valueOf(i + 1)));
+                                if (!TextUtils.isEmpty(onOff)) {
                                     swichBean.setOnOff("true".equals(onOff) ? 1 : 0);
                                 }
                             }
@@ -164,14 +198,32 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
 
 
     /**
+     * 跳转到设置
+     */
+    public void jumpSetting() {
+        Intent intent = new Intent(context, DeviceSettingActivity.class);
+        intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+        intent.putExtra(GlobalConstant.DEVICE_NAME, devName);
+        intent.putExtra(GlobalConstant.ROOM_ID, roomId);
+        intent.putExtra(GlobalConstant.ROOM_NAME, roomName);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_PANELSWITCH);
+        String deviceJson = new Gson().toJson(mGroDeviceBean);
+        intent.putExtra(GlobalConstant.DEVICE_BEAN, deviceJson);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
+
+    /**
      * 跳转到定时
      */
     public void jumpTiming() {
-        Intent timingIntent = new Intent(context, DeviceTimingListActivity.class);
-        timingIntent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
-        timingIntent.putExtra(GlobalConstant.DEVICE_NAME, devName);
-        timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_PANELSWITCH);
-        ActivityUtils.startActivity((Activity) context,timingIntent,ActivityUtils.ANIMATE_FORWARD,false);
+        Intent intent = new Intent(context, DeviceTimingListActivity.class);
+        intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+        intent.putExtra(GlobalConstant.DEVICE_NAME, devName);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_PANELSWITCH);
+        String deviceJson = new Gson().toJson(mGroDeviceBean);
+        intent.putExtra(GlobalConstant.DEVICE_BEAN, deviceJson);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
@@ -179,12 +231,12 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
      * 跳转到修改名字
      */
     public void jumpEditName(int switchId) {
-        Intent timingIntent = new Intent(context, EditNameActivity.class);
-        timingIntent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
-        timingIntent.putExtra(GlobalConstant.DEVICE_NAME, devName);
-        timingIntent.putExtra(GlobalConstant.DEVICE_SWITCH_ID, switchId);
-        timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_PANELSWITCH);
-        ActivityUtils.startActivity((Activity) context,timingIntent,ActivityUtils.ANIMATE_FORWARD,false);
+        Intent intent = new Intent(context, EditNameActivity.class);
+        intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+        intent.putExtra(GlobalConstant.DEVICE_NAME, devName);
+        intent.putExtra(GlobalConstant.DEVICE_SWITCH_ID, switchId);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_PANELSWITCH);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
     /**
@@ -200,9 +252,9 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
         if (deviceNotOnline()) {
             LinkedHashMap<String, Object> dpMap = new LinkedHashMap<>();
             for (int i = 0; i < panelSwitchBean.getRoad(); i++) {
-                dpMap.put(String.valueOf(i+1), isOpen);
+                dpMap.put(String.valueOf(i + 1), isOpen);
             }
-            TuyaApiUtils.sendCommand(dpMap,mTuyaDevice,this);
+            TuyaApiUtils.sendCommand(dpMap, mTuyaDevice, this);
         }
 
     }
@@ -210,7 +262,6 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
 
     /**
      * 操作单个开关
-     *
      */
     public void singleOnOff(String dpId) {
         try {
@@ -218,10 +269,10 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
                 MyToastUtils.toast(R.string.m171_check_network);
                 return;
             }
-            if (deviceNotOnline()){
+            if (deviceNotOnline()) {
                 String onOff = String.valueOf(deviceBean.getDps().get(dpId));
-                boolean isOpen= "true".equals(onOff);
-                TuyaApiUtils.sendCommand(dpId,!isOpen,mTuyaDevice,this);
+                boolean isOpen = "true".equals(onOff);
+                TuyaApiUtils.sendCommand(dpId, !isOpen, mTuyaDevice, this);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -262,7 +313,7 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
                     String key = (String) iterator.next();
                     boolean value;
                     value = object.getBoolean(key);
-                    baseView.freshStatus(Integer.parseInt(key)-1,value);
+                    baseView.freshStatus(Integer.parseInt(key) - 1, value);
                 }
 
             } catch (Exception e) {
@@ -291,7 +342,7 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
 
     }
 
-    public void destroyTuya(){
+    public void destroyTuya() {
         if (mTuyaDevice != null) {
             mTuyaDevice.unRegisterDevListener();
             mTuyaDevice.onDestroy();

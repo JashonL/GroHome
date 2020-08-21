@@ -16,6 +16,7 @@ import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.eventbus.DevEditNameBean;
+import com.growatt.grohome.eventbus.TransferDevMsg;
 import com.growatt.grohome.module.config.view.IConfigSuccessView;
 import com.growatt.grohome.module.device.BulbActivity;
 import com.growatt.grohome.module.device.SwitchActivity;
@@ -47,6 +48,9 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
     private String deviceName;
     private String deviceType;
     private String deviceId;
+    private String mRoomId;
+    private String mRoomName;
+
 
     private ITuyaDevice mTuyaDevice;
 
@@ -59,6 +63,8 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
         deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
         deviceId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
         deviceName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_NAME);
+        mRoomId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_ID);
+        mRoomName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_NAME);
         mTuyaDevice = TuyaHomeSdk.newDeviceInstance(deviceId);
     }
 
@@ -67,9 +73,8 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
      * 设备改名
      */
     public void getDeviceData() {
-       baseView.setDeviceName(deviceName);
+        baseView.setDeviceName(deviceName);
     }
-
 
 
     /**
@@ -169,12 +174,16 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
                 Intent intent1 = new Intent(context, SwitchActivity.class);
                 intent1.putExtra(GlobalConstant.DEVICE_ID, deviceId);
                 intent1.putExtra(GlobalConstant.DEVICE_NAME, deviceName);
+                intent1.putExtra(GlobalConstant.ROOM_NAME, mRoomName);
+                intent1.putExtra(GlobalConstant.ROOM_ID, mRoomId);
                 ActivityUtils.startActivity((Activity) context, intent1, ActivityUtils.ANIMATE_FORWARD, true);
                 break;
             case DeviceTypeConstant.TYPE_BULB:
                 Intent intent2 = new Intent(context, BulbActivity.class);
                 intent2.putExtra(GlobalConstant.DEVICE_ID, deviceId);
                 intent2.putExtra(GlobalConstant.DEVICE_NAME, deviceName);
+                intent2.putExtra(GlobalConstant.ROOM_NAME, mRoomName);
+                intent2.putExtra(GlobalConstant.ROOM_ID, mRoomId);
                 ActivityUtils.startActivity((Activity) context, intent2, ActivityUtils.ANIMATE_FORWARD, true);
                 break;
             default:
@@ -241,27 +250,30 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
     }
 
 
-
     /**
      * 转移设备
      *
      * @throws Exception
      */
-    public void transferDevice(String roomId) throws Exception {
+    public void transferDevice(String roomId, String roomName) throws Exception {
         JSONObject requestJson = new JSONObject();
         requestJson.put("roomId", roomId);
         requestJson.put("cmd", "updateDeviceRoom");
         requestJson.put("devId", deviceId);
         requestJson.put("lan", CommentUtils.getLanguage());
-        requestJson.put("devType",deviceType);
+        requestJson.put("devType", deviceType);
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
         addDisposable(apiServer.roomRequest(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
                 try {
-                    JSONObject obj = new JSONObject(bean);
-                    int code = obj.getInt("code");
+                    mRoomId = roomId;
+                    mRoomName = roomName;
+                    TransferDevMsg transferBean = new TransferDevMsg();
+                    transferBean.setRoomId(roomId);
+                    transferBean.setRoomName(roomName);
+                    EventBus.getDefault().post(bean);
                     jumpToDeviceDetail();
                 } catch (Exception e) {
                     e.printStackTrace();

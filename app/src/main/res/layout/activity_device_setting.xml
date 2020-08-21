@@ -79,7 +79,7 @@
                     style="@style/style_mine_tittle_item"
                     android:text="@string/m265_device_room" />
 
-                <TextView style="@style/style_mine_text_item" />
+                <TextView style="@style/style_mine_text_item" android:id="@+id/tv_room_name" />
 
                 <ImageView
                     android:id="@+id/iv_room_more"
@@ -107,7 +107,7 @@
                     style="@style/style_mine_tittle_item"
                     android:text="@string/m266_sn" />
 
-                <TextView style="@style/style_mine_text_item" />
+                <TextView style="@style/style_mine_text_item" android:id="@+id/tv_device_id"/>
 
                 <ImageView
                     android:id="@+id/iv_sn_more"
@@ -197,8 +197,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_5"
-                app:cardCornerRadius="@dimen/dp_12"
-                app:cardElevation="@dimen/dp_2"
+                app:cardCornerRadius="@dimen/dp_0"
+                app:cardElevation="@dimen/dp_0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_third_party">

@@ -4,12 +4,9 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,9 +18,16 @@ import com.growatt.grohome.adapter.SwitchAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.PanelSwitchBean;
 import com.growatt.grohome.customview.GridDivider;
+import com.growatt.grohome.eventbus.DevEditNameBean;
+import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
+import com.growatt.grohome.eventbus.TransferDevMsg;
 import com.growatt.grohome.module.device.presenter.SwitchPresenter;
 import com.growatt.grohome.module.device.view.ISwitchView;
 import com.growatt.grohome.utils.CommentUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,37 +36,18 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISwitchView, Toolbar.OnMenuItemClickListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener {
-
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.rv_panel_grid)
     RecyclerView rvPanelGrid;
-    @BindView(R.id.vDivider)
-    View vDivider;
-    @BindView(R.id.ivTiming)
-    ImageView ivTiming;
-    @BindView(R.id.tvTiming)
-    TextView tvTiming;
-    @BindView(R.id.llTiming)
-    LinearLayout llTiming;
     @BindView(R.id.ivAllOpen)
     ImageView ivAllOpen;
-    @BindView(R.id.tvAllOpen)
-    TextView tvAllOpen;
-    @BindView(R.id.llAllOpen)
-    LinearLayout llAllOpen;
     @BindView(R.id.ivAllClose)
     ImageView ivAllClose;
-    @BindView(R.id.tvAllClose)
-    TextView tvAllClose;
-    @BindView(R.id.llAllClose)
-    LinearLayout llAllClose;
-    @BindView(R.id.cl_top_menu)
-    ConstraintLayout clTopMenu;
-    @BindView(R.id.cl_root)
-    ConstraintLayout clRoot;
     private SwitchAdapter mSwitchAdapter;
 
     @Override
@@ -76,9 +61,16 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
     }
 
     @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.color_panel_background).init();
+    }
+
+
+    @Override
     protected void initViews() {
         //设置头部
-        toolbar.setNavigationIcon(R.drawable.icon_return);
+        toolbar.setNavigationIcon(R.drawable.icon_return_w);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.color_panel_background));
         toolbar.inflateMenu(R.menu.menu_device_setting);
         toolbar.setOnMenuItemClickListener(this);
@@ -125,6 +117,7 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
         try {
             presenter.initDevice();
         } catch (Exception e) {
@@ -181,7 +174,10 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        return false;
+        if (item.getItemId() == R.id.action_set) {
+            presenter.jumpSetting();
+        }
+        return true;
     }
 
     @Override
@@ -217,9 +213,42 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
     }
 
 
+
+    /*修改设备名称*/
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showEditSuccess(DevEditNameBean msg) {
+        if (msg != null) {
+            String name = msg.getName();
+            presenter.setDevName(name);
+            setTitle(name);
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventDevTransferBean(TransferDevMsg bean) {
+        if (bean != null) {
+            //获取列表设备列表
+            try {
+                presenter.setRoomInfo(bean);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventUpdata(DeviceAddOrDelMsg bean) {
+        if (bean != null) {
+            finish();
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         presenter.destroyTuya();
+        EventBus.getDefault().unregister(this);
     }
 }

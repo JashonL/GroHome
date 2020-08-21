@@ -24,6 +24,9 @@ import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.customview.colorpicker.BlurMaskCircularView;
 import com.growatt.grohome.customview.colorpicker.CircleBackgroundView;
 import com.growatt.grohome.customview.colorpicker.ColorPicker;
+import com.growatt.grohome.eventbus.DevEditNameBean;
+import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
+import com.growatt.grohome.eventbus.TransferDevMsg;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.presenter.BulbPresenter;
 import com.growatt.grohome.module.device.view.IBulbView;
@@ -442,6 +445,36 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         upDataSceneList(sceneList);
     }
 
+
+
+    /*修改设备名称*/
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showEditSuccess(DevEditNameBean msg) {
+        if (msg != null) {
+            String name = msg.getName();
+            presenter.setDevName(name);
+            setTitle(name);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventDevTransferBean(TransferDevMsg bean) {
+        if (bean != null) {
+            //获取列表设备列表
+            try {
+                presenter.setRoomInfo(bean);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventUpdata(DeviceAddOrDelMsg bean) {
+        if (bean != null) {
+            finish();
+        }
+    }
 
     @Override
     public void onDestroy() {

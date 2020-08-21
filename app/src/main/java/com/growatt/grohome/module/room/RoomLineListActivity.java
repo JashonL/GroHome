@@ -44,10 +44,6 @@ public class RoomLineListActivity extends BaseActivity<RoomLineListPresenter> im
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tvNote)
-    TextView tvNote;
-    @BindView(R.id.ivAddRoom)
-    ImageView ivAddRoom;
     @BindView(R.id.rvRoom)
     RecyclerView rvRoom;
     @BindView(R.id.srl_pull)
@@ -146,7 +142,7 @@ public class RoomLineListActivity extends BaseActivity<RoomLineListPresenter> im
                     //当前选中的房间
                     HomeRoomBean nowItem = mRoomLineListAdapter.getNowItem();
                     if (nowItem == null) return;
-                    presenter.transferDevice(String.valueOf(nowItem.getCid()));
+                    presenter.transferDevice(String.valueOf(nowItem.getCid()),nowItem.getName());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

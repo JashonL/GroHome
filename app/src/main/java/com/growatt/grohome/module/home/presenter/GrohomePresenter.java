@@ -184,11 +184,12 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         }else {
             clazz = BulbActivity.class;
         }
-        if (clazz == null) return;
-        Intent intentThermostat = new Intent(context, clazz);
-        intentThermostat.putExtra(GlobalConstant.DEVICE_ID, bean.getDevId());
-        intentThermostat.putExtra(GlobalConstant.DEVICE_NAME, bean.getName());
-        ActivityUtils.startActivity((Activity) context, intentThermostat, ActivityUtils.ANIMATE_FORWARD, false);
+        String deviceBean = new Gson().toJson(bean);
+        Intent intent = new Intent(context, clazz);
+        intent.putExtra(GlobalConstant.DEVICE_ID, bean.getDevId());
+        intent.putExtra(GlobalConstant.DEVICE_NAME, bean.getName());
+        intent.putExtra(GlobalConstant.DEVICE_BEAN,deviceBean);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 

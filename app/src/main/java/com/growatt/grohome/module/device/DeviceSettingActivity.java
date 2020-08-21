@@ -4,13 +4,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +18,7 @@ import com.growatt.grohome.adapter.SceneGridAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.customview.GridDivider;
+import com.growatt.grohome.eventbus.TransferDevMsg;
 import com.growatt.grohome.module.device.manager.DeviceAirCon;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
@@ -30,6 +28,9 @@ import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.presenter.DeviceSettingPresenter;
 import com.growatt.grohome.module.device.view.IDeviceSettingView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -49,50 +50,10 @@ public class DeviceSettingActivity extends BaseActivity<DeviceSettingPresenter> 
     ImageView ivDeviceIcon;
     @BindView(R.id.tv_device_name)
     TextView tvDeviceName;
-    @BindView(R.id.iv_scene_edit)
-    ImageView ivSceneEdit;
-    @BindView(R.id.v_divider_room)
-    View vDividerRoom;
-    @BindView(R.id.iv_room_more)
-    ImageView ivRoomMore;
-    @BindView(R.id.ll_room)
-    LinearLayout llRoom;
-    @BindView(R.id.v_divider_sn)
-    View vDividerSn;
-    @BindView(R.id.iv_sn_more)
-    ImageView ivSnMore;
-    @BindView(R.id.ll_sn)
-    LinearLayout llSn;
-    @BindView(R.id.v_divider_chack_version)
-    View vDividerChackVersion;
-    @BindView(R.id.iv_chack_version)
-    ImageView ivChackVersion;
-    @BindView(R.id.ll_chack_version)
-    LinearLayout llChackVersion;
-    @BindView(R.id.v_divider_reconfig)
-    View vDividerReconfig;
-    @BindView(R.id.iv_reconfig)
-    ImageView ivReconfig;
-    @BindView(R.id.ll_reconfig)
-    LinearLayout llReconfig;
-    @BindView(R.id.tv_third_party)
-    AppCompatTextView tvThirdParty;
-    @BindView(R.id.icon_alexa)
-    ImageView iconAlexa;
-    @BindView(R.id.tv_alexa)
-    AppCompatTextView tvAlexa;
-    @BindView(R.id.cl_alexa)
-    ConstraintLayout clAlexa;
-    @BindView(R.id.icon_google)
-    ImageView iconGoogle;
-    @BindView(R.id.tv_google)
-    AppCompatTextView tvGoogle;
-    @BindView(R.id.cl_google)
-    ConstraintLayout clGoogle;
-    @BindView(R.id.card_view_third)
-    CardView cardViewThird;
-    @BindView(R.id.tv_add_scenes)
-    AppCompatTextView tvAddScenes;
+    @BindView(R.id.tv_room_name)
+    TextView tvRoomName;
+    @BindView(R.id.tv_device_id)
+    TextView tvDeviceId;
     @BindView(R.id.rlv_scenes_list)
     RecyclerView rlvScenesList;
 
@@ -117,7 +78,7 @@ public class DeviceSettingActivity extends BaseActivity<DeviceSettingPresenter> 
     @Override
     protected void initViews() {
         //头部
-        tvTitle.setText("");
+        tvTitle.setText(R.string.m148_edit);
         toolbar.setNavigationIcon(R.drawable.icon_return);
         //场景列表
         //定时列表
@@ -136,6 +97,7 @@ public class DeviceSettingActivity extends BaseActivity<DeviceSettingPresenter> 
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
         presenter.getIntentData();
         try {
             presenter.getSceneById();
@@ -145,7 +107,7 @@ public class DeviceSettingActivity extends BaseActivity<DeviceSettingPresenter> 
     }
 
 
-    @OnClick({R.id.tv_device_name, R.id.ll_room, R.id.ll_chack_version, R.id.ll_reconfig, R.id.tv_delete})
+    @OnClick({R.id.tv_device_name, R.id.iv_scene_edit,R.id.ll_room, R.id.ll_chack_version, R.id.ll_reconfig, R.id.tv_delete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_device_name:
@@ -215,14 +177,44 @@ public class DeviceSettingActivity extends BaseActivity<DeviceSettingPresenter> 
     }
 
     @Override
+    public void setRoomName(String roomName) {
+        if (!TextUtils.isEmpty(roomName)) {
+            tvRoomName.setText(roomName);
+        }
+    }
+
+    @Override
+    public void setDeviceId(String deviceId) {
+        if (!TextUtils.isEmpty(deviceId)){
+            tvDeviceId.setText(deviceId);
+        }
+    }
+
+    @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         ScenesBean.DataBean dataBean = mSceneGridAdapter.getData().get(position);
         presenter.toSceneDetail(dataBean);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventDevTransferBean(TransferDevMsg bean) {
+        if (bean != null) {
+            //获取列表设备列表
+            try {
+                if (!TextUtils.isEmpty(bean.roomName)) {
+                    tvRoomName.setText(bean.roomName);
+                }
+                presenter.setRoomInfo(bean);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -13,8 +13,12 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.eventbus.DevEditNameBean;
+import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
+import com.growatt.grohome.eventbus.TransferDevMsg;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.device.DeviceUpdataActivity;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
@@ -30,6 +34,7 @@ import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,12 +45,12 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
-    private String name;
+    private GroDeviceBean mGroDeviceBean;
+    private String devName;
     private String deviceType;
-    private String devId;
+    private String deviceId;
     private String roomName;
     private List<String> nameList;
-    private int used;
     private int roomId;
 
     private ITuyaDevice mTuyaDevice;
@@ -63,16 +68,28 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
 
     public void getIntentData() {
         Intent intent = ((Activity) context).getIntent();
-        name = intent.getStringExtra(GlobalConstant.DEVICE_NAME);
+        devName = intent.getStringExtra(GlobalConstant.DEVICE_NAME);
         deviceType = intent.getStringExtra(GlobalConstant.DEVICE_TYPE);
-        devId = intent.getStringExtra(GlobalConstant.DEVICE_ID);
-        mTuyaDevice = TuyaHomeSdk.newDeviceInstance(devId);
+        deviceId = intent.getStringExtra(GlobalConstant.DEVICE_ID);
+        mTuyaDevice = TuyaHomeSdk.newDeviceInstance(deviceId);
         roomName = intent.getStringExtra(GlobalConstant.ROOM_NAME);
         roomId = intent.getIntExtra(GlobalConstant.ROOM_ID, -1);
+        String deviceJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_BEAN);
+        if (!TextUtils.isEmpty(deviceJson)) {
+            mGroDeviceBean = new Gson().fromJson(deviceJson, GroDeviceBean.class);
+            deviceId = mGroDeviceBean.getDevId();
+            devName = mGroDeviceBean.getName();
+            roomId = mGroDeviceBean.getRoomId();
+            roomName = mGroDeviceBean.getRoomName();
+        }
+
         if (deviceType.equals(DeviceTypeConstant.TYPE_PANELSWITCH)){
             nameList = intent.getStringArrayListExtra(GlobalConstant.NAME_LIST);
         }
         baseView.setViewsByType(deviceType);
+        baseView.setDeviceName(devName);
+        baseView.setRoomName(roomName);
+        baseView.setDeviceId(deviceId);
     }
 
 
@@ -80,7 +97,7 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
      * 场景改名
      */
     public void editName() {
-        CircleDialogUtils.showCommentInputDialog((FragmentActivity) context, context.getString(R.string.m148_edit), name,
+        CircleDialogUtils.showCommentInputDialog((FragmentActivity) context, context.getString(R.string.m148_edit), devName,
                 context.getString(R.string.m233_please_entry_name), true, new OnInputClickListener() {
                     @Override
                     public boolean onClick(String text, View v) {
@@ -123,11 +140,18 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
 
     }
 
-
+    public void setRoomInfo(TransferDevMsg bean) {
+        roomName = bean.getRoomName();
+        roomId= Integer.parseInt(bean.getRoomId());
+        if (mGroDeviceBean!=null){
+            mGroDeviceBean.setRoomId(Integer.parseInt(bean.getRoomId()));
+            mGroDeviceBean.setRoomName(bean.getRoomName());
+        }
+    }
 
     public void editNameByServer(String reName) throws JSONException {
         JSONObject requestJson = new JSONObject();
-        requestJson.put("devId", devId);
+        requestJson.put("devId", deviceId);
         requestJson.put("devType", deviceType);
         requestJson.put("name", reName);
         requestJson.put("lan", CommentUtils.getLanguage());
@@ -147,6 +171,10 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
                     int code = object.getInt("code");
                     if (code == 0) {
                         baseView.setDeviceName(reName);
+                        DevEditNameBean bean = new DevEditNameBean();
+                        bean.setDevId(deviceId);
+                        bean.setName(reName);
+                        EventBus.getDefault().post(bean);
                         MyToastUtils.toast(R.string.m200_success);
                     } else {
                         MyToastUtils.toast(R.string.m201_fail);
@@ -176,12 +204,12 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
             public void onClick(View v) {
                 Intent intent = new Intent(context, RoomLineListActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra(GlobalConstant.ROOM_ID, roomId);
+                intent.putExtra(GlobalConstant.ROOM_ID, String.valueOf(roomId));
                 intent.putExtra(GlobalConstant.ROOM_NAME, roomName);
-                intent.putExtra(GlobalConstant.DEVICE_ID, devId);
+                intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
                 intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
                 intent.putExtra(GlobalConstant.ACITION_KEY, GlobalConstant.ACITION_DEVICE_TRANSFER);
-                ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, true);
+                ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
             }
         });
 
@@ -193,8 +221,8 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
      */
     public void jumptoUpdata() {
         Intent timingIntent = new Intent(context, DeviceUpdataActivity.class);
-        timingIntent.putExtra(GlobalConstant.DEVICE_ID, devId);
-        timingIntent.putExtra(GlobalConstant.DEVICE_NAME, name);
+        timingIntent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+        timingIntent.putExtra(GlobalConstant.DEVICE_NAME, devName);
         timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         ActivityUtils.startActivity((Activity) context, timingIntent, ActivityUtils.ANIMATE_FORWARD, false);
 
@@ -228,7 +256,7 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
 
     public void deleteDevice() throws JSONException {
         JSONObject requestJson = new JSONObject();
-        requestJson.put("devId", devId);
+        requestJson.put("devId", deviceId);
         requestJson.put("devType", deviceType);
         requestJson.put("userId", App.getUserBean().getAccountName());
         requestJson.put("lan", CommentUtils.getLanguage());
@@ -237,16 +265,20 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
         addDisposable(apiServer.deleteDevice(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String jsonBean) {
-                JSONObject obj;
                 try {
-                    obj = new JSONObject(jsonBean);
+                    JSONObject obj = new JSONObject(jsonBean);
                     int code = obj.getInt("code");
                     if (code == 0) {
+                        MyToastUtils.toast(R.string.m200_success);
+                        //通知首页更新
+                        DeviceAddOrDelMsg deviceAddOrDelMsg = new DeviceAddOrDelMsg();
+                        deviceAddOrDelMsg.setType(DeviceAddOrDelMsg.DELETE_DEV);
+                        deviceAddOrDelMsg.setDevType(deviceType);
+                        deviceAddOrDelMsg.setDevId(deviceId);
+                        EventBus.getDefault().post(deviceAddOrDelMsg);
                         ((Activity)context).finish();
-                    } else {
                     }
-
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -261,13 +293,13 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
 
     public void getSceneById() throws JSONException {
         JSONObject requestJson = new JSONObject();
-        requestJson.put("devId", devId);
+        requestJson.put("devId", deviceId);
         requestJson.put("cmd", "selectSceneByDevId");
         requestJson.put("userId", App.getUserBean().getAccountName());
         requestJson.put("lan", CommentUtils.getLanguage());
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.deleteDevice(body), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.smartHomeRequest(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String jsonBean) {
                 try {

@@ -113,8 +113,9 @@ public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> im
                 if (-1 != nowSelectPosition) {
                     HomeRoomBean roomBean = mSelectRoomAdapter.getData().get(nowSelectPosition);
                     int cid = roomBean.getCid();
+                    String roomName = roomBean.getName();
                     try {
-                        presenter.transferDevice(String.valueOf(cid));
+                        presenter.transferDevice(String.valueOf(cid),roomName);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
