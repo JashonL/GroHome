@@ -26,13 +26,13 @@ import com.growatt.grohome.base.BaseFragment;
 import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.customview.GridDivider;
 import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.customview.MySwipeRefreshLayout;
 import com.growatt.grohome.eventbus.FreshScenesMsg;
 import com.growatt.grohome.module.scenes.presenter.ScenesPresenter;
 import com.growatt.grohome.module.scenes.view.IScenesView;
 import com.growatt.grohome.utils.CircleDialogUtils;
-import com.growatt.grohome.utils.CommentUtils;
 import com.mylhyl.circledialog.res.drawable.CircleDrawable;
 import com.mylhyl.circledialog.res.values.CircleColor;
 import com.mylhyl.circledialog.res.values.CircleDimen;
@@ -116,7 +116,8 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         //一键执行
         mRlvLaunch = launchView.findViewById(R.id.rlv_launch_tap);
         mRlvLaunch.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        mRlvLaunch.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, 5, ContextCompat.getColor(getActivity(), R.color.nocolor)));
+        int div = getResources().getDimensionPixelSize(R.dimen.dp_10);
+        mRlvLaunch.addItemDecoration( new GridDivider(ContextCompat.getColor(getContext(), R.color.nocolor), div, div));
         mLaunchTapAdapter = new LaunchTapAdapter(new ArrayList<>());
         launchEmpty = LayoutInflater.from(getContext()).inflate(R.layout.scene_launch_empty_view, mRlvLaunch, false);
         llAddLaunchView = launchEmpty.findViewById(R.id.ll_add_launch_background);
@@ -131,7 +132,6 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         llAddLinkageView = linkageEmpty.findViewById(R.id.ll_add_linkage_background);
         mLinkageSceneAdapter.setEmptyView(linkageEmpty);
         mRlvLinkage.setAdapter(mLinkageSceneAdapter);
-        int div = CommentUtils.dip2px(getActivity(), 16);
         mRlvLinkage.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, div, ContextCompat.getColor(getActivity(), R.color.nocolor)));
         //日志
         mRlvLogs = logsView.findViewById(R.id.rlv_logs);

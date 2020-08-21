@@ -49,6 +49,7 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
     private String sceneType = GlobalConstant.SCENE_LUANCH_TAP_TO_RUN;
     private int satisfy;
     private ScenesBean.DataBean scenesBean;
+    private String status;
 
     public SceneDetailPresenter(ISceneDetailView baseView) {
         super(baseView);
@@ -68,9 +69,24 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
             } else {
                 sceneType = GlobalConstant.SCENE_SMART;
             }
+            status = scenesBean.getStatus();
+            baseView.setStatus(status);
             baseView.setViewBySceneType(sceneType);
             baseView.updataViews(scenesBean);
         }
+    }
+
+
+    /**
+     * 设置是否启用
+     */
+    public void setStatus() {
+        if ("0".equals(status)) {
+            status = "1";
+        } else {
+            status = "0";
+        }
+        baseView.setStatus(status);
     }
 
 
@@ -141,15 +157,15 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
     public void toEditCondition(SceneConditionBean sceneConditionBean) {
         if (sceneConditionBean == null) return;
         String devType = sceneConditionBean.getDevType();
-        if (DeviceTypeConstant.TYPE_TIME.equals(devType)){
+        if (DeviceTypeConstant.TYPE_TIME.equals(devType)) {
             toEditConditionTime(sceneConditionBean);
-        }else {
+        } else {
             toEditConditionDevice(sceneConditionBean);
         }
     }
 
 
-    private void toEditConditionTime(SceneConditionBean sceneConditionBean){
+    private void toEditConditionTime(SceneConditionBean sceneConditionBean) {
         Intent intent = new Intent(context, EffectivePeriodActivity.class);
         intent.putExtra(GlobalConstant.SCENE_DEVICE_SELECT, GlobalConstant.SCENE_EDIT);
         intent.putExtra(GlobalConstant.SET_TIMEVALUE_OR_TIMEPERIOD, GlobalConstant.SET_TIMEVALUE);
@@ -160,7 +176,7 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
     }
 
 
-    private void toEditConditionDevice(SceneConditionBean sceneConditionBean){
+    private void toEditConditionDevice(SceneConditionBean sceneConditionBean) {
         String bean = new Gson().toJson(sceneConditionBean);
         Intent intent = new Intent(context, SceneConditionActivity.class);
         intent.putExtra(GlobalConstant.SCENE_CONDITION_BEAN, bean);
@@ -215,7 +231,8 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
         JSONObject requestJson = new JSONObject();
         requestJson.put("cmd", "updateSceneNew");
         requestJson.put("userId", App.getUserBean().getAccountName());
-        requestJson.put("status", 0);
+        requestJson.put("cid", scenesBean.getCid());
+        requestJson.put("status", status);
         requestJson.put("name", name);
         requestJson.put("onoff", 1);
         int isCondition;

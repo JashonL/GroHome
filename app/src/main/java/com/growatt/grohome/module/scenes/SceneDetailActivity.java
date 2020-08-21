@@ -63,6 +63,8 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
     TextView tvEexecutionMet;
     @BindView(R.id.status_bar_view)
     View statusBarView;
+    @BindView(R.id.iv_status)
+    ImageView ivStatus;
 
     private SceneTaskAdapter mSceneTaskAdapter;
     private SceneConditionAdapter mSceneConditionAdapter;
@@ -216,8 +218,17 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
         }
     }
 
+    @Override
+    public void setStatus(String status) {
+        if ("0".equals(status)) {
+            ivStatus.setImageResource(R.drawable.scenes_on);
+        } else {
+            ivStatus.setImageResource(R.drawable.scenes_off);
+        }
+    }
 
-    @OnClick({R.id.card_view_name, R.id.iv_task_add, R.id.btn_save, R.id.iv_condition_add, R.id.tv_execution_met})
+
+    @OnClick({R.id.card_view_name, R.id.iv_task_add, R.id.btn_save, R.id.iv_condition_add, R.id.tv_execution_met,R.id.iv_status})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.card_view_name:
@@ -239,6 +250,9 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
             case R.id.iv_execution_pull:
             case R.id.tv_execution_met:
                 presenter.selectConditionMet();
+                break;
+            case R.id.iv_status:
+                presenter.setStatus();
                 break;
         }
     }
