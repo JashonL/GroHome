@@ -20,14 +20,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
 
             <ImageView
+                android:id="@+id/iv_commondity_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/bathroom_m" />
+                android:scaleType="fitXY" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -40,6 +40,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_content_sp_14"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />

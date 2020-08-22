@@ -61,7 +61,7 @@ public class ServicePresenter extends BasePresenter<IServiceFragmentView> {
      * 根据国家获取服务器
      */
     public void getAdvertisingList() {
-        String userUrl = GlobalConstant.HTTP_PREFIX + App.getUserBean().getUrl() + API.GET_ADVERTISING_LIST + CommentUtils.getLocale();
+        String userUrl = GlobalConstant.HTTP_PREFIX + App.getUserBean().getUrl() + API.GET_ADVERTISING_LIST + CommentUtils.getLocale()+"&kind=12";
         addDisposable(apiServer.getAdvertisingList(userUrl), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
