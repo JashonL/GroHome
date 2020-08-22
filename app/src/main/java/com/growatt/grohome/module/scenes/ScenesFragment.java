@@ -235,7 +235,7 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
     public void launchTapToRunSuccess(ScenesBean.DataBean dataBean) {
         List<SceneTaskBean> conf = dataBean.getConf();
         View bodyView = LayoutInflater.from(getActivity()).inflate(R.layout.layout_scenes_exeresult, null, false);
-        CircleDialogUtils.showCommentBodyView(getContext(), bodyView, dataBean.getName(), getActivity().getSupportFragmentManager(), new OnCreateBodyViewListener() {
+        CircleDialogUtils.showCommentBodyViewNoCancel(getContext(), bodyView, dataBean.getName(), getActivity().getSupportFragmentManager(), new OnCreateBodyViewListener() {
             @Override
             public void onCreateBodyView(View view) {
                 CircleDrawable bgCircleDrawable = new CircleDrawable(CircleColor.DIALOG_BACKGROUND

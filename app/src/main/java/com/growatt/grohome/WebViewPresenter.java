@@ -17,6 +17,9 @@ public class WebViewPresenter extends BasePresenter<IWebViewView> {
     public WebViewPresenter(Context context, IWebViewView baseView) {
         super(context, baseView);
         url=((Activity)context).getIntent().getStringExtra(GlobalConstant.WEB_URL);
+    }
 
+    public void showWeb(){
+        baseView.openWebView(url);
     }
 }

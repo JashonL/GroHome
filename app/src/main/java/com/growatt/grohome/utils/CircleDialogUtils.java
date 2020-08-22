@@ -199,17 +199,24 @@ public class CircleDialogUtils {
      * @return
      */
     public static DialogFragment showCommentDialog(FragmentActivity activity, String title, String text, View.OnClickListener listener) {
+        return showCommentDialog(activity, title, text, listener,null);
+    }
+
+
+
+    /**
+     * 公共提示框
+     *
+     * @param activity
+     * @return
+     */
+    public static DialogFragment showCommentDialog(FragmentActivity activity, String title, String text, View.OnClickListener posiListener,View.OnClickListener negativeListener) {
         DialogFragment inputDialog = new CircleDialog.Builder()
                 .setTitle(title)
                 .setText(text)
                 .setGravity(Gravity.CENTER)
-                .setPositive(activity.getString(R.string.m90_ok), listener)
-                .setNegative(activity.getString(R.string.m89_cancel), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                })
+                .setPositive(activity.getString(R.string.m90_ok), posiListener)
+                .setNegative(activity.getString(R.string.m89_cancel), negativeListener)
                 .show(activity.getSupportFragmentManager());
         return inputDialog;
     }
@@ -279,6 +286,23 @@ public class CircleDialogUtils {
 
                     }
                 })
+                .show(fragmentManager);
+        ;
+        return commentBodyDialog;
+    }
+
+
+    /**
+     * 公共自定义框
+     *
+     * @return
+     */
+    public static DialogFragment showCommentBodyViewNoCancel(Context context, View bodyView, String title, FragmentManager fragmentManager, OnCreateBodyViewListener listener, View.OnClickListener positiveListner) {
+        DialogFragment commentBodyDialog = new CircleDialog.Builder()
+                .setTitle(title)
+                .setBodyView(bodyView, listener)
+                .setGravity(Gravity.CENTER)
+                .setPositive(context.getString(R.string.m90_ok), positiveListner)
                 .show(fragmentManager);
         ;
         return commentBodyDialog;

@@ -121,4 +121,7 @@ public class GlobalConstant {
     public static final String WIFI_SSID = "wifi_ssid";
     public static final String WIFI_PASSWORD = "wifi_password";
     public static final String WIFI_TOKEN = "wifi_token";
+    //***********************官网********************
+    public static final String COMPANY_WEBSITE_CN = "http://www.growatt.com/";
+    public static final String COMPANY_WEBSITE_EN = "http://ginverter.com/";
 }

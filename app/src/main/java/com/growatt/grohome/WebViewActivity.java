@@ -87,7 +87,7 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements I
 
     @Override
     protected void initData() {
-
+        presenter.showWeb();
     }
 
 
@@ -187,6 +187,5 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements I
         if (url.startsWith("http")){
             webview.loadUrl(url);//加载url
         }
-
     }
 }

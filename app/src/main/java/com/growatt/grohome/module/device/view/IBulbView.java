@@ -8,6 +8,8 @@ import java.util.List;
 public interface IBulbView extends BaseView {
     void setDeviceTitle(String devName);
 
+    void setViewsByDeviceType(String deviceType);
+
     void setOnoff(String onoff);
 
     void setBright(String bright);

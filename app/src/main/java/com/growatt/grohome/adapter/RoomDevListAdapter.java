@@ -13,6 +13,7 @@ import com.growatt.grohome.module.device.manager.DeviceAirCon;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
 import com.growatt.grohome.module.device.manager.DevicePlug;
+import com.growatt.grohome.module.device.manager.DeviceStripLights;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 
@@ -67,6 +68,9 @@ public class RoomDevListAdapter extends BaseMultiItemQuickAdapter<GroDeviceBean,
                 case DeviceTypeConstant.TYPE_THERMOSTAT:
                     deviceIcon.setImageResource(DeviceThermostat.getOpenIcon(0));
                     break;
+                case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
+                    deviceIcon.setImageResource(DeviceStripLights.getOpenIcon(0));
+                    break;
             }
         } else {
             switch (devType) {
@@ -86,7 +90,9 @@ public class RoomDevListAdapter extends BaseMultiItemQuickAdapter<GroDeviceBean,
                 case DeviceTypeConstant.TYPE_THERMOSTAT:
                     deviceIcon.setImageResource(DeviceThermostat.getCloseIcon(0));
                     break;
-
+                case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
+                    deviceIcon.setImageResource(DeviceStripLights.getCloseIcon(0));
+                    break;
             }
         }
         helper.addOnClickListener(R.id.card_item);

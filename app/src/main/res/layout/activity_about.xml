@@ -20,18 +20,18 @@
         app:layout_constraintTop_toBottomOf="@+id/headerView">
 
         <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="@dimen/dp_60"
-            android:layout_height="@dimen/dp_60"
+            android:id="@+id/iv_app_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/dp_20" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/tv_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView1"
+            android:layout_below="@+id/iv_app_logo"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_20"
             android:textSize="@dimen/size_title_sp_16" />
@@ -108,7 +108,7 @@
 
                 <TextView
                     style="@style/style_about_tittle_item"
-                    android:text="@string/m27_company_website" />
+                    android:text="@string/m296_customer_email" />
 
                 <TextView
                     android:id="@+id/tv_about_email"
@@ -116,6 +116,29 @@
 
                 <ImageView
                     android:id="@+id/iv_official_more"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/v_website_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1" />
+
+            <LinearLayout style="@style/style_about_linearlayout_item" android:id="@+id/ll_about_website">
+
+                <TextView
+                    style="@style/style_about_tittle_item"
+                    android:text="@string/m27_company_website" />
+
+                <TextView
+                    android:id="@+id/tv_about_website"
+                    style="@style/style_about_text_item" />
+
+                <ImageView
+                    android:id="@+id/iv_website_more"
                     android:layout_width="@dimen/dp_7"
                     android:layout_height="@dimen/dp_14"
                     android:layout_gravity="center_vertical"

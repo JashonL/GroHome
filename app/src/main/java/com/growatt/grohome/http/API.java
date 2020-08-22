@@ -44,6 +44,8 @@ public class API {
 
     public static final String GET_ADVERTISING_LIST = "/newPlantAPI.do?op=getAdvertisingList&language=";
 
+    public static final String GET_SERVICE_PHONENUM="/newUserAPI.do?op=getServicePhoneNum&language=";
+
     public static final String URL_HOST = "server-api.growatt.com";//注册时用
     public static final String URL_CN_HOST = "server-cn-api.growatt.com";//注册时用
     //根据用户名或者采集器序列号获取服务器
@@ -197,6 +199,11 @@ public class API {
         //首页文章列表 这里的{}是填入页数
         @GET
         Observable<String> getAdvertisingList(@Url String url);
+
+        //---------------------------【    关于      】------------------------------------------
+        @GET
+        Observable<String> getServicePhoneNum(@Url String url);
+
     }
 
 }

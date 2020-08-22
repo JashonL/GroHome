@@ -13,6 +13,7 @@ import com.growatt.grohome.module.device.manager.DeviceAirCon;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
 import com.growatt.grohome.module.device.manager.DevicePlug;
+import com.growatt.grohome.module.device.manager.DeviceStripLights;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 
@@ -58,7 +59,6 @@ public class AllDeviceAdapter extends BaseQuickAdapter<GroDeviceBean, BaseViewHo
                 helper.setImageResource(R.id.ivIcon, DevicePanel.getCloseIcon(1));
                 break;
 
-
             case DeviceTypeConstant.TYPE_AIRCONDITION:
                 if (TextUtils.isEmpty(name)) {
                     name = DeviceTypeConstant.TYPE_AIRCONDITION;
@@ -71,6 +71,12 @@ public class AllDeviceAdapter extends BaseQuickAdapter<GroDeviceBean, BaseViewHo
                     name = DeviceTypeConstant.TYPE_BULB;
                 }
                 helper.setImageResource(R.id.ivIcon, DeviceBulb.getCloseIcon(1));
+                break;
+            case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
+                if (TextUtils.isEmpty(name)) {
+                    name = DeviceTypeConstant.TYPE_STRIP_LIGHTS;
+                }
+                helper.setImageResource(R.id.ivIcon, DeviceStripLights.getCloseIcon(1));
                 break;
             default:
                 if (TextUtils.isEmpty(name)) {

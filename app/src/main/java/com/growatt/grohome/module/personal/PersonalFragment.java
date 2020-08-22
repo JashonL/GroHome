@@ -80,12 +80,18 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
 
 
 
-    @OnClick({R.id.iv_avatar, R.id.tv_username})
+    @OnClick({R.id.iv_avatar, R.id.tv_username,R.id.cl_cache,R.id.cl_about})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_avatar:
             case R.id.tv_username:
                 presenter.toUsercenter();
+                break;
+            case R.id.cl_cache:
+                presenter.clearCache();
+                break;
+            case R.id.cl_about:
+                presenter.about();
                 break;
         }
     }

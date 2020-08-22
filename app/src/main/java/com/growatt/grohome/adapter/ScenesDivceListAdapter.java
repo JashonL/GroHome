@@ -9,8 +9,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.growatt.grohome.R;
 import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
 import com.growatt.grohome.module.device.manager.DevicePlug;
+import com.growatt.grohome.module.device.manager.DeviceStripLights;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 
@@ -64,6 +66,23 @@ public class ScenesDivceListAdapter extends BaseQuickAdapter<SceneTaskBean, Base
                     }
                 }
                 icon.setImageResource(DevicePanel.getCloseIcon(1));
+                break;
+            case DeviceTypeConstant.TYPE_BULB:
+                if (GlobalConstant.SCENE_DEVICE_OPEN.equals(linkType)) {
+                    setting.append(mContext.getString(R.string.m240_on_off)).append(":").append(mContext.getString(R.string.m167_on));
+                } else {
+                    setting.append(mContext.getString(R.string.m240_on_off)).append(":").append(mContext.getString(R.string.m168_off));
+                }
+                icon.setImageResource(DeviceBulb.getCloseIcon(1));
+                break;
+
+            case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
+                if (GlobalConstant.SCENE_DEVICE_OPEN.equals(linkType)) {
+                    setting.append(mContext.getString(R.string.m240_on_off)).append(":").append(mContext.getString(R.string.m167_on));
+                } else {
+                    setting.append(mContext.getString(R.string.m240_on_off)).append(":").append(mContext.getString(R.string.m168_off));
+                }
+                icon.setImageResource(DeviceStripLights.getCloseIcon(1));
                 break;
         }
         String s = setting.toString();

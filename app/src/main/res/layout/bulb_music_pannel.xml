@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/v_bulb_background_colour"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="@dimen/dp_200"
+        app:layout_constraintBottom_toTopOf="@+id/seek_brightness_colour"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <com.growatt.grohome.customview.colorpicker.ColorPicker
+        android:id="@+id/color_picker"
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="@dimen/dp_250"
+        app:color_wheel_thickness="@dimen/dp_30"
+        app:layout_constraintBottom_toBottomOf="@+id/v_bulb_background_colour"
+        app:layout_constraintLeft_toLeftOf="@+id/v_bulb_background_colour"
+        app:layout_constraintRight_toRightOf="@+id/v_bulb_background_colour"
+        app:layout_constraintTop_toTopOf="@+id/v_bulb_background_colour" />
+
+    <ImageView
+        android:id="@+id/iv_bulb_colour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bulb_on"
+        app:layout_constraintBottom_toBottomOf="@+id/v_bulb_background_colour"
+        app:layout_constraintLeft_toLeftOf="@+id/v_bulb_background_colour"
+        app:layout_constraintRight_toRightOf="@+id/v_bulb_background_colour"
+        app:layout_constraintTop_toTopOf="@+id/v_bulb_background_colour" />
+
+    <ImageView
+        android:id="@+id/iv_brightness_left_colour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dev_brightness"
+        app:layout_constraintBottom_toBottomOf="@+id/seek_brightness_colour"
+        app:layout_constraintRight_toLeftOf="@+id/seek_brightness_colour"
+        app:layout_constraintTop_toTopOf="@+id/seek_brightness_colour" />
+
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/seek_brightness_colour"
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_20"
+        android:padding="@dimen/dp_10"
+        android:progressDrawable="@drawable/seek_colour_temp"
+        android:thumb="@drawable/seek_colour_temp_thumb"
+        app:layout_constraintBottom_toTopOf="@+id/seek_temp_colour"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:max="990"
+        app:layout_constraintTop_toBottomOf="@+id/v_bulb_background_colour" />
+
+
+    <ImageView
+        android:id="@+id/iv_brightness_right_colour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dev_brightness2"
+        app:layout_constraintBottom_toBottomOf="@+id/seek_brightness_colour"
+        app:layout_constraintLeft_toRightOf="@+id/seek_brightness_colour"
+        app:layout_constraintTop_toTopOf="@+id/seek_brightness_colour" />
+
+
+    <ImageView
+        android:id="@+id/iv_temp_left_colour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dev_colourtemp"
+        app:layout_constraintBottom_toBottomOf="@+id/seek_temp_colour"
+        app:layout_constraintRight_toLeftOf="@+id/seek_temp_colour"
+        app:layout_constraintTop_toTopOf="@+id/seek_temp_colour" />
+
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/seek_temp_colour"
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_20"
+        android:padding="@dimen/dp_10"
+        android:max="1000"
+        android:progressDrawable="@drawable/seek_colour_temp"
+        android:thumb="@drawable/seek_colour_temp_thumb"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seek_brightness_colour" />
+
+
+    <ImageView
+        android:id="@+id/iv_temp_right_colour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dev_colourtemp2"
+        app:layout_constraintBottom_toBottomOf="@+id/seek_temp_colour"
+        app:layout_constraintLeft_toRightOf="@+id/seek_temp_colour"
+        app:layout_constraintTop_toTopOf="@+id/seek_temp_colour" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -357,6 +357,23 @@ public class CommentUtils {
         return null;
     }
 
+
+    /**
+     * [获取应用程序包名称信息]
+     *
+     * @param context
+     * @return 当前应用的包名
+     */
+    public static String getVerSionName(Context context) {
+        try {
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     /**
      * 判断字符串是否是"null"
      */

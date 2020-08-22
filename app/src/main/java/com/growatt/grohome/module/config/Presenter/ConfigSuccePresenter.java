@@ -178,12 +178,14 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
                 intent1.putExtra(GlobalConstant.ROOM_ID, mRoomId);
                 ActivityUtils.startActivity((Activity) context, intent1, ActivityUtils.ANIMATE_FORWARD, true);
                 break;
+            case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
             case DeviceTypeConstant.TYPE_BULB:
                 Intent intent2 = new Intent(context, BulbActivity.class);
                 intent2.putExtra(GlobalConstant.DEVICE_ID, deviceId);
                 intent2.putExtra(GlobalConstant.DEVICE_NAME, deviceName);
                 intent2.putExtra(GlobalConstant.ROOM_NAME, mRoomName);
                 intent2.putExtra(GlobalConstant.ROOM_ID, mRoomId);
+                intent2.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
                 ActivityUtils.startActivity((Activity) context, intent2, ActivityUtils.ANIMATE_FORWARD, true);
                 break;
             default:

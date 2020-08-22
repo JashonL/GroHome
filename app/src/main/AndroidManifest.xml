@@ -50,14 +50,19 @@
                 android:resource="@xml/file_provider_paths" />
         </provider>
 
-        <activity android:name=".module.login.RegisterLoginActivity">
+
+        <activity
+            android:name=".SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/WelcomeTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <activity
             android:name=".MainActivity"
@@ -67,6 +72,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".module.login.RegisterLoginActivity"/>
 
         <activity android:name=".module.room.RoomListActivity" />
 
@@ -118,6 +124,9 @@
         <activity android:name=".module.personal.UpdatepwdActivity" />
         <activity android:name=".module.personal.NewEmailActivity" />
         <activity android:name=".module.login.ForgotpasswordActivity" />
+        <activity android:name=".module.personal.CacheClearActivity" />
+        <activity android:name=".module.personal.AboutActivity"/>
+        <activity android:name=".WebViewActivity"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

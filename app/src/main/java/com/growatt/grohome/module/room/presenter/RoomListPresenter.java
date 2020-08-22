@@ -17,6 +17,7 @@ import com.growatt.grohome.module.device.BulbActivity;
 import com.growatt.grohome.module.device.SwitchActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePlug;
+import com.growatt.grohome.module.device.manager.DeviceStripLights;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.room.RoomAddActivity;
@@ -193,7 +194,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
      */
     public int initDevOnOff(String devType, String devId) {
         DeviceBean deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
-        String onOff = "true";//设备的开关状态
+        String onOff = "false";//设备的开关状态
         if (deviceBean != null) {
             switch (devType) {
                 case DeviceTypeConstant.TYPE_PADDLE:
@@ -207,6 +208,9 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
                     break;
                 case DeviceTypeConstant.TYPE_BULB:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
+                    break;
+                case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
+                    onOff = String.valueOf(deviceBean.getDps().get(DeviceStripLights.getBulbSwitchLed()));
                     break;
             }
         }

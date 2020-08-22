@@ -17,6 +17,7 @@ import com.growatt.grohome.module.device.BulbActivity;
 import com.growatt.grohome.module.device.SwitchActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePlug;
+import com.growatt.grohome.module.device.manager.DeviceStripLights;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.home.view.IGrohomeView;
@@ -179,7 +180,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         Class clazz;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {
             clazz = SwitchActivity.class;
-        } else if (DeviceTypeConstant.TYPE_BULB.equals(devType)) {
+        } else if (DeviceTypeConstant.TYPE_BULB.equals(devType)||DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(devType)) {
             clazz = BulbActivity.class;
         }else {
             clazz = BulbActivity.class;
@@ -188,6 +189,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         Intent intent = new Intent(context, clazz);
         intent.putExtra(GlobalConstant.DEVICE_ID, bean.getDevId());
         intent.putExtra(GlobalConstant.DEVICE_NAME, bean.getName());
+        intent.putExtra(GlobalConstant.DEVICE_TYPE,bean.getDevType());
         intent.putExtra(GlobalConstant.DEVICE_BEAN,deviceBean);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
@@ -200,7 +202,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
      */
     public int initDevOnOff(String devType, String devId) {
         DeviceBean deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
-        String onOff = "true";//设备的开关状态
+        String onOff = "false";//设备的开关状态
         if (deviceBean != null) {
             switch (devType) {
                 case DeviceTypeConstant.TYPE_PADDLE:
@@ -214,6 +216,9 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                     break;
                 case DeviceTypeConstant.TYPE_BULB:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
+                    break;
+                case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
+                    onOff = String.valueOf(deviceBean.getDps().get(DeviceStripLights.getBulbSwitchLed()));
                     break;
             }
         }

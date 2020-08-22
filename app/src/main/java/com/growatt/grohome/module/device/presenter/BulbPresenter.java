@@ -60,6 +60,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     private GroDeviceBean mGroDeviceBean;
     private String deviceId;
+    private String deviceType;
     private String devName;
     private String roomId;
     private String roomName;
@@ -94,6 +95,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     public BulbPresenter(Context context, IBulbView baseView) {
         super(context, baseView);
         deviceId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
+        deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
         devName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_NAME);
         roomId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_ID);
         roomName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.ROOM_NAME);
@@ -101,6 +103,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         if (!TextUtils.isEmpty(deviceJson)) {
             mGroDeviceBean = new Gson().fromJson(deviceJson, GroDeviceBean.class);
             deviceId = mGroDeviceBean.getDevId();
+            deviceType = mGroDeviceBean.getDevType();
             devName = mGroDeviceBean.getName();
             roomId = String.valueOf(mGroDeviceBean.getRoomId());
             roomName = mGroDeviceBean.getRoomName();
@@ -108,8 +111,9 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         if (!TextUtils.isEmpty(devName)) {
             baseView.setDeviceTitle(devName);
         }
-    }
 
+        baseView.setViewsByDeviceType(deviceType);
+    }
 
 
     public List<BulbSceneBean> initScene() {
@@ -537,26 +541,24 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         intent.putExtra(GlobalConstant.DEVICE_NAME, devName);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_BULB);
         String deviceJson = new Gson().toJson(mGroDeviceBean);
-        intent.putExtra(GlobalConstant.DEVICE_BEAN,deviceJson);
+        intent.putExtra(GlobalConstant.DEVICE_BEAN, deviceJson);
         intent.putExtra(GlobalConstant.ROOM_ID, roomId);
         intent.putExtra(GlobalConstant.ROOM_NAME, roomName);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
-
-
     public void setDevName(String name) {
         devName = name;
-        if (mGroDeviceBean!=null){
+        if (mGroDeviceBean != null) {
             mGroDeviceBean.setName(name);
         }
     }
 
     public void setRoomInfo(TransferDevMsg bean) {
         roomName = bean.getRoomName();
-        roomId=bean.getRoomId();
-        if (mGroDeviceBean!=null){
+        roomId = bean.getRoomId();
+        if (mGroDeviceBean != null) {
             mGroDeviceBean.setRoomId(Integer.parseInt(bean.getRoomId()));
             mGroDeviceBean.setRoomName(bean.getRoomName());
         }
