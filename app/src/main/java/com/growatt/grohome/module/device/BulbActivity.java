@@ -196,7 +196,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setCuntDown(String countdown) {
-        if (!TextUtils.isEmpty(countdown) && !"0".equals(countdown)) {
+        if (!CommentUtils.isStringEmpty(countdown) && !"0".equals(countdown)) {
             tvLeftTimeTitle.setVisibility(View.VISIBLE);
             tvLeftTimeValue.setVisibility(View.VISIBLE);
             tvLeftDown.setVisibility(View.GONE);
@@ -216,7 +216,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     @Override
     public void setScene(String scene) {
         //解析返回的场景设置ui
-        if (!TextUtils.isEmpty(scene) && scene.length() > 2) {
+        if (!CommentUtils.isStringEmpty(scene) && scene.length() > 2) {
             String number = scene.substring(0, 2);
             int id = CommentUtils.hexStringToInter(number);
             mBulbSceneAdapter.setNowSelectPosition(id);
@@ -233,7 +233,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setTemp(String temp) {
-        if (!TextUtils.isEmpty(temp)) {
+        if (!CommentUtils.isStringEmpty(temp)) {
             try {
                 int brightValue = Integer.parseInt(temp);
                 int mProgree = seekTempWhite.getMax() - brightValue;

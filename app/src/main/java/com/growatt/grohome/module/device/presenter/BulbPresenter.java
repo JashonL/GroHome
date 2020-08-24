@@ -199,16 +199,17 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         baseView.setMode(mode);
         baseView.setTemp(temp);
 
-        int whiteBright = Integer.parseInt(bright);
-        int whiteTemp = 1000 - Integer.parseInt(temp);
-        float[] hsv = new float[3];
-        hsv[0] = 42.3f;
-        hsv[1] = (float) whiteTemp / 1000f;
-        hsv[2] = (float) whiteBright / 1000f;
-        mWhiteColor = Color.HSVToColor(hsv);
-        baseView.setWhiteMaskView(mWhiteColor);
-        baseView.setWhiteBgColor(mWhiteColor);
-
+        if (!CommentUtils.isStringEmpty(bright) && !CommentUtils.isStringEmpty(temp)) {
+            int whiteBright = Integer.parseInt(bright);
+            int whiteTemp = 1000 - Integer.parseInt(temp);
+            float[] hsv = new float[3];
+            hsv[0] = 42.3f;
+            hsv[1] = (float) whiteTemp / 1000f;
+            hsv[2] = (float) whiteBright / 1000f;
+            mWhiteColor = Color.HSVToColor(hsv);
+            baseView.setWhiteMaskView(mWhiteColor);
+            baseView.setWhiteBgColor(mWhiteColor);
+        }
         //从服务器获取场景
         try {
             requestBulbScene();

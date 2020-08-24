@@ -85,6 +85,7 @@
 
         <include
             android:id="@+id/layout_music"
+            android:visibility="gone"
             layout="@layout/bulb_music_pannel" />
 
     </FrameLayout>

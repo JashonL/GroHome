@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/nocolor</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/color_theme_green</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
 
@@ -194,8 +195,6 @@
 
     <style name="WelcomeTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/layer_welcome</item>
     </style>
 
