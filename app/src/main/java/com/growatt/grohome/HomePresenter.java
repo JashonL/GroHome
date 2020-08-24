@@ -12,6 +12,8 @@ import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MD5andKL;
 import com.tuya.smart.android.user.api.ILoginCallback;
 import com.tuya.smart.android.user.bean.User;
+import com.tuya.smart.api.service.MicroServiceManager;
+import com.tuya.smart.commonbiz.bizbundle.family.api.AbsBizBundleFamilyService;
 import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
@@ -163,6 +165,9 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
 
 
     private void initHome() {
+        AbsBizBundleFamilyService service = MicroServiceManager.getInstance().findServiceByInterface(AbsBizBundleFamilyService.class.getName());
+        //设置为当前家庭的homeId
+        service.setCurrentHomeId(TuyaApiUtils.getHomeId());
         TuyaApiUtils.getHomeDetail(TuyaApiUtils.getHomeId(), new ITuyaHomeResultCallback() {
             @Override
             public void onSuccess(HomeBean homeBean) {

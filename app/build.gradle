@@ -22,6 +22,17 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
+    packagingOptions {
+        pickFirst 'lib/*/libc++_shared.so'
+        pickFirst 'lib/*/libgnustl_shared.so'
+    }
+
+
+    lintOptions {
+        abortOnError false
+    }
+
     buildToolsVersion = '28.0.3'
 
 }
@@ -115,4 +126,23 @@ dependencies {
     implementation 'com.github.yalantis:ucrop:2.2.1'
     //加载弹框
     implementation 'com.github.maning0303:MNProgressHUD:V2.0.0X'
+
+
+    //***** required start ****//
+    implementation 'com.tuya.smart:panel-sdk:0.5.7'
+
+
+
+    implementation 'com.weigan:loopView:0.1.1'
+    implementation 'com.facebook.infer.annotation:infer-annotation:0.11.2'
+    implementation 'javax.inject:javax.inject:1'
+    implementation 'com.facebook.soloader:soloader:0.8.2'
+    implementation 'com.facebook.fresco:fresco:1.3.0'
+    implementation "com.facebook.fresco:imagepipeline-okhttp3:1.3.0"
+    implementation 'com.facebook.react:react-native:0.51.1.11'
+    implementation 'org.apache.commons:commons-compress:1.12'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+
+
 }

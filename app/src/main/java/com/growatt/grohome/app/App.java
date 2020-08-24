@@ -3,11 +3,19 @@ package com.growatt.grohome.app;
 import android.app.Activity;
 import android.app.Application;
 
+import com.growatt.grohome.BizBundleFamilyServiceImpl;
 import com.growatt.grohome.bean.User;
 import com.growatt.grohome.utils.LogUtil;
 import com.hjq.toast.ToastUtils;
 import com.mylhyl.circledialog.res.values.CircleColor;
+import com.tuya.sdk.panel.base.presenter.TuyaPanel;
+import com.tuya.smart.android.panel.TuyaPanelSDK;
+import com.tuya.smart.api.router.UrlBuilder;
+import com.tuya.smart.api.service.RouteEventListener;
+import com.tuya.smart.commonbiz.bizbundle.family.api.AbsBizBundleFamilyService;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.utils.ToastUtil;
+import com.tuya.smart.wrapper.api.TuyaWrapper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -33,7 +41,17 @@ public class App extends Application {
         ToastUtils.init(this);
 
         //初始化涂鸦
-        TuyaHomeSdk.init(this);
+//        TuyaHomeSdk.init(this);
+        TuyaPanelSDK.init(this,"fheuyt49ajggpqqffy7f","p5exhqm5maetnxgjrfry3h7xvgy74grj");
+        // fail router listener
+        TuyaWrapper.init(this, new RouteEventListener() {
+            @Override
+            public void onFaild(int errorCode, UrlBuilder urlBuilder) {
+                ToastUtil.shortToast(TuyaPanelSDK.getCurrentActivity(), urlBuilder.originUrl);
+            }
+        });
+        // set current Home id
+        TuyaWrapper.registerService(AbsBizBundleFamilyService.class, new BizBundleFamilyServiceImpl());
         TuyaHomeSdk.setDebugMode(true);
         //全局初始化弹框
         initCirclerDialog();
@@ -69,6 +87,8 @@ public class App extends Application {
             e.printStackTrace();
         } finally {
             //注销涂鸦
+            TuyaPanel.getInstance().onDestroy();
+            TuyaPanelSDK.getPanelInstance().clearPanelCache();
             TuyaHomeSdk.onDestroy();
             System.exit(0);
         }

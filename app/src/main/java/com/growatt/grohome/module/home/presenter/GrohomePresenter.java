@@ -29,6 +29,8 @@ import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
+import com.tuya.smart.android.panel.TuyaPanelSDK;
+import com.tuya.smart.android.panel.api.ITuyaPanelLoadCallback;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;
@@ -177,14 +179,18 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
      */
     public void jumpTodevice(HomeDeviceBean.DataBean bean) {
         String devType = bean.getDevType();
-        Class clazz;
+        Class clazz = null;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {
             clazz = SwitchActivity.class;
-        } else if (DeviceTypeConstant.TYPE_BULB.equals(devType)||DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(devType)) {
+        } else if (DeviceTypeConstant.TYPE_BULB.equals(devType)) {
             clazz = BulbActivity.class;
+        }else if (DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(devType)){
+            TuyaPanelSDK.getPanelInstance().gotoPanelViewControllerWithDevice(TuyaPanelSDK.getCurrentActivity(), TuyaApiUtils.getHomeId(), bean.getDevId(), mLoadCallback);
         }else {
             clazz = BulbActivity.class;
         }
+        TuyaPanelSDK.getPanelInstance().gotoPanelViewControllerWithDevice(TuyaPanelSDK.getCurrentActivity(), TuyaApiUtils.getHomeId(), bean.getDevId(), mLoadCallback);
+        if (clazz==null)return;
         String deviceBean = new Gson().toJson(bean);
         Intent intent = new Intent(context, clazz);
         intent.putExtra(GlobalConstant.DEVICE_ID, bean.getDevId());
@@ -193,6 +199,27 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         intent.putExtra(GlobalConstant.DEVICE_BEAN,deviceBean);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
+
+
+    //open the panel listener
+    private final ITuyaPanelLoadCallback mLoadCallback = new ITuyaPanelLoadCallback() {
+        @Override
+        public void onStart(String deviceId) {
+        }
+
+        @Override
+        public void onError(String deviceId, int code, String error) {
+        }
+
+        @Override
+        public void onSuccess(String deviceId) {
+        }
+
+        @Override
+        public void onProgress(String deviceId, int progress) {
+        }
+    };
+
 
 
     /**

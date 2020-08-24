@@ -12,7 +12,7 @@
 	<dimen name="dp_m_1">-1.0240dp</dimen>
 	<dimen name="dp_0">0.0000dp</dimen>
 	<dimen name="dp_0_1">0.1024dp</dimen>
-	<dimen name="dp_0_5">0.5120dp</dimen>
+	<dimen name="dp_0__5">0.5120dp</dimen>
 	<dimen name="dp_1">1.0240dp</dimen>
 	<dimen name="dp_1_5">1.5360dp</dimen>
 	<dimen name="dp_2">2.0480dp</dimen>

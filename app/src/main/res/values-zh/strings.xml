@@ -1,0 +1,336 @@
+<resources>
+    <string name="app_name">GroHome</string>
+
+    <string name="m1_exit">Click to signout</string>
+    <string name="m2_parse_error_msg">Failed to parse data</string>
+    <string name="m3_bad_network_msg">Internet problem</string>
+    <string name="m4_connect_error_msg">Connection error</string>
+    <string name="m5_connect_timeout_msg">Connection timed out</string>
+    <string name="m6_other_msg">unknown mistake</string>
+    <string name="m7_username">Username</string>
+    <string name="m8_password">Password</string>
+    <string name="m9_registered">Registered</string>
+    <string name="m10_scenes">Scenes</string>
+    <string name="m11_service">Service</string>
+    <string name="m12_mine">Mine</string>
+    <string name="m13_grohome">Grohome</string>
+    <string name="m14_login">Log in</string>
+    <string name="m15_email">Email</string>
+    <string name="m16_select_country">Please select a country</string>
+    <string name="m17_select_time_zone">Select time zone</string>
+    <string name="m18_set_up">Set up</string>
+    <string name="m19_about">About</string>
+    <string name="m20_avatar">Avatar</string>
+    <string name="m21_change_password">Change Password</string>
+    <string name="m22_phone_number">Phone number</string>
+    <string name="m23_installer_code">Installer code</string>
+    <string name="m24_log_out">Log out</string>
+    <string name="m25_user_agreement">User Agreement</string>
+    <string name="m26_consumer_hotline">consumer hotline</string>
+    <string name="m27_company_website">Company website</string>
+    <string name="m28_forget_password">Forget password</string>
+    <string name="m29_user_agreement">Agree to user agreement</string>
+    <string name="m30_verification_code">verification code</string>
+    <string name="m31_room">Room</string>
+    <string name="m32_all">All</string>
+    <string name="m33_device">Device</string>
+    <string name="m34_welcome_groHome">Welcome GroHome</string>
+    <string name="m35_add_device">Add device</string>
+    <string name="m36_socket">Socket</string>
+    <string name="m37_panel_switch">Panel switch</string>
+    <string name="m38_thermostat">thermostat</string>
+    <string name="m39_bulb">Bulb</string>
+    <string name="m40_light_strip">Light strip</string>
+    <string name="m41_air_con">Air-con</string>
+    <string name="m42_select_frequency">Select 2.4GHz Wi-Fi network and enter the password</string>
+    <string name="m43_set_frequency">If your wifi is 5GHz, please set it to 2.4GHz</string>
+    <string name="m44_router_setting_methods">Common router setting methods</string>
+    <string name="m45_enter_wifi_name">Enter wifi name</string>
+    <string name="m46_enter_wifi_password">Enter wifi password</string>
+    <string name="m47_next">Next</string>
+    <string name="m48_reset_device">Reset device</string>
+    <!--接通电源确认指示灯在快闪-->
+    <string name="m49_flash_fast_set">Turn on the power, and make sure the indicator is flashing fast (0.5 seconds/1 time)</string>
+    <string name="m50_complete_within_three">Please complete the distribution within three minutes</string>
+    <string name="m51_reset_device_details">Reset device details</string>
+    <!-- 确认指示灯在快闪-->
+    <string name="m52_make_sure_flashing_fast">Make sure the indicator is flashing fast</string>
+    <string name="m53_adding_device">Adding device</string>
+    <string name="m54_ensure_good_signal">Ensure good wifi signal</string>
+    <string name="m55_find_device">Find device</string>
+    <string name="m56_register_cloud">Register to the cloud</string>
+    <string name="m57_device_initialization">Device initialization</string>
+    <string name="m58_connect_hotspot">Connect your phone to a hotspot</string>
+    <string name="m59_connect_hotspot_picture">Please connect your phone to the hotspot shown in the picture below</string>
+    <string name="m60_return_continue_add">Return to this application to continue to add</string>
+    <string name="m61_confirm_connection_correct">Confirm that the hotspot connection is correct</string>
+    <string name="m62_to_connect">To connect</string>
+    <string name="m63_ap_config_detail">Use compatible mode to configure the network, you need to set the indicator to the slow flashing state, please complete the setting according to the following 4 steps</string>
+    <string name="m64_step">Step</string>
+    <string name="m65_turn_on_ten_second">Turn on the device, and then turn off the power after 10 seconds</string>
+    <string name="m66_press_reset_five">Press and hold the reset button for 5 seconds</string>
+    <string name="m67_fast_flashing_to_next">After confirming that the indicator flashes quickly, proceed to the next step</string>
+    <string name="m68_long_press_reset">Press and hold the reset button again for 5 seconds until the indicator flashes slowly</string>
+    <string name="m69_message_center">Message Center</string>
+    <string name="m70_share_device">Share device</string>
+    <string name="m71_caching">Caching</string>
+    <string name="m72_about">About</string>
+    <string name="m73_agreement">Agreement</string>
+    <string name="m74_third_party">Third-Party Access Device</string>
+    <string name="m75_alexa">Alexa</string>
+    <string name="m76_google_assistant">Google Assistant</string>
+    <string name="m77_manual">Manual</string>
+    <string name="m78_faq">FAQ</string>
+    <string name="m80_selection">Selection</string>
+    <string name="m81_launch_tap_to_run">Launch tap to run</string>
+    <string name="m82_linkage_details">Linkage details</string>
+    <string name="m83_logs">Logs</string>
+    <string name="m84_recommend">Recommend</string>
+    <string name="m85_add_scenes">Add Scenes</string>
+    <string name="m86_scene_des">Timing/batch setting device, intelligent life.</string>
+    <string name="m87_scenes">Scenes</string>
+    <string name="m88_white_mode">White Mode</string>
+    <string name="m89_cancel">Cancel</string>
+    <string name="m90_ok">OK</string>
+    <string name="m91_bright_ness">Brightness</string>
+    <string name="m92_colour_temp">Colour Temp</string>
+    <string name="m93_request_permission">Request Permission</string>
+    <string name="m94_location">location</string>
+    <string name="m95_tips">Tips</string>
+    <string name="m96_wifi_not_connected">Wifi not connected</string>
+    <string name="m97_to_connect">To connect</string>
+    <string name="m98_enter_wifi_password">Enter wifi password</string>
+    <string name="m99_connected_5ghz_wifi">You are currently connected to 5GHz wifi</string>
+    <string name="m100_go_on">go on</string>
+    <string name="m101_switch_wifi">Switch WiFi</string>
+    <string name="m102_ap_mode">AP Mode</string>
+    <string name="m105_ez_mode">EZ Mode</string>
+    <string name="m106_refer_instructions">Please refer to the &quot;instructions&quot; or choose according to the type of equipment networking</string>
+    <!--新增-->
+    <!--手机连接设备热点后将配网信息点对点传送给设备-->
+    <string name="m107_hotspot_to_device">The device produces Wi-Fi hotspots, and the mobile phone connects the device hotspots and transmits the distribution information to the device point-to-point</string>
+    <!--收到配网信息的设备自动连接路由器-->
+    <string name="m108_device_connect_auto">After the mobile phone is connected to the router, it broadcasts the distribution information, and the device receiving the distribution information automatically connects to the router</string>
+    <!--选择配网方式-->
+    <string name="m109_select_config_type">Choose a network distribution method</string>
+    <!--接通电源确认指示灯在慢闪-->
+    <string name="m120_flashing_slowly_set">Turn on the power and make sure the indicator is flashing slowly (3 seconds / 1 time)</string>
+    <!--确认指示灯在慢闪-->
+    <string name="m121_make_sure_flashing_slowly">Confirm that the indicator is flashing slowly</string>
+    <!--默认模式配网-->
+    <string name="m122_ez_config_detail">Use EZ mode to configure the network, you need to set the indicator to a flashing state, please complete the setting according to the following 3 steps</string>
+    <string name="m123_fail_to_add_device">Fail to add device,please retry or check Help</string>
+    <string name="m124_help">help</string>
+    <string name="m125_got_it">Got it</string>
+    <!--将停止添加设备是否确认退出-->
+    <string name="m126_confirm_exit">Will stop adding devices, confirm exit?</string>
+    <string name="m127_no">No</string>
+    <!--    设备无响应-->
+    <string name="m128_device_not_responding">Device not responding Check demerit points and retry</string>
+    <!--确认设备已重置灯在慢闪-->
+    <string name="m129_confirm_device_reset_slowly">Confirm that the device has been reset and the light is flashing slowly</string>
+    <!--确认设备已重置灯在快闪-->
+    <string name="m130_confirm_device_reset_fast">Check if the device has been reset and the indicator is blinking quickly</string>
+    <!--是否连接到设备热点-->
+    <string name="m131_whether_connect_hotspot">Whether to connect to the device hotspot</string>
+    <!--核对WiFi密码是否正确-->
+    <string name="m132_verify_the_password">Verify the Wi-Fi password</string>
+    <!--按步骤重试-->
+    <string name="m133_retry">Retry</string>
+    <!--切换配网模式-->
+    <string name="m134_switch_pairing_mode">Switch Pairing Mode</string>
+    <!--检查是否为2_4GHz-->
+    <string name="m135_check_is_2_4GHz">Check if it is 2.4 GHZ Wi-Fi</string>
+    <!--请排查以下问题后重试-->
+    <string name="m136_check_try_again">The device is not responding, please check the following issues and try again</string>
+
+    <string name="m137_ap_config_detail">the light needs to be set to flash rapidly. Please follow the 4 steps below to flnish setting.</string>
+    <!--重新连接-->
+    <string name="m138_reconnect">reconnect</string>
+    <!--设备添加成功-->
+    <string name="m139_device_add_success">Device Successfully Added </string>
+    <!--设备名称-->
+    <string name="m140_device_name">Device Name</string>
+    <!--选择房间-->
+    <string name="m141_select_room">Select Room</string>
+    <!--完成-->
+    <string name="m142_done">Done</string>
+    <!--用户名为空-->
+    <string name="m143_username_empty">Username is Empty!</string>
+    <!--密码为空-->
+    <string name="m144_password_empty">PassWord is Empty!</string>
+    <!---->
+    <string name="m145_left_time">Left time</string>
+    <string name="m146_timer">Timer</string>
+
+    <string name="m147_scene">Scene</string>
+    <string name="m148_edit">Edit</string>
+    <string name="m149_device_does_not_exist">Device does not exist</string>
+    <string name="m150_device_is_offline">Device is offline</string>
+    <string name="m151_send_dps_failed">Failed to send instruction</string>
+    <!--灯泡场景-->
+    <string name="m152_scene_night">Night</string>
+    <string name="m153_scene_read">Read</string>
+    <string name="m154_scene_meeting">Meeting</string>
+    <string name="m155_scene_leisure">Leisure</string>
+    <string name="m156_scene_soft">Soft</string>
+    <string name="m157_scene_shine">Shine</string>
+    <string name="m158_sence_gorgeous">gorgeous</string>
+    <string name="m159_scence_rainbow">rainbow</string>
+    <string name="m160_scence_colour">Scence Color</string>
+    <string name="m161_colour_flash_mode">Colour Flash Mode</string>
+    <string name="m162_reset">Reset</string>
+    <string name="m163_static">Static</string>
+    <string name="m164_flash">Flash</string>
+    <string name="m165_breath">Breath</string>
+    <string name="m166_colour_flash_speed">Colour Flash Speed</string>
+
+    <!--面板开关-->
+    <string name="m167_on">ON</string>
+    <string name="m168_off">OFF</string>
+    <string name="m169_open_all">Open All</string>
+    <string name="m170_close_all">Close All</string>
+    <string name="m171_check_network">Please try again or check network connection</string>
+
+    <!--注册-->
+    <string name="m172_enter_country">Please enter your country</string>
+    <string name="m173_country">Country</string>
+    <string name="m174_china">China</string>
+    <string name="m175_get_code">Get code</string>
+    <string name="m176_enter_email">Please enter email</string>
+    <string name="m177_select_country">Please select country</string>
+    <string name="m178_verification_send_email">The verification code has been sent to your email</string>
+    <string name="m179_select_time_zone">Please select time zone</string>
+    <string name="m180_enter_password">Please enter password</string>
+    <string name="m181_verificationcode_error">VerificationCode Error</string>
+    <string name="m182_register_success">Registered successfully</string>
+    <string name="m183_registered_name">Registered username</string>
+    <string name="m184_register_error">Register Erorr</string>
+    <string name="m185_zone">Zone</string>
+
+    <!--房间-->
+    <string name="m186_room_list">Room List</string>
+    <string name="m187_room_name">Room name</string>
+    <string name="m189_enter_room_name_tips">Please enter a room name</string>
+    <string name="m190_select_cover_image">Select cover image</string>
+    <string name="m191_add_picture">Add a picture</string>
+    <string name="m192_default_picture">Default picture</string>
+    <string name="m193_add_room">Add room</string>
+
+    <!--拍照-->
+    <string name="m194_take_photo">Take a photo</string>
+    <string name="m195_choose_photos">Choose from photos</string>
+    <string name="m196_canmer">Choose from photos</string>
+    <string name="m197_camera_or_storage">Camera or storage</string>
+    <string name="m198_storage">Storage</string>
+    <string name="m199_camera">Camera</string>
+    <string name="m200_success">Success</string>
+    <string name="m201_fail">Fail</string>
+    <string name="m202_add_picture">Please add a picture</string>
+    <string name="m203_enter_room_name">Please enter a room name</string>
+
+    <!--房间-->
+    <string name="m204_room_picture">Room picture</string>
+    <string name="m205_all_device">All device</string>
+    <string name="m206_delete">Delete</string>
+    <string name="m207_transfer">Transfer</string>
+    <string name="m208_note">Note</string>
+    <string name="m209_delete_room">Whether to delete the room</string>
+    <string name="m210_delete_device">Delete device</string>
+    <!--场景-->
+    <string name="m211_scene_name">Scene name</string>
+    <string name="m212_condition_for_execution">Condition for execution</string>
+    <string name="m213_execution_task">Execution task</string>
+    <string name="m214_switch_status">Switch status</string>
+    <string name="m215_setting_temperature">Setting temperature</string>
+    <string name="m216_effective_period">Effective Period</string>
+    <string name="m217_all_conditions_are_met">All Conditions Are Met</string>
+    <string name="m218_any_conditions_is_met">Any Condition Is Met</string>
+    <string name="m219_time_period">Time Period</string>
+    <string name="m220_repeat">Repeat</string>
+
+    <string name="m221_username_password_error">User name or password error</string>
+
+    <!--重复选择-->
+    <string name="m222_single">Single</string>
+    <string name="m224_everyday">Everyday</string>
+    <string name="m225_monday">Monday</string>
+    <string name="m226_tuesday">Tuesday</string>
+    <string name="m227_wednesday">Wednesday</string>
+    <string name="m228_thursday">Thursday</string>
+    <string name="m229_friday">Friday</string>
+    <string name="m230_saturday">Saturday</string>
+    <string name="m231_sunday">Sunday</string>
+
+    <string name="m232_click_to_add">Click to Add</string>
+    <string name="m233_please_entry_name">Please Enter name</string>
+    <string name="m234_smart">Smart</string>
+    <string name="m235_not_set">Not set</string>
+    <string name="m236_set_effect_time">Set Effective Period</string>
+    <string name="m237_no_device">No device</string>
+    <string name="m238_device_setting">Device settings</string>
+    <string name="m239_setting">Setting</string>
+    <string name="m240_on_off">On/Off</string>
+    <string name="m241_setting_temperature">Setting temperature</string>
+    <string name="m242_please_set_task">Please set the task</string>
+    <string name="m243_device_status_changes">Device status changes</string>
+    <string name="m244_add_new_condition">Add new condition</string>
+    <string name="m245_start_time">Start time</string>
+    <string name="m246_end_time">End Time</string>
+    <string name="m247_time_setting">Time Setting</string>
+
+    <string name="m248_save">Save</string>
+    <string name="m249_hour">Hour</string>
+    <string name="m250_min">Min</string>
+    <string name="m251_device_already_task">The device has been added to the list of executed devices and cannot be added as a condition for execution</string>
+    <string name="m252_time">Time</string>
+    <string name="m253_timed_execution">Timed execution</string>
+    <string name="m254_incomplete_settings">Incomplete settings</string>
+    <string name="m255_use_this_condition">Use this condition</string>
+    <string name="m256_choose_at_leat_one">Choose at least one condition</string>
+
+    <string name="m257_cannot_be_deleted">The built-in scene cannot be deleted</string>
+    <string name="m258_current_status">Current status</string>
+    <string name="m259_add">Add</string>
+
+    <string name="m260_no_data">No data</string>
+    <string name="m261_timing_not_set">Timing not set</string>
+    <string name="m262_repeat_not_set">Repeat type not set</string>
+    <string name="m263_on">No execution task set</string>
+    <string name="m264_state_not_set">Switch state is not set</string>
+    <string name="m265_device_room">Device Room</string>
+    <string name="m266_sn">sn</string>
+    <string name="m267_check_firmware_version">Check firmware version</string>
+    <string name="m268_reconfigure">Reconfigure</string>
+    <string name="m269_add_to_the_following">Add to the following</string>
+    <string name="m270_latest_version">Already the latest version</string>
+    <string name="m271_current_version">Current version</string>
+    <string name="m271_new_version">New version</string>
+    <string name="m272_firmware_update">Firmware update</string>
+    <string name="m273_time_out">Time out</string>
+    <string name="m274_single_channel_timing">Single channel timing</string>
+    <string name="m275_function_is_not_ready">Function is not ready</string>
+    <string name="m276_name">Name</string>
+    <string name="m277_my_information">My information</string>
+    <string name="m278_old_password">Old password</string>
+    <string name="m279_new_password">New password</string>
+    <string name="m280_repeat_password">Repeate password</string>
+    <string name="m281_change_password">Change password</string>
+    <string name="m282_password_must_six_characters">Password must be 6 or more characters</string>
+    <string name="m283_enter_the_same_password">Please enter the same password</string>
+    <string name="m284_password_incorrect">Password incorrect</string>
+    <string name="m285_not_have_permission">Your account does not have permission to operate</string>
+    <string name="m286_fail_connect_server">Failed to connect to server</string>
+    <string name="m287_verification_message_failed">Send verification code message failed</string>
+    <string name="m288_sign_out">Sign out?</string>
+    <string name="m289_schedule_detail">Schedule your light status according to daily routines</string>
+    <string name="m290_light_bulbs_detail">You can control light bulbs with Alexa and Google home to make life easier</string>
+    <string name="m291_logding">Logding</string>
+    <string name="m292_retrievepwd_title">Retrieve Password</string>
+    <string name="m293_email_sending_failed">Email sending failed</string>
+    <string name="m293_user_does_not_exist">User does not exist</string>
+    <string name="m294_new_password_registered">The new password will be sent to the registered email. Please check it.</string>
+    <string name="m294_transfer_device">Transfer device</string>
+    <string name="m295_clear_cache">Clear cache</string>
+    <string name="m296_customer_email">Customer email</string>
+</resources>
