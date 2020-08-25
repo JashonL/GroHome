@@ -40,7 +40,6 @@ public class SceneGridAdapter extends BaseMultiItemQuickAdapter<ScenesBean.DataB
     protected void convert(@NonNull BaseViewHolder helper, ScenesBean.DataBean item) {
 
         helper.setText(R.id.tv_name, item.getName());
-        helper.addOnClickListener(R.id.iv_right);
         LinearLayout llTaskGroup = helper.getView(R.id.ll_task);
         llTaskGroup.removeAllViews();
         List<SceneTaskBean> conf = item.getConf();
