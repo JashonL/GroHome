@@ -161,7 +161,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
 
             @Override
             public void onError(String msg) {
-                baseView.freshStop();
+               baseView.onError(msg);
             }
         });
 

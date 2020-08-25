@@ -105,7 +105,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
 

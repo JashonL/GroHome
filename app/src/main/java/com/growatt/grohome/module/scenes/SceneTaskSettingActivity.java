@@ -192,7 +192,7 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
 
     @Override
     public void freshStop() {
-        if (srlPull!=null){
+        if (srlPull != null && srlPull.isRefreshing()) {
             srlPull.setRefreshing(false);
         }
     }
@@ -206,6 +206,12 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
             tvSocketOnoff.setText(R.string.m168_off);
             ivSocketSwitch.setImageResource(R.drawable.scenes_off);
         }
+    }
+
+    @Override
+    public void onError(String onError) {
+        freshStop();
+        requestError(onError);
     }
 
 

@@ -10,4 +10,6 @@ public interface IConfigSuccessView extends BaseView {
     void upRoomList( List<HomeRoomBean> homeRoomList);
 
     void setDeviceName(String deviceName);
+
+    void onError(String msg);
 }

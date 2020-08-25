@@ -227,6 +227,11 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
         }
     }
 
+    @Override
+    public void onError(String msg) {
+        requestError(msg);
+    }
+
 
     @OnClick({R.id.card_view_name, R.id.iv_task_add, R.id.btn_save, R.id.iv_condition_add, R.id.tv_execution_met,R.id.iv_status})
     public void onViewClicked(View view) {

@@ -79,7 +79,7 @@ public class EditNamePresenter extends BasePresenter<IEditNameView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

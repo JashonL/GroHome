@@ -4,6 +4,8 @@ import com.growatt.grohome.base.BaseView;
 
 public interface IDeviceConfigView extends BaseView {
 
+    void onError(String msg);
+
     void showConnectPage();
 
     void showSuccessPage(String devId,String pId,String devName);

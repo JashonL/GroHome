@@ -115,6 +115,11 @@ public class DeviceConfigActivity extends BaseActivity<DeviceConfigPresenter> im
     }
 
     @Override
+    public void onError(String msg) {
+        requestError(msg);
+    }
+
+    @Override
     public void showConnectPage() {
 
     }

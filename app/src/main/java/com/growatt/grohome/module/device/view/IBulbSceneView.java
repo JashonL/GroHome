@@ -25,4 +25,6 @@ public interface IBulbSceneView extends BaseView {
 
     void setViewsById(int id);
 
+    void onError(String msg);
+
 }

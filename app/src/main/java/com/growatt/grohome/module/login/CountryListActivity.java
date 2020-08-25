@@ -84,6 +84,10 @@ public class CountryListActivity extends BaseActivity<CountryListPresenter> impl
         mCountryAdapter.replaceData(newList);
     }
 
+    @Override
+    public void onError(String error) {
+        requestError(error);
+    }
 
 
     @Override

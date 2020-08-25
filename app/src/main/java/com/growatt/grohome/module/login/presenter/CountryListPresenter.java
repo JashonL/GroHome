@@ -83,6 +83,7 @@ public class CountryListPresenter extends BasePresenter<ICountryListView> {
 
             @Override
             public void onError(String msg) {
+                baseView.onError(msg);
             }
         });
     }

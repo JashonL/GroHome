@@ -2,7 +2,6 @@ package com.growatt.grohome.module.room;
 
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -179,18 +178,27 @@ public class RoomLineListActivity extends BaseActivity<RoomLineListPresenter> im
     @Override
     public void hideLoading() {
         super.hideLoading();
-        srlPull.setRefreshing(false);
+        if (srlPull != null && srlPull.isRefreshing()) {
+            srlPull.setRefreshing(false);
+        }
     }
 
     @Override
     public void onErrorCode(BaseBean bean) {
         super.onErrorCode(bean);
-        srlPull.setRefreshing(false);
     }
 
     @Override
     public void transferFail(String msg) {
         MyToastUtils.toast(msg);
+    }
+
+    @Override
+    public void onError(String msg) {
+        if (srlPull != null && srlPull.isRefreshing()) {
+            srlPull.setRefreshing(false);
+        }
+        requestError(msg);
     }
 
     @Override

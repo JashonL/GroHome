@@ -291,7 +291,7 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

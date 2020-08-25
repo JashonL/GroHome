@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -63,6 +64,9 @@ public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> impleme
         View emptyView = LayoutInflater.from(this).inflate(R.layout.comment_empty_view, rvDevice, false);
         mAllDeviceAdapter.setEmptyView(emptyView);
         rvDevice.setAdapter(mAllDeviceAdapter);
+
+        //下拉刷新
+        swipeRefresh.setColorSchemeColors(ContextCompat.getColor(this, R.color.color_theme_green));
     }
 
     @Override
@@ -86,11 +90,26 @@ public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> impleme
             }
         });
         mAllDeviceAdapter.setOnItemClickListener(this);
+        swipeRefresh.setOnRefreshListener(() -> {
+            try {
+                presenter.getAlldevice();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
     public void setAllDeviceSuccess(List<GroDeviceBean> deviceList) {
         mAllDeviceAdapter.replaceData(deviceList);
+    }
+
+    @Override
+    public void onError(String onError) {
+        if (swipeRefresh != null && swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+        requestError(onError);
     }
 
     @Override
@@ -109,6 +128,15 @@ public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> impleme
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventScenesConditionBean(@NonNull SceneConditionBean bean) {
         finish();
+    }
+
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        if (swipeRefresh != null && swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
     }
 
     @Override

@@ -227,6 +227,14 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     }
 
     @Override
+    public void onError(String onError) {
+        if (srlPull != null && srlPull.isRefreshing()) {
+            srlPull.setRefreshing(false);
+        }
+        requestError(onError);
+    }
+
+    @Override
     public List<HomeDeviceBean.DataBean> getDeviceList() {
         if (mLayoutType == TYPE_GRID) {
             return mGrohomeGridAdapter.getData();

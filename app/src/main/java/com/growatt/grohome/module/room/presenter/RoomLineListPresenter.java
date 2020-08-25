@@ -110,7 +110,7 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
 
@@ -160,7 +160,7 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
 

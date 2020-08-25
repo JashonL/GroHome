@@ -54,4 +54,6 @@ public interface IBulbView extends BaseView {
     void upDataSceneList(List<BulbSceneBean> sceneList);
 
     List<BulbSceneBean> getSceneList();
+
+    void onError(String onError);
 }

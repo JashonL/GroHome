@@ -547,7 +547,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

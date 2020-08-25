@@ -132,6 +132,11 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements IAbou
         }
     }
 
+    @Override
+    public void onError(String onError) {
+        requestError(onError);
+    }
+
 
     @OnClick(R.id.ll_about_website)
     public void onViewClicked() {

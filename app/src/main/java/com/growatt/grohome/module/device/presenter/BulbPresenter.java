@@ -272,7 +272,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

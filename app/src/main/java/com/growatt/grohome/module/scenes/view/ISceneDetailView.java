@@ -32,4 +32,6 @@ public interface ISceneDetailView extends BaseView {
     void setConditionMet(int satisfy);
 
     void setStatus(String status);
+
+    void onError(String msg);
 }

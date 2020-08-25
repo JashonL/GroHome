@@ -159,6 +159,11 @@ public class DeviceTimingSetActivity extends BaseActivity<DeviceTimingSetPresent
         return tvOnoffValue.getText().toString();
     }
 
+    @Override
+    public void onError(String msg) {
+        requestError(msg);
+    }
+
 
     @OnClick({R.id.cl_time, R.id.cl_repeat, R.id.cl_onoff, R.id.cl_temp, R.id.tv_delete})
     public void onViewClicked(View view) {

@@ -321,6 +321,11 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         return mBulbSceneAdapter.getData();
     }
 
+    @Override
+    public void onError(String onError) {
+        requestError(onError);
+    }
+
     public void showViewsByTab(String mode) {
         if (DeviceBulb.BULB_MODE_WHITE.equals(mode)) {//白光模式
             ivWhiteLight.setSelected(true);

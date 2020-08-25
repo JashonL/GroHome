@@ -22,4 +22,6 @@ public interface ISceneTaskSettingView extends BaseView {
 
     void setSocketUi(String linkType);
 
+    void onError(String onError);
+
 }

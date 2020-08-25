@@ -9,6 +9,8 @@ public interface IRoomEditView extends BaseView {
 
     void editNameSuccess(String name);
 
+    void onError(String msg);
+
     void editNameFail(String msg);
 
     void deleteRoomSuccess();

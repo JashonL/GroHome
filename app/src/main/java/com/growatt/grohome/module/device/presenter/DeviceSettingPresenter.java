@@ -187,7 +187,7 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -285,7 +285,7 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -331,7 +331,7 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

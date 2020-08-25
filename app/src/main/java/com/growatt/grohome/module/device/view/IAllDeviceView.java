@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IAllDeviceView extends BaseView {
     void setAllDeviceSuccess(List<GroDeviceBean> deviceList);
+
+    void onError(String onError);
 }

@@ -240,7 +240,7 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

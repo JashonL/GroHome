@@ -10,4 +10,6 @@ public interface IRoomAddView extends BaseView {
     void createRoomSuccess();
 
     void createRoomFail(String msg);
+
+    void onError(String onError);
 }

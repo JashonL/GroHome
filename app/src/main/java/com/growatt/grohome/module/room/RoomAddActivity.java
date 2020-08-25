@@ -202,4 +202,9 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
     public void createRoomFail(String msg) {
         MyToastUtils.toast(msg);
     }
+
+    @Override
+    public void onError(String onError) {
+        requestError(onError);
+    }
 }

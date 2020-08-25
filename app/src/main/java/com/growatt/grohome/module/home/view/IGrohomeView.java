@@ -9,6 +9,8 @@ import java.util.List;
 public interface IGrohomeView extends BaseView {
         void setAllDeviceSuccess(HomeDeviceBean bean);
 
+        void onError(String onError);
+
         List<HomeDeviceBean.DataBean> getDeviceList();
 
         void upDataStatus(String devId, String value);

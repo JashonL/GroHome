@@ -13,4 +13,6 @@ public interface IScenesView extends BaseView {
     void launchTapToRunSuccess(ScenesBean.DataBean dataBean);
 
     void updataSuccess(int position,ScenesBean.DataBean dataBean);
+
+    void onError(String onError);
 }

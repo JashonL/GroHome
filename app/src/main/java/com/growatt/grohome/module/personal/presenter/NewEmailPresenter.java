@@ -73,7 +73,7 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -113,7 +113,7 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -150,7 +150,7 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

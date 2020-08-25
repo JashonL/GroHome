@@ -226,7 +226,7 @@ public class RoomAddPresenter extends BasePresenter<IRoomAddView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

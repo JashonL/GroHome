@@ -153,6 +153,11 @@ public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> im
     }
 
     @Override
+    public void onError(String msg) {
+        requestError(msg);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();

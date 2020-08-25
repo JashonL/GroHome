@@ -69,7 +69,7 @@ public class UpdatePwdPresenter extends BasePresenter<IUpdatePwdView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
 

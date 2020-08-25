@@ -100,7 +100,7 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
 
@@ -145,7 +145,7 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
 
                 @Override
                 public void onError(String msg) {
-
+                    baseView.onError(msg);
                 }
             });
 
@@ -187,7 +187,7 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

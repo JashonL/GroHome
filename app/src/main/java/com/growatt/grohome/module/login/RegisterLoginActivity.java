@@ -223,14 +223,15 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     }
 
     @Override
+    public void onError(String error) {
+        requestError(error);
+    }
+
+    @Override
     public void loginSuccess(String user) {
         startActivity(new Intent(this, MainActivity.class));
     }
 
-    @Override
-    public void loginError(String errorMessage) {
-        ToastUtils.show(errorMessage);
-    }
 
     @Override
     public String getEmail() {
@@ -261,6 +262,8 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     public void setZone(String zone) {
         tvZone.setText(zone);
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

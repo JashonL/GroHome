@@ -397,6 +397,11 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
         }
     }
 
+    @Override
+    public void onError(String msg) {
+        requestError(msg);
+    }
+
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

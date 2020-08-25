@@ -278,6 +278,14 @@ public class RoomListActivity extends BaseActivity<RoomListPresenter> implements
     }
 
     @Override
+    public void onError(String onError) {
+        if (srlPull != null && srlPull.isRefreshing()) {
+            srlPull.setRefreshing(false);
+        }
+        requestError(onError);
+    }
+
+    @Override
     public void onTabSelected(TabLayout.Tab tab) {
         int position = tab.getPosition();
         setSelected(position);

@@ -15,4 +15,6 @@ public interface IRoomListView extends BaseView {
     List<GroDeviceBean> getData();
 
     void upDataStatus(String devId, String value);
+
+    void onError(String onError);
 }

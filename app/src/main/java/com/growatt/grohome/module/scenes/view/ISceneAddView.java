@@ -26,4 +26,6 @@ public interface ISceneAddView extends BaseView {
     void addSceneResult(String msg);
 
     void setConditionMet(int satisfy);
+
+    void onError(String onError);
 }

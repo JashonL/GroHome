@@ -221,6 +221,11 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
         }
     }
 
+    @Override
+    public void onError(String onError) {
+        requestError(onError);
+    }
+
 
     @OnClick({R.id.card_view_name,R.id.iv_task_add,R.id.btn_save,R.id.iv_condition_add,R.id.tv_execution_met})
     public void onViewClicked(View view) {

@@ -6,4 +6,6 @@ public interface IEditNameView extends BaseView {
     void setName(String name);
 
     String getName();
+
+    void onError(String msg);
 }

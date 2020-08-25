@@ -169,7 +169,7 @@ public class RoomImagePresenter extends BasePresenter<IRoomImageView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

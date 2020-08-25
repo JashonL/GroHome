@@ -136,6 +136,11 @@ public class ServiceFragment extends BaseFragment<ServicePresenter> implements I
     }
 
     @Override
+    public void onError(String onError) {
+        requestError(onError);
+    }
+
+    @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         CommondityBean commondityBean = mServiceCommondityAdapter.getData().get(position);
         String url = commondityBean.getUrl();

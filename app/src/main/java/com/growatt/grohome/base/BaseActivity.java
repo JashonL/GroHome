@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
+import com.growatt.grohome.utils.MyToastUtils;
 import com.growatt.grohome.utils.Mydialog;
 import com.gyf.immersionbar.ImmersionBar;
 
@@ -192,6 +193,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     public void onErrorCode(BaseBean bean) {
         Mydialog.dissmiss();
+    }
+
+
+
+    public void requestError(String errorMsg){
+        MyToastUtils.toast(errorMsg);
     }
 
 

@@ -134,7 +134,7 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
         addDisposable(apiServer.getSwitchDetail(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
-                JSONObject jsonObject = null;
+                JSONObject jsonObject;
                 try {
                     jsonObject = new JSONObject(bean);
                     int code = jsonObject.getInt("code");
@@ -191,6 +191,7 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
 
             @Override
             public void onError(String msg) {
+                baseView.onError(msg);
             }
         });
 

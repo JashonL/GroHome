@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface ISwitchView extends BaseView {
 
+    void onError(String onError);
+
     void setTitle(String name);
 
     void freshData(List<PanelSwitchBean.SwichBean> beanList);

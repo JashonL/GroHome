@@ -16,4 +16,6 @@ public interface IDeviceSettingView extends BaseView {
     void setRoomName(String roomName);
 
     void setDeviceId(String deviceId);
+
+    void onError(String onError);
 }

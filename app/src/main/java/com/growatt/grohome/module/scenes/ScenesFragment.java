@@ -185,7 +185,9 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
     @Override
     public void hideLoading() {
         super.hideLoading();
-        srlPull.setRefreshing(false);
+        if (srlPull != null && srlPull.isRefreshing()) {
+            srlPull.setRefreshing(false);
+        }
     }
 
 
@@ -263,6 +265,14 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
             dataBean.setItemType(0);
         }
         mLinkageSceneAdapter.setData(position,dataBean);
+    }
+
+    @Override
+    public void onError(String onError) {
+        if (srlPull != null && srlPull.isRefreshing()) {
+            srlPull.setRefreshing(false);
+        }
+        requestError(onError);
     }
 
     @Override

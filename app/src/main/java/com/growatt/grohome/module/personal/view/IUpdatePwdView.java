@@ -8,4 +8,6 @@ public interface IUpdatePwdView extends BaseView {
     String getNewPassWord();
 
     String getRepeatePassWord();
+
+    void onError(String error);
 }

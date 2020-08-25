@@ -11,4 +11,6 @@ public interface INewEmailView extends BaseView {
     void getVerificationCodeEnd();
 
     void setCountDown(String countDown);
+
+    void onError(String onError);
 }

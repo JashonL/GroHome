@@ -187,6 +187,11 @@ public class RoomImageActivity extends BaseActivity<RoomImagePresenter> implemen
     }
 
     @Override
+    public void onError(String msg) {
+        requestError(msg);
+    }
+
+    @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         super.onPermissionsDenied(requestCode, perms);
         finish();

@@ -9,4 +9,6 @@ public interface IDeviceTimingView extends BaseView {
     void updata(List<DeviceTimingBean> beanList);
 
     void upList();
+
+    void onError(String onError);
 }

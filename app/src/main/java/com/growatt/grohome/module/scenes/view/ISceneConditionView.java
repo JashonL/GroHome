@@ -17,6 +17,8 @@ public interface ISceneConditionView extends BaseView {
 
     void freshStop();
 
+    void onError(String errorMsg);
+
     void setSwitchRoad(List<ScenesRoadBean> beanList);
 
     void setSocketUi(String linkType);

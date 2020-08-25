@@ -79,7 +79,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                     switch (result) {
                         case 0://失败
                             errorMsg = context.getString(R.string.m3_bad_network_msg);
-                            baseView.loginError(errorMsg);
+                            baseView.onError(errorMsg);
                             break;
                         case 1:
                             JSONObject obj = jsonObject.getJSONObject("obj");
@@ -95,10 +95,10 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                             break;
                     }
                     if (result != 1) {
-                        baseView.loginError(errorMsg);
+                        baseView.onError(errorMsg);
                     }
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -106,7 +106,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -137,7 +137,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                         baseView.loginSuccess(bean);
                     } else {
                         String msg = context.getString(R.string.m221_username_password_error);
-                        baseView.loginError(msg);
+                        baseView.onError(msg);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -146,7 +146,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
 
             @Override
             public void onError(String msg) {
-                baseView.loginError(msg);
+                baseView.onError(msg);
             }
         });
     }
@@ -215,6 +215,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
 
                     @Override
                     public void onError(String msg) {
+                        baseView.onError(msg);
                     }
                 });
             } catch (Exception e) {
@@ -256,14 +257,14 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                             MyToastUtils.toast(s);
                         }
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -327,7 +328,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

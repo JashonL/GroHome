@@ -84,6 +84,7 @@ public class ServicePresenter extends BasePresenter<IServiceFragmentView> {
 
             @Override
             public void onError(String msg) {
+                baseView.onError(msg);
             }
         });
 

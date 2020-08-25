@@ -115,7 +115,7 @@ public class RoomEditPresenter extends BasePresenter<IRoomEditView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -238,7 +238,7 @@ public class RoomEditPresenter extends BasePresenter<IRoomEditView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -278,7 +278,7 @@ public class RoomEditPresenter extends BasePresenter<IRoomEditView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

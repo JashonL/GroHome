@@ -12,4 +12,6 @@ public interface IRoomLineListView extends BaseView {
     void transferSuccess();
 
     void transferFail(String msg);
+
+    void onError(String msg);
 }

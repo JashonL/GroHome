@@ -26,4 +26,6 @@ public interface ISwitchTimingView extends BaseView {
     void  setAllOpen();
 
     void updataAdapter();
+
+    void onError(String onError);
 }

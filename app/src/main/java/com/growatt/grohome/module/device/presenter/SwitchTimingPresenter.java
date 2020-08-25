@@ -175,6 +175,7 @@ public class SwitchTimingPresenter extends BasePresenter<ISwitchTimingView> {
 
             @Override
             public void onError(String msg) {
+                baseView.onError(msg);
             }
         });
 
@@ -354,7 +355,7 @@ public class SwitchTimingPresenter extends BasePresenter<ISwitchTimingView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -425,7 +426,7 @@ public class SwitchTimingPresenter extends BasePresenter<ISwitchTimingView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -477,7 +478,7 @@ public class SwitchTimingPresenter extends BasePresenter<ISwitchTimingView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

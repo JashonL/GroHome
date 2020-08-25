@@ -12,4 +12,6 @@ public interface IAboutView extends BaseView {
     void setPhone(String phone);
 
     void setEmail(String email);
+
+    void onError(String onError);
 }

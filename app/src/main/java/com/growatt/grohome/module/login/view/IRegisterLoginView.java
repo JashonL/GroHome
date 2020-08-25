@@ -8,9 +8,9 @@ public interface IRegisterLoginView extends BaseView {
 
     String getPassword();
 
-    void loginSuccess(String user);
+    void onError(String error);
 
-    void loginError(String errorMessage);
+    void loginSuccess(String user);
 
     String getEmail();
 
@@ -21,4 +21,5 @@ public interface IRegisterLoginView extends BaseView {
     void getCodeEnd();
 
     void setZone(String zone);
+
 }

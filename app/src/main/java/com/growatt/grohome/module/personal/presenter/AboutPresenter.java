@@ -55,6 +55,7 @@ public class AboutPresenter extends BasePresenter<IAboutView> {
 
             @Override
             public void onError(String msg) {
+                baseView.onError(msg);
             }
         });
     }

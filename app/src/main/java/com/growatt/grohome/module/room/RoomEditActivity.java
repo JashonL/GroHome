@@ -170,6 +170,11 @@ public class RoomEditActivity extends BaseActivity<RoomEditPresenter> implements
     }
 
     @Override
+    public void onError(String msg) {
+        requestError(msg);
+    }
+
+    @Override
     public void editNameFail(String msg) {
         MyToastUtils.toast(msg);
     }

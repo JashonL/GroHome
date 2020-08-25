@@ -242,6 +242,11 @@ public class SwitchTimingActivity extends BaseActivity<SwitchTimingPresenter> im
         mPtaAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onError(String onError) {
+        requestError(onError);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

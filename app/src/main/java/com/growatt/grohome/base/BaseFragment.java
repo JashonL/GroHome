@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.growatt.grohome.R;
+import com.growatt.grohome.utils.MyToastUtils;
 import com.growatt.grohome.utils.Mydialog;
 import com.gyf.immersionbar.ImmersionBar;
 
@@ -157,6 +158,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         if (mToolBar != null && !mToolBar.isShown()) {
             mToolBar.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void requestError(String msg){
+        MyToastUtils.toast(msg);
     }
 
     @Override

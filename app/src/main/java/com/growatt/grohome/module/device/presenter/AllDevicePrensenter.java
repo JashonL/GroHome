@@ -73,7 +73,7 @@ public class AllDevicePrensenter extends BasePresenter<IAllDeviceView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

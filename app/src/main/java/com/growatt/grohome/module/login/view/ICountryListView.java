@@ -8,4 +8,6 @@ import java.util.List;
 public interface ICountryListView extends BaseView {
 
     void updataList(List<CountryBean> newList);
+
+    void onError(String error);
 }

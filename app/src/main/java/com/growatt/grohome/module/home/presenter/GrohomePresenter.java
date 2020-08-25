@@ -105,7 +105,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
 
@@ -149,7 +149,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
 

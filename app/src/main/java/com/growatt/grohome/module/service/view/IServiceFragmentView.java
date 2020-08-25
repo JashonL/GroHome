@@ -9,4 +9,6 @@ public interface IServiceFragmentView extends BaseView {
 
     void setBannerList(List<String> bannerList);
 
+    void onError(String onError);
+
 }

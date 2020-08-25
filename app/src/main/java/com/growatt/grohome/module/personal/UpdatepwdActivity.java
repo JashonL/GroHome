@@ -100,4 +100,9 @@ public class UpdatepwdActivity extends BaseActivity<UpdatePwdPresenter> implemen
     public String getRepeatePassWord() {
         return etRepeatPassword.getText().toString();
     }
+
+    @Override
+    public void onError(String error) {
+        requestError(error);
+    }
 }

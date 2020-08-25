@@ -136,4 +136,9 @@ public class NewEmailActivity extends BaseActivity<NewEmailPresenter> implements
         //倒计时
         btnSendCode.setText(countDown);
     }
+
+    @Override
+    public void onError(String onError) {
+        requestError(onError);
+    }
 }

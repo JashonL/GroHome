@@ -173,14 +173,23 @@ public class DeviceTimingListActivity extends BaseActivity<DeviceTimingPresenter
     }
 
     @Override
+    public void onError(String onError) {
+        if (srlPull != null && srlPull.isRefreshing()) {
+            srlPull.setRefreshing(false);
+        }
+        requestError(onError);
+    }
+
+    @Override
     public void hideLoading() {
         super.hideLoading();
-        srlPull.setRefreshing(false);
+        if (srlPull != null && srlPull.isRefreshing()) {
+            srlPull.setRefreshing(false);
+        }
     }
 
     @Override
     public void onErrorCode(BaseBean bean) {
         super.onErrorCode(bean);
-        srlPull.setRefreshing(false);
     }
 }

@@ -191,6 +191,11 @@ public class DeviceSettingActivity extends BaseActivity<DeviceSettingPresenter> 
     }
 
     @Override
+    public void onError(String onError) {
+        requestError(onError);
+    }
+
+    @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         ScenesBean.DataBean dataBean = mSceneGridAdapter.getData().get(position);
         presenter.toSceneDetail(dataBean);

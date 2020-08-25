@@ -79,7 +79,7 @@ public class ForgotPassWordPresenter extends BasePresenter<IForgotPasswordView> 
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
 
@@ -126,7 +126,7 @@ public class ForgotPassWordPresenter extends BasePresenter<IForgotPasswordView> 
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
 

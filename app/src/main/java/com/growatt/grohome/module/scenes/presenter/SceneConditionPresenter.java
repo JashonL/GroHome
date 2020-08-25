@@ -177,7 +177,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
 
             @Override
             public void onError(String msg) {
-                baseView.freshStop();
+               baseView.onError(msg);
             }
         });
 

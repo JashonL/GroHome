@@ -13,4 +13,6 @@ public interface IRoomImageView extends BaseView {
     void updateImageSuccess();
 
     void updateImageFail(String msg);
+
+    void onError(String msg);
 }

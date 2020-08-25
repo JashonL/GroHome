@@ -93,7 +93,7 @@ public class DeviceTimingPresenter extends BasePresenter<IDeviceTimingView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
 
@@ -199,7 +199,7 @@ public class DeviceTimingPresenter extends BasePresenter<IDeviceTimingView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

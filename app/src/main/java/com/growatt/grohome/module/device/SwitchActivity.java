@@ -126,6 +126,11 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
     }
 
     @Override
+    public void onError(String onError) {
+        requestError(onError);
+    }
+
+    @Override
     public void setTitle(String name) {
         if (!TextUtils.isEmpty(name)) {
             tvTitle.setText(name);

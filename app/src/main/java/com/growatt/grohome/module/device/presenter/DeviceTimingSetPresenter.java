@@ -411,7 +411,7 @@ public class DeviceTimingSetPresenter extends BasePresenter<IDeviceTimingSetView
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -456,7 +456,7 @@ public class DeviceTimingSetPresenter extends BasePresenter<IDeviceTimingSetView
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -502,7 +502,7 @@ public class DeviceTimingSetPresenter extends BasePresenter<IDeviceTimingSetView
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }

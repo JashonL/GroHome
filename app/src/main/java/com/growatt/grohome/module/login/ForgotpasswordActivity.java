@@ -76,5 +76,10 @@ public class ForgotpasswordActivity extends BaseActivity<ForgotPassWordPresenter
         return etEmail.getText().toString();
     }
 
+    @Override
+    public void onError(String onError) {
+        requestError(onError);
+    }
+
 
 }

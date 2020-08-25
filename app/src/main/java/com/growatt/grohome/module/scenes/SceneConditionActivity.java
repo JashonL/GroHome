@@ -241,9 +241,15 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
 
     @Override
     public void freshStop() {
-        if (srlPull!=null){
+        if (srlPull != null && srlPull.isRefreshing()) {
             srlPull.setRefreshing(false);
         }
+    }
+
+    @Override
+    public void onError(String errorMsg) {
+        freshStop();
+        requestError(errorMsg);
     }
 
     @Override

@@ -161,7 +161,7 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -246,7 +246,7 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
     }
@@ -284,7 +284,7 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
 
             @Override
             public void onError(String msg) {
-
+                baseView.onError(msg);
             }
         });
 

@@ -106,6 +106,11 @@ public class EditNameActivity extends BaseActivity<EditNamePresenter> implements
     }
 
     @Override
+    public void onError(String msg) {
+        requestError(msg);
+    }
+
+    @Override
     public boolean onMenuItemClick(MenuItem item) {
         return false;
     }

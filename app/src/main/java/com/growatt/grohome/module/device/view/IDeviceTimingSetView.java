@@ -21,4 +21,6 @@ public interface IDeviceTimingSetView extends BaseView {
 
     String getViewsonffValue();
 
+    void onError(String msg);
+
 }
