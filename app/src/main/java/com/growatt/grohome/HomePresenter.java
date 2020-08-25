@@ -7,6 +7,7 @@ import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.eventbus.DeviceStatusMessage;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MD5andKL;
@@ -15,6 +16,8 @@ import com.tuya.smart.android.user.bean.User;
 import com.tuya.smart.home.sdk.bean.HomeBean;
 import com.tuya.smart.home.sdk.callback.ITuyaGetHomeListCallback;
 import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,6 +170,7 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
             @Override
             public void onSuccess(HomeBean homeBean) {
                 TuyaApiUtils.setIsHomeInit(true);
+                EventBus.getDefault().post(new DeviceStatusMessage());
             }
 
             @Override

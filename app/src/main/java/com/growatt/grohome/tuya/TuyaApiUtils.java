@@ -184,8 +184,7 @@ public class TuyaApiUtils {
      * @return
      */
     public static boolean isShowDevice(String deviceType){
-        return DeviceTypeConstant.TYPE_BULB.equals(deviceType) || DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)||DeviceTypeConstant.TYPE_PADDLE.equals(deviceType)
-                ||DeviceTypeConstant.TYPE_THERMOSTAT.equals(deviceType)||DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(deviceType);
+        return DeviceTypeConstant.TYPE_BULB.equals(deviceType) || DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)||DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(deviceType);
     }
 
 }

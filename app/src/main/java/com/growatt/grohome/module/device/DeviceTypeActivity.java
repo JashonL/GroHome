@@ -16,6 +16,7 @@ import com.growatt.grohome.bean.DeviceTypeBean;
 import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
+import com.growatt.grohome.module.device.manager.DeviceStripLights;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.presenter.DeviceTypePresenter;
 import com.growatt.grohome.module.device.view.IDeviceTypeView;
@@ -58,7 +59,6 @@ public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implem
     @Override
     protected void initViews() {
         //头部toolBar
-//        toolbar.setTitle(R.string.m35_添加设备);
         tvTitle.setText(R.string.m35_add_device);
         toolbar.setNavigationIcon(R.drawable.icon_return);
         //列表
@@ -71,10 +71,8 @@ public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implem
     @Override
     protected void initData() {
         List<DeviceTypeBean> newList = new ArrayList<>();
-//        String[] typeArray = new String[]{DeviceTypeConstant.TYPE_PADDLE, DeviceTypeConstant.TYPE_PANELSWITCH, DeviceTypeConstant.TYPE_THERMOSTAT, DeviceTypeConstant.TYPE_BULB, DeviceTypeConstant.TYPE_STRIP_LIGHTS};
-        String[] typeArray = new String[]{DeviceTypeConstant.TYPE_PANELSWITCH,DeviceTypeConstant.TYPE_BULB};
-//        String[] nameArray = new String[]{getString(DevicePlug.getNameRes()), getString(DevicePanel.getNameRes()), getString(DeviceThermostat.getNameRes()), getString(DeviceBulb.getNameRes()), getString(DeviceStripLights.getNameRes())};
-        String[] nameArray = new String[]{getString(DevicePanel.getNameRes()),  getString(DeviceBulb.getNameRes())};
+        String[] typeArray = new String[]{DeviceTypeConstant.TYPE_PANELSWITCH,DeviceTypeConstant.TYPE_BULB,DeviceTypeConstant.TYPE_STRIP_LIGHTS};
+        String[] nameArray = new String[]{getString(DevicePanel.getNameRes()),  getString(DeviceBulb.getNameRes()),getString(DeviceStripLights.getNameRes())};
         for (int i = 0; i < typeArray.length; i++) {
             DeviceTypeBean bean = new DeviceTypeBean();
             bean.setBluethooth(false);

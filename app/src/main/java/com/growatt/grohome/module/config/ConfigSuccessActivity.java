@@ -82,7 +82,7 @@ public class ConfigSuccessActivity extends BaseActivity<ConfigSuccePresenter> im
         mSelectRoomAdapter = new SelectRoomAdapter(new ArrayList<>());
         rlvRoom.setLayoutManager(new GridLayoutManager(this, 3));
         rlvRoom.setAdapter(mSelectRoomAdapter);
-        int div = CommentUtils.dip2px(this, 10);
+        int div = CommentUtils.dip2px(this, 5);
         rlvRoom.addItemDecoration(new GridDivider(ContextCompat.getColor(this, R.color.nocolor), div, div));
     }
 

@@ -39,7 +39,8 @@ import butterknife.OnClick;
 public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> implements IBulbSceneView, BaseQuickAdapter.OnItemClickListener,
         SeekBar.OnSeekBarChangeListener, ColorBarView.OnColorChangeListener, Toolbar.OnMenuItemClickListener {
 
-
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -114,6 +115,12 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
 
 
     @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarView(statusBarView).init();
+    }
+
+    @Override
     protected BulbScenePresenter createPresenter() {
         return new BulbScenePresenter(this, this);
     }
@@ -126,7 +133,7 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     @Override
     protected void initViews() {
         //初始化toolbar
-        toolbar.setNavigationIcon(R.drawable.icon_return);
+        toolbar.setNavigationIcon(R.drawable.icon_return_w);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.nocolor));
         toolbar.inflateMenu(R.menu.menu_right_text);
         switchItem = toolbar.getMenu().findItem(R.id.item_save);
@@ -226,7 +233,6 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
             @Override
             public void onClick(View v) {
                 presenter.resetScene();
-                finish();
             }
         });
 

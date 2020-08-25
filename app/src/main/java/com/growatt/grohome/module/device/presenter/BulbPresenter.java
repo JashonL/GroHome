@@ -309,6 +309,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     public void bulbBrightness(int brightness) {
         if (deviceNotOnline()) {
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbBrightValue(), brightness, mTuyaDevice, this);
             bright = String.valueOf(brightness);
             int whiteTemp = Integer.parseInt(temp);
             float[] hsv = new float[3];
@@ -318,7 +319,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             int newColor = Color.HSVToColor(hsv);
             baseView.setWhiteBgColor(newColor);
             baseView.setWhiteMaskView(newColor);
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbBrightValue(), brightness, mTuyaDevice, this);
         }
     }
 
@@ -394,6 +394,9 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * 设置彩光亮度
      */
     public void bulbColourVal(int progress) {
+        if (deviceNotOnline()) {
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
+        }
         float[] hsv = new float[3];
         Color.colorToHSV(mColor, hsv);
         float mHue = hsv[0];
@@ -409,9 +412,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         int newColor = Color.HSVToColor(hsv);
         baseView.setCenterColor(newColor);
 
-        if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
-        }
     }
 
 

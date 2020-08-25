@@ -28,6 +28,7 @@ import com.growatt.grohome.customview.GridDivider;
 import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.eventbus.DevEditNameBean;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
+import com.growatt.grohome.eventbus.DeviceStatusMessage;
 import com.growatt.grohome.eventbus.HomeRoomEvent;
 import com.growatt.grohome.eventbus.HomeRoomStatusBean;
 import com.growatt.grohome.eventbus.TransferDevMsg;
@@ -226,6 +227,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         mGrohomeGridAdapter.replaceData(deviceList);
     }
 
+
     @Override
     public void onError(String onError) {
         if (srlPull != null && srlPull.isRefreshing()) {
@@ -291,10 +293,10 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        if (adapter==mRoomAdapter){
+        if (adapter == mRoomAdapter) {
             String roomlist = new Gson().toJson(mRoomAdapter.getData());
             presenter.jumpToRoom(roomlist, position);
-        }else {
+        } else {
             HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean) adapter.getData().get(position);
             presenter.jumpTodevice(bean);
         }
@@ -379,6 +381,33 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     }
 
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventDevTransferBean(DeviceStatusMessage bean) {
+        if (bean != null) {
+            List<HomeDeviceBean.DataBean> newList;
+            if (mLayoutType == TYPE_LINE) {
+                newList = mGroHomeDevLineAdapter.getData();
+            } else {
+                newList = mGrohomeGridAdapter.getData();
+            }
+
+            for (int i = 0; i < newList.size(); i++) {
+                HomeDeviceBean.DataBean deviceBean = newList.get(i);
+                String devId = deviceBean.getDevId();
+                String devType = deviceBean.getDevType();
+                presenter.initTuyaDevices(devId);
+                int onOff = presenter.initDevOnOff(devType, devId);
+                deviceBean.setOnoff(onOff);
+            }
+            if (mLayoutType == TYPE_LINE) {
+                mGroHomeDevLineAdapter.notifyDataSetChanged();
+            } else {
+               mGrohomeGridAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+
     /**
      * 刷新房间
      *
@@ -396,7 +425,6 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
 
     /**
      * 接收房间名称修改
-     *
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventRoomEventBean(HomeRoomEvent bean) {
@@ -424,7 +452,6 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             }
         }
     }
-
 
 
     @Override

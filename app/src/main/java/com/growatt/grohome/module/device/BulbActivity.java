@@ -1,6 +1,7 @@
 package com.growatt.grohome.module.device;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -156,9 +157,9 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setViewsByDeviceType(String deviceType) {
-        if (DeviceTypeConstant.TYPE_BULB.equals(deviceType)){
+        if (DeviceTypeConstant.TYPE_BULB.equals(deviceType)) {
             ivMusicLight.setVisibility(View.GONE);
-        }else {
+        } else {
             ivMusicLight.setVisibility(View.VISIBLE);
         }
     }
@@ -172,11 +173,13 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         }
     }
 
+
     @Override
     public void setBright(String bright) {
         if (!TextUtils.isEmpty(bright)) {
             try {
-                int brightValue = Integer.parseInt(bright) - 10;
+                //亮度的范围是10-1000，所以计算百分比需要减去10
+                int brightValue = (Integer.parseInt(bright) - 10) * 100 / (1000 - 10);
                 seekBrightnessWhite.setProgress(brightValue);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
@@ -202,11 +205,11 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             tvLeftDown.setVisibility(View.GONE);
 
             int time = Integer.parseInt(countdown);
-            int hour = time /(60*60);
-            int min = (time % (60*60))/ (60);
-            countdown = hour + " h " + min+" min ";
+            int hour = time / (60 * 60);
+            int min = (time % (60 * 60)) / (60);
+            countdown = hour + " h " + min + " min ";
             tvLeftTimeValue.setText(countdown);
-        }else {
+        } else {
             tvLeftTimeTitle.setVisibility(View.GONE);
             tvLeftTimeValue.setVisibility(View.GONE);
             tvLeftDown.setVisibility(View.VISIBLE);
@@ -236,7 +239,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         if (!CommentUtils.isStringEmpty(temp)) {
             try {
                 int brightValue = Integer.parseInt(temp);
-                int mProgree = seekTempWhite.getMax() - brightValue;
+                int mProgree = (1000 - brightValue)* seekTempWhite.getMax() / 1000 ;
                 seekTempWhite.setProgress(mProgree);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
@@ -251,13 +254,13 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setSatProgress(int progress) {
-        seekTempColour.setProgress(progress);
+        seekTempColour.setProgress(progress / 10);
 
     }
 
     @Override
     public void setVatProgress(int progress) {
-        seekBrightnessColour.setProgress(progress);
+        seekBrightnessColour.setProgress(progress / 10);
     }
 
     @Override
@@ -356,7 +359,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
 
     @OnClick({R.id.iv_white_light, R.id.iv_colour_light, R.id.iv_scenec_light, R.id.iv_switch, R.id.iv_edit, R.id.tv_edit,
-            R.id.tv_leftdown,R.id.tv_left_time_value,R.id.tv_left_time_title,R.id.tv_timer})
+            R.id.tv_leftdown, R.id.tv_left_time_value, R.id.tv_left_time_title, R.id.tv_timer})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_white_light:
@@ -402,23 +405,29 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        //亮度调节
-        if (seekBar == seekBrightnessWhite) {
-            presenter.bulbBrightness(progress + 10);
-        }
-        //温度调节
-        if (seekBar == seekTempWhite) {
-            int mProgree = seekTempWhite.getMax() - progress;
-            presenter.bulbTemper(mProgree);
-        }
-        //饱和度调节
-        if (seekBar == seekBrightnessColour) {
-            presenter.bulbColourVal(progress);
+        if (fromUser) {
+            //亮度调节
+            if (seekBar == seekBrightnessWhite) {
+                int light = (progress * (1000 - 10)) / 100 + 10;
+                Log.d("liaojinsah", "发送亮度值:" + light);
+                presenter.bulbBrightness(light);
+            }
+            //温度调节
+            if (seekBar == seekTempWhite) {
+                int mProgree = (seekTempWhite.getMax() - progress) * 10;
+                Log.d("liaojinsah", "发送冷暖值:" + mProgree);
+                presenter.bulbTemper(mProgree);
+            }
+            //饱和度调节
+            if (seekBar == seekBrightnessColour) {
+                presenter.bulbColourVal(progress * 10);
+            }
+
+            if (seekBar == seekTempColour) {
+                presenter.bulbColourSat(progress * 10);
+            }
         }
 
-        if (seekBar == seekTempColour) {
-            presenter.bulbColourSat(progress);
-        }
     }
 
     @Override
@@ -461,7 +470,6 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     public void onEventUpdataScenes(@NonNull List<BulbSceneBean> sceneList) {
         upDataSceneList(sceneList);
     }
-
 
 
     /*修改设备名称*/

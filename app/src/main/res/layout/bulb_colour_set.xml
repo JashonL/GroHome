@@ -52,12 +52,12 @@
         android:layout_height="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_20"
         android:padding="@dimen/dp_10"
-        android:progressDrawable="@drawable/seek_colour_temp"
-        android:thumb="@drawable/seek_colour_temp_thumb"
+        android:progressDrawable="@drawable/seek_white_lightness"
+        android:thumb="@drawable/seek_white_thumb"
         app:layout_constraintBottom_toTopOf="@+id/seek_temp_colour"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:max="990"
+        android:max="100"
         app:layout_constraintTop_toBottomOf="@+id/v_bulb_background_colour" />
 
 
@@ -75,7 +75,7 @@
         android:id="@+id/iv_temp_left_colour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/dev_colourtemp"
+        android:src="@drawable/dev_saturation"
         app:layout_constraintBottom_toBottomOf="@+id/seek_temp_colour"
         app:layout_constraintRight_toLeftOf="@+id/seek_temp_colour"
         app:layout_constraintTop_toTopOf="@+id/seek_temp_colour" />
@@ -87,9 +87,9 @@
         android:layout_height="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_20"
         android:padding="@dimen/dp_10"
-        android:max="1000"
-        android:progressDrawable="@drawable/seek_colour_temp"
-        android:thumb="@drawable/seek_colour_temp_thumb"
+        android:max="100"
+        android:progressDrawable="@drawable/seek_white_temp"
+        android:thumb="@drawable/seek_white_thumb"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -100,7 +100,7 @@
         android:id="@+id/iv_temp_right_colour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/dev_colourtemp2"
+        android:src="@drawable/dev_saturation2"
         app:layout_constraintBottom_toBottomOf="@+id/seek_temp_colour"
         app:layout_constraintLeft_toRightOf="@+id/seek_temp_colour"
         app:layout_constraintTop_toTopOf="@+id/seek_temp_colour" />
