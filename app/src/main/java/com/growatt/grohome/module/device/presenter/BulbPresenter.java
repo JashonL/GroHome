@@ -185,6 +185,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             hsv[0] = mWhiteHue;
             hsv[1] = (float) (1000 - mWhiteSatProgrees) / 1000f;
             hsv[2] = (float) (mWhiteValProgrees - 10) / 990f;
+            if (hsv[2] < 0.3) hsv[2] = 0.3f;
             mWhiteColor = Color.HSVToColor(hsv);
             baseView.setWhiteMaskView(mWhiteColor);
             baseView.setWhiteBgColor(mWhiteColor);
@@ -212,7 +213,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                 int mVal = CommentUtils.hexStringToInter(val);
                 hsv[0] = (float) mColourHue;
                 hsv[1] = (float) mSat / 1000f;
-                if (hsv[1] < 0.3) hsv[1] = 0.3f;
                 hsv[2] = (float) (mVal - 10) / 990f;
                 if (hsv[2] < 0.3) hsv[2] = 0.3f;
                 mColor = Color.HSVToColor(hsv);
@@ -337,6 +337,8 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             hsv[0] = mWhiteHue;
             hsv[1] = (float) (1000 - whiteTemp) / 1000f;
             hsv[2] = (float) brightness / 1000f;
+            if (hsv[2] < 0.3) hsv[2] = 0.3f;
+
             int newColor = Color.HSVToColor(hsv);
             baseView.setWhiteBgColor(newColor);
             baseView.setWhiteMaskView(newColor);
@@ -359,6 +361,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             hsv[0] = mWhiteHue;
             hsv[1] = (float) (1000 - temper) / 1000f;
             hsv[2] = (float) whiteBright / 1000f;
+            if (hsv[2] < 0.3) hsv[2] = 0.3f;
             int newColor = Color.HSVToColor(hsv);
             baseView.setWhiteBgColor(newColor);
             baseView.setWhiteMaskView(newColor);
@@ -387,8 +390,8 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
 
         hsv[1] = mSat / 1000f;
-        if (hsv[1] < 0.3) hsv[1] = 0.3f;
         hsv[2] = (mVal - 10) / 990f;
+        if (hsv[2] < 0.3) hsv[2] = 0.3f;
         //中心圆颜色赋值
         int newColor = Color.HSVToColor(hsv);
         baseView.setCenterColor(newColor);
@@ -410,7 +413,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         hsv[0] = mColourHue;
         hsv[1] = (float) progress / 1000f;
         hsv[2] = mVal / 1000f;
-        if (hsv[1] < 0.3) hsv[1] = 0.3f;
         if (hsv[2] < 0.3) hsv[2] = 0.3f;
 
 
@@ -441,7 +443,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         hsv[0] = mColourHue;
         hsv[1] = mSat / 1000f;
         hsv[2] = (float) progress / 1000f;
-        if (hsv[1] < 0.3) hsv[1] = 0.3f;
         if (hsv[2] < 0.3) hsv[2] = 0.3f;
 
         //中心圆颜色赋值
