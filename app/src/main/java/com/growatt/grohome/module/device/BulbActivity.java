@@ -1,7 +1,6 @@
 package com.growatt.grohome.module.device;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -97,6 +96,8 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     TextView tvLeftTimeTitle;
     @BindView(R.id.tv_leftdown)
     TextView tvLeftDown;
+    @BindView(R.id.v_bulb_backgroud_colour)
+    CircleBackgroundView vBulbCirBackgroud;
 
     private BulbSceneAdapter mBulbSceneAdapter;
 
@@ -139,6 +140,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         tvLeftTimeValue.setVisibility(View.GONE);
         tvLeftTimeTitle.setVisibility(View.GONE);
         tvLeftDown.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -286,7 +288,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setCenterColor(int color) {
-        colorPicker.setNewCenterColor(color);
+        vBulbCirBackgroud.setColor(color);
     }
 
     @Override
@@ -426,16 +428,14 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
                 int mProgree = (seekTempWhite.getMax() - progress) * 10;
                 presenter.bulbTemper(mProgree);
             }
-            //饱和度调节
+            //亮度调节
             if (seekBar == seekBrightnessColour) {
                 int light = (progress * (1000 - 10)) / 100 + 10;
-                Log.d("liaojinsah", "发送亮度值:" + light);
                 presenter.bulbColourVal(light);
             }
 
             if (seekBar == seekTempColour) {
                 presenter.bulbColourSat(progress * 10);
-                Log.d("liaojinsah", "发送冷暖值:" + progress);
             }
         }
 

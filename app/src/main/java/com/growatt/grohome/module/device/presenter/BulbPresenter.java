@@ -77,13 +77,18 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     //颜色
     private int mColor = Color.RED;
+
+    //色相
+    private int mColourHue;
+
     //冷暖色
-    private int mColourSatProgrees = 0;
+    private int mColourSatProgrees = 1000;
     //亮度
     private int mColourValProgrees = 1000;
 
-    //白光
-    private int mWhiteColor;
+    //色相
+    private float mWhiteHue = 42.3f;
+
     private DialogFragment dialogFragment;
 
 
@@ -93,11 +98,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     public BulbPresenter(Context context, IBulbView baseView) {
         super(context, baseView);
-        float[] hsv = new float[3];
-        hsv[0] = 42.3f;
-        hsv[1] = 0f;
-        hsv[2] = 1f;
-        mWhiteColor = Color.HSVToColor(hsv);
         deviceId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
         deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
         devName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_NAME);
@@ -164,7 +164,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             return;
         }
 
-        //获取开关状态
+        //初始化相关数据
         onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
         bright = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbBrightValue()));
         colour = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbColourData()));
@@ -173,8 +173,33 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         scene = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSceneData()));
         mode = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbWorkMode()));
         temp = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbTempValue()));
-        baseView.setOnoff(onOff);
-        baseView.setBright(bright);
+
+
+        //设置白光
+        int mWhiteColor;
+        if (!CommentUtils.isStringEmpty(bright) && !CommentUtils.isStringEmpty(temp)) {
+            //白光冷暖值
+            int mWhiteSatProgrees = Integer.parseInt(temp);
+            int mWhiteValProgrees = Integer.parseInt(bright);
+            float[] hsv = new float[3];
+            hsv[0] = mWhiteHue;
+            hsv[1] = (float) (1000 - mWhiteSatProgrees) / 1000f;
+            hsv[2] = (float) (mWhiteValProgrees - 10) / 990f;
+            mWhiteColor = Color.HSVToColor(hsv);
+            baseView.setWhiteMaskView(mWhiteColor);
+            baseView.setWhiteBgColor(mWhiteColor);
+        } else {
+            float[] hsv = new float[3];
+            hsv[0] = mWhiteHue;
+            hsv[1] = 0.5f;
+            hsv[2] = 0.8f;
+            mWhiteColor = Color.HSVToColor(hsv);
+            baseView.setWhiteMaskView(mWhiteColor);
+            baseView.setWhiteBgColor(mWhiteColor);
+        }
+
+
+        //设置彩光
         if (!CommentUtils.isStringEmpty(colour)) {
             int length = colour.length();
             if (length > 9) {
@@ -182,41 +207,35 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                 String angle = colour.substring(0, 4);
                 String sat = colour.substring(4, 8);
                 String val = colour.substring(8, length);
-                int mHue = CommentUtils.hexStringToInter(angle);
+                mColourHue = CommentUtils.hexStringToInter(angle);
                 int mSat = CommentUtils.hexStringToInter(sat);
                 int mVal = CommentUtils.hexStringToInter(val);
-                hsv[0] = (float) mHue;
+                hsv[0] = (float) mColourHue;
                 hsv[1] = (float) mSat / 1000f;
+                if (hsv[1] < 0.3) hsv[1] = 0.3f;
                 hsv[2] = (float) (mVal - 10) / 990f;
+                if (hsv[2] < 0.3) hsv[2] = 0.3f;
                 mColor = Color.HSVToColor(hsv);
                 mColourSatProgrees = mSat;
                 mColourValProgrees = mVal;
             }
         }
+
+
+        baseView.setOnoff(onOff);
+        baseView.setTemp(temp);
+        baseView.setBright(bright);
         baseView.setSatProgress(mColourSatProgrees);
         baseView.setVatProgress(mColourValProgrees);
         baseView.setColour(mColor);
+        baseView.setCenterColor(mColor);
         baseView.setColourMaskView(mColor);
         baseView.setControData(controdata);
         baseView.setCuntDown(countdown);
         baseView.setScene(scene);
         baseView.setMode(mode);
-        baseView.setTemp(temp);
 
-        if (!CommentUtils.isStringEmpty(bright) && !CommentUtils.isStringEmpty(temp)) {
-            int whiteBright = Integer.parseInt(bright);
-            int whiteTemp = 1000 - Integer.parseInt(temp);
-            float[] hsv = new float[3];
-            hsv[0] = 42.3f;
-            hsv[1] = (float) whiteTemp / 1000f;
-            hsv[2] = (float) whiteBright / 1000f;
-            int newColor = Color.HSVToColor(hsv);
-            baseView.setWhiteMaskView(newColor);
-            baseView.setWhiteBgColor(newColor);
-        } else {
-            baseView.setWhiteMaskView(mWhiteColor);
-            baseView.setWhiteBgColor(mWhiteColor);
-        }
+
         //从服务器获取场景
         requestBulbScene();
     }
@@ -315,8 +334,8 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             bright = String.valueOf(brightness);
             int whiteTemp = Integer.parseInt(temp);
             float[] hsv = new float[3];
-            Color.colorToHSV(mWhiteColor, hsv);
-            hsv[1] = (float) whiteTemp / 1000f;
+            hsv[0] = mWhiteHue;
+            hsv[1] = (float) (1000 - whiteTemp) / 1000f;
             hsv[2] = (float) brightness / 1000f;
             int newColor = Color.HSVToColor(hsv);
             baseView.setWhiteBgColor(newColor);
@@ -334,10 +353,10 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     public void bulbTemper(int temper) {
         if (deviceNotOnline()) {
-            temp = String.valueOf((1000 - temper));
+            temp = String.valueOf(temper);
             int whiteBright = Integer.parseInt(bright);
             float[] hsv = new float[3];
-            Color.colorToHSV(mWhiteColor, hsv);
+            hsv[0] = mWhiteHue;
             hsv[1] = (float) (1000 - temper) / 1000f;
             hsv[2] = (float) whiteBright / 1000f;
             int newColor = Color.HSVToColor(hsv);
@@ -354,10 +373,10 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     public void bulbColour(int color) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
-        float mHue = hsv[0];
+        mColourHue = (int) hsv[0];
         float mSat = mColourSatProgrees;
         float mVal = mColourValProgrees;
-        String angle = CommentUtils.integerToHexstring((int) mHue, 4);
+        String angle = CommentUtils.integerToHexstring(mColourHue, 4);
         String s = CommentUtils.integerToHexstring((int) mSat, 4);
         String v = CommentUtils.integerToHexstring((int) mVal, 4);
         colour = angle + s + v;
@@ -365,6 +384,16 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
         }
+
+
+        hsv[1] = mSat / 1000f;
+        if (hsv[1] < 0.3) hsv[1] = 0.3f;
+        hsv[2] = (mVal - 10) / 990f;
+        //中心圆颜色赋值
+        int newColor = Color.HSVToColor(hsv);
+        baseView.setCenterColor(newColor);
+
+
     }
 
 
@@ -372,21 +401,28 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * 设置彩光饱和度
      */
     public void bulbColourSat(int progress) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(mColor, hsv);
-        float mHue = hsv[0];
+        //饱和度赋值
         mColourSatProgrees = progress;
-        float mVal = mColourValProgrees;
-        String angle = CommentUtils.integerToHexstring((int) mHue, 4);
-        String s = CommentUtils.integerToHexstring((progress), 4);
-        String v = CommentUtils.integerToHexstring((int) mVal, 4);
-        colour = angle + s + v;
 
+
+        float mVal = mColourValProgrees;
+        float[] hsv = new float[3];
+        hsv[0] = mColourHue;
         hsv[1] = (float) progress / 1000f;
-        hsv[2] = mVal / (1000);
+        hsv[2] = mVal / 1000f;
+        if (hsv[1] < 0.3) hsv[1] = 0.3f;
+        if (hsv[2] < 0.3) hsv[2] = 0.3f;
+
+
+        //中心圆颜色赋值
         int newColor = Color.HSVToColor(hsv);
         baseView.setCenterColor(newColor);
 
+        //下发到彩灯
+        String angle = CommentUtils.integerToHexstring(mColourHue, 4);
+        String s = CommentUtils.integerToHexstring(progress, 4);
+        String v = CommentUtils.integerToHexstring((int) mVal, 4);
+        colour = angle + s + v;
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
         }
@@ -397,19 +433,26 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * 设置彩光亮度
      */
     public void bulbColourVal(int progress) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(mColor, hsv);
-        float mHue = hsv[0];
         float mSat = mColourSatProgrees;
+
+
         mColourValProgrees = progress;
-        String angle = CommentUtils.integerToHexstring((int) mHue, 4);
-        String s = CommentUtils.integerToHexstring((int) mSat, 4);
-        String v = CommentUtils.integerToHexstring((progress), 4);
-        colour = angle + s + v;
+        float[] hsv = new float[3];
+        hsv[0] = mColourHue;
         hsv[1] = mSat / 1000f;
-        hsv[2] = (float) progress /1000f;
+        hsv[2] = (float) progress / 1000f;
+        if (hsv[1] < 0.3) hsv[1] = 0.3f;
+        if (hsv[2] < 0.3) hsv[2] = 0.3f;
+
+        //中心圆颜色赋值
         int newColor = Color.HSVToColor(hsv);
         baseView.setCenterColor(newColor);
+
+        //下发到彩灯
+        String angle = CommentUtils.integerToHexstring(mColourHue, 4);
+        String s = CommentUtils.integerToHexstring((int) mSat, 4);
+        String v = CommentUtils.integerToHexstring(progress, 4);
+        colour = angle + s + v;
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
         }

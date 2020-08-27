@@ -406,7 +406,8 @@ public class ColorPicker extends View {
         // Draw the halo of the center colors.
         canvas.drawCircle(0, 0, mColorCenterHaloRadius, mCenterHaloPaint);
 
-        if (mShowCenterOldColor) {
+        //隐藏中间的圆
+     /*   if (mShowCenterOldColor) {
             // Draw the old selected color in the center.
             canvas.drawArc(mCenterRectangle, 90, 180, true, mCenterOldPaint);
 
@@ -416,7 +417,7 @@ public class ColorPicker extends View {
         else {
             // Draw the new selected color in the center.
             canvas.drawArc(mCenterRectangle, 0, 360, true, mCenterNewPaint);
-        }
+        }*/
     }
 
     @Override
