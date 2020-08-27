@@ -197,8 +197,8 @@
                     android:max="100"
                     android:padding="@dimen/dp_10"
                     android:progress="0"
-                    android:progressDrawable="@drawable/seek_colour_temp"
-                    android:thumb="@drawable/seek_colour_temp_thumb"
+                    android:progressDrawable="@drawable/seek_white_lightness"
+                    android:thumb="@drawable/seek_white_thumb"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/seek_colour" />
@@ -232,8 +232,8 @@
                     android:max="100"
                     android:padding="@dimen/dp_10"
                     android:progress="0"
-                    android:progressDrawable="@drawable/seek_colour_temp"
-                    android:thumb="@drawable/seek_colour_temp_thumb"
+                    android:progressDrawable="@drawable/seek_white_temp"
+                    android:thumb="@drawable/seek_white_thumb"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/seek_brightness" />

@@ -28,6 +28,7 @@ import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
+import com.growatt.grohome.utils.LogUtil;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.api.IDevListener;
@@ -431,22 +432,22 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
 
     @Override
     public void onRemoved(String devId) {
-
+        LogUtil.d("设备移除： "+devId);
     }
 
     @Override
     public void onStatusChanged(String devId, boolean online) {
-
+        LogUtil.d("设备在线状态变化：   "+devId+"      是否在线："+online);
     }
 
     @Override
     public void onNetworkStatusChanged(String devId, boolean status) {
-
+        LogUtil.d("设备网络状态变化：   "+devId+"      是否在线："+status);
     }
 
     @Override
     public void onDevInfoUpdate(String devId) {
-
+        LogUtil.d("设备信息发生改变：   "+devId);
     }
 
     @Override

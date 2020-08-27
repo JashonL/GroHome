@@ -147,7 +147,11 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         List<BulbSceneBean> bulbSceneBeans = presenter.initScene();
         mBulbSceneAdapter.replaceData(bulbSceneBeans);
         sceneBackGround.setBackgroundResource(R.drawable.sence_night);//默认选中第一个
-        presenter.initDevice();
+        try {
+            presenter.initDevice();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -260,7 +264,13 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setVatProgress(int progress) {
-        seekBrightnessColour.setProgress(progress / 10);
+        try {
+            //亮度的范围是10-1000，所以计算百分比需要减去10
+            int brightValue = (progress - 10) * 100 / (1000 - 10);
+            seekBrightnessColour.setProgress(brightValue);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -409,22 +419,23 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             //亮度调节
             if (seekBar == seekBrightnessWhite) {
                 int light = (progress * (1000 - 10)) / 100 + 10;
-                Log.d("liaojinsah", "发送亮度值:" + light);
                 presenter.bulbBrightness(light);
             }
             //温度调节
             if (seekBar == seekTempWhite) {
                 int mProgree = (seekTempWhite.getMax() - progress) * 10;
-                Log.d("liaojinsah", "发送冷暖值:" + mProgree);
                 presenter.bulbTemper(mProgree);
             }
             //饱和度调节
             if (seekBar == seekBrightnessColour) {
-                presenter.bulbColourVal(progress * 10);
+                int light = (progress * (1000 - 10)) / 100 + 10;
+                Log.d("liaojinsah", "发送亮度值:" + light);
+                presenter.bulbColourVal(light);
             }
 
             if (seekBar == seekTempColour) {
                 presenter.bulbColourSat(progress * 10);
+                Log.d("liaojinsah", "发送冷暖值:" + progress);
             }
         }
 

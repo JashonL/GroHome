@@ -42,7 +42,6 @@ import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -81,7 +80,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     //冷暖色
     private int mColourSatProgrees = 0;
     //亮度
-    private int mColourValProgrees = 990;
+    private int mColourValProgrees = 1000;
 
     //白光
     private int mWhiteColor;
@@ -94,6 +93,11 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     public BulbPresenter(Context context, IBulbView baseView) {
         super(context, baseView);
+        float[] hsv = new float[3];
+        hsv[0] = 42.3f;
+        hsv[1] = 0f;
+        hsv[2] = 1f;
+        mWhiteColor = Color.HSVToColor(hsv);
         deviceId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
         deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
         devName = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_NAME);
@@ -138,7 +142,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * 获取到设备操作类
      * 并获取数据，进行初始化
      */
-    public void initDevice() {
+    public void initDevice() throws Exception {
         //先干掉之前的在重新获取，避免多次回调
         if (mTuyaDevice != null) {
             mTuyaDevice.unRegisterDevListener();
@@ -186,7 +190,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                 hsv[2] = (float) (mVal - 10) / 990f;
                 mColor = Color.HSVToColor(hsv);
                 mColourSatProgrees = mSat;
-                mColourValProgrees = mVal - 10;
+                mColourValProgrees = mVal;
             }
         }
         baseView.setSatProgress(mColourSatProgrees);
@@ -206,23 +210,22 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             hsv[0] = 42.3f;
             hsv[1] = (float) whiteTemp / 1000f;
             hsv[2] = (float) whiteBright / 1000f;
-            mWhiteColor = Color.HSVToColor(hsv);
+            int newColor = Color.HSVToColor(hsv);
+            baseView.setWhiteMaskView(newColor);
+            baseView.setWhiteBgColor(newColor);
+        } else {
             baseView.setWhiteMaskView(mWhiteColor);
             baseView.setWhiteBgColor(mWhiteColor);
         }
         //从服务器获取场景
-        try {
-            requestBulbScene();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        requestBulbScene();
     }
 
 
     /**
      * 服务器获取场景
      */
-    public void requestBulbScene() throws JSONException {
+    public void requestBulbScene() throws Exception {
         JSONObject requestJson = new JSONObject();
         requestJson.put("devId", deviceId);
         requestJson.put("devType", DeviceTypeConstant.TYPE_BULB);
@@ -309,7 +312,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     public void bulbBrightness(int brightness) {
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbBrightValue(), brightness, mTuyaDevice, this);
             bright = String.valueOf(brightness);
             int whiteTemp = Integer.parseInt(temp);
             float[] hsv = new float[3];
@@ -319,6 +321,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             int newColor = Color.HSVToColor(hsv);
             baseView.setWhiteBgColor(newColor);
             baseView.setWhiteMaskView(newColor);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbBrightValue(), brightness, mTuyaDevice, this);
         }
     }
 
@@ -353,7 +356,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         Color.colorToHSV(color, hsv);
         float mHue = hsv[0];
         float mSat = mColourSatProgrees;
-        float mVal = mColourValProgrees + 10;
+        float mVal = mColourValProgrees;
         String angle = CommentUtils.integerToHexstring((int) mHue, 4);
         String s = CommentUtils.integerToHexstring((int) mSat, 4);
         String v = CommentUtils.integerToHexstring((int) mVal, 4);
@@ -366,14 +369,14 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
 
     /**
-     * 设置彩光饱亮度
+     * 设置彩光饱和度
      */
     public void bulbColourSat(int progress) {
         float[] hsv = new float[3];
         Color.colorToHSV(mColor, hsv);
         float mHue = hsv[0];
-        float mVal = mColourValProgrees + 10;
         mColourSatProgrees = progress;
+        float mVal = mColourValProgrees;
         String angle = CommentUtils.integerToHexstring((int) mHue, 4);
         String s = CommentUtils.integerToHexstring((progress), 4);
         String v = CommentUtils.integerToHexstring((int) mVal, 4);
@@ -394,9 +397,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      * 设置彩光亮度
      */
     public void bulbColourVal(int progress) {
-        if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
-        }
         float[] hsv = new float[3];
         Color.colorToHSV(mColor, hsv);
         float mHue = hsv[0];
@@ -404,14 +404,15 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         mColourValProgrees = progress;
         String angle = CommentUtils.integerToHexstring((int) mHue, 4);
         String s = CommentUtils.integerToHexstring((int) mSat, 4);
-        String v = CommentUtils.integerToHexstring((progress + 10), 4);
+        String v = CommentUtils.integerToHexstring((progress), 4);
         colour = angle + s + v;
-
         hsv[1] = mSat / 1000f;
-        hsv[2] = (float) progress / (990);
+        hsv[2] = (float) progress /1000f;
         int newColor = Color.HSVToColor(hsv);
         baseView.setCenterColor(newColor);
-
+        if (deviceNotOnline()) {
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
+        }
     }
 
 
