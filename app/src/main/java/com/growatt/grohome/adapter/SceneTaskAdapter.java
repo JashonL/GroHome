@@ -14,6 +14,7 @@ import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
 import com.growatt.grohome.module.device.manager.DevicePlug;
+import com.growatt.grohome.module.device.manager.DeviceStripLights;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 
@@ -54,6 +55,14 @@ public class SceneTaskAdapter extends BaseQuickAdapter<SceneTaskBean, BaseViewHo
                 break;
             case DeviceTypeConstant.TYPE_BULB:
                 helper.setImageResource(R.id.iv_device_icon, DeviceBulb.getCloseIcon(1));
+                if (GlobalConstant.SCENE_DEVICE_SHUT.equals(linkType)) {
+                    setting.append(mContext.getString(R.string.m240_on_off)).append(":").append(mContext.getString(R.string.m168_off));
+                } else {
+                    setting.append(mContext.getString(R.string.m240_on_off)).append(":").append(mContext.getString(R.string.m167_on));
+                }
+                break;
+            case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
+                helper.setImageResource(R.id.iv_device_icon, DeviceStripLights.getCloseIcon(1));
                 if (GlobalConstant.SCENE_DEVICE_SHUT.equals(linkType)) {
                     setting.append(mContext.getString(R.string.m240_on_off)).append(":").append(mContext.getString(R.string.m168_off));
                 } else {

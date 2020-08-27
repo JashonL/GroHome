@@ -270,6 +270,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         LinkedHashMap<String, Object> sendMap = new LinkedHashMap<>();
         if (deviceNotOnline()) {
             switch (devType) {
+                case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
                 case DeviceTypeConstant.TYPE_BULB:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
                     bulb_onoff = "true".equals(onOff);
@@ -399,6 +400,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                             e.printStackTrace();
                         }
                         break;
+                    case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
                     case DeviceTypeConstant.TYPE_BULB:
                         try {
                             if (object.length() > 2) return;//自动上报，可能导致状态错误

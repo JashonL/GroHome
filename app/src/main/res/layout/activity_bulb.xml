@@ -40,19 +40,9 @@
         android:padding="@dimen/dp_10"
         android:src="@drawable/selector_bulb_radio_scene"
         app:layout_constraintLeft_toRightOf="@+id/iv_colour_light"
-        app:layout_constraintRight_toLeftOf="@+id/iv_music_light"
-        app:layout_constraintTop_toTopOf="@+id/iv_white_light" />
-
-
-    <ImageView
-        android:id="@+id/iv_music_light"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"
-        android:src="@drawable/selector_bulb_radio_music"
-        app:layout_constraintLeft_toRightOf="@+id/iv_scenec_light"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_white_light" />
+
 
 
     <FrameLayout
@@ -82,11 +72,6 @@
             layout="@layout/bulb_offline"
             android:visibility="gone"
             />
-
-        <include
-            android:id="@+id/layout_music"
-            android:visibility="gone"
-            layout="@layout/bulb_music_pannel" />
 
     </FrameLayout>
 

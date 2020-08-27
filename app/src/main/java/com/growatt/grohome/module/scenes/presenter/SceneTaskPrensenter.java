@@ -195,6 +195,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 bean.setRoad(switchSetting);
                 bean.setSwitchNameList(nameList);
                 break;
+            case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
             case DeviceTypeConstant.TYPE_BULB:
                 bean.setLinkType(linkType);
                 break;

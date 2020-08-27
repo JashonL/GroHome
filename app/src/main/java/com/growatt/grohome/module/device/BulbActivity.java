@@ -28,7 +28,6 @@ import com.growatt.grohome.eventbus.DevEditNameBean;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.eventbus.TransferDevMsg;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
-import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.presenter.BulbPresenter;
 import com.growatt.grohome.module.device.view.IBulbView;
 import com.growatt.grohome.utils.CommentUtils;
@@ -58,8 +57,6 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     ImageView ivColourLight;
     @BindView(R.id.iv_scenec_light)
     ImageView ivScenecLight;
-    @BindView(R.id.iv_music_light)
-    ImageView ivMusicLight;
     @BindView(R.id.v_bulb_backgroud_white)
     CircleBackgroundView vBulbBackgroudWhite;
     @BindView(R.id.seek_brightness_white)
@@ -163,11 +160,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setViewsByDeviceType(String deviceType) {
-        if (DeviceTypeConstant.TYPE_BULB.equals(deviceType)) {
-            ivMusicLight.setVisibility(View.GONE);
-        } else {
-            ivMusicLight.setVisibility(View.VISIBLE);
-        }
+
     }
 
     @Override
@@ -245,7 +238,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         if (!CommentUtils.isStringEmpty(temp)) {
             try {
                 int brightValue = Integer.parseInt(temp);
-                int mProgree = (1000 - brightValue)* seekTempWhite.getMax() / 1000 ;
+                int mProgree = (1000 - brightValue) * seekTempWhite.getMax() / 1000;
                 seekTempWhite.setProgress(mProgree);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
@@ -388,6 +381,9 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
                 break;
             case R.id.iv_edit:
             case R.id.tv_edit:
+                if (presenter.getMusicOnoff() && mBulbSceneAdapter.getNowSelectPosition() == 0) {
+                    return;
+                }
                 presenter.toEditScene();
                 break;
             case R.id.tv_leftdown:

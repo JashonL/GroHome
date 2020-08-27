@@ -159,7 +159,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
         Class clazz;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {
             clazz = SwitchActivity.class;
-        } else if (DeviceTypeConstant.TYPE_BULB.equals(devType)) {
+        } else if (DeviceTypeConstant.TYPE_BULB.equals(devType)||DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(devType)) {
             clazz = BulbActivity.class;
         }else {
             clazz = BulbActivity.class;
@@ -261,6 +261,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
         LinkedHashMap<String, Object> sendMap = new LinkedHashMap<>();
         if (deviceNotOnline()) {
             switch (devType) {
+                case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
                 case DeviceTypeConstant.TYPE_BULB:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
                     bulb_onoff = "true".equals(onOff);
@@ -400,6 +401,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
                             e.printStackTrace();
                         }
                         break;
+                    case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
                     case DeviceTypeConstant.TYPE_BULB:
                         try {
                             if (object.length() > 2) return;//自动上报，可能导致状态错误

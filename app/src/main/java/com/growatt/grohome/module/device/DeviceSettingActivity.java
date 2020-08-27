@@ -23,6 +23,7 @@ import com.growatt.grohome.module.device.manager.DeviceAirCon;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
 import com.growatt.grohome.module.device.manager.DevicePlug;
+import com.growatt.grohome.module.device.manager.DeviceStripLights;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.presenter.DeviceSettingPresenter;
@@ -159,7 +160,9 @@ public class DeviceSettingActivity extends BaseActivity<DeviceSettingPresenter> 
             case DeviceTypeConstant.TYPE_PANELSWITCH:
                 ivDeviceIcon.setImageResource(DevicePanel.getOpenIcon(0));
                 break;
-
+            case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
+                ivDeviceIcon.setImageResource(DeviceStripLights.getOpenIcon(0));
+                break;
         }
     }
 

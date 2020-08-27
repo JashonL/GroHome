@@ -5,6 +5,7 @@ public class BulbSceneBean {
     private boolean selected;
     private String id;
     private String sceneValue;
+    private String musicOnoff;
 
     public String getName() {
         return name;
@@ -36,5 +37,13 @@ public class BulbSceneBean {
 
     public void setSceneValue(String sceneValue) {
         this.sceneValue = sceneValue;
+    }
+
+    public String getMusicOnoff() {
+        return musicOnoff;
+    }
+
+    public void setMusicOnoff(String musicOnoff) {
+        this.musicOnoff = musicOnoff;
     }
 }

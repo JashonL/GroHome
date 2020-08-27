@@ -18,7 +18,6 @@ import com.growatt.grohome.bean.BulbSceneBean;
 import com.growatt.grohome.bean.BulbSceneColourBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
-import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.IBulbSceneView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
@@ -58,6 +57,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
 
     //设备Id
     private String deviceId;
+    private String deviceType;
     private DeviceBean deviceBean;
     private ITuyaDevice mTuyaDevice;
 
@@ -85,6 +85,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
     public BulbScenePresenter(Context context, IBulbSceneView baseView) {
         super(context, baseView);
         deviceId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
+        deviceType= ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
         initDevice();
         initColor();
     }
@@ -526,7 +527,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
     public void requestSubmit() throws JSONException {
         JSONObject requestJson = new JSONObject();
         requestJson.put("devId", deviceId);
-        requestJson.put("devType", DeviceTypeConstant.TYPE_BULB);
+        requestJson.put("devType", deviceType);
         requestJson.put("lan", CommentUtils.getLanguage());
         JSONObject modeObject = new JSONObject();
         JSONArray array = new JSONArray();

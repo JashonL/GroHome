@@ -27,7 +27,6 @@ import com.growatt.grohome.module.device.BulbSceneEditActivity;
 import com.growatt.grohome.module.device.DeviceSettingActivity;
 import com.growatt.grohome.module.device.DeviceTimingListActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
-import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.IBulbView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
@@ -90,6 +89,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     private float mWhiteHue = 42.3f;
 
     private DialogFragment dialogFragment;
+    private String musicOnoff;
 
 
     public BulbPresenter(IBulbView baseView) {
@@ -241,13 +241,18 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     }
 
 
+    public boolean getMusicOnoff() {
+        return "1".equals(musicOnoff);
+    }
+
+
     /**
      * 服务器获取场景
      */
     public void requestBulbScene() throws Exception {
         JSONObject requestJson = new JSONObject();
         requestJson.put("devId", deviceId);
-        requestJson.put("devType", DeviceTypeConstant.TYPE_BULB);
+        requestJson.put("devType", deviceType);
         requestJson.put("lan", CommentUtils.getLanguage());
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
@@ -260,12 +265,16 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                     List<BulbSceneBean> sceneList = new ArrayList<>();
                     if (code == 0) {
                         JSONObject data = obj.getJSONObject("data");
+                        musicOnoff = obj.optString("musicOnoff");
                         JSONArray modeArray = data.getJSONArray("mode");
                         for (int i = 0; i < modeArray.length(); i++) {
                             BulbSceneBean sceneBean = new BulbSceneBean();
                             JSONObject modeObjcte = modeArray.getJSONObject(i);
                             sceneBean.setId(modeObjcte.optString("numb", ""));
                             sceneBean.setName(modeObjcte.optString("name", ""));
+                            if (i == 0 && "1".equals(musicOnoff)) {//有音乐律动
+                                sceneBean.setName(context.getString(R.string.m297_music));
+                            }
                             sceneBean.setSelected(false);
                             sceneBean.setSceneValue(modeObjcte.optString("color", ""));
                             sceneList.add(sceneBean);
@@ -562,6 +571,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         intent.putExtra(GlobalConstant.BULB_SCENE_BEAN, beanJson);
         intent.putExtra(GlobalConstant.BULB_SCENE_BEAN_LIST, beanListJson);
         intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -573,7 +583,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         Intent timingIntent = new Intent(context, DeviceTimingListActivity.class);
         timingIntent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
         timingIntent.putExtra(GlobalConstant.DEVICE_NAME, devName);
-        timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_BULB);
+        timingIntent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         ActivityUtils.startActivity((Activity) context, timingIntent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -585,7 +595,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         Intent intent = new Intent(context, DeviceSettingActivity.class);
         intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
         intent.putExtra(GlobalConstant.DEVICE_NAME, devName);
-        intent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_BULB);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         String deviceJson = new Gson().toJson(mGroDeviceBean);
         intent.putExtra(GlobalConstant.DEVICE_BEAN, deviceJson);
         intent.putExtra(GlobalConstant.ROOM_ID, roomId);

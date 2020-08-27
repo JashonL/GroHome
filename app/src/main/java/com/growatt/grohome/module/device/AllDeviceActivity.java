@@ -32,6 +32,8 @@ import butterknife.BindView;
 
 public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> implements IAllDeviceView , BaseQuickAdapter.OnItemClickListener {
 
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -42,6 +44,12 @@ public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> impleme
     SwipeRefreshLayout swipeRefresh;
 
     private AllDeviceAdapter mAllDeviceAdapter;
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
 
     @Override
     protected AllDevicePrensenter createPresenter() {

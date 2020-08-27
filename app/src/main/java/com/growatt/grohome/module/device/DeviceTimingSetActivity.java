@@ -28,36 +28,14 @@ public class DeviceTimingSetActivity extends BaseActivity<DeviceTimingSetPresent
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tv_time)
-    TextView tvTime;
     @BindView(R.id.tv_time_value)
     AppCompatTextView tvTimeValue;
-    @BindView(R.id.iv_more1)
-    ImageView ivMore1;
-    @BindView(R.id.cl_time)
-    ConstraintLayout clTime;
-    @BindView(R.id.tv_repeat)
-    TextView tvRepeat;
     @BindView(R.id.tv_repeat_value)
     AppCompatTextView tvRepeatValue;
-    @BindView(R.id.iv_more2)
-    ImageView ivMore2;
-    @BindView(R.id.cl_repeat)
-    ConstraintLayout clRepeat;
-    @BindView(R.id.tv_onoff)
-    TextView tvOnoff;
     @BindView(R.id.tv_onoff_value)
     AppCompatTextView tvOnoffValue;
-    @BindView(R.id.iv_more3)
-    ImageView ivMore3;
-    @BindView(R.id.cl_onoff)
-    ConstraintLayout clOnoff;
-    @BindView(R.id.tv_temp)
-    TextView tvTemp;
     @BindView(R.id.tv_temp_value)
     AppCompatTextView tvTempValue;
-    @BindView(R.id.iv_more4)
-    ImageView ivMore4;
     @BindView(R.id.cl_temp)
     ConstraintLayout clTemp;
     @BindView(R.id.tv_delete)
