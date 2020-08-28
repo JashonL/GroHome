@@ -31,36 +31,57 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> implements ISceneTaskSettingView , BaseQuickAdapter.OnItemClickListener{
+public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> implements ISceneTaskSettingView, BaseQuickAdapter.OnItemClickListener {
 
+
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tvDeviceTitle)
+    @BindView(R.id.tv_device_title)
     TextView tvDeviceTitle;
-    @BindView(R.id.tvSceneName)
+    @BindView(R.id.tv_scene_name)
     TextView tvSceneName;
-    @BindView(R.id.tvDeviceName)
+    @BindView(R.id.tv_device_name)
     TextView tvDeviceName;
-    @BindView(R.id.tvSocketOnoff)
+    @BindView(R.id.layout_bulb)
+    ConstraintLayout layoutBulb;
+    @BindView(R.id.tv_socket_onoff)
     TextView tvSocketOnoff;
-    @BindView(R.id.ivSocketSwitch)
+    @BindView(R.id.iv_socket_switch)
     ImageView ivSocketSwitch;
-    @BindView(R.id.clSocket)
-    ConstraintLayout clSocket;
-    @BindView(R.id.clThemostatStatus)
-    ConstraintLayout clThemostatStatus;
-    @BindView(R.id.v)
-    View v;
-    @BindView(R.id.clTemp)
-    ConstraintLayout clTemp;
-    @BindView(R.id.rvPanelSetting)
+    @BindView(R.id.layout_socket)
+    ConstraintLayout layoutSocket;
+    @BindView(R.id.rv_panel_setting)
     RecyclerView rvPanelSetting;
+    @BindView(R.id.layout_switch)
+    ConstraintLayout layoutSwitch;
+    @BindView(R.id.iv_bulb_onoff)
+    ImageView ivBulbOnOff;
+    @BindView(R.id.tv_bulb_onoff_value)
+    TextView tvBulbOnOffValue;
+    @BindView(R.id.tv_bulb_mode_value)
+    TextView tvBulbModeValue;
+    @BindView(R.id.tv_bulb_bright_value)
+    TextView tvBulbBrightValue;
+    @BindView(R.id.tv_bulb_temp_value)
+    TextView tvBulbTempValue;
+    @BindView(R.id.tv_bulb_time_value)
+    TextView tvBulbTimeValue;
+
     @BindView(R.id.srl_pull)
     SwipeRefreshLayout srlPull;
 
     private ScenesPanelAdapter mPanelAdapter;
+
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
 
     @Override
     protected SceneTaskPrensenter createPresenter() {
@@ -115,25 +136,21 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
         String typeName;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {//面板
             srlPull.setEnabled(true);
-            rvPanelSetting.setVisibility(View.VISIBLE);
-            clThemostatStatus.setVisibility(View.GONE);
-            v.setVisibility(View.GONE);
-            clTemp.setVisibility(View.GONE);
-            clSocket.setVisibility(View.GONE);
+            layoutBulb.setVisibility(View.GONE);
+            layoutSocket.setVisibility(View.GONE);
+            layoutSwitch.setVisibility(View.VISIBLE);
             //面板开关需要根据devid请求设备详情获取线路和名称
             try {
                 presenter.getDetailData();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            typeName=getString(R.string.m37_panel_switch);
+            typeName = getString(R.string.m37_panel_switch);
         } else {
-            clSocket.setVisibility(View.VISIBLE);
-            clThemostatStatus.setVisibility(View.GONE);
-            v.setVisibility(View.GONE);
-            clTemp.setVisibility(View.GONE);
-            rvPanelSetting.setVisibility(View.GONE);
-            typeName=getString(R.string.m39_bulb);
+            layoutBulb.setVisibility(View.VISIBLE);
+            layoutSocket.setVisibility(View.GONE);
+            layoutSwitch.setVisibility(View.GONE);
+            typeName = getString(R.string.m39_bulb);
         }
         String deviceSet = String.format("%1$s %2$s", typeName, getString(R.string.m239_setting));
         tvDeviceTitle.setText(deviceSet);
@@ -148,25 +165,21 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
         String typeName;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {//面板
             srlPull.setEnabled(true);
-            rvPanelSetting.setVisibility(View.VISIBLE);
-            clThemostatStatus.setVisibility(View.GONE);
-            v.setVisibility(View.GONE);
-            clTemp.setVisibility(View.GONE);
-            clSocket.setVisibility(View.GONE);
+            layoutBulb.setVisibility(View.GONE);
+            layoutSocket.setVisibility(View.GONE);
+            layoutSwitch.setVisibility(View.VISIBLE);
             //面板开关需要根据devid请求设备详情获取线路和名称
             try {
                 presenter.getDetailData();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            typeName=getString(R.string.m37_panel_switch);
+            typeName = getString(R.string.m37_panel_switch);
         } else {
-            clSocket.setVisibility(View.VISIBLE);
-            clThemostatStatus.setVisibility(View.GONE);
-            v.setVisibility(View.GONE);
-            clTemp.setVisibility(View.GONE);
-            rvPanelSetting.setVisibility(View.GONE);
-            typeName=getString(R.string.m39_bulb);
+            layoutBulb.setVisibility(View.GONE);
+            layoutSocket.setVisibility(View.GONE);
+            layoutSwitch.setVisibility(View.VISIBLE);
+            typeName = getString(R.string.m39_bulb);
             setSocketUi(bean.getLinkType());
         }
         String deviceSet = String.format("%1$s %2$s", typeName, getString(R.string.m239_setting));
@@ -202,9 +215,13 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
         if (GlobalConstant.SCENE_DEVICE_OPEN.equals(linkType)) {
             tvSocketOnoff.setText(R.string.m167_on);
             ivSocketSwitch.setImageResource(R.drawable.scenes_on);
+            tvBulbOnOffValue.setText(R.string.m167_on);
+            ivBulbOnOff.setImageResource(R.drawable.scenes_on);
         } else {
             tvSocketOnoff.setText(R.string.m168_off);
             ivSocketSwitch.setImageResource(R.drawable.scenes_off);
+            tvBulbOnOffValue.setText(R.string.m168_off);
+            ivBulbOnOff.setImageResource(R.drawable.scenes_off);
         }
     }
 
@@ -214,14 +231,65 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
         requestError(onError);
     }
 
+    @Override
+    public void selectedMode(String mode) {
+        tvBulbModeValue.setText(mode);
+    }
 
-    @OnClick({R.id.ivSocketSwitch, R.id.btnNext})
+    @Override
+    public void setBright(String bright) {
+        if (!TextUtils.isEmpty(bright)){
+            tvBulbBrightValue.setText(bright);
+        }
+    }
+
+    @Override
+    public void setTemp(String temp) {
+        if (!TextUtils.isEmpty(temp)){
+            tvBulbTempValue.setText(temp);
+        }
+    }
+
+    @Override
+    public void setCountDown(String countDown) {
+        if (!TextUtils.isEmpty(countDown)){
+            tvBulbTimeValue.setText(countDown);
+        }
+    }
+
+
+    @OnClick({R.id.iv_bulb_onoff, R.id.btn_next,
+            R.id.tv_bulb_mode_title, R.id.tv_bulb_mode_value, R.id.iv_mode_more,
+            R.id.tv_bulb_bright_title, R.id.tv_bulb_bright_value, R.id.iv_bright_more,
+            R.id.tv_bulb_time_title, R.id.tv_bulb_time_value, R.id.iv_time_more,
+            R.id.tv_bulb_temp_title, R.id.tv_bulb_temp_value, R.id.iv_temp_more
+    })
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ivSocketSwitch:
-               presenter.setSocketOnoff();
+            case R.id.iv_bulb_onoff:
+                presenter.setSocketOnoff();
                 break;
-            case R.id.btnNext:
+            case R.id.tv_bulb_mode_title:
+            case R.id.iv_mode_more:
+            case R.id.tv_bulb_mode_value:
+                presenter.setDeviceMode();
+                break;
+            case R.id.tv_bulb_bright_title:
+            case R.id.tv_bulb_bright_value:
+            case R.id.iv_bright_more:
+                presenter.setBrightValue();
+                break;
+            case R.id.tv_bulb_time_title:
+            case R.id.tv_bulb_time_value:
+            case R.id.iv_time_more:
+                presenter.showTimeSelect();
+                break;
+            case R.id.tv_bulb_temp_title:
+            case R.id.tv_bulb_temp_value:
+            case R.id.iv_temp_more:
+                presenter.setTempValue();
+                break;
+            case R.id.btn_next:
                 presenter.settingComplete();
                 break;
         }

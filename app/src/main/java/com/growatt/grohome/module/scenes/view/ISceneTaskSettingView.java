@@ -24,4 +24,11 @@ public interface ISceneTaskSettingView extends BaseView {
 
     void onError(String onError);
 
+    void selectedMode(String mode);
+
+    void setBright(String bright);
+
+    void setTemp(String temp);
+
+    void setCountDown(String countDown);
 }

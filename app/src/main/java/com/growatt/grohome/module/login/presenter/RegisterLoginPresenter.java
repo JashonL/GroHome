@@ -68,7 +68,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     public void getUserType() {
         String username = baseView.getUserName();
         String password = baseView.getPassword();
-        addDisposable(apiServer.getUserType(username, MD5andKL.encryptPassword(password), String.valueOf(CommentUtils.getLanguage())), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.getUserType(username, MD5andKL.encryptPassword(password), String.valueOf(CommentUtils.getLanguage())), new BaseObserver<String>(baseView, false) {
 
             @Override
             public void onSuccess(String json) {

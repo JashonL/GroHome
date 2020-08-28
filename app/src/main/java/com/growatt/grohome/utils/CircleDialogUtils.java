@@ -7,11 +7,14 @@ import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 
+import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
 import com.contrarywind.view.WheelView;
@@ -309,7 +312,35 @@ public class CircleDialogUtils {
     }
 
 
-    public static DialogFragment showWhiteTimeSelect(Context context, int hour, int min, FragmentManager fragmentManager,timeSelectedListener listener) {
+
+    /**
+     * 公共复选择框
+     *
+     * @return
+     */
+    public static DialogFragment showSelectItemDialog(FragmentActivity context,  String title, RecyclerView.Adapter adapter,  RecyclerView.LayoutManager layoutManager,View.OnClickListener positiveListner) {
+        DialogFragment selectItemDialog = new CircleDialog.Builder()
+                .setTitle(title)
+                .setItems(adapter,layoutManager)
+                .setPositive(context.getString(R.string.m90_ok), positiveListner)
+                .setNegative(context.getString(R.string.m89_cancel),null)
+                .show(context.getSupportFragmentManager());
+        ;
+        return selectItemDialog;
+    }
+
+
+    /**
+     * 时间选择框
+     * @param context 上下文
+     * @param hour  当前时间：时
+     * @param min 当前时间：分
+     * @param fragmentManager  fragmentManager
+     * @param listener 回调监听
+     * @return
+     */
+
+    public static DialogFragment showWhiteTimeSelect(Context context, int hour, int min, FragmentManager fragmentManager,boolean isShowStatus,timeSelectedListener listener) {
         View contentView = LayoutInflater.from(context).inflate(R.layout.dialog_time_select, null, false);
         DialogFragment bulbBodyDialog = new CircleDialog.Builder()
                 .setBodyView(contentView, new OnCreateBodyViewListener() {
@@ -331,6 +362,9 @@ public class CircleDialogUtils {
                         wheelMin.setCurrentItem(min);
                         wheelMin.setTextColorCenter(ContextCompat.getColor(context, R.color.color_text_00));
 
+                        Group status = view.findViewById(R.id.group_status);
+                        status.setVisibility(isShowStatus?View.VISIBLE:View.GONE);
+                        CheckBox cbStatus = view.findViewById(R.id.cb_checked);
 
                         view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -344,7 +378,8 @@ public class CircleDialogUtils {
                             public void onClick(View v) {
                                 int hour = wheelHour.getCurrentItem();
                                 int min = wheelMin.getCurrentItem();
-                                listener.ok(hour,min);
+                                boolean checked = cbStatus.isChecked();
+                                listener.ok(checked,hour,min);
                             }
                         });
                     }
@@ -357,9 +392,11 @@ public class CircleDialogUtils {
     }
 
 
+
+
     public interface timeSelectedListener {
         void cancle();
-        void ok(int hour,int min);
+        void ok(boolean status,int hour,int min);
     }
 
 }

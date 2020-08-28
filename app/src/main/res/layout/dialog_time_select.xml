@@ -31,8 +31,53 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="tv_current_status,tv_current_status_value,cb_checked" />
 
 
+        <TextView
+            android:id="@+id/tv_current_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_25"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp_10"
+            android:text="@string/m258_current_status"
+            android:textColor="@color/color_text_33"
+            android:textSize="@dimen/size_content_sp_14"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_title" />
+
+
+        <TextView
+            android:id="@+id/tv_current_status_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_25"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp_10"
+            android:text="@string/m167_on"
+            android:textColor="@color/color_text_33"
+            android:textSize="@dimen/size_content_sp_14"
+            app:layout_constraintRight_toLeftOf="@+id/cb_checked"
+            app:layout_constraintTop_toBottomOf="@+id/card_title" />
+
+
+        <CheckBox
+            android:id="@+id/cb_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:button="@drawable/checkbox_switch"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_current_status"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_current_status">
+
+        </CheckBox>
 
 
         <com.contrarywind.view.WheelView
@@ -43,7 +88,7 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/tv_hour"
-            app:layout_constraintTop_toBottomOf="@+id/card_title" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_current_status" />
 
 
         <TextView
@@ -53,7 +98,7 @@
             android:gravity="center_vertical"
             android:padding="@dimen/dp_10"
             android:text="@string/m249_hour"
-            android:textColor="@color/white"
+            android:textColor="@color/color_text_33"
             android:textSize="@dimen/size_content_sp_14"
             app:layout_constraintBottom_toBottomOf="@+id/wheel_hour"
             app:layout_constraintLeft_toRightOf="@+id/wheel_hour"
@@ -77,12 +122,12 @@
             android:gravity="center_vertical"
             android:padding="@dimen/dp_10"
             android:text="@string/m250_min"
-            android:textColor="@color/white"
+            android:textColor="@color/color_text_33"
             android:textSize="@dimen/size_content_sp_14"
             app:layout_constraintBottom_toBottomOf="@+id/wheel_hour"
             app:layout_constraintLeft_toRightOf="@+id/wheel_min"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/wheel_hour"  />
+            app:layout_constraintTop_toTopOf="@+id/wheel_hour" />
 
 
         <Button
@@ -93,10 +138,10 @@
             android:background="@drawable/shape_white_corner_bg"
             android:text="@string/m89_cancel"
             android:textColor="@color/color_text_33"
-            app:layout_goneMarginTop="@dimen/dp_50"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/btn_ok"
-            app:layout_constraintTop_toBottomOf="@+id/wheel_hour" />
+            app:layout_constraintTop_toBottomOf="@+id/wheel_hour"
+            app:layout_goneMarginTop="@dimen/dp_50" />
 
         <Button
             android:id="@+id/btn_ok"

@@ -93,7 +93,7 @@
     <string name="m89_cancel">Cancel</string>
     <string name="m90_ok">OK</string>
     <string name="m91_bright_ness">Brightness</string>
-    <string name="m92_colour_temp">Colour Temp</string>
+    <string name="m92_colour_temp">Colour Temperature</string>
     <string name="m93_request_permission">Request Permission</string>
     <string name="m94_location">location</string>
     <string name="m95_tips">Tips</string>
@@ -334,6 +334,8 @@
     <string name="m295_clear_cache">Clear cache</string>
     <string name="m296_customer_email">Customer email</string>
     <string name="m297_music">Music</string>
-
+    <string name="m298_mode">Mode</string>
+    <string name="m298_white">White</string>
+    <string name="m298_colour">colour</string>
 
 </resources>

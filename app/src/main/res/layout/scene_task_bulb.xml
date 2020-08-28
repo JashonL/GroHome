@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:id="@+id/layout_bulb"
+    android:paddingLeft="@dimen/dp_12"
+    android:paddingRight="@dimen/dp_12">
+
+
+    <TextView
+        android:id="@+id/tv_bulb_onoff_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_45"
+        android:gravity="center"
+        android:text="@string/m214_switch_status"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_bulb_onoff_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_15"
+        android:text="@string/m167_on"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_bulb_onoff_title"
+        app:layout_constraintRight_toLeftOf="@+id/iv_bulb_onoff"
+        app:layout_constraintTop_toTopOf="@+id/tv_bulb_onoff_title" />
+
+    <ImageView
+        android:id="@+id/iv_bulb_onoff"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_20"
+        android:src="@drawable/scenes_on"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_bulb_onoff_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_bulb_onoff_title" />
+
+    <View
+        android:id="@+id/v_divider_onoff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_5"
+        android:background="@color/color_item_divider_99"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bulb_onoff_title" />
+
+
+    <TextView
+        android:id="@+id/tv_bulb_mode_title"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_45"
+        android:gravity="center_vertical"
+        android:text="@string/m298_mode"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_bulb_mode_value"
+        app:layout_constraintTop_toBottomOf="@+id/v_divider_onoff" />
+
+
+    <TextView
+        android:id="@+id/tv_bulb_mode_value"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_45"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintRight_toLeftOf="@+id/iv_mode_more"
+        app:layout_constraintTop_toBottomOf="@+id/v_divider_onoff" />
+
+    <ImageView
+        android:id="@+id/iv_mode_more"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_0"
+        android:src="@drawable/icon_more"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_bulb_mode_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_bulb_mode_title" />
+
+    <View
+        android:id="@+id/v_divider_mode"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_5"
+        android:background="@color/color_item_divider_99"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bulb_mode_title" />
+
+    <TextView
+        android:id="@+id/tv_bulb_bright_title"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_45"
+        android:gravity="center_vertical"
+        android:text="@string/m91_bright_ness"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_bulb_mode_value"
+        app:layout_constraintTop_toBottomOf="@+id/v_divider_mode" />
+
+
+    <TextView
+        android:id="@+id/tv_bulb_bright_value"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_45"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_bulb_bright_title"
+        app:layout_constraintRight_toLeftOf="@+id/iv_bright_more"
+        app:layout_constraintTop_toTopOf="@+id/tv_bulb_bright_title" />
+
+    <ImageView
+        android:id="@+id/iv_bright_more"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_0"
+        android:src="@drawable/icon_more"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_bulb_bright_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_bulb_bright_title" />
+
+    <View
+        android:id="@+id/v_divider_bright"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_5"
+        android:background="@color/color_item_divider_99"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bulb_bright_value" />
+
+
+    <TextView
+        android:id="@+id/tv_bulb_temp_title"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_45"
+        android:gravity="center_vertical"
+        android:text="@string/m92_colour_temp"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_bulb_mode_value"
+        app:layout_constraintTop_toBottomOf="@+id/v_divider_bright" />
+
+
+    <TextView
+        android:id="@+id/tv_bulb_temp_value"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_45"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_bulb_temp_title"
+        app:layout_constraintRight_toLeftOf="@+id/iv_temp_more"
+        app:layout_constraintTop_toTopOf="@+id/tv_bulb_temp_title" />
+
+    <ImageView
+        android:id="@+id/iv_temp_more"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_0"
+        android:src="@drawable/icon_more"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_bulb_temp_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_bulb_temp_title" />
+    <View
+        android:id="@+id/v_divider_temp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_5"
+        android:background="@color/color_item_divider_99"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bulb_temp_title" />
+
+
+    <TextView
+        android:id="@+id/tv_bulb_time_title"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_45"
+        android:gravity="center_vertical"
+        android:text="@string/m145_left_time"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_bulb_mode_value"
+        app:layout_constraintTop_toBottomOf="@+id/v_divider_temp" />
+
+
+    <TextView
+        android:id="@+id/tv_bulb_time_value"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_45"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_bulb_time_title"
+        app:layout_constraintRight_toLeftOf="@+id/iv_temp_more"
+        app:layout_constraintTop_toTopOf="@+id/tv_bulb_time_title" />
+
+    <ImageView
+        android:id="@+id/iv_time_more"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_0"
+        android:src="@drawable/icon_more"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_bulb_time_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_bulb_time_title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

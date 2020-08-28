@@ -18,6 +18,7 @@ public class SceneTaskBean {
     private String url;
     private List<String> switchNameList;
     private List<String> gunNameList;
+    private SceneBulbSetInfo setInfo;
 
     public String getDevId() {
         return devId;
@@ -137,5 +138,13 @@ public class SceneTaskBean {
 
     public void setGunNameList(List<String> gunNameList) {
         this.gunNameList = gunNameList;
+    }
+
+    public SceneBulbSetInfo getSetInfo() {
+        return setInfo;
+    }
+
+    public void setSetInfo(SceneBulbSetInfo setInfo) {
+        this.setInfo = setInfo;
     }
 }

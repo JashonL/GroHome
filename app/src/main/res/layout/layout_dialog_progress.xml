@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="@string/m91_bright_ness"
+        android:textColor="@color/color_text_00"
+        android:textSize="@dimen/size_title_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_less"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_20"
+        android:gravity="center"
+        android:background="@drawable/shape_edit_stroke"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_16"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_greater"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_greater"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginStart="@dimen/dp_20"
+        android:gravity="center"
+        android:background="@drawable/shape_theme_solid"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_content_sp_16"
+        app:layout_constraintLeft_toRightOf="@+id/tv_less"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_less" />
+
+    <TextView
+        android:id="@+id/tv_value"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/shape_circle_darkred"
+        android:gravity="center"
+        android:padding="@dimen/dp_5"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_title_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_less" />
+
+
+    <TextView
+        android:id="@+id/tv_minus"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center"
+        android:text="-"
+        android:textColor="@color/color_text_00"
+        android:textSize="@dimen/size_title_sp_16"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/seek_percent"
+        app:layout_constraintRight_toLeftOf="@+id/seek_percent"
+        app:layout_constraintTop_toTopOf="@+id/seek_percent" />
+
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/seek_percent"
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_20"
+        android:max="100"
+        android:padding="@dimen/dp_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_value" />
+
+
+    <TextView
+        android:id="@+id/tv_plus"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center"
+        android:text="+"
+        android:textColor="@color/color_text_00"
+        android:textSize="@dimen/size_title_sp_16"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/seek_percent"
+        app:layout_constraintLeft_toRightOf="@+id/seek_percent"
+        app:layout_constraintTop_toTopOf="@+id/seek_percent" />
+
+
+    <View
+        android:id="@+id/v_padding_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_1"
+        android:background="@color/gray"
+        android:layout_marginTop="@dimen/dp_20"
+        app:layout_constraintTop_toBottomOf="@+id/seek_percent" />
+
+
+    <TextView
+        android:id="@+id/btn_cancel"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:background="@null"
+        android:gravity="center"
+        android:text="@string/m89_cancel"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/v_cancel_divider"
+        app:layout_constraintTop_toBottomOf="@+id/v_padding_bottom" />
+
+
+    <View
+        android:id="@+id/v_cancel_divider"
+        android:layout_width="@dimen/dp_0_1"
+        android:layout_height="@dimen/dp_0"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_cancel"
+        app:layout_constraintLeft_toRightOf="@+id/btn_cancel"
+        app:layout_constraintRight_toLeftOf="@+id/btn_delete"
+        app:layout_constraintTop_toTopOf="@+id/btn_cancel" />
+
+
+    <TextView
+        android:id="@+id/btn_delete"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:background="@null"
+        android:gravity="center"
+        android:text="@string/m206_delete"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toRightOf="@+id/v_cancel_divider"
+        app:layout_constraintRight_toLeftOf="@+id/v_buttom_center"
+        app:layout_constraintTop_toTopOf="@+id/btn_cancel" />
+
+
+    <View
+        android:id="@+id/v_buttom_center"
+        android:layout_width="@dimen/dp_0_1"
+        android:layout_height="@dimen/dp_0"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_cancel"
+        app:layout_constraintLeft_toRightOf="@+id/btn_delete"
+        app:layout_constraintRight_toLeftOf="@+id/btn_ok"
+        app:layout_constraintTop_toTopOf="@+id/btn_cancel" />
+
+
+    <TextView
+        android:id="@+id/btn_ok"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:background="@null"
+        android:gravity="center"
+        android:text="@string/m90_ok"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_content_sp_14"
+        app:layout_constraintLeft_toRightOf="@+id/v_buttom_center"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_cancel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

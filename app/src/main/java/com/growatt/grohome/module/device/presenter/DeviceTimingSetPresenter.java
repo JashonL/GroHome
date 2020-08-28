@@ -241,14 +241,14 @@ public class DeviceTimingSetPresenter extends BasePresenter<IDeviceTimingSetView
 
     public void showTimeSelectDialog() {
         FragmentManager supportFragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-        dialogFragment = CircleDialogUtils.showWhiteTimeSelect(context, 0, 0, supportFragmentManager, new CircleDialogUtils.timeSelectedListener() {
+        dialogFragment = CircleDialogUtils.showWhiteTimeSelect(context, 0, 0, supportFragmentManager,false, new CircleDialogUtils.timeSelectedListener() {
             @Override
             public void cancle() {
                 dialogFragment.dismiss();
             }
 
             @Override
-            public void ok(int hour, int min) {
+            public void ok(boolean status,int hour, int min) {
                 String hourString=hour <10?("0"+hour):hour+"";
                 String minString=min <10?("0"+min):min+"";
                 timeValue = hourString + ":" + minString;
