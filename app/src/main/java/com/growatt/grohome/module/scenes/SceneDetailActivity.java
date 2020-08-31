@@ -3,6 +3,7 @@ package com.growatt.grohome.module.scenes;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.Group;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,6 +68,10 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
     @BindView(R.id.iv_status)
     ImageView ivStatus;
 
+    //头部
+    private TextView tvMenuRightText;
+    private MenuItem switchItem;
+
     private SceneTaskAdapter mSceneTaskAdapter;
     private SceneConditionAdapter mSceneConditionAdapter;
 
@@ -89,7 +95,12 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
     protected void initViews() {
         //头部初始化
         toolbar.setNavigationIcon(R.drawable.icon_return);
-
+        toolbar.inflateMenu(R.menu.menu_right_text);
+        switchItem = toolbar.getMenu().findItem(R.id.item_save);
+        switchItem.setActionView(R.layout.menu_right_text);
+        tvMenuRightText = switchItem.getActionView().findViewById(R.id.tv_right_text);
+        tvMenuRightText.setTextColor(ContextCompat.getColor(this, R.color.color_text_33));
+        tvMenuRightText.setText(R.string.m248_save);
 
         //条件列表
         rlvCondition.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -131,6 +142,16 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
         });
         mSceneTaskAdapter.setOnItemChildClickListener(this);
         mSceneConditionAdapter.setOnItemChildClickListener(this);
+        tvMenuRightText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    presenter.upScenesData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -233,18 +254,14 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
     }
 
 
-    @OnClick({R.id.card_view_name, R.id.iv_task_add, R.id.btn_save, R.id.iv_condition_add, R.id.tv_execution_met,R.id.iv_status})
+    @OnClick({R.id.card_view_name, R.id.iv_task_add, R.id.btn_delete, R.id.iv_condition_add, R.id.tv_execution_met,R.id.iv_status})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.card_view_name:
                 presenter.showInuptNameDialog();
                 break;
-            case R.id.btn_save:
-                try {
-                    presenter.upScenesData();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            case R.id.btn_delete:
+                presenter.deleteScene();
                 break;
             case R.id.iv_task_add:
                 presenter.selectDevice(GlobalConstant.SCENE_ADD_TASK);

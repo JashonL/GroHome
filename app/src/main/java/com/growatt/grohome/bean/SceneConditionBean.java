@@ -20,6 +20,7 @@ public class SceneConditionBean {
     private String connectorId;
     private int connectors;
     private String url;
+    private SceneBulbSetInfo setInfo;
 
     public String getDevId() {
         return devId;
@@ -147,5 +148,13 @@ public class SceneConditionBean {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public SceneBulbSetInfo getSetInfo() {
+        return setInfo;
+    }
+
+    public void setSetInfo(SceneBulbSetInfo setInfo) {
+        this.setInfo = setInfo;
     }
 }

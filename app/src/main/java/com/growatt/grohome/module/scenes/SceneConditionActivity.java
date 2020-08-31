@@ -2,7 +2,6 @@ package com.growatt.grohome.module.scenes;
 
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,8 +9,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Group;
-import androidx.constraintlayout.widget.Guideline;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +33,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter> implements ISceneConditionView, BaseQuickAdapter.OnItemChildClickListener {
+
+
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -46,56 +47,37 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
     TextView tvSceneName;
     @BindView(R.id.tvDeviceName)
     TextView tvDeviceName;
-    @BindView(R.id.gl_begin)
-    Guideline glBegin;
-    @BindView(R.id.gl_end)
-    Guideline glEnd;
-    @BindView(R.id.gp_switch)
-    Group gpSwitch;
-    @BindView(R.id.tv_switch_use)
-    TextView tvSwitchUse;
     @BindView(R.id.cb_switch_use)
     CheckBox cbSwitchUse;
-    @BindView(R.id.v_switch_divider)
-    View vSwitchDivider;
-    @BindView(R.id.gp_switch_status)
-    Group gpSwitchStatus;
-    @BindView(R.id.tv_switch_status)
-    TextView tvSwitchStatus;
     @BindView(R.id.tv_switch_onoff)
     TextView tvSwitchOnoff;
     @BindView(R.id.iv_switch_onoff)
     ImageView ivSwitchOnoff;
-    @BindView(R.id.v_switch_margin_divider)
-    View vSwitchMarginDivider;
-    @BindView(R.id.gp_temp)
-    Group gpTemp;
-    @BindView(R.id.tv_temp_use)
-    TextView tvTempUse;
+    @BindView(R.id.tv_bulb_mode_value)
+    TextView tvBulbModeValue;
+    @BindView(R.id.tv_bulb_bright_value)
+    TextView tvBulbBrightValue;
     @BindView(R.id.cb_temp_use)
     CheckBox cbTempUse;
-    @BindView(R.id.v_temp_divider)
-    View vTempDivider;
-    @BindView(R.id.v_temp_click)
-    View vTempClick;
-    @BindView(R.id.tv_temp_status)
-    TextView tvTempStatus;
-    @BindView(R.id.tv_temp_onoff)
-    TextView tvTempOnoff;
-    @BindView(R.id.tv_temp_value)
-    TextView tvTempValue;
-    @BindView(R.id.iv_temp_more)
-    ImageView ivTempMore;
+    @BindView(R.id.tv_bulb_temp_value)
+    TextView tvBulbTempValue;
+    @BindView(R.id.tv_bulb_time_value)
+    TextView tvBulbTimeValue;
     @BindView(R.id.rv_panel_setting)
     RecyclerView rvPanelSetting;
-    @BindView(R.id.cl_setting_parent)
-    ConstraintLayout clSettingParent;
-    @BindView(R.id.v1)
-    View v1;
-    @BindView(R.id.btnNext)
-    Button btnNext;
+    @BindView(R.id.layout_switch)
+    ConstraintLayout layoutSwitch;
     @BindView(R.id.srl_pull)
     SwipeRefreshLayout srlPull;
+    @BindView(R.id.layout_bulb)
+    ConstraintLayout layoutBulb;
+    @BindView(R.id.cb_mode_use)
+    CheckBox cbModeUse;
+    @BindView(R.id.cb_bright_use)
+    CheckBox cbBrightUse;
+    @BindView(R.id.cb_time_use)
+    CheckBox cbTimeUse;
+
 
     private ScenesPanelConditionAdapter mPanelAdapter;
 
@@ -107,6 +89,13 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
     @Override
     protected int getLayoutId() {
         return R.layout.activity_scene_condition;
+    }
+
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
     }
 
     @Override
@@ -154,24 +143,22 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
         String typeName;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {//面板
             srlPull.setEnabled(true);
-            rvPanelSetting.setVisibility(View.VISIBLE);
-            gpSwitch.setVisibility(View.GONE);
-            gpSwitchStatus.setVisibility(View.GONE);
-            gpTemp.setVisibility(View.GONE);
-
+            layoutBulb.setVisibility(View.GONE);
+            layoutSwitch.setVisibility(View.VISIBLE);
             //面板开关需要根据devid请求设备详情获取线路和名称
             try {
                 presenter.getDetailData();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            typeName=getString(R.string.m37_panel_switch);
+            typeName = getString(R.string.m37_panel_switch);
         } else {
-            gpSwitch.setVisibility(View.VISIBLE);
-            gpSwitchStatus.setVisibility(View.VISIBLE);
-            rvPanelSetting.setVisibility(View.GONE);
-            gpTemp.setVisibility(View.GONE);
-            typeName=getString(R.string.m39_bulb);
+            layoutBulb.setVisibility(View.VISIBLE);
+            layoutSwitch.setVisibility(View.GONE);
+            typeName = getString(R.string.m39_bulb);
+            if (DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(devType)){
+                typeName = getString(R.string.m40_light_strip);
+            }
         }
         String deviceSet = String.format("%1$s %2$s", typeName, getString(R.string.m239_setting));
         tvDeviceTitle.setText(deviceSet);
@@ -186,10 +173,8 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
         String typeName;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {//面板
             srlPull.setEnabled(true);
-            rvPanelSetting.setVisibility(View.VISIBLE);
-            gpSwitch.setVisibility(View.GONE);
-            gpSwitchStatus.setVisibility(View.GONE);
-            gpTemp.setVisibility(View.GONE);
+            layoutBulb.setVisibility(View.GONE);
+            layoutSwitch.setVisibility(View.VISIBLE);
 
             //面板开关需要根据devid请求设备详情获取线路和名称
             try {
@@ -197,19 +182,18 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            typeName=getString(R.string.m37_panel_switch);
+            typeName = getString(R.string.m37_panel_switch);
         } else {
-            gpSwitch.setVisibility(View.VISIBLE);
-            gpSwitchStatus.setVisibility(View.VISIBLE);
-            rvPanelSetting.setVisibility(View.GONE);
-            gpTemp.setVisibility(View.GONE);
-            typeName=getString(R.string.m39_bulb);
+            layoutBulb.setVisibility(View.VISIBLE);
+            layoutSwitch.setVisibility(View.GONE);
+            typeName = getString(R.string.m39_bulb);
+            if (DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(devType)){
+                typeName = getString(R.string.m40_light_strip);
+            }
         }
         String deviceSet = String.format("%1$s %2$s", typeName, getString(R.string.m239_setting));
         tvDeviceTitle.setText(deviceSet);
     }
-
-
 
 
     @Override
@@ -228,8 +212,53 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
     }
 
     @Override
+    public boolean getModeChecked() {
+        return cbModeUse.isChecked();
+    }
+
+    @Override
+    public boolean getBrightChecked() {
+        return cbBrightUse.isChecked();
+    }
+
+    @Override
     public boolean getTempChecked() {
         return cbTempUse.isChecked();
+    }
+
+    @Override
+    public boolean getTimeChecked() {
+        return cbTimeUse.isChecked();
+    }
+
+    @Override
+    public void selectedMode(String mode) {
+        cbModeUse.setChecked(true);
+        tvBulbModeValue.setText(mode);
+    }
+
+    @Override
+    public void setBright(String bright) {
+        if (!TextUtils.isEmpty(bright)){
+            cbBrightUse.setChecked(true);
+            tvBulbBrightValue.setText(bright);
+        }
+    }
+
+    @Override
+    public void setTemp(String temp) {
+        if (!TextUtils.isEmpty(temp)){
+            cbTempUse.setChecked(true);
+            tvBulbTempValue.setText(temp);
+        }
+    }
+
+    @Override
+    public void setCountDown(String countDown) {
+        if (!TextUtils.isEmpty(countDown)){
+            cbTimeUse.setChecked(true);
+            tvBulbTimeValue.setText(countDown);
+        }
     }
 
     @Override
@@ -264,31 +293,49 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
     }
 
 
-    @OnClick({R.id.tv_switch_onoff, R.id.btnNext})
+    @OnClick({R.id.iv_switch_onoff, R.id.btnNext,
+            R.id.tv_bulb_mode_title, R.id.tv_bulb_mode_value, R.id.iv_mode_more,
+            R.id.tv_bulb_bright_title, R.id.tv_bulb_bright_value, R.id.iv_bright_more,
+            R.id.tv_bulb_time_title, R.id.tv_bulb_time_value, R.id.iv_time_more,
+            R.id.tv_bulb_temp_title, R.id.tv_bulb_temp_value, R.id.iv_temp_more
+    })
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_switch_onoff:
+            case R.id.iv_switch_onoff:
                 presenter.setSocketOnoff();
                 break;
             case R.id.btnNext:
                 presenter.settingComplete();
+                break;
+            case R.id.tv_bulb_mode_title:
+            case R.id.iv_mode_more:
+            case R.id.tv_bulb_mode_value:
+                presenter.setDeviceMode();
+                break;
+            case R.id.tv_bulb_bright_title:
+            case R.id.tv_bulb_bright_value:
+            case R.id.iv_bright_more:
+                presenter.setBrightValue();
+                break;
+            case R.id.tv_bulb_time_title:
+            case R.id.tv_bulb_time_value:
+            case R.id.iv_time_more:
+                presenter.showTimeSelect();
+                break;
+            case R.id.tv_bulb_temp_title:
+            case R.id.tv_bulb_temp_value:
+            case R.id.iv_temp_more:
+                presenter.setTempValue();
                 break;
         }
     }
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-      /*  List<ScenesRoadBean> data = mPanelAdapter.getData();
-        ScenesRoadBean scenesRoadBean = data.get(position);
-        int onOff = scenesRoadBean.getOnOff();
-        scenesRoadBean.setOnOff(onOff == 0 ? 1 : 0);
-        mPanelAdapter.notifyDataSetChanged();
-*/
-
         List<ScenesRoadBean> data = mPanelAdapter.getData();
         ScenesRoadBean swichBean = data.get(position);
 
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_switch_use:
                 boolean scenesConditionEnable = swichBean.isScenesConditionEnable();
                 swichBean.setScenesConditionEnable(!scenesConditionEnable);
@@ -296,7 +343,7 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
                 break;
             case R.id.iv_switch_onoff:
                 int onOff = swichBean.getOnOff();
-                swichBean.setOnOff(onOff == 0?1:0);
+                swichBean.setOnOff(onOff == 0 ? 1 : 0);
                 mPanelAdapter.notifyDataSetChanged();
                 break;
         }

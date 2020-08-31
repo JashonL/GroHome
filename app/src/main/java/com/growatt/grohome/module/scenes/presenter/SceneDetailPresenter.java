@@ -295,4 +295,58 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
             }
         });
     }
+
+
+    /**
+     * 删除场景
+     */
+    public void deleteScene() {
+        CircleDialogUtils.showCommentDialog((FragmentActivity) context, context.getString(R.string.m208_note), context.getString(R.string.m206_delete), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    requestDelete();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 删除场景模式
+     */
+    private void requestDelete() throws JSONException {
+        //封装json
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("cmd", "deleteScense");
+        jsonObject.put("cid", scenesBean.getCid());
+        jsonObject.put("lan", CommentUtils.getLanguage());
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
+        addDisposable(apiServer.smartHomeRequest(body), new BaseObserver<String>(baseView, true) {
+            @Override
+            public void onSuccess(String jsonBean) {
+                try {
+                    JSONObject object = new JSONObject(jsonBean);
+                    int code = object.getInt("code");
+                    if (code == 0) {
+                        FreshScenesMsg bean = new FreshScenesMsg();
+                        EventBus.getDefault().post(bean);
+                        ((Activity)context).finish();
+                    }
+                    String data = object.getString("data");
+                    MyToastUtils.toast(data);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String msg) {
+                baseView.onError(msg);
+            }
+        });
+    }
+
 }

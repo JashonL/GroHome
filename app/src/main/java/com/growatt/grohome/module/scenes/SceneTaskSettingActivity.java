@@ -151,6 +151,9 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
             layoutSocket.setVisibility(View.GONE);
             layoutSwitch.setVisibility(View.GONE);
             typeName = getString(R.string.m39_bulb);
+            if (DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(devType)){
+                typeName = getString(R.string.m40_light_strip);
+            }
         }
         String deviceSet = String.format("%1$s %2$s", typeName, getString(R.string.m239_setting));
         tvDeviceTitle.setText(deviceSet);
@@ -180,6 +183,9 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
             layoutSocket.setVisibility(View.GONE);
             layoutSwitch.setVisibility(View.GONE);
             typeName = getString(R.string.m39_bulb);
+            if (DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(devType)){
+                typeName = getString(R.string.m40_light_strip);
+            }
             setSocketUi(bean.getLinkType());
         }
         String deviceSet = String.format("%1$s %2$s", typeName, getString(R.string.m239_setting));
