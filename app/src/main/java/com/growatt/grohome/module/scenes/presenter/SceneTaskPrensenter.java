@@ -127,7 +127,10 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 if (!TextUtils.isEmpty(temp)) {
                     String[] s = temp.split("_");
                     if (s.length >= 3) {
-                        baseView.setTemp(s[2]);
+                        int value = Integer.parseInt(s[2]);
+                        //亮度的范围是10-1000，所以计算百分比需要减去10
+                        int temp = value / 10;
+                        baseView.setTemp(temp+"%");
                     }
                 }
                 bright = setInfo.getBright();
@@ -136,15 +139,18 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                     if (s.length >= 3) {
                         int value = Integer.parseInt(s[2]);
                         //亮度的范围是10-1000，所以计算百分比需要减去10
-                        int brightValue = (value - 10) * 100 / (1000 - 10);
-                        baseView.setBright(brightValue +"%");
+                        int brightValue = value / 10;
+                        baseView.setBright(brightValue + "%");
                     }
                 }
                 countdown = setInfo.getCountdown();
                 if (!TextUtils.isEmpty(countdown)) {
                     String[] s = countdown.split("_");
                     if (s.length >= 3) {
-                        baseView.setCountDown(s[2]);
+                        int value = Integer.parseInt(s[2]);
+                        int hour = value / (60 * 60);
+                        int min = (value % (60 * 60)) / (60);
+                        baseView.setCountDown(hour + " h " + min + " min ");
                     }
                 }
             }
@@ -265,7 +271,10 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 bean.setLinkType(linkType);
                 SceneBulbSetInfo setInfo = new SceneBulbSetInfo();
                 setInfo.setMode(mode);
-
+                setInfo.setBright(bright);
+                setInfo.setCountdown(countdown);
+                setInfo.setTemp(temp);
+                bean.setSetInfo(setInfo);
                 break;
 
             default:
@@ -390,8 +399,9 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                     if (s.length >= 3) {
                         int value = Integer.parseInt(s[2]);
                         //亮度的范围是10-1000，所以计算百分比需要减去10
-                        int brightValue = (value - 10) * 100 / (1000 - 10);
-                        tvValue.setText(brightValue +"%");
+                        int brightValue = value / 10;
+                        seekPercent.setProgress(brightValue);
+                        tvValue.setText(brightValue + "%");
                     }
                 }
 
@@ -462,7 +472,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                     @Override
                     public void onClick(View v) {
                         bright = null;
-                        baseView.selectedMode("");
+                        baseView.setBright("");
                         dialogFragment.dismiss();
                     }
                 });
@@ -473,6 +483,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                         int progress = seekPercent.getProgress();
                         String value = progress + "%";
                         baseView.setBright(value);
+                        //亮度的范围是10-1000，所以计算百分比需要减去10
                         int light = (progress * (1000 - 10)) / 100 + 10;
                         bright = "0_equal_" + light;
                         dialogFragment.dismiss();
@@ -503,9 +514,21 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 TextView tvMinus = view.findViewById(R.id.tv_minus);
                 TextView tvPlus = view.findViewById(R.id.tv_plus);
                 tvTitle.setText(R.string.m92_colour_temp);
-                tvLess.setText("<");
-                tvGreater.setText(">");
+                tvLess.setVisibility(View.GONE);
+                tvGreater.setVisibility(View.GONE);
                 tvValue.setText(0 + "%");
+
+                if (!TextUtils.isEmpty(temp)) {
+                    String[] s = temp.split("_");
+                    if (s.length >= 3) {
+                        int value = Integer.parseInt(s[2]);
+                        //亮度的范围是10-1000，所以计算百分比需要减去10
+                        int brightValue = value / 10;
+                        seekPercent.setProgress(brightValue);
+                        tvValue.setText(brightValue + "%");
+                    }
+                }
+
                 tvMinus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -521,28 +544,6 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                         seekPercent.setProgress(++progress);
                     }
                 });
-
-                tvLess.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        tvLess.setTextColor(ContextCompat.getColor(context, R.color.white));
-                        tvLess.setBackgroundResource(R.drawable.shape_theme_solid);
-                        tvGreater.setTextColor(ContextCompat.getColor(context, R.color.color_text_33));
-                        tvGreater.setBackgroundResource(R.drawable.shape_edit_stroke);
-                    }
-                });
-
-
-                tvGreater.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        tvGreater.setTextColor(ContextCompat.getColor(context, R.color.white));
-                        tvGreater.setBackgroundResource(R.drawable.shape_theme_solid);
-                        tvLess.setTextColor(ContextCompat.getColor(context, R.color.color_text_33));
-                        tvLess.setBackgroundResource(R.drawable.shape_edit_stroke);
-                    }
-                });
-
 
                 seekPercent.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
@@ -572,6 +573,8 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        temp = null;
+                        baseView.setTemp("");
                         dialogFragment.dismiss();
                     }
                 });
@@ -579,6 +582,12 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 btnOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int progress = seekPercent.getProgress();
+                        String value = progress + "%";
+                        baseView.setTemp(value);
+                        //亮度的范围是10-1000，所以计算百分比需要减去10
+                        int light = (progress * (1000 - 10)) / 100 + 10;
+                        temp = "0_equal_" + light;
                         dialogFragment.dismiss();
                     }
                 });
@@ -588,8 +597,18 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
 
 
     public void showTimeSelect() {
+        int hour = 0;
+        int min = 0;
+        if (!TextUtils.isEmpty(countdown) && !"0".equals(countdown)) {
+            String[] s = countdown.split("_");
+            if (s.length >= 3) {
+                int time = Integer.parseInt(s[2]);
+                hour = time / (60 * 60);
+                min = (time % (60 * 60)) / (60);
+            }
+        }
         FragmentManager supportFragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-        dialogFragment = CircleDialogUtils.showWhiteTimeSelect(context, 0, 0, supportFragmentManager, true, new CircleDialogUtils.timeSelectedListener() {
+        dialogFragment = CircleDialogUtils.showWhiteTimeSelect(context, hour, min, supportFragmentManager, true, new CircleDialogUtils.timeSelectedListener() {
             @Override
             public void cancle() {
                 dialogFragment.dismiss();
@@ -597,7 +616,11 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
 
             @Override
             public void ok(boolean status, int hour, int min) {
-
+                if (status) {
+                    int value = hour * 3600 + min * 60;
+                    countdown = "0_equal_" + value;
+                    baseView.setCountDown(hour + " h " + min + " min ");
+                }
                 dialogFragment.dismiss();
             }
         });

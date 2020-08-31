@@ -365,6 +365,7 @@ public class CircleDialogUtils {
                         Group status = view.findViewById(R.id.group_status);
                         status.setVisibility(isShowStatus?View.VISIBLE:View.GONE);
                         CheckBox cbStatus = view.findViewById(R.id.cb_checked);
+                        cbStatus.setChecked(true);
 
                         view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
                             @Override

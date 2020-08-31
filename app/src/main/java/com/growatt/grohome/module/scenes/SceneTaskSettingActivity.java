@@ -176,9 +176,9 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
             }
             typeName = getString(R.string.m37_panel_switch);
         } else {
-            layoutBulb.setVisibility(View.GONE);
+            layoutBulb.setVisibility(View.VISIBLE);
             layoutSocket.setVisibility(View.GONE);
-            layoutSwitch.setVisibility(View.VISIBLE);
+            layoutSwitch.setVisibility(View.GONE);
             typeName = getString(R.string.m39_bulb);
             setSocketUi(bean.getLinkType());
         }
