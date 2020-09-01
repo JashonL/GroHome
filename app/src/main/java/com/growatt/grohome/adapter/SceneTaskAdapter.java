@@ -76,15 +76,12 @@ public class SceneTaskAdapter extends BaseQuickAdapter<SceneTaskBean, BaseViewHo
                     if (!TextUtils.isEmpty(bright)) {
                         String[] s = bright.split("_");
                         int value = Integer.parseInt(s[2]);
-                        int brightValue = value / 10;
-                        setting.append(mContext.getString(R.string.m91_bright_ness)).append(":").append(brightValue).append("%").append(",");
+                        setting.append(mContext.getString(R.string.m91_bright_ness)).append(":").append(value).append(",");
                     }
                     if (!TextUtils.isEmpty(countdown)) {
                         String[] s = countdown.split("_");
                         int value = Integer.parseInt(s[2]);
-                        int hour = value / (60 * 60);
-                        int min = (value % (60 * 60)) / (60);
-                        setting.append(mContext.getString(R.string.m145_left_time)).append(":").append(hour).append("h").append(min).append("min").append(",");
+                        setting.append(mContext.getString(R.string.m145_left_time)).append(":").append(value).append(mContext.getString(R.string.m303_second)).append(",");
                     }
                     if (!TextUtils.isEmpty(mode)) {
                         String[] s = mode.split("_");
@@ -94,8 +91,7 @@ public class SceneTaskAdapter extends BaseQuickAdapter<SceneTaskBean, BaseViewHo
                     if (!TextUtils.isEmpty(temp)) {
                         String[] s = temp.split("_");
                         int value = Integer.parseInt(s[2]);
-                        int brightValue = value / 10;
-                        setting.append(mContext.getString(R.string.m92_colour_temp)).append(":").append(brightValue).append(",");
+                        setting.append(mContext.getString(R.string.m92_colour_temp)).append(":").append(value).append(",");
                     }
                 }
                 break;
