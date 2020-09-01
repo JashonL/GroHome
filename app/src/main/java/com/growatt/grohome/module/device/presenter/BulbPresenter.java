@@ -266,7 +266,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                     if (code == 0) {
                         JSONObject data = obj.getJSONObject("data");
                         musicOnoff = obj.optString("musicOnoff");
-                        JSONArray modeArray = data.getJSONArray("mode");
+                        JSONArray modeArray = data.getJSONArray("bulbMode");
                         for (int i = 0; i < modeArray.length(); i++) {
                             BulbSceneBean sceneBean = new BulbSceneBean();
                             JSONObject modeObjcte = modeArray.getJSONObject(i);

@@ -20,46 +20,69 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/tv_less"
-        android:layout_width="@dimen/dp_40"
+    <RadioGroup
+        android:id="@+id/rg_compared"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
         android:layout_marginTop="@dimen/dp_20"
-        android:gravity="center"
-        android:background="@drawable/shape_edit_stroke"
-        android:textColor="@color/color_text_33"
-        android:textSize="@dimen/size_content_sp_16"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/tv_greater"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
-    <TextView
-        android:id="@+id/tv_greater"
-        android:layout_width="@dimen/dp_40"
-        android:layout_height="@dimen/dp_40"
-        android:layout_marginStart="@dimen/dp_20"
-        android:gravity="center"
-        android:background="@drawable/shape_theme_solid"
-        android:textColor="@color/white"
-        android:textSize="@dimen/size_content_sp_16"
-        app:layout_constraintLeft_toRightOf="@+id/tv_less"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_less" />
+        <RadioButton
+            android:id="@+id/rb_less"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_scenes_radiobutton"
+            android:textColor="@color/selector_text_color"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/m300_less"
+            android:textSize="@dimen/size_title_sp_14" />
+
+        <RadioButton
+            android:id="@+id/rb_equal"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_scenes_radiobutton"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/m301_qual"
+            android:textColor="@color/selector_text_color"
+            android:textSize="@dimen/size_title_sp_14" />
+
+        <RadioButton
+            android:id="@+id/rb_greater"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_scenes_radiobutton"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/m302_greater"
+            android:textColor="@color/selector_text_color"
+            android:textSize="@dimen/size_title_sp_14" />
+
+    </RadioGroup>
+
 
     <TextView
         android:id="@+id/tv_value"
-        android:layout_width="@dimen/dp_70"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_20"
         android:background="@drawable/shape_circle_darkred"
         android:gravity="center"
+        android:lines="1"
+        android:ellipsize="end"
+        android:minWidth="@dimen/dp_70"
         android:padding="@dimen/dp_5"
         android:textColor="@color/white"
         android:textSize="@dimen/size_title_sp_14"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_less" />
+        app:layout_constraintTop_toBottomOf="@+id/rg_compared" />
 
 
     <TextView
@@ -81,7 +104,6 @@
         android:layout_width="@dimen/dp_250"
         android:layout_height="@dimen/dp_40"
         android:layout_marginTop="@dimen/dp_20"
-        android:max="100"
         android:padding="@dimen/dp_10"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -106,8 +128,8 @@
         android:id="@+id/v_padding_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0_1"
-        android:background="@color/gray"
         android:layout_marginTop="@dimen/dp_20"
+        android:background="@color/gray"
         app:layout_constraintTop_toBottomOf="@+id/seek_percent" />
 
 

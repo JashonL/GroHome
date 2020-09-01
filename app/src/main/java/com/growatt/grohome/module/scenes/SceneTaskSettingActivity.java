@@ -246,6 +246,8 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
     public void setBright(String bright) {
         if (!TextUtils.isEmpty(bright)){
             tvBulbBrightValue.setText(bright);
+        }else {
+            tvBulbBrightValue.setText("");
         }
     }
 
@@ -253,6 +255,8 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
     public void setTemp(String temp) {
         if (!TextUtils.isEmpty(temp)){
             tvBulbTempValue.setText(temp);
+        }else {
+            tvBulbTempValue.setText("");
         }
     }
 
@@ -260,6 +264,8 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
     public void setCountDown(String countDown) {
         if (!TextUtils.isEmpty(countDown)){
             tvBulbTimeValue.setText(countDown);
+        }else {
+            tvBulbTimeValue.setText("");
         }
     }
 
@@ -288,7 +294,7 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
             case R.id.tv_bulb_time_title:
             case R.id.tv_bulb_time_value:
             case R.id.iv_time_more:
-                presenter.showTimeSelect();
+                presenter.setTime();
                 break;
             case R.id.tv_bulb_temp_title:
             case R.id.tv_bulb_temp_value:

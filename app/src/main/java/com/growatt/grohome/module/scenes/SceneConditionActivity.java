@@ -242,6 +242,9 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
         if (!TextUtils.isEmpty(bright)){
             cbBrightUse.setChecked(true);
             tvBulbBrightValue.setText(bright);
+        }else {
+            cbBrightUse.setChecked(false);
+            tvBulbBrightValue.setText("");
         }
     }
 
@@ -250,6 +253,9 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
         if (!TextUtils.isEmpty(temp)){
             cbTempUse.setChecked(true);
             tvBulbTempValue.setText(temp);
+        }else {
+            cbTempUse.setChecked(false);
+            tvBulbTempValue.setText("");
         }
     }
 
@@ -258,6 +264,9 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
         if (!TextUtils.isEmpty(countDown)){
             cbTimeUse.setChecked(true);
             tvBulbTimeValue.setText(countDown);
+        }else {
+            cbTimeUse.setChecked(false);
+            tvBulbTimeValue.setText("");
         }
     }
 
@@ -320,7 +329,7 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
             case R.id.tv_bulb_time_title:
             case R.id.tv_bulb_time_value:
             case R.id.iv_time_more:
-                presenter.showTimeSelect();
+                presenter.setTime();
                 break;
             case R.id.tv_bulb_temp_title:
             case R.id.tv_bulb_temp_value:

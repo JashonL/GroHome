@@ -68,7 +68,7 @@ public class HomeDeviceBean {
 
         //shineBoost
         private String temperature;
-        private String mode;
+
 
 
         private SchemaDpdBean  dpd;
@@ -324,13 +324,6 @@ public class HomeDeviceBean {
             this.temperature = temperature;
         }
 
-        public String getMode() {
-            return mode;
-        }
-
-        public void setMode(String mode) {
-            this.mode = mode;
-        }
 
 
         @Override

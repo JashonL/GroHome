@@ -102,15 +102,14 @@ public class SceneConditionAdapter extends BaseQuickAdapter<SceneConditionBean, 
                     if (!TextUtils.isEmpty(bright)) {
                         String[] s = bright.split("_");
                         int value = Integer.parseInt(s[2]);
-                        int brightValue = value / 10;
-                        setting.append(mContext.getString(R.string.m91_bright_ness)).append(":").append(brightValue).append("%").append(",");
+                        String symbol=s[1];
+                        setting.append(mContext.getString(R.string.m91_bright_ness)).append(":").append(symbol).append(value).append(",");
                     }
                     if (!TextUtils.isEmpty(countdown)) {
                         String[] s = countdown.split("_");
                         int value = Integer.parseInt(s[2]);
-                        int hour = value / (60 * 60);
-                        int min = (value % (60 * 60)) / (60);
-                        setting.append(mContext.getString(R.string.m145_left_time)).append(":").append(hour).append("h").append(min).append("min").append(",");
+                        String symbol=s[1];
+                        setting.append(mContext.getString(R.string.m145_left_time)).append(":").append(symbol).append(value).append(mContext.getString(R.string.m303_second)).append(",");
                     }
                     if (!TextUtils.isEmpty(mode)) {
                         String[] s = mode.split("_");
@@ -120,8 +119,8 @@ public class SceneConditionAdapter extends BaseQuickAdapter<SceneConditionBean, 
                     if (!TextUtils.isEmpty(temp)) {
                         String[] s = temp.split("_");
                         int value = Integer.parseInt(s[2]);
-                        int brightValue = value / 10;
-                        setting.append(mContext.getString(R.string.m92_colour_temp)).append(":").append(brightValue).append(",");
+                        String symbol=s[1];
+                        setting.append(mContext.getString(R.string.m92_colour_temp)).append(":").append(symbol).append(value).append(",");
                     }
                 }
                 break;

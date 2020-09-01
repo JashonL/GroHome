@@ -338,5 +338,9 @@
     <string name="m298_white">White</string>
     <string name="m298_colour">colour</string>
     <string name="m299_least_one_condition">Choose at least one condition</string>
+    <string name="m300_less">Less</string>
+    <string name="m301_qual">Equal</string>
+    <string name="m302_greater">Greater</string>
+    <string name="m303_second">Second</string>
 
 </resources>

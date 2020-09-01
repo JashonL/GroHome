@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatSeekBar;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -126,30 +126,30 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 if (!TextUtils.isEmpty(temp)) {
                     String[] s = temp.split("_");
                     if (s.length >= 3) {
+                        String symbol = s[1];
                         int value = Integer.parseInt(s[2]);
-                        //亮度的范围是10-1000，所以计算百分比需要减去10
-                        int temp = value / 10;
-                        baseView.setTemp(temp + "%");
+                        String currenTemp = symbol +"  "+ value;
+                        baseView.setTemp(currenTemp);
                     }
                 }
                 bright = setInfo.getBright();
                 if (!TextUtils.isEmpty(bright)) {
                     String[] s = bright.split("_");
                     if (s.length >= 3) {
+                        String symbol = s[1];
                         int value = Integer.parseInt(s[2]);
-                        //亮度的范围是10-1000，所以计算百分比需要减去10
-                        int brightValue = value / 10;
-                        baseView.setBright(brightValue + "%");
+                        String currenBright = symbol +"  "+ value;
+                        baseView.setBright(currenBright);
                     }
                 }
                 countdown = setInfo.getCountdown();
                 if (!TextUtils.isEmpty(countdown)) {
                     String[] s = countdown.split("_");
                     if (s.length >= 3) {
+                        String symbol = s[1];
                         int value = Integer.parseInt(s[2]);
-                        int hour = value / (60 * 60);
-                        int min = (value % (60 * 60)) / (60);
-                        baseView.setCountDown(hour + " h " + min + " min ");
+                        String leftTime = symbol + "  " + value + "  " + context.getString(R.string.m303_second);
+                        baseView.setCountDown(leftTime);
                     }
                 }
             }
@@ -276,7 +276,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
             case DeviceTypeConstant.TYPE_BULB:
                 bean.setLinkType(linkType);
                 if (!baseView.getSwitchChecked() && !baseView.getBrightChecked() && !baseView.getTimeChecked() && !baseView.getTempChecked()) {
-                  MyToastUtils.toast(R.string.m299_least_one_condition);
+                    MyToastUtils.toast(R.string.m299_least_one_condition);
                     return;
                 }
                 SceneBulbSetInfo setInfo = new SceneBulbSetInfo();
@@ -413,8 +413,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
             @Override
             public void onCreateBodyView(View view) {
                 TextView tvTitle = view.findViewById(R.id.tv_title);
-                TextView tvLess = view.findViewById(R.id.tv_less);
-                TextView tvGreater = view.findViewById(R.id.tv_greater);
+                RadioGroup radioGroup = view.findViewById(R.id.rg_compared);
                 TextView tvValue = view.findViewById(R.id.tv_value);
                 AppCompatSeekBar seekPercent = view.findViewById(R.id.seek_percent);
                 TextView btnCancel = view.findViewById(R.id.btn_cancel);
@@ -423,18 +422,27 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 TextView tvMinus = view.findViewById(R.id.tv_minus);
                 TextView tvPlus = view.findViewById(R.id.tv_plus);
                 tvTitle.setText(R.string.m91_bright_ness);
-                tvLess.setVisibility(View.GONE);
-                tvGreater.setVisibility(View.GONE);
-                tvValue.setText(0 + "%");
-
+                tvValue.setText(0 + "");
+                seekPercent.setMax(990);
+                radioGroup.check(R.id.rb_equal);
                 if (!TextUtils.isEmpty(bright)) {
                     String[] s = bright.split("_");
                     if (s.length >= 3) {
                         int value = Integer.parseInt(s[2]);
-                        //亮度的范围是10-1000，所以计算百分比需要减去10
-                        int brightValue = value / 10;
-                        seekPercent.setProgress(brightValue);
-                        tvValue.setText(brightValue + "%");
+                        seekPercent.setProgress(value - 10);
+                        tvValue.setText(value + "");
+                        String symbol=s[1];
+                        switch (symbol){
+                            case "less":
+                                radioGroup.check(R.id.rb_less);
+                                break;
+                            case "equal":
+                                radioGroup.check(R.id.rb_equal);
+                                break;
+                            case "greater":
+                                radioGroup.check(R.id.rb_greater);
+                                break;
+                        }
                     }
                 }
 
@@ -454,32 +462,11 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                     }
                 });
 
-                tvLess.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        tvLess.setTextColor(ContextCompat.getColor(context, R.color.white));
-                        tvLess.setBackgroundResource(R.drawable.shape_theme_solid);
-                        tvGreater.setTextColor(ContextCompat.getColor(context, R.color.color_text_33));
-                        tvGreater.setBackgroundResource(R.drawable.shape_edit_stroke);
-                    }
-                });
-
-
-                tvGreater.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        tvGreater.setTextColor(ContextCompat.getColor(context, R.color.white));
-                        tvGreater.setBackgroundResource(R.drawable.shape_theme_solid);
-                        tvLess.setTextColor(ContextCompat.getColor(context, R.color.color_text_33));
-                        tvLess.setBackgroundResource(R.drawable.shape_edit_stroke);
-                    }
-                });
-
 
                 seekPercent.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        String value = progress + "%";
+                        String value = String.valueOf(progress + 10);
                         tvValue.setText(value);
                     }
 
@@ -513,12 +500,23 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 btnOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int progress = seekPercent.getProgress();
-                        String value = progress + "%";
+                        int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+                        String symbol = "less";
+                        switch (checkedRadioButtonId) {
+                            case R.id.rb_less:
+                                symbol = "less";
+                                break;
+                            case R.id.rb_equal:
+                                symbol = "equal";
+                                break;
+                            case R.id.rb_greater:
+                                symbol = "greater";
+                                break;
+                        }
+                        int progress = seekPercent.getProgress() + 10;
+                        String value = symbol + " " + progress;
                         baseView.setBright(value);
-                        //亮度的范围是10-1000，所以计算百分比需要减去10
-                        int light = (progress * (1000 - 10)) / 100 + 10;
-                        bright = "0_equal_" + light;
+                        bright = "0_" + symbol + "_" + progress;
                         dialogFragment.dismiss();
                     }
                 });
@@ -537,8 +535,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
             @Override
             public void onCreateBodyView(View view) {
                 TextView tvTitle = view.findViewById(R.id.tv_title);
-                TextView tvLess = view.findViewById(R.id.tv_less);
-                TextView tvGreater = view.findViewById(R.id.tv_greater);
+                RadioGroup radioGroup = view.findViewById(R.id.rg_compared);
                 TextView tvValue = view.findViewById(R.id.tv_value);
                 AppCompatSeekBar seekPercent = view.findViewById(R.id.seek_percent);
                 TextView btnCancel = view.findViewById(R.id.btn_cancel);
@@ -547,18 +544,27 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 TextView tvMinus = view.findViewById(R.id.tv_minus);
                 TextView tvPlus = view.findViewById(R.id.tv_plus);
                 tvTitle.setText(R.string.m92_colour_temp);
-                tvLess.setVisibility(View.GONE);
-                tvGreater.setVisibility(View.GONE);
-                tvValue.setText(0 + "%");
-
+                tvValue.setText(0 + "");
+                seekPercent.setMax(1000);
+                radioGroup.check(R.id.rb_equal);
                 if (!TextUtils.isEmpty(temp)) {
                     String[] s = temp.split("_");
                     if (s.length >= 3) {
                         int value = Integer.parseInt(s[2]);
-                        //亮度的范围是10-1000，所以计算百分比需要减去10
-                        int brightValue = value / 10;
-                        seekPercent.setProgress(brightValue);
-                        tvValue.setText(brightValue + "%");
+                        seekPercent.setProgress(value);
+                        tvValue.setText(value + "");
+                        String symbol=s[1];
+                        switch (symbol){
+                            case "less":
+                                radioGroup.check(R.id.rb_less);
+                                break;
+                            case "equal":
+                                radioGroup.check(R.id.rb_equal);
+                                break;
+                            case "greater":
+                                radioGroup.check(R.id.rb_greater);
+                                break;
+                        }
                     }
                 }
 
@@ -581,7 +587,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 seekPercent.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        String value = progress + "%";
+                        String value = progress + "";
                         tvValue.setText(value);
                     }
 
@@ -615,12 +621,144 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 btnOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+                        String symbol = "less";
+                        switch (checkedRadioButtonId) {
+                            case R.id.rb_less:
+                                symbol = "less";
+                                break;
+                            case R.id.rb_equal:
+                                symbol = "equal";
+                                break;
+                            case R.id.rb_greater:
+                                symbol = "greater";
+                                break;
+                        }
+
                         int progress = seekPercent.getProgress();
-                        String value = progress + "%";
+                        String value = symbol + " " + progress;
                         baseView.setTemp(value);
-                        //亮度的范围是10-1000，所以计算百分比需要减去10
-                        int light = (progress * (1000 - 10)) / 100 + 10;
-                        temp = "0_equal_" + light;
+                        temp = "0_" + symbol + "_" + progress;
+                        dialogFragment.dismiss();
+                    }
+                });
+            }
+        });
+    }
+
+
+    public void setTime() {
+        View bodyView = LayoutInflater.from(context).inflate(R.layout.layout_dialog_progress, null, false);
+        dialogFragment = CircleDialogUtils.showCommentBodyDialog(bodyView, ((FragmentActivity) context).getSupportFragmentManager(), new OnCreateBodyViewListener() {
+            @Override
+            public void onCreateBodyView(View view) {
+                TextView tvTitle = view.findViewById(R.id.tv_title);
+                RadioGroup radioGroup = view.findViewById(R.id.rg_compared);
+                TextView tvValue = view.findViewById(R.id.tv_value);
+                AppCompatSeekBar seekPercent = view.findViewById(R.id.seek_percent);
+                TextView btnCancel = view.findViewById(R.id.btn_cancel);
+                TextView btnDelete = view.findViewById(R.id.btn_delete);
+                TextView btnOk = view.findViewById(R.id.btn_ok);
+                TextView tvMinus = view.findViewById(R.id.tv_minus);
+                TextView tvPlus = view.findViewById(R.id.tv_plus);
+                tvTitle.setText(R.string.m145_left_time);
+                radioGroup.check(R.id.rb_equal);
+                tvValue.setText(0 + "");
+                seekPercent.setMax(86400);
+                if (!TextUtils.isEmpty(countdown)) {
+                    String[] s = countdown.split("_");
+                    if (s.length >= 3) {
+                        int value = Integer.parseInt(s[2]);
+                        seekPercent.setProgress(value);
+                        String time = value + "  " + context.getString(R.string.m303_second);
+                        tvValue.setText(time);
+                        String symbol=s[1];
+                        switch (symbol){
+                            case "less":
+                                radioGroup.check(R.id.rb_less);
+                                break;
+                            case "equal":
+                                radioGroup.check(R.id.rb_equal);
+                                break;
+                            case "greater":
+                                radioGroup.check(R.id.rb_greater);
+                                break;
+                        }
+                    }
+                }
+
+                tvMinus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int progress = seekPercent.getProgress();
+                        seekPercent.setProgress(--progress);
+                    }
+                });
+
+                tvPlus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int progress = seekPercent.getProgress();
+                        seekPercent.setProgress(++progress);
+                    }
+                });
+
+                seekPercent.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        String value = progress + "  " + context.getString(R.string.m303_second);
+                        tvValue.setText(value);
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                });
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        dialogFragment.dismiss();
+                    }
+                });
+
+                btnDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        countdown = null;
+                        baseView.setCountDown("");
+                        dialogFragment.dismiss();
+                    }
+                });
+
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+                        String symbol = "less";
+                        switch (checkedRadioButtonId) {
+                            case R.id.rb_less:
+                                symbol = "less";
+                                break;
+                            case R.id.rb_equal:
+                                symbol = "equal";
+                                break;
+                            case R.id.rb_greater:
+                                symbol = "greater";
+                                break;
+                        }
+
+                        int progress = seekPercent.getProgress();
+                        String value = symbol + "  " + progress + "  " + context.getString(R.string.m303_second);
+                        baseView.setCountDown(value);
+                        countdown = "0_" + symbol + "_" + progress;
                         dialogFragment.dismiss();
                     }
                 });

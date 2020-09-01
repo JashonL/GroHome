@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/dp_16"
-        app:layout_constraintBottom_toTopOf="@+id/btn_save"
+        android:layout_marginBottom="@dimen/dp_10"
+        app:layout_constraintBottom_toTopOf="@+id/btn_delete"
         app:layout_constraintTop_toBottomOf="@+id/headerView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -440,9 +441,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="@dimen/dp_48"
-        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_48"
-        android:layout_marginBottom="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_10"
         android:background="@color/white"
         android:minWidth="@dimen/dp_250"
         android:padding="@dimen/dp_5"

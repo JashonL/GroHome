@@ -44,7 +44,7 @@ public class GroDeviceBean implements MultiItemEntity {
 
     //shineBoost
     private String temperature;
-    private String mode;
+
 
 
     private SchemaDpdBean  dpd;
@@ -300,13 +300,7 @@ public class GroDeviceBean implements MultiItemEntity {
         this.temperature = temperature;
     }
 
-    public String getMode() {
-        return mode;
-    }
 
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
 
 
     @Override
