@@ -99,9 +99,7 @@ public class DeviceBulb extends BaseDevice {
     }
 
    /**************************获取dpid*************************************/
-    public static String getBulbSwitchLed(){
-        return BULB_SWITCH_LED;
-    }
+    public static String getBulbSwitchLed(){return BULB_SWITCH_LED;}
 
     public static String getBulbWorkMode() {
         return BULB_WORK_MODE;

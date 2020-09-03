@@ -199,15 +199,15 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     @Override
     public void setCuntDown(String countdown) {
         if (!CommentUtils.isStringEmpty(countdown) && !"0".equals(countdown)) {
-            tvLeftTimeTitle.setVisibility(View.VISIBLE);
-            tvLeftTimeValue.setVisibility(View.VISIBLE);
-            tvLeftDown.setVisibility(View.GONE);
-
             int time = Integer.parseInt(countdown);
             int hour = time / (60 * 60);
             int min = (time % (60 * 60)) / (60);
             countdown = hour + " h " + min + " min ";
             tvLeftTimeValue.setText(countdown);
+
+            tvLeftTimeTitle.setVisibility(View.VISIBLE);
+            tvLeftTimeValue.setVisibility(View.VISIBLE);
+            tvLeftDown.setVisibility(View.GONE);
         } else {
             tvLeftTimeTitle.setVisibility(View.GONE);
             tvLeftTimeValue.setVisibility(View.GONE);

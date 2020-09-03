@@ -207,6 +207,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="@dimen/dp_10"
+                        android:drawableEnd="@drawable/icon_arrow_s"
                         android:text="@string/m217_all_conditions_are_met"
                         android:textColor="@color/color_text_66"
                         android:textSize="@dimen/size_content_sp_12"

@@ -119,34 +119,64 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 if (!TextUtils.isEmpty(mode)) {
                     String[] s = mode.split("_");
                     if (s.length >= 3) {
-                        index = Integer.parseInt(s[2]);
-                        baseView.selectedMode(modes[index - 1]);
+                        try {
+                            int isEnable = Integer.parseInt(s[0]);
+                            if (isEnable != 0){
+                                index = Integer.parseInt(s[2]);
+                                baseView.selectedMode(modes[index - 1]);
+                            }
+
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 temp = setInfo.getTemp();
                 if (!TextUtils.isEmpty(temp)) {
                     String[] s = temp.split("_");
                     if (s.length >= 3) {
-                        int value = Integer.parseInt(s[2]);
-                        baseView.setTemp(value + "");
+                        try {
+                            int isEnable = Integer.parseInt(s[0]);
+                            if (isEnable != 0) {
+                                int value = Integer.parseInt(s[2]);
+                                baseView.setTemp(value + "");
+                            }
+
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 bright = setInfo.getBright();
                 if (!TextUtils.isEmpty(bright)) {
                     String[] s = bright.split("_");
                     if (s.length >= 3) {
-                        int value = Integer.parseInt(s[2]);
-                        //亮度的范围是10-1000，所以计算百分比需要减去10
-                        baseView.setBright(value + "");
+                        try {
+                            int isEnable = Integer.parseInt(s[0]);
+                            if (isEnable != 0){
+                                int value = Integer.parseInt(s[2]);
+                                //亮度的范围是10-1000，所以计算百分比需要减去10
+                                baseView.setBright(value + "");
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 countdown = setInfo.getCountdown();
                 if (!TextUtils.isEmpty(countdown)) {
                     String[] s = countdown.split("_");
                     if (s.length >= 3) {
-                        int value = Integer.parseInt(s[2]);
-                        String leftTime = value + "  " + context.getString(R.string.m303_second);
-                        baseView.setCountDown(leftTime);
+                        try {
+                            int isEnable = Integer.parseInt(s[0]);
+                            if (isEnable != 0){
+                                int value = Integer.parseInt(s[2]);
+                                String leftTime = value + "  " + context.getString(R.string.m303_second);
+                                baseView.setCountDown(leftTime);
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -266,6 +296,18 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
             case DeviceTypeConstant.TYPE_BULB:
                 bean.setLinkType(linkType);
                 SceneBulbSetInfo setInfo = new SceneBulbSetInfo();
+                if (TextUtils.isEmpty(mode)){
+                    mode="0_equal_1";
+                }
+                if (TextUtils.isEmpty(bright)){
+                    bright="0_equal_10";
+                }
+                if (TextUtils.isEmpty(countdown)){
+                    countdown="0_equal_0";
+                }
+                if (TextUtils.isEmpty(temp)){
+                    temp="0_equal_0";
+                }
                 setInfo.setMode(mode);
                 setInfo.setBright(bright);
                 setInfo.setCountdown(countdown);
@@ -311,17 +353,25 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 if (!TextUtils.isEmpty(mode)) {
                     String[] s = mode.split("_");
                     if (s.length >= 3) {
-                        index = Integer.parseInt(s[2]);
-                        switch (index) {
-                            case 1:
-                                radioWhite.setChecked(true);
-                                break;
-                            case 2:
-                                radioColour.setChecked(true);
-                                break;
-                            case 3:
-                                radioScenes.setChecked(true);
-                                break;
+                        try {
+                            int isEnable = Integer.parseInt(s[0]);
+                            if (isEnable != 0){
+                                index = Integer.parseInt(s[2]);
+                                switch (index) {
+                                    case 1:
+                                        radioWhite.setChecked(true);
+                                        break;
+                                    case 2:
+                                        radioColour.setChecked(true);
+                                        break;
+                                    case 3:
+                                        radioScenes.setChecked(true);
+                                        break;
+                                }
+                            }
+
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
                         }
                     }
 
@@ -347,16 +397,16 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                     @Override
                     public void onClick(View v) {
                         if (radioWhite.isChecked()) {
-                            mode = "0_equal_" + 1;
+                            mode = "1_equal_" + 1;
                             baseView.selectedMode(modes[0]);
                         }
                         if (radioColour.isChecked()) {
-                            mode = "0_equal_" + 2;
+                            mode = "1_equal_" + 2;
                             baseView.selectedMode(modes[1]);
                         }
                         if (radioScenes.isChecked()) {
                             baseView.selectedMode(modes[2]);
-                            mode = "0_equal_" + 3;
+                            mode = "1_equal_" + 3;
                         }
                         dialogFragment.dismiss();
                     }
@@ -391,10 +441,16 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 if (!TextUtils.isEmpty(bright)) {
                     String[] s = bright.split("_");
                     if (s.length >= 3) {
-                        int value = Integer.parseInt(s[2]);
-                        //亮度的范围是10-1000，所以计算百分比需要减去10
-                        seekPercent.setProgress(value - 10);
-                        tvValue.setText(value + "");
+                        try {
+                            int enable=Integer.parseInt(s[0]);
+                            if (enable==0)return;
+                            int value = Integer.parseInt(s[2]);
+                            //亮度的范围是10-1000，所以计算百分比需要减去10
+                            seekPercent.setProgress(value - 10);
+                            tvValue.setText(value + "");
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
@@ -455,7 +511,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                         int progress = seekPercent.getProgress() + 10;
                         String value = progress + "";
                         baseView.setBright(value);
-                        bright = "0_equal_" + progress;
+                        bright = "1_equal_" + progress;
                         dialogFragment.dismiss();
                     }
                 });
@@ -489,9 +545,15 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 if (!TextUtils.isEmpty(temp)) {
                     String[] s = temp.split("_");
                     if (s.length >= 3) {
-                        int value = Integer.parseInt(s[2]);
-                        seekPercent.setProgress(value);
-                        tvValue.setText(value + "");
+                        try {
+                            int enable=Integer.parseInt(s[0]);
+                            if (enable==0)return;
+                            int value = Integer.parseInt(s[2]);
+                            seekPercent.setProgress(value);
+                            tvValue.setText(value + "");
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
@@ -551,7 +613,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                         int progress = seekPercent.getProgress();
                         String value = progress + "";
                         baseView.setTemp(value);
-                        temp = "0_equal_" + progress;
+                        temp = "1_equal_" + progress;
                         dialogFragment.dismiss();
                     }
                 });
@@ -581,10 +643,16 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 if (!TextUtils.isEmpty(countdown)) {
                     String[] s = countdown.split("_");
                     if (s.length >= 3) {
-                        int value = Integer.parseInt(s[2]);
-                        seekPercent.setProgress(value);
-                        String time = value + "  " + context.getString(R.string.m303_second);
-                        tvValue.setText(time);
+                        try {
+                            int enable=Integer.parseInt(s[0]);
+                            if (enable==0)return;
+                            int value = Integer.parseInt(s[2]);
+                            seekPercent.setProgress(value);
+                            String time = value + "  " + context.getString(R.string.m303_second);
+                            tvValue.setText(time);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
@@ -644,7 +712,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                         int progress = seekPercent.getProgress();
                         String value = progress + "  " + context.getString(R.string.m303_second);
                         baseView.setCountDown(value);
-                        countdown = "0_equal_" + progress;
+                        countdown = "1_equal_" + progress;
                         dialogFragment.dismiss();
                     }
                 });
@@ -675,7 +743,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
             public void ok(boolean status, int hour, int min) {
                 if (status) {
                     int value = hour * 3600 + min * 60;
-                    countdown = "0_equal_" + value;
+                    countdown = "1_equal_" + value;
                     baseView.setCountDown(hour + " h " + min + " min ");
                 }
                 dialogFragment.dismiss();

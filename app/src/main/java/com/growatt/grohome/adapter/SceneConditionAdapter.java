@@ -101,26 +101,63 @@ public class SceneConditionAdapter extends BaseQuickAdapter<SceneConditionBean, 
                     String temp = setInfo.getTemp();
                     if (!TextUtils.isEmpty(bright)) {
                         String[] s = bright.split("_");
-                        int value = Integer.parseInt(s[2]);
-                        String symbol=s[1];
-                        setting.append(mContext.getString(R.string.m91_bright_ness)).append(":").append(symbol).append(value).append(",");
+                        int value = 0;
+                        int enable=0;
+                        try {
+                            enable = Integer.parseInt(s[0]);
+                            value = Integer.parseInt(s[2]);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                        if (enable!=0) {
+                            String symbol = s[1];
+                            setting.append(mContext.getString(R.string.m91_bright_ness)).append(":").append(symbol).append(value).append(",");
+                        }
                     }
                     if (!TextUtils.isEmpty(countdown)) {
                         String[] s = countdown.split("_");
-                        int value = Integer.parseInt(s[2]);
-                        String symbol=s[1];
-                        setting.append(mContext.getString(R.string.m145_left_time)).append(":").append(symbol).append(value).append(mContext.getString(R.string.m303_second)).append(",");
+                        int value = 0;
+                        int enable=0;
+                        try {
+                            enable = Integer.parseInt(s[0]);
+                            value = Integer.parseInt(s[2]);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                        if (enable!=0) {
+                            String symbol = s[1];
+                            setting.append(mContext.getString(R.string.m145_left_time)).append(":").append(symbol).append(value).append(mContext.getString(R.string.m303_second)).append(",");
+                        }
                     }
                     if (!TextUtils.isEmpty(mode)) {
                         String[] s = mode.split("_");
-                        int index = Integer.parseInt(s[2]);
-                        setting.append(mContext.getString(R.string.m298_mode)).append(":").append(modes[index - 1]).append(",");
+                        int index = 0;
+                        int enable=0;
+                        try {
+                            enable = Integer.parseInt(s[0]);
+                            index = Integer.parseInt(s[2]);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (enable!=0&&index>0) {
+                            setting.append(mContext.getString(R.string.m298_mode)).append(":").append(modes[index - 1]).append(",");
+                        }
                     }
                     if (!TextUtils.isEmpty(temp)) {
                         String[] s = temp.split("_");
-                        int value = Integer.parseInt(s[2]);
-                        String symbol=s[1];
-                        setting.append(mContext.getString(R.string.m92_colour_temp)).append(":").append(symbol).append(value).append(",");
+                        int value = 0;
+                        int enable=0;
+                        try {
+                            enable = Integer.parseInt(s[0]);
+                            value = Integer.parseInt(s[2]);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                        if (enable!=0) {
+                            String symbol = s[1];
+                            setting.append(mContext.getString(R.string.m92_colour_temp)).append(":").append(symbol).append(value).append(",");
+                        }
                     }
                 }
                 break;

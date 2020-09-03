@@ -206,6 +206,7 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
         return mPanelAdapter.getData();
     }
 
+
     @Override
     public boolean getSwitchChecked() {
         return cbSwitchUse.isChecked();
@@ -231,10 +232,17 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
         return cbTimeUse.isChecked();
     }
 
+
+
     @Override
     public void selectedMode(String mode) {
-        cbModeUse.setChecked(true);
-        tvBulbModeValue.setText(mode);
+        if (!TextUtils.isEmpty(mode)){
+            cbModeUse.setChecked(true);
+            tvBulbModeValue.setText(mode);
+        }else {
+            cbModeUse.setChecked(false);
+            tvBulbModeValue.setText("");
+        }
     }
 
     @Override
@@ -292,6 +300,11 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
 
     @Override
     public void setSocketUi(String linkType) {
+        if (TextUtils.isEmpty(linkType)){
+            cbSwitchUse.setChecked(false);
+        }else {
+            cbSwitchUse.setChecked(true);
+        }
         if (GlobalConstant.SCENE_DEVICE_OPEN.equals(linkType)) {
             tvSwitchOnoff.setText(R.string.m167_on);
             ivSwitchOnoff.setImageResource(R.drawable.scenes_on);

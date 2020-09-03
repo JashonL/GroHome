@@ -239,7 +239,11 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
 
     @Override
     public void selectedMode(String mode) {
-        tvBulbModeValue.setText(mode);
+        if (!TextUtils.isEmpty(mode)){
+            tvBulbModeValue.setText(mode);
+        }else {
+            tvBulbModeValue.setText("");
+        }
     }
 
     @Override
