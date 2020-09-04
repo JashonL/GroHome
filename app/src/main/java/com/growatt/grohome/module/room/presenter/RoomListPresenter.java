@@ -207,7 +207,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
                     onOff = String.valueOf(deviceBean.getDps().get("1"));//默认获取第一路的开关
                     break;
                 case DeviceTypeConstant.TYPE_BULB:
-                    onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
+                    onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed(devId)));
                     break;
                 case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceStripLights.getBulbSwitchLed()));
@@ -263,19 +263,19 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
             switch (devType) {
                 case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
                 case DeviceTypeConstant.TYPE_BULB:
-                    onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
+                    onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed(devId)));
                     bulb_onoff = "true".equals(onOff);
-                    sendMap.put(DeviceBulb.getBulbSwitchLed(), !bulb_onoff);
+                    sendMap.put(DeviceBulb.getBulbSwitchLed(devId), !bulb_onoff);
                     break;
                 case DeviceTypeConstant.TYPE_PADDLE:
                     onOff = String.valueOf(deviceBean.getDps().get(DevicePlug.getPlugOnoff()));
                     bulb_onoff = "true".equals(onOff);
-                    sendMap.put(DeviceBulb.getBulbSwitchLed(), !bulb_onoff);
+                    sendMap.put(DeviceBulb.getBulbSwitchLed(devId), !bulb_onoff);
                     break;
                 case DeviceTypeConstant.TYPE_THERMOSTAT:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceThermostat.getSwitchThermostat()));
                     bulb_onoff = "true".equals(onOff);
-                    sendMap.put(DeviceBulb.getBulbSwitchLed(), !bulb_onoff);
+                    sendMap.put(DeviceBulb.getBulbSwitchLed(devId), !bulb_onoff);
                     break;
             }
             ITuyaDevice mTuyaDevice = mTuyaDevices.get(devId);
@@ -407,7 +407,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
                             if (object.length() > 2) return;//自动上报，可能导致状态错误
                             while (iterator.hasNext()) {
                                 String key = (String) iterator.next();
-                                if (DeviceBulb.getBulbSwitchLed().equals(key)) {
+                                if (DeviceBulb.getBulbSwitchLed(devId).equals(key)) {
                                     String value = String.valueOf(object.optBoolean(key));
                                     if ("true".equals(value)) {
                                         baseView.upDataStatus(devId, "1");

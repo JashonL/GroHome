@@ -317,7 +317,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
                 CommentUtils.integerToHexstring((int) (hsv[2] * 1000), 4)
                 + CommentUtils.integerToHexstring(temper * 10, 4);
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), whiteScene, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(deviceId), whiteScene, mTuyaDevice, this);
         }
     }
 
@@ -338,7 +338,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
                 + CommentUtils.integerToHexstring(light * 10, 4)
                 + CommentUtils.integerToHexstring((int) (hsv[1] * 1000), 4);
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), whiteScene, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(deviceId), whiteScene, mTuyaDevice, this);
         }
     }
 
@@ -366,7 +366,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED +
                 DeviceBulb.BULB_SCENE_WHITE_STATIC + colour + DeviceBulb.BULB_SCENE_COLOUR_DEFAULT_SPACE;
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), whiteScene, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(deviceId), whiteScene, mTuyaDevice, this);
         }
     }
 
@@ -392,7 +392,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED +
                 DeviceBulb.BULB_SCENE_WHITE_STATIC + colour + DeviceBulb.BULB_SCENE_COLOUR_DEFAULT_SPACE;
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), whiteScene, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(deviceId), whiteScene, mTuyaDevice, this);
         }
     }
 
@@ -419,7 +419,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         String whiteScene = CommentUtils.integerToHexstring(id, 2) + DeviceBulb.BULB_SCENE_WHITE_DEFAULT_SPEED +
                 DeviceBulb.BULB_SCENE_WHITE_STATIC + colour + DeviceBulb.BULB_SCENE_COLOUR_DEFAULT_SPACE;
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), whiteScene, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(deviceId), whiteScene, mTuyaDevice, this);
         }
     }
 
@@ -459,7 +459,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         }
         //发送数据到涂鸦
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), scenes.toString(), mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(deviceId), scenes.toString(), mTuyaDevice, this);
         }
 
         //发送数据到本地
@@ -490,7 +490,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
     public void resetScene() {
         parserScenes();
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), sceneValue, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(deviceId), sceneValue, mTuyaDevice, this);
         }
         ((Activity)context).finish();
     }

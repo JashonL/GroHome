@@ -165,14 +165,14 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         }
 
         //初始化相关数据
-        onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
-        bright = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbBrightValue()));
-        colour = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbColourData()));
-        controdata = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbControlData()));
-        countdown = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbCountdown()));
-        scene = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSceneData()));
-        mode = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbWorkMode()));
-        temp = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbTempValue()));
+        onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed(deviceId)));
+        bright = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbBrightValue(deviceId)));
+        colour = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbColourData(deviceId)));
+        controdata = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbControlData(deviceId)));
+        countdown = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbCountdown(deviceId)));
+        scene = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSceneData(deviceId)));
+        mode = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbWorkMode(deviceId)));
+        temp = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbTempValue(deviceId)));
 
 
         //设置白光
@@ -315,7 +315,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     public void bulbSwitch() {
         if (deviceNotOnline()) {
             boolean bulb_onoff = "true".equals(onOff);
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSwitchLed(), !bulb_onoff, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSwitchLed(deviceId), !bulb_onoff, mTuyaDevice, this);
         }
 
     }
@@ -327,7 +327,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      */
     public void bulbMode(String mode) {
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbWorkMode(), mode, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbWorkMode(deviceId), mode, mTuyaDevice, this);
         }
     }
 
@@ -351,7 +351,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             int newColor = Color.HSVToColor(hsv);
             baseView.setWhiteBgColor(newColor);
             baseView.setWhiteMaskView(newColor);
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbBrightValue(), brightness, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbBrightValue(deviceId), brightness, mTuyaDevice, this);
         }
     }
 
@@ -374,7 +374,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
             int newColor = Color.HSVToColor(hsv);
             baseView.setWhiteBgColor(newColor);
             baseView.setWhiteMaskView(newColor);
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbTempValue(), temper, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbTempValue(deviceId), temper, mTuyaDevice, this);
         }
     }
 
@@ -394,7 +394,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         colour = angle + s + v;
         mColor = color;
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(deviceId), colour, mTuyaDevice, this);
         }
 
 
@@ -435,7 +435,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         String v = CommentUtils.integerToHexstring((int) mVal, 4);
         colour = angle + s + v;
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(deviceId), colour, mTuyaDevice, this);
         }
     }
 
@@ -464,7 +464,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         String v = CommentUtils.integerToHexstring(progress, 4);
         colour = angle + s + v;
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(), colour, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbColourData(deviceId), colour, mTuyaDevice, this);
         }
     }
 
@@ -477,7 +477,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     public void bulbScene(String scene) {
         this.scene = scene;
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(), scene, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(deviceId), scene, mTuyaDevice, this);
         }
     }
 
@@ -557,7 +557,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      */
     private void bulbCountDown() {
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbCountdown(), Integer.parseInt(countdown), mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(DeviceBulb.getBulbCountdown(deviceId), Integer.parseInt(countdown), mTuyaDevice, this);
         }
     }
 
@@ -630,20 +630,20 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                 Iterator iterator = object.keys();
                 while (iterator.hasNext()) {
                     String key = (String) iterator.next();
-                    if (key.equals(DeviceBulb.getBulbSwitchLed())) {
+                    if (key.equals(DeviceBulb.getBulbSwitchLed(deviceId))) {
                         if (object.length() > 2) return;//自动上报，可能导致状态错误
                         //开关
-                        boolean switch_on = object.optBoolean(DeviceBulb.getBulbSwitchLed());
+                        boolean switch_on = object.optBoolean(DeviceBulb.getBulbSwitchLed(deviceId));
                         onOff = String.valueOf(switch_on);
                         baseView.setOnoff(String.valueOf(switch_on));
-                    } else if (key.equals(DeviceBulb.getBulbWorkMode())) {
-                        this.mode = object.optString(DeviceBulb.getBulbWorkMode());
+                    } else if (key.equals(DeviceBulb.getBulbWorkMode(deviceId))) {
+                        this.mode = object.optString(DeviceBulb.getBulbWorkMode(deviceId));
                         baseView.setMode(mode);
-                    } else if (key.equals(DeviceBulb.getBulbSceneData())) {
-                        this.scene = object.optString(DeviceBulb.getBulbSceneData());
+                    } else if (key.equals(DeviceBulb.getBulbSceneData(deviceId))) {
+                        this.scene = object.optString(DeviceBulb.getBulbSceneData(deviceId));
                         baseView.setScene(scene);
-                    } else if (key.equals(DeviceBulb.getBulbCountdown())) {
-                        this.countdown = object.optString(DeviceBulb.getBulbCountdown());
+                    } else if (key.equals(DeviceBulb.getBulbCountdown(deviceId))) {
+                        this.countdown = object.optString(DeviceBulb.getBulbCountdown(deviceId));
                         baseView.setCuntDown(countdown);
                     }
                 }

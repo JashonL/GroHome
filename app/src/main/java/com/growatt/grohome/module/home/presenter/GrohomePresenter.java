@@ -9,13 +9,16 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.bean.BulbDpBean;
 import com.growatt.grohome.bean.HomeDeviceBean;
 import com.growatt.grohome.bean.HomeRoomBean;
+import com.growatt.grohome.bean.SwitchDpBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.constants.GlobalVariable;
 import com.growatt.grohome.module.device.BulbActivity;
 import com.growatt.grohome.module.device.SwitchActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
+import com.growatt.grohome.module.device.manager.DevicePanel;
 import com.growatt.grohome.module.device.manager.DevicePlug;
 import com.growatt.grohome.module.device.manager.DeviceStripLights;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
@@ -74,7 +77,6 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     }
 
 
-
     public void getAlldevice() throws Exception {
         JSONObject requestJson = new JSONObject();
         requestJson.put("userId", App.getUserBean().accountName);
@@ -96,6 +98,39 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                         GlobalVariable.filterEnable = "1".equals(filterEnable);
                         HomeDeviceBean infoData = new Gson().fromJson(bean, HomeDeviceBean.class);
                         baseView.setAllDeviceSuccess(infoData);
+                        JSONArray data = obj.getJSONArray("data");
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject device = data.getJSONObject(i);
+                            JSONObject dpdObject = device.getJSONObject("dpd");
+                            String devType = device.getString("devType");
+                            String deviceId = device.getString("devId");
+                            switch (devType) {
+                                case DeviceTypeConstant.TYPE_BULB:
+                                case DeviceTypeConstant.TYPE_STRIP_LIGHTS: {
+                                    BulbDpBean schma = new Gson().fromJson(dpdObject.toString(), BulbDpBean.class);
+                                    DeviceBulb.sechMap.put(deviceId, schma);
+                                    break;
+                                }
+                                case DeviceTypeConstant.TYPE_PANELSWITCH:
+                                    SwitchDpBean switchSechMap = new SwitchDpBean();
+                                    String countdown = dpdObject.getString("countdown");
+                                    String countdown_scale = dpdObject.getString("countdown_scale");
+                                    switchSechMap.setCountdown(countdown);
+                                    switchSechMap.setCountdown_scale(countdown_scale);
+                                    List<String> switchDpIds = new ArrayList<>();
+                                    Iterator<String> keys = dpdObject.keys();
+                                    while (keys.hasNext()) {
+                                        String key = keys.next();
+                                        if (key.contains("switch_")) {
+                                            String value = dpdObject.getString(key);
+                                            switchDpIds.add(value);
+                                        }
+                                    }
+                                    switchSechMap.setSwitchDpIds(switchDpIds);
+                                    DevicePanel.sechMap.put(deviceId, switchSechMap);
+                                    break;
+                            }
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -157,20 +192,15 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     }
 
 
-
-
     /**
      * 跳转到设备操作页面
      */
-    public void jumpToRoom(String roomList,int position) {
+    public void jumpToRoom(String roomList, int position) {
         Intent intent = new Intent(context, RoomListActivity.class);
-        intent.putExtra(GlobalConstant.ROOM_LIST,roomList);
-        intent.putExtra(GlobalConstant.ROOM_POSITION,position);
+        intent.putExtra(GlobalConstant.ROOM_LIST, roomList);
+        intent.putExtra(GlobalConstant.ROOM_POSITION, position);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
-
-
-
 
 
     /**
@@ -181,17 +211,17 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         Class clazz;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {
             clazz = SwitchActivity.class;
-        } else if (DeviceTypeConstant.TYPE_BULB.equals(devType)||DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(devType)) {
+        } else if (DeviceTypeConstant.TYPE_BULB.equals(devType) || DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(devType)) {
             clazz = BulbActivity.class;
-        }else {
+        } else {
             clazz = BulbActivity.class;
         }
         String deviceBean = new Gson().toJson(bean);
         Intent intent = new Intent(context, clazz);
         intent.putExtra(GlobalConstant.DEVICE_ID, bean.getDevId());
         intent.putExtra(GlobalConstant.DEVICE_NAME, bean.getName());
-        intent.putExtra(GlobalConstant.DEVICE_TYPE,bean.getDevType());
-        intent.putExtra(GlobalConstant.DEVICE_BEAN,deviceBean);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, bean.getDevType());
+        intent.putExtra(GlobalConstant.DEVICE_BEAN, deviceBean);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -216,7 +246,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                     onOff = String.valueOf(deviceBean.getDps().get("1"));//默认获取第一路的开关
                     break;
                 case DeviceTypeConstant.TYPE_BULB:
-                    onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
+                    onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed(devId)));
                     break;
                 case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceStripLights.getBulbSwitchLed()));
@@ -272,19 +302,19 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
             switch (devType) {
                 case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
                 case DeviceTypeConstant.TYPE_BULB:
-                    onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed()));
+                    onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed(devId)));
                     bulb_onoff = "true".equals(onOff);
-                    sendMap.put(DeviceBulb.getBulbSwitchLed(), !bulb_onoff);
+                    sendMap.put(DeviceBulb.getBulbSwitchLed(devId), !bulb_onoff);
                     break;
                 case DeviceTypeConstant.TYPE_PADDLE:
                     onOff = String.valueOf(deviceBean.getDps().get(DevicePlug.getPlugOnoff()));
                     bulb_onoff = "true".equals(onOff);
-                    sendMap.put(DeviceBulb.getBulbSwitchLed(), !bulb_onoff);
+                    sendMap.put(DeviceBulb.getBulbSwitchLed(devId), !bulb_onoff);
                     break;
                 case DeviceTypeConstant.TYPE_THERMOSTAT:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceThermostat.getSwitchThermostat()));
                     bulb_onoff = "true".equals(onOff);
-                    sendMap.put(DeviceBulb.getBulbSwitchLed(), !bulb_onoff);
+                    sendMap.put(DeviceBulb.getBulbSwitchLed(devId), !bulb_onoff);
                     break;
             }
             ITuyaDevice mTuyaDevice = mTuyaDevices.get(devId);
@@ -406,7 +436,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                             if (object.length() > 2) return;//自动上报，可能导致状态错误
                             while (iterator.hasNext()) {
                                 String key = (String) iterator.next();
-                                if (DeviceBulb.getBulbSwitchLed().equals(key)) {
+                                if (DeviceBulb.getBulbSwitchLed(devId).equals(key)) {
                                     String value = String.valueOf(object.optBoolean(key));
                                     if ("true".equals(value)) {
                                         baseView.upDataStatus(devId, "1");
@@ -434,22 +464,22 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
 
     @Override
     public void onRemoved(String devId) {
-        LogUtil.d("设备移除： "+devId);
+        LogUtil.d("设备移除： " + devId);
     }
 
     @Override
     public void onStatusChanged(String devId, boolean online) {
-        LogUtil.d("设备在线状态变化：   "+devId+"      是否在线："+online);
+        LogUtil.d("设备在线状态变化：   " + devId + "      是否在线：" + online);
     }
 
     @Override
     public void onNetworkStatusChanged(String devId, boolean status) {
-        LogUtil.d("设备网络状态变化：   "+devId+"      是否在线："+status);
+        LogUtil.d("设备网络状态变化：   " + devId + "      是否在线：" + status);
     }
 
     @Override
     public void onDevInfoUpdate(String devId) {
-        LogUtil.d("设备信息发生改变：   "+devId);
+        LogUtil.d("设备信息发生改变：   " + devId);
     }
 
     @Override

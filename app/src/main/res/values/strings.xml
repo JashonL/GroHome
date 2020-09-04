@@ -75,7 +75,7 @@
     <string name="m70_share_device">Share device</string>
     <string name="m71_caching">Caching</string>
     <string name="m72_about">About</string>
-    <string name="m73_agreement">Agreement</string>
+    <string name="m73_agreement">User Agreement</string>
     <string name="m74_third_party">Third-Party Access Device</string>
     <string name="m75_alexa">Alexa</string>
     <string name="m76_google_assistant">Google Assistant</string>
@@ -83,7 +83,7 @@
     <string name="m78_faq">FAQ</string>
     <string name="m80_selection">Selection</string>
     <string name="m81_launch_tap_to_run">Launch tap to run</string>
-    <string name="m82_linkage_details">Linkage details</string>
+    <string name="m82_smart">Smart</string>
     <string name="m83_logs">Logs</string>
     <string name="m84_recommend">Recommend</string>
     <string name="m85_add_scenes">Add Scenes</string>

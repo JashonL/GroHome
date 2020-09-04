@@ -1,8 +1,16 @@
 package com.growatt.grohome.module.device.manager;
 
 import com.growatt.grohome.R;
+import com.growatt.grohome.bean.SwitchDpBean;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DevicePanel extends BaseDevice {
+
+    public static Map<String, SwitchDpBean> sechMap = new HashMap<>();
+
+
     @Override
     public String getType() {
         return DeviceTypeConstant.TYPE_PANELSWITCH;

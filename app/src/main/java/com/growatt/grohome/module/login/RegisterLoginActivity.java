@@ -86,7 +86,7 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
         tabTitle.addOnTabSelectedListener(this);
 
         //初始化登录
-        String logHing = getString(R.string.m7_username) + "/" + getString(R.string.m15_email);
+        String logHing = getString(R.string.m15_email);
         etUsername.setHint(logHing);
         etPassword.setHint(R.string.m8_password);
 
