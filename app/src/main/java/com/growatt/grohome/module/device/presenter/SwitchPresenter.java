@@ -16,6 +16,7 @@ import com.growatt.grohome.eventbus.TransferDevMsg;
 import com.growatt.grohome.module.device.DeviceSettingActivity;
 import com.growatt.grohome.module.device.DeviceTimingListActivity;
 import com.growatt.grohome.module.device.EditNameActivity;
+import com.growatt.grohome.module.device.manager.DevicePanel;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.ISwitchView;
 import com.growatt.grohome.tuya.SendDpListener;
@@ -50,6 +51,7 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
     private ITuyaDevice mTuyaDevice;
     private DeviceBean deviceBean;
     private List<String> nameList = new ArrayList<>();
+    private List<String> switchIds;
 
     public SwitchPresenter(ISwitchView baseView) {
         super(baseView);
@@ -163,11 +165,12 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
                         devName = panelObject.getString("name");
                         baseView.setTitle(devName);
                         road = panelSwitchBean.getRoad();
+                        switchIds = DevicePanel.getSwitchIds(deviceId, road);
                         for (int i = 0; i < road; i++) {
                             PanelSwitchBean.SwichBean swichBean = new PanelSwitchBean.SwichBean();
                             swichBean.setId(i + 1);
                             if (deviceBean != null) {
-                                String onOff = String.valueOf(deviceBean.getDps().get(String.valueOf(i + 1)));
+                                String onOff = String.valueOf(deviceBean.getDps().get(switchIds.get(i)));
                                 if (!TextUtils.isEmpty(onOff)) {
                                     swichBean.setOnOff("true".equals(onOff) ? 1 : 0);
                                 }
@@ -175,6 +178,7 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
                             String name = panelObject.getString("code" + swichBean.getId());
                             swichBean.setName(name);
                             swichBean.setCustomName(panelObject.getString("name" + swichBean.getId()));
+                            swichBean.setSwitchId(switchIds.get(i));
                             nameList.add(name);
                             panelSwitchBean.addSwitchBean(swichBean);
                         }
@@ -253,7 +257,9 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
         if (deviceNotOnline()) {
             LinkedHashMap<String, Object> dpMap = new LinkedHashMap<>();
             for (int i = 0; i < panelSwitchBean.getRoad(); i++) {
-                dpMap.put(String.valueOf(i + 1), isOpen);
+                if (i<switchIds.size()){
+                    dpMap.put(switchIds.get(i), isOpen);
+                }
             }
             TuyaApiUtils.sendCommand(dpMap, mTuyaDevice, this);
         }

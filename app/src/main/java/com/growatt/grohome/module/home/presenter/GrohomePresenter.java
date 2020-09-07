@@ -42,6 +42,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -95,9 +96,12 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                     int code = obj.getInt("code");
                     if (0 == code) {
                         String filterEnable = obj.optString("filterEnable", "1");
+                        //是否控制场景添加设备为不重复
                         GlobalVariable.filterEnable = "1".equals(filterEnable);
                         HomeDeviceBean infoData = new Gson().fromJson(bean, HomeDeviceBean.class);
                         baseView.setAllDeviceSuccess(infoData);
+
+                        //---------------------------这段代码用来控制相对应的设备是否动态匹配功能点,如果不用动态的就会使用固定的----------------------------------
                         JSONArray data = obj.getJSONArray("data");
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject device = data.getJSONObject(i);
@@ -123,14 +127,23 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                                         String key = keys.next();
                                         if (key.contains("switch_")) {
                                             String value = dpdObject.getString(key);
-                                            switchDpIds.add(value);
+                                            if (!"-1".equals(value)) {
+                                                switchDpIds.add(value);
+                                            }
                                         }
                                     }
+                                    Collections.sort(switchDpIds, (o1, o2) -> {
+                                        Integer v1 = Integer.valueOf(o1);
+                                        Integer v2 = Integer.valueOf(o2);
+                                        return v1-v2;
+                                    });
                                     switchSechMap.setSwitchDpIds(switchDpIds);
                                     DevicePanel.sechMap.put(deviceId, switchSechMap);
                                     break;
                             }
                         }
+
+                        //---------------------------------------------------------------------------------------------
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -229,9 +242,11 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     /**
      * 获取设备的开关状态
      *
-     * @param devId 设备id
+     * @param device 设备
      */
-    public int initDevOnOff(String devType, String devId) {
+    public int initDevOnOff(HomeDeviceBean.DataBean device) {
+        String devId = device.getDevId();
+        String devType = device.getDevType();
         DeviceBean deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
         String onOff = "false";//设备的开关状态
         if (deviceBean != null) {
@@ -243,7 +258,9 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceThermostat.getSwitchThermostat()));
                     break;
                 case DeviceTypeConstant.TYPE_PANELSWITCH:
-                    onOff = String.valueOf(deviceBean.getDps().get("1"));//默认获取第一路的开关
+                    int road = device.getRoad();
+                    List<String> switchIds = DevicePanel.getSwitchIds(devId, road);
+                    onOff = String.valueOf(deviceBean.getDps().get(switchIds.get(0)));//默认获取第一路的开关
                     break;
                 case DeviceTypeConstant.TYPE_BULB:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed(devId)));
@@ -333,8 +350,11 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         boolean bulb_onoff = onOff == 1;
         LinkedHashMap<String, Object> sendMap = new LinkedHashMap<>();
         if (deviceNotOnline()) {
+            List<String> switchIds = DevicePanel.getSwitchIds(devId, road);
             for (int i = 0; i < road; i++) {
-                sendMap.put(String.valueOf(i + 1), !bulb_onoff);
+                if (i < switchIds.size()) {
+                    sendMap.put(switchIds.get(i), !bulb_onoff);
+                }
             }
             ITuyaDevice mTuyaDevice = mTuyaDevices.get(devId);
             if (mTuyaDevice == null) return;

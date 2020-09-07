@@ -16,6 +16,7 @@ import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.BulbActivity;
 import com.growatt.grohome.module.device.SwitchActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
+import com.growatt.grohome.module.device.manager.DevicePanel;
 import com.growatt.grohome.module.device.manager.DevicePlug;
 import com.growatt.grohome.module.device.manager.DeviceStripLights;
 import com.growatt.grohome.module.device.manager.DeviceThermostat;
@@ -294,8 +295,11 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
         boolean bulb_onoff = onOff == 1;
         LinkedHashMap<String, Object> sendMap = new LinkedHashMap<>();
         if (deviceNotOnline()) {
+            List<String> switchIds = DevicePanel.getSwitchIds(devId, road);
             for (int i = 0; i < road; i++) {
-                sendMap.put(String.valueOf(i + 1), !bulb_onoff);
+                if (i<switchIds.size()){
+                    sendMap.put(switchIds.get(i), !bulb_onoff);
+                }
             }
             ITuyaDevice mTuyaDevice = mTuyaDevices.get(devId);
             if (mTuyaDevice == null) return;

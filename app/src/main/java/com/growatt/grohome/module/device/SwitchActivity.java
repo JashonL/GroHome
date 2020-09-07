@@ -197,7 +197,7 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         if (adapter == mSwitchAdapter) {
             PanelSwitchBean.SwichBean swichBean = mSwitchAdapter.getData().get(position);
-            presenter.singleOnOff(String.valueOf(swichBean.getId()));
+            presenter.singleOnOff(swichBean.getSwitchId());
         }
     }
 

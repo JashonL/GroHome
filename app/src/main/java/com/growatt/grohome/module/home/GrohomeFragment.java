@@ -220,7 +220,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             if (!TuyaApiUtils.isShowDevice(devType)) continue;
             String devId = deviceBean.getDevId();
             presenter.initTuyaDevices(devId);
-            int onOff = presenter.initDevOnOff(devType, devId);
+            int onOff = presenter.initDevOnOff(deviceBean);
             deviceBean.setOnoff(onOff);
             deviceList.add(deviceBean);
         }
@@ -394,9 +394,8 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             for (int i = 0; i < newList.size(); i++) {
                 HomeDeviceBean.DataBean deviceBean = newList.get(i);
                 String devId = deviceBean.getDevId();
-                String devType = deviceBean.getDevType();
                 presenter.initTuyaDevices(devId);
-                int onOff = presenter.initDevOnOff(devType, devId);
+                int onOff = presenter.initDevOnOff(deviceBean);
                 deviceBean.setOnoff(onOff);
             }
             if (mLayoutType == TYPE_LINE) {

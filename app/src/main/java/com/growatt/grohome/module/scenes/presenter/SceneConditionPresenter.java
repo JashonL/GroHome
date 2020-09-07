@@ -25,6 +25,7 @@ import com.growatt.grohome.bean.SceneBulbSetInfo;
 import com.growatt.grohome.bean.SceneConditionBean;
 import com.growatt.grohome.bean.ScenesRoadBean;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.module.device.manager.DevicePanel;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.scenes.view.ISceneConditionView;
 import com.growatt.grohome.utils.CircleDialogUtils;
@@ -229,12 +230,13 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                         }
                         panelSwitchBean.setRoad(road);
                         List<ScenesRoadBean> beanList = new ArrayList<>();
+                        List<String> switchIds = DevicePanel.getSwitchIds(devId, road);
                         for (int i = 0; i < road; i++) {
                             ScenesRoadBean swichBean = new ScenesRoadBean();
                             swichBean.setId(i + 1);
                             String onOff;
                             if (deviceBean != null) {
-                                onOff = String.valueOf(deviceBean.getDps().get(String.valueOf(i + 1)));
+                                onOff = String.valueOf(deviceBean.getDps().get(switchIds.get(i)));
                                 swichBean.setOnOff("true".equals(onOff) ? 1 : 0);
                             }
                             if (GlobalConstant.SCENE_EDIT.equals(createOrEdit)) {

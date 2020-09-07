@@ -32,7 +32,7 @@ public class PanelSwitchBean implements Parcelable {
         private String customName;
         private int id;
         private boolean scenesConditionEnable;
-
+        private String switchId;
 
         public int getOnOff() {
             return onOff;
@@ -72,6 +72,14 @@ public class PanelSwitchBean implements Parcelable {
 
         public void setScenesConditionEnable(boolean scenesConditionEnable) {
             this.scenesConditionEnable = scenesConditionEnable;
+        }
+
+        public String getSwitchId() {
+            return switchId;
+        }
+
+        public void setSwitchId(String switchId) {
+            this.switchId = switchId;
         }
     }
 
