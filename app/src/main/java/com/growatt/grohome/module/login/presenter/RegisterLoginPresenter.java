@@ -296,7 +296,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
             return;
         }
 
-        if (TextUtils.isEmpty(verificationCode) || !this.verificationCode.equals(verificationCode)) {
+        if (TextUtils.isEmpty(this.verificationCode)||TextUtils.isEmpty(verificationCode) || !verificationCode.equals(this.verificationCode)) {
             MyToastUtils.toast(R.string.m181_verificationcode_error);
             return;
         }

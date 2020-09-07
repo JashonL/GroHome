@@ -250,7 +250,7 @@ public class RoomListActivity extends BaseActivity<RoomListPresenter> implements
                 for (int i = 0; i < devList.size(); i++) {
                     GroDeviceBean deviceBean = devList.get(i);
                     presenter.initTuyaDevices(deviceBean.getDevId());
-                    int onOff = presenter.initDevOnOff(deviceBean.getDevType(), deviceBean.getDevId());
+                    int onOff = presenter.initDevOnOff(deviceBean);
                     deviceBean.setOnoff(onOff);
                 }
                 mRoomDevListAdapter.replaceData(devList);

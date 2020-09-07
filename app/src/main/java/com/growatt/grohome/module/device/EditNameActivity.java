@@ -38,6 +38,12 @@ public class EditNameActivity extends BaseActivity<EditNamePresenter> implements
     private MenuItem switchItem;
 
     @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
+
+    @Override
     protected EditNamePresenter createPresenter() {
         return new EditNamePresenter(this, this);
     }
@@ -50,22 +56,20 @@ public class EditNameActivity extends BaseActivity<EditNamePresenter> implements
     @Override
     protected void initViews() {
         toolbar.setNavigationIcon(R.drawable.icon_return);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.nocolor));
         toolbar.inflateMenu(R.menu.menu_right_text);
         switchItem = toolbar.getMenu().findItem(R.id.item_save);
         switchItem.setActionView(R.layout.menu_right_text);
         tvMenuRightText = switchItem.getActionView().findViewById(R.id.tv_right_text);
-        tvMenuRightText.setTextColor(ContextCompat.getColor(this, R.color.white));
-        tvMenuRightText.setText(R.string.m162_reset);
+        tvMenuRightText.setTextColor(ContextCompat.getColor(this, R.color.color_text_33));
+        tvMenuRightText.setText(R.string.m248_save);
         tvTitle.setText(R.string.m148_edit);
-        tvTitle.setTextColor(ContextCompat.getColor(this, R.color.white));
         toolbar.setOnMenuItemClickListener(this);
 
     }
 
     @Override
     protected void initData() {
-
+        presenter.getData();
     }
 
     @Override

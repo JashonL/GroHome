@@ -23,12 +23,15 @@
         android:layout_marginStart="@dimen/dp_10"
         android:gravity="center_vertical"
         android:text="@string/m276_name"
-        android:textColor="@color/color_text_33"
+        android:textColor="@color/color_text_99"
         android:textSize="@dimen/size_title_sp_14"
         app:layout_constraintBottom_toBottomOf="@+id/viewName"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/viewName"
         app:layout_constraintVertical_chainStyle="packed" />
+
+
+
 
     <EditText
         android:id="@+id/etNameValue"

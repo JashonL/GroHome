@@ -235,10 +235,10 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
     /**
      * 跳转到修改名字
      */
-    public void jumpEditName(int switchId) {
+    public void jumpEditName(int switchId,String customName) {
         Intent intent = new Intent(context, EditNameActivity.class);
         intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
-        intent.putExtra(GlobalConstant.DEVICE_NAME, devName);
+        intent.putExtra(GlobalConstant.DEVICE_NAME, customName);
         intent.putExtra(GlobalConstant.DEVICE_SWITCH_ID, switchId);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_PANELSWITCH);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);

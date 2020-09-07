@@ -100,7 +100,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                         GlobalVariable.filterEnable = "1".equals(filterEnable);
                         HomeDeviceBean infoData = new Gson().fromJson(bean, HomeDeviceBean.class);
 
-                        //---------------------------这段代码用来控制相对应的设备是否动态匹配功能点,如果不用动态的就会使用固定的----------------------------------
+                        //---------------------------这段代码用来控制相对应的设备是否动态匹配功能点,如果不用动态(注释掉对应的设备类型即可)的就会使用固定的----------------------------------
                         JSONArray data = obj.getJSONArray("data");
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject device = data.getJSONObject(i);

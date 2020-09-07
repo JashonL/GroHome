@@ -11,7 +11,6 @@ import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.GroDeviceBean;
-import com.growatt.grohome.bean.HomeDeviceBean;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.BulbActivity;
@@ -194,7 +193,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
      *
      * @param device 设备
      */
-    public int initDevOnOff(HomeDeviceBean.DataBean device) {
+    public int initDevOnOff(GroDeviceBean device) {
         String devId = device.getDevId();
         String devType = device.getDevType();
         DeviceBean deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
