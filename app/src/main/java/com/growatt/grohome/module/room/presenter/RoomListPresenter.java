@@ -11,6 +11,7 @@ import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.GroDeviceBean;
+import com.growatt.grohome.bean.HomeDeviceBean;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.device.BulbActivity;
@@ -191,9 +192,11 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
     /**
      * 获取设备的开关状态
      *
-     * @param devId 设备id
+     * @param device 设备
      */
-    public int initDevOnOff(String devType, String devId) {
+    public int initDevOnOff(HomeDeviceBean.DataBean device) {
+        String devId = device.getDevId();
+        String devType = device.getDevType();
         DeviceBean deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
         String onOff = "false";//设备的开关状态
         if (deviceBean != null) {
@@ -205,7 +208,14 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceThermostat.getSwitchThermostat()));
                     break;
                 case DeviceTypeConstant.TYPE_PANELSWITCH:
-                    onOff = String.valueOf(deviceBean.getDps().get("1"));//默认获取第一路的开关
+                    int road = device.getRoad();
+                    List<String> switchIds = DevicePanel.getSwitchIds(devId, road);
+                    int count = 0;
+                    for (int i = 0; i < road; i++) {
+                        String status = String.valueOf(deviceBean.getDps().get(switchIds.get(i)));
+                        if ("true".equals(status)) count++;
+                    }
+                    onOff = count == 0 ? "false" : "true";//有一路开启就是开启
                     break;
                 case DeviceTypeConstant.TYPE_BULB:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed(devId)));
@@ -351,7 +361,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
                     case DeviceTypeConstant.TYPE_PANELSWITCH:
                         try {
                             int road = data.get(allDevice).getRoad();
-                            while (iterator.hasNext()) {
+                          /*  while (iterator.hasNext()) {
                                 String key = (String) iterator.next();
                                 String value = String.valueOf(object.optBoolean(key));
                                 if (Integer.parseInt(key) > road) return;
@@ -360,7 +370,17 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
                                 } else {
                                     baseView.upDataStatus(devId, "0");
                                 }
+                            }*/
+                            List<String> switchIds = DevicePanel.getSwitchIds(devId, road);
+                            int count = 0;
+                            deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
+                            if (deviceBean == null) return;
+                            for (int i = 0; i < road; i++) {
+                                String status = String.valueOf(deviceBean.getDps().get(switchIds.get(i)));
+                                if ("true".equals(status)) count++;
                             }
+                            String onOff = count == 0 ? "0" : "1";//有一路开启就是开启
+                            baseView.upDataStatus(devId, onOff);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

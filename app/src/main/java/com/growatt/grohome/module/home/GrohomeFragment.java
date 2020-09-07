@@ -38,6 +38,7 @@ import com.growatt.grohome.module.home.presenter.GrohomePresenter;
 import com.growatt.grohome.module.home.view.IGrohomeView;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.CommentUtils;
+import com.growatt.grohome.utils.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -221,6 +222,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             String devId = deviceBean.getDevId();
             presenter.initTuyaDevices(devId);
             int onOff = presenter.initDevOnOff(deviceBean);
+            LogUtil.d("获取设备开关状态：   setAllDeviceSuccess" +onOff);
             deviceBean.setOnoff(onOff);
             deviceList.add(deviceBean);
         }
@@ -397,6 +399,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
                 presenter.initTuyaDevices(devId);
                 int onOff = presenter.initDevOnOff(deviceBean);
                 deviceBean.setOnoff(onOff);
+                LogUtil.d("获取设备开关状态：   onEventDevTransferBean" +onOff);
             }
             if (mLayoutType == TYPE_LINE) {
                 mGroHomeDevLineAdapter.notifyDataSetChanged();

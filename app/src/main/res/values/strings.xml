@@ -325,7 +325,7 @@
     <string name="m288_sign_out">Sign out?</string>
     <string name="m289_schedule_detail">Schedule your light status according to daily routines</string>
     <string name="m290_light_bulbs_detail">You can control light bulbs with Alexa and Google home to make life easier</string>
-    <string name="m291_logding">Logding</string>
+    <string name="m291_logding">Loading</string>
     <string name="m292_retrievepwd_title">Retrieve Password</string>
     <string name="m293_email_sending_failed">Email sending failed</string>
     <string name="m293_user_does_not_exist">User does not exist</string>

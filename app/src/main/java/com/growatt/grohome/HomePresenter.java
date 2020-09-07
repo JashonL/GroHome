@@ -2,6 +2,7 @@ package com.growatt.grohome;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseBean;
@@ -107,12 +108,13 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
         public void onSuccess(User user) {
             //登录成功处理
             isNeedCreateHome();
+            Log.d("tuyalogin","登录成功");
         }
 
         @Override
         public void onError(String code, String error) {
             //登录失败处理
-
+            Log.d("tuyalogin","登录失败");
         }
     };
 
@@ -171,10 +173,12 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
             public void onSuccess(HomeBean homeBean) {
                 TuyaApiUtils.setIsHomeInit(true);
                 EventBus.getDefault().post(new DeviceStatusMessage());
+                Log.d("initHome","家庭初始化成功");
             }
 
             @Override
             public void onError(String s, String s1) {
+                Log.d("initHome","家庭初始化失败");
             }
         });
     }

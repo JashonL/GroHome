@@ -99,7 +99,6 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                         //是否控制场景添加设备为不重复
                         GlobalVariable.filterEnable = "1".equals(filterEnable);
                         HomeDeviceBean infoData = new Gson().fromJson(bean, HomeDeviceBean.class);
-                        baseView.setAllDeviceSuccess(infoData);
 
                         //---------------------------这段代码用来控制相对应的设备是否动态匹配功能点,如果不用动态的就会使用固定的----------------------------------
                         JSONArray data = obj.getJSONArray("data");
@@ -135,7 +134,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                                     Collections.sort(switchDpIds, (o1, o2) -> {
                                         Integer v1 = Integer.valueOf(o1);
                                         Integer v2 = Integer.valueOf(o2);
-                                        return v1-v2;
+                                        return v1 - v2;
                                     });
                                     switchSechMap.setSwitchDpIds(switchDpIds);
                                     DevicePanel.sechMap.put(deviceId, switchSechMap);
@@ -144,6 +143,8 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                         }
 
                         //---------------------------------------------------------------------------------------------
+
+                        baseView.setAllDeviceSuccess(infoData);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -260,7 +261,12 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                 case DeviceTypeConstant.TYPE_PANELSWITCH:
                     int road = device.getRoad();
                     List<String> switchIds = DevicePanel.getSwitchIds(devId, road);
-                    onOff = String.valueOf(deviceBean.getDps().get(switchIds.get(0)));//默认获取第一路的开关
+                    int count = 0;
+                    for (int i = 0; i < road; i++) {
+                        String status = String.valueOf(deviceBean.getDps().get(switchIds.get(i)));
+                        if ("true".equals(status)) count++;
+                    }
+                    onOff = count == 0 ? "false" : "true";//有一路开启就是开启
                     break;
                 case DeviceTypeConstant.TYPE_BULB:
                     onOff = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSwitchLed(devId)));
@@ -396,7 +402,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                     case DeviceTypeConstant.TYPE_PANELSWITCH:
                         try {
                             int road = deviceList.get(allDevice).getRoad();
-                            while (iterator.hasNext()) {
+                          /*  while (iterator.hasNext()) {
                                 String key = (String) iterator.next();
                                 String value = String.valueOf(object.optBoolean(key));
                                 if (Integer.parseInt(key) > road) return;
@@ -405,7 +411,19 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                                 } else {
                                     baseView.upDataStatus(devId, "0");
                                 }
-                            }
+                            }*/
+
+
+                                List<String> switchIds = DevicePanel.getSwitchIds(devId, road);
+                                int count = 0;
+                                deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
+                                if (deviceBean == null) return;
+                                for (int i = 0; i < road; i++) {
+                                    String status = String.valueOf(deviceBean.getDps().get(switchIds.get(i)));
+                                    if ("true".equals(status)) count++;
+                                }
+                                String onOff = count == 0 ? "0" : "1";//有一路开启就是开启
+                                baseView.upDataStatus(devId, onOff);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
