@@ -56,7 +56,7 @@ public class SceneTaskAdapter extends BaseQuickAdapter<SceneTaskBean, BaseViewHo
                 break;
             case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
             case DeviceTypeConstant.TYPE_BULB:
-                String[] modes = new String[]{mContext.getString(R.string.m298_white), mContext.getString(R.string.m298_colour), mContext.getString(R.string.m10_scenes)};
+                String[] modes = new String[]{mContext.getString(R.string.m306_white), mContext.getString(R.string.m307_colour), mContext.getString(R.string.m10_scenes)};
                 if (DeviceTypeConstant.TYPE_BULB.equals(devType)) {
                     helper.setImageResource(R.id.iv_device_icon, DeviceBulb.getCloseIcon(1));
                 } else {

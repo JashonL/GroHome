@@ -83,7 +83,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
 
     public SceneTaskPrensenter(Context context, ISceneTaskSettingView baseView) {
         super(context, baseView);
-        modes = new String[]{context.getString(R.string.m298_white), context.getString(R.string.m298_colour), context.getString(R.string.m10_scenes)};
+        modes = new String[]{context.getString(R.string.m306_white), context.getString(R.string.m307_colour), context.getString(R.string.m10_scenes)};
     }
 
 

@@ -176,7 +176,7 @@ public class DeviceBulb extends BaseDevice {
         if (dpBean!=null){
             return dpBean.getIsWhite();
         }
-        return "1";
+        return "0";
     }
 
 

@@ -343,20 +343,22 @@
     <string name="m290_light_bulbs_detail">You can control light bulbs with Alexa and Google home to make life easier</string>
     <string name="m291_logding">Loading</string>
     <string name="m292_retrievepwd_title">Retrieve Password</string>
+
     <string name="m293_email_sending_failed">Email sending failed</string>
-    <string name="m293_user_does_not_exist">User does not exist</string>
     <string name="m294_new_password_registered">The new password will be sent to the registered email. Please check it.</string>
-    <string name="m294_transfer_device">Transfer device</string>
     <string name="m295_clear_cache">Clear cache</string>
     <string name="m296_customer_email">Customer email</string>
     <string name="m297_music">Music</string>
     <string name="m298_mode">Mode</string>
-    <string name="m298_white">White</string>
-    <string name="m298_colour">colour</string>
+
     <string name="m299_least_one_condition">Choose at least one condition</string>
     <string name="m300_less">Less</string>
     <string name="m301_qual">Equal</string>
     <string name="m302_greater">Greater</string>
     <string name="m303_second">Second</string>
 
+    <string name="m304_user_does_not_exist">User does not exist</string>
+    <string name="m305_transfer_device">Transfer device</string>
+    <string name="m306_white">White</string>
+    <string name="m307_colour">colour</string>
 </resources>

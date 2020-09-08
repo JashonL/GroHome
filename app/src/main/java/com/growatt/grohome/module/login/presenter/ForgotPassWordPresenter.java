@@ -65,7 +65,7 @@ public class ForgotPassWordPresenter extends BasePresenter<IForgotPasswordView> 
                             MyToastUtils.toast(R.string.m293_email_sending_failed);
                         }
                         if (str.equals("502")) {
-                            MyToastUtils.toast(R.string.m293_user_does_not_exist);
+                            MyToastUtils.toast(R.string.m304_user_does_not_exist);
                         }
                         if (str.equals("503")) {
                             MyToastUtils.toast(R.string.m286_fail_connect_server);
@@ -113,7 +113,7 @@ public class ForgotPassWordPresenter extends BasePresenter<IForgotPasswordView> 
                             MyToastUtils.toast(R.string.m293_email_sending_failed);
                         }
                         if (str.equals("502")) {
-                            MyToastUtils.toast(R.string.m293_user_does_not_exist);
+                            MyToastUtils.toast(R.string.m304_user_does_not_exist);
                         }
                         if (str.equals("503")) {
                             MyToastUtils.toast(R.string.m286_fail_connect_server);
