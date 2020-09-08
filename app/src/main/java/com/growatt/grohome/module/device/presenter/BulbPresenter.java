@@ -72,6 +72,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     private String mode;
     private String temp;
     private DeviceBean deviceBean;
+    private String isWhite;
 
 
     //颜色
@@ -173,7 +174,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         scene = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbSceneData(deviceId)));
         mode = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbWorkMode(deviceId)));
         temp = String.valueOf(deviceBean.getDps().get(DeviceBulb.getBulbTempValue(deviceId)));
-
+        isWhite = DeviceBulb.getBulbIsWhite(deviceId);
 
         //设置白光
         int mWhiteColor;
@@ -234,7 +235,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         baseView.setCuntDown(countdown);
         baseView.setScene(scene);
         baseView.setMode(mode);
-
+        baseView.isWhiteMode(isWhite);
 
         //从服务器获取场景
         requestBulbScene();
@@ -266,18 +267,20 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                     if (code == 0) {
                         JSONObject data = obj.getJSONObject("data");
                         musicOnoff = obj.optString("musicOnoff");
-                        JSONArray modeArray = data.getJSONArray("bulbMode");
-                        for (int i = 0; i < modeArray.length(); i++) {
-                            BulbSceneBean sceneBean = new BulbSceneBean();
-                            JSONObject modeObjcte = modeArray.getJSONObject(i);
-                            sceneBean.setId(modeObjcte.optString("numb", ""));
-                            sceneBean.setName(modeObjcte.optString("name", ""));
-                            if (i == 0 && "1".equals(musicOnoff)) {//有音乐律动
-                                sceneBean.setName(context.getString(R.string.m297_music));
+                        JSONArray modeArray = data.optJSONArray("bulbMode");
+                        if (modeArray!=null){
+                            for (int i = 0; i < modeArray.length(); i++) {
+                                BulbSceneBean sceneBean = new BulbSceneBean();
+                                JSONObject modeObjcte = modeArray.getJSONObject(i);
+                                sceneBean.setId(modeObjcte.optString("numb", ""));
+                                sceneBean.setName(modeObjcte.optString("name", ""));
+                                if (i == 0 && "1".equals(musicOnoff)) {//有音乐律动
+                                    sceneBean.setName(context.getString(R.string.m297_music));
+                                }
+                                sceneBean.setSelected(false);
+                                sceneBean.setSceneValue(modeObjcte.optString("color", ""));
+                                sceneList.add(sceneBean);
                             }
-                            sceneBean.setSelected(false);
-                            sceneBean.setSceneValue(modeObjcte.optString("color", ""));
-                            sceneList.add(sceneBean);
                         }
                     }
                     if (sceneList.size() > 0) {
@@ -572,6 +575,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         intent.putExtra(GlobalConstant.BULB_SCENE_BEAN_LIST, beanListJson);
         intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        intent.putExtra(GlobalConstant.BULB_ISWHITE,isWhite);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 

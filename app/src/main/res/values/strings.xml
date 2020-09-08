@@ -104,6 +104,8 @@
     <string name="m100_go_on">go on</string>
     <string name="m101_switch_wifi">Switch WiFi</string>
     <string name="m102_ap_mode">AP Mode</string>
+    <string name="m103_ap_mode">Confirm that the indicator is flashing slowly</string>
+    <string name="m104_ap_mode">Choose a network distribution method</string>
     <string name="m105_ez_mode">EZ Mode</string>
     <string name="m106_refer_instructions">Please refer to the &quot;instructions&quot; or choose according to the type of equipment networking</string>
     <!--新增-->
@@ -113,6 +115,20 @@
     <string name="m108_device_connect_auto">After the mobile phone is connected to the router, it broadcasts the distribution information, and the device receiving the distribution information automatically connects to the router</string>
     <!--选择配网方式-->
     <string name="m109_select_config_type">Choose a network distribution method</string>
+
+    <string name="m110_privacy_policy">Privacy policy</string>
+    <string name="m111_bluetooth_search">Bluetooth Search</string>
+    <string name="m112_search_two_minutes">The search process may take up to two minutes</string>
+    <string name="m113_please_do_not_during">Please do not perform any operations during this time</string>
+    <string name="m114_find_device_add">Find the device to be added</string>
+    <string name="m115_scanning_nearby">Scanning nearby device…</string>
+    <string name="m116_turn_on_bluetooth">GroHome wants to turn on Bluetooth</string>
+    <string name="m117_allow">ALLOW</string>
+    <string name="m118_deny">DENY</string>
+    <string name="m119_Bluetooth">Bluetooth</string>
+    <string name="m120_Today">Today</string>
+
+
     <!--接通电源确认指示灯在慢闪-->
     <string name="m120_flashing_slowly_set">Turn on the power and make sure the indicator is flashing slowly (3 seconds / 1 time)</string>
     <!--确认指示灯在慢闪-->

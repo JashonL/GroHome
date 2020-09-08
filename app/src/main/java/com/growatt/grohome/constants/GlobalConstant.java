@@ -71,13 +71,21 @@ public class GlobalConstant {
     //**************************开关********************************
     public static final int STATUS_ON = 1;
     public static final int STATUS_OFF = 0;
+
+    public static final String STRING_STATUS_ON = "1";
+    public static final String STRING_STATUS_OFF = "0";
+
     //***************************彩灯场景*******************************
+    public static final String BULB_ISWHITE="iswhite";
     public static final String BULB_SCENE_BEAN = "bulb_scene_bean";
     public static final String BULB_SCENE_BEAN_LIST = "bulb_scene_list";
+
 
     //**************************item类型添加或是其他********************************
     public static final int STATUS_ITEM_DATA= 1;
     public static final int STATUS_ITEM_OTHER = 0;
+
+
 
     //******************************温度符号******************************
     public static final String TEMP_UNIT = "temp_unit";

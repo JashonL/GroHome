@@ -44,13 +44,19 @@
         app:layout_constraintTop_toTopOf="@+id/iv_white_light" />
 
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_scene"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="iv_white_light,iv_colour_light,iv_scenec_light" />
 
     <FrameLayout
         android:id="@+id/rl_device_menu"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
         app:layout_constraintBottom_toTopOf="@+id/v_bottom_background"
-        app:layout_constraintTop_toBottomOf="@+id/iv_white_light">
+        app:layout_constraintTop_toBottomOf="@+id/barrier_scene">
 
         <include
             android:id="@+id/layout_white"
@@ -70,8 +76,7 @@
         <include
             android:id="@+id/layout_offline"
             layout="@layout/bulb_offline"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
     </FrameLayout>
 
@@ -113,9 +118,9 @@
         android:textColor="@color/white"
         android:textSize="@dimen/size_content_sp_14"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tv_left_time_title"
         app:layout_constraintLeft_toLeftOf="@+id/v_bottom_background"
         app:layout_constraintRight_toLeftOf="@+id/iv_switch"
-        app:layout_constraintBottom_toTopOf="@+id/tv_left_time_title"
         app:layout_constraintTop_toTopOf="@+id/v_bottom_background"
         app:layout_constraintVertical_chainStyle="packed" />
 
@@ -131,9 +136,9 @@
         android:textSize="@dimen/size_content_sp_14"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/v_bottom_background"
-        app:layout_constraintTop_toBottomOf="@+id/tv_left_time_value"
         app:layout_constraintLeft_toLeftOf="@+id/v_bottom_background"
-        app:layout_constraintRight_toLeftOf="@+id/iv_switch" />
+        app:layout_constraintRight_toLeftOf="@+id/iv_switch"
+        app:layout_constraintTop_toBottomOf="@+id/tv_left_time_value" />
 
 
     <ImageView

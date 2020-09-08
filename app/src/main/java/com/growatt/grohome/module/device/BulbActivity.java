@@ -1,6 +1,5 @@
 package com.growatt.grohome.module.device;
 
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -175,7 +174,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void setBright(String bright) {
-        if (!TextUtils.isEmpty(bright)) {
+        if (!CommentUtils.isStringEmpty(bright)) {
             try {
                 //亮度的范围是10-1000，所以计算百分比需要减去10
                 int brightValue = (Integer.parseInt(bright) - 10) * 100 / (1000 - 10);
@@ -225,6 +224,14 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             rlvScene.scrollToPosition(id);
             Integer integer = DeviceBulb.getSceneDefultPicRes().get(id);
             sceneBackGround.setBackgroundResource(integer);
+        }
+    }
+
+    @Override
+    public void isWhiteMode(String mode) {
+        if (!"1".equals(mode)){
+            whiteClude.setVisibility(View.GONE);
+            ivWhiteLight.setVisibility(View.GONE);
         }
     }
 

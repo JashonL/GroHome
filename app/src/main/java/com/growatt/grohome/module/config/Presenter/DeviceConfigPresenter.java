@@ -309,7 +309,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
                         intent.putExtra(GlobalConstant.DEVICE_NAME, deviceName);
                         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, true);
                     }
-                    String data = object.getString("data");
+                    String data = object.optString("data");
                     MyToastUtils.toast(data);
                 } catch (Exception e) {
                     e.printStackTrace();

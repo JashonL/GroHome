@@ -167,16 +167,15 @@
                     android:id="@+id/seek_colour"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_20"
-                    app:barHeight="@dimen/dp_10"
                     android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_20"
                     android:layout_marginEnd="@dimen/dp_10"
+                    app:barHeight="@dimen/dp_10"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ll_color_select"
-                    app:thumbDrawable="@drawable/colour"
-                    app:thumbHeight="@dimen/dp_30" />
-
+                    app:thumbDrawable="@drawable/icon_slider"
+                    app:thumbHeight="@dimen/dp_20" />
 
 
                 <ImageView
@@ -253,13 +252,13 @@
                     android:id="@+id/seek_white"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_32"
+                    android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_10"
                     android:max="100"
                     android:progress="0"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:splitTrack="false"
                     android:progressDrawable="@drawable/seek_white_temp"
+                    android:splitTrack="false"
                     android:thumb="@drawable/seek_white_thumb"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"

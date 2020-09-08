@@ -11,6 +11,8 @@ public interface IBulbSceneView extends BaseView {
 
     String getSceneName();
 
+    void isWhite(String isWhite);
+
     void setMode(int mode);
 
     void setSpeed(int speed);

@@ -10,6 +10,11 @@ public class BulbDpBean {
     private String scene_data;
     private String countdown;
     private String control_data;
+    private String debug_data;
+    private String isWhite;
+
+
+
 
 
     public String getSwitch_led() {
@@ -74,5 +79,21 @@ public class BulbDpBean {
 
     public void setControl_data(String control_data) {
         this.control_data = control_data;
+    }
+
+    public String getDebug_data() {
+        return debug_data;
+    }
+
+    public void setDebug_data(String debug_data) {
+        this.debug_data = debug_data;
+    }
+
+    public String getIsWhite() {
+        return isWhite;
+    }
+
+    public void setIsWhite(String isWhite) {
+        this.isWhite = isWhite;
     }
 }

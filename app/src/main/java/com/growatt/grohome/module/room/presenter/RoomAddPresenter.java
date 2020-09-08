@@ -208,8 +208,8 @@ public class RoomAddPresenter extends BasePresenter<IRoomAddView> {
             public void onSuccess(String result) {
                 try {
                     JSONObject obj = new JSONObject(result);
-                    int code = obj.getInt("code");
-                    String data =obj.getString("data");
+                    int code = obj.optInt("code");
+                    String data =obj.optString("data");
                     if (code == 0) {
                      baseView.createRoomSuccess();
                         File file = new File(imagePath);

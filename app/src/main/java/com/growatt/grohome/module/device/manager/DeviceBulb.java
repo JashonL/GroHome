@@ -170,6 +170,16 @@ public class DeviceBulb extends BaseDevice {
     }
 
 
+
+    public static String getBulbIsWhite(String deviceId) {
+        BulbDpBean dpBean = sechMap.get(deviceId);
+        if (dpBean!=null){
+            return dpBean.getIsWhite();
+        }
+        return "1";
+    }
+
+
     /*********************默认场景***********************/
     public static List<String> getSceneCodeName() {
         List<String> codes = new ArrayList<>();
@@ -199,10 +209,10 @@ public class DeviceBulb extends BaseDevice {
 
     public static List<String> getSceneDefultValue() {
         List<String> codes = new ArrayList<>();
-        codes.add("000e0d0000000000000000c80000");
-        codes.add("010e0d0000000000000003e801f4");
-        codes.add("020e0d0000000000000003e803e8");
-        codes.add("030e0d0000000000000001f401f4");
+        codes.add("00464600003003e803e800000000");
+        codes.add("01464600003803e803e800000000");
+        codes.add("02464600043803e803e800000000");
+        codes.add("03464600640003e803e800000000");
         codes.add("04464602007803e803e800000000464602007803e8000a00000000");
         codes.add("05464601000003e803e800000000464601007803e803e80000000046460100f003e803e800000000464601003d03e803e80000000046460100ae03e803e800000000464601011303e803e800000000");
         codes.add("06464601000003e803e800000000464601007803e803e80000000046460100f003e803e800000000");

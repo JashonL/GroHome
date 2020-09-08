@@ -51,6 +51,10 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
     private float[] whiteHsv;
     private int whiteColor;//默认颜色
 
+
+    private String isWhite;//是否有白色
+
+
     //当前选中颜色实例
     private BulbSceneColourBean mCurrentColourBean;
 
@@ -74,7 +78,6 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
     private String name;
 
 
-
     //8个场景列表
     private List<BulbSceneBean> mBulbSceneList = new ArrayList<>();
 
@@ -85,7 +88,9 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
     public BulbScenePresenter(Context context, IBulbSceneView baseView) {
         super(context, baseView);
         deviceId = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_ID);
-        deviceType= ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
+        deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
+        isWhite = ((Activity) context).getIntent().getStringExtra(GlobalConstant.BULB_ISWHITE);
+
         initDevice();
         initColor();
     }
@@ -116,9 +121,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
             return;
         }
         //设备不在线
-        if (!deviceNotOnline()) {
-            return;
-        }
+        deviceNotOnline();
     }
 
 
@@ -201,8 +204,14 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
             dataDeal(colourBeanList);
             baseView.setColous(colourBeanList);
         }
+
+        baseView.isWhite(isWhite);
     }
 
+
+    public String getIsWhite() {
+        return isWhite;
+    }
 
     public void dataDeal(List<BulbSceneColourBean> colourBeanList) {
         if (mCurrentFlashMode != 0 && colourBeanList.size() < 6) {
@@ -441,7 +450,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
                 scenes.append(currentSpeed).append(CommentUtils.integerToHexstring(mCurrentFlashMode, 2));
                 BulbSceneColourBean bulbSceneColourBean = data.get(i);
                 int itemType = bulbSceneColourBean.getItemType();
-                if (itemType==GlobalConstant.STATUS_ITEM_OTHER)break;
+                if (itemType == GlobalConstant.STATUS_ITEM_OTHER) break;
                 float[] hsv = bulbSceneColourBean.getHsv();
                 float[] whiteHsv = bulbSceneColourBean.getWhiteHsv();
                 boolean colour = bulbSceneColourBean.isColour();
@@ -467,7 +476,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         if (mBulbSceneList != null && mBulbSceneList.size() > id) {
             BulbSceneBean bulbSceneBean = mBulbSceneList.get(id);
             bulbSceneBean.setSceneValue(scenes.toString());
-            if (!TextUtils.isEmpty(sceneName)){
+            if (!TextUtils.isEmpty(sceneName)) {
                 bulbSceneBean.setName(sceneName);
             }
             EventBus.getDefault().post(mBulbSceneList);
@@ -480,7 +489,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
             e.printStackTrace();
         }
 
-        ((Activity)context).finish();
+        ((Activity) context).finish();
     }
 
 
@@ -492,7 +501,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(deviceId), sceneValue, mTuyaDevice, this);
         }
-        ((Activity)context).finish();
+        ((Activity) context).finish();
     }
 
 

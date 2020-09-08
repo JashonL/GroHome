@@ -63,14 +63,14 @@ public class BulbSceneColourAdapter extends BaseMultiItemQuickAdapter<BulbSceneC
                 this.nowSelectPosition = position;
                 BulbSceneColourBean itemNow = getItem(nowSelectPosition);
                 //只有没被选中才刷新数据
-                assert itemNow != null;
+                if (itemNow==null)return;
                 if (!itemNow.isSelected()) {
                     itemNow.setSelected(true);
                     notifyDataSetChanged();
                 }
             }else {
                 BulbSceneColourBean itemNow = getItem(position);
-                assert itemNow != null;
+               if (itemNow==null)return;
                 itemNow.setSelected(false);
                 nowSelectPosition=-1;
                 notifyDataSetChanged();

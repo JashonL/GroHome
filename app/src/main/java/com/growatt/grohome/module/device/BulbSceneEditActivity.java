@@ -281,6 +281,13 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     }
 
     @Override
+    public void isWhite(String isWhite) {
+        if (!GlobalConstant.STRING_STATUS_ON.equals(isWhite)){
+            llWhite.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public void setMode(int mode) {
         switch (mode) {
             case 0:
@@ -492,7 +499,12 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     public void onCheckedChanged(int checkedId) {
         switch (checkedId) {
             case R.id.ll_colour:
-                llColour.setBackgroundResource(R.drawable.shape_radio_left_selected);
+                String isWhite = presenter.getIsWhite();
+                if (!GlobalConstant.STRING_STATUS_ON.equals(isWhite)){
+                    llColour.setBackgroundResource(R.drawable.shape_radio_circle);
+                }else {
+                    llColour.setBackgroundResource(R.drawable.shape_radio_left_selected);
+                }
                 llWhite.setBackgroundResource(R.drawable.shape_radio_right_normal);
                 break;
             case R.id.ll_white:

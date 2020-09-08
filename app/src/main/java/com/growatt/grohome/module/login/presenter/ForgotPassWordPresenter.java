@@ -47,9 +47,9 @@ public class ForgotPassWordPresenter extends BasePresenter<IForgotPasswordView> 
             public void onSuccess(String respon) {
                 try {
                     JSONObject jsonObject = new JSONObject(respon);
-                    String success = jsonObject.getString("success");
+                    String success = jsonObject.optString("success","");
                     if ("true".equals(success)) {
-                        String url = jsonObject.getString("msg");
+                        String url = jsonObject.optString("msg","");
                         if (TextUtils.isEmpty(url)) {
                             if (count == 1) {
                                 findPwdByUsername(2);
@@ -60,7 +60,7 @@ public class ForgotPassWordPresenter extends BasePresenter<IForgotPasswordView> 
                         }
                         sendEmailByUser(url);
                     } else {
-                        String str = jsonObject.getString("msg").toString();
+                        String str = jsonObject.optString("msg","").toString();
                         if (str.equals("501")) {
                             MyToastUtils.toast(R.string.m293_email_sending_failed);
                         }

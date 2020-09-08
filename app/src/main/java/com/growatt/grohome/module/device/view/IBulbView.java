@@ -22,6 +22,8 @@ public interface IBulbView extends BaseView {
 
     void setScene(String scene);
 
+    void isWhiteMode(String mode);
+
     void setMode(String mode);
 
     void setTemp(String temp);
