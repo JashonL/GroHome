@@ -86,9 +86,9 @@ public class DeviceTimingSetPresenter extends BasePresenter<IDeviceTimingSetView
             mode = intent.getStringExtra(GlobalConstant.TEMP_MODE);
             road = intent.getStringExtra(GlobalConstant.DEVICE_ROAD);
             initResource();
-            baseView.initViews(deviceType);
+            baseView.initViewsByType(deviceType);
         } else {
-            if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)){
+            if (!DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)){
                 String timingBean = intent.getStringExtra(GlobalConstant.TIMING_BEAN);
                 if (!TextUtils.isEmpty(timingBean)) {
                     DeviceTimingBean deviceTimingBean = new Gson().fromJson(timingBean, DeviceTimingBean.class);
@@ -107,11 +107,11 @@ public class DeviceTimingSetPresenter extends BasePresenter<IDeviceTimingSetView
                     initResource();
                     setOnoffUI();
                     baseView.setTimeValue(timeValue);
-                    baseView.initViews(deviceType);
+                    baseView.initViewsByType(deviceType);
                     setRepeatUI();
                 }
             }else {
-                String switchTimingJson = intent.getStringExtra(GlobalConstant.SWTICH_TIMING_BEAN);
+                String switchTimingJson = intent.getStringExtra(GlobalConstant.TIMING_BEAN);
                 if (!TextUtils.isEmpty(switchTimingJson)) {
                     SwitchTimingBean switchTimingBean = new Gson().fromJson(switchTimingJson, SwitchTimingBean.class);
                     cKey = switchTimingBean.getcKey();
@@ -123,9 +123,10 @@ public class DeviceTimingSetPresenter extends BasePresenter<IDeviceTimingSetView
                     cValue = switchTimingBean.getcValue();
                     tempUnit = intent.getStringExtra(GlobalConstant.TEMP_UNIT);
                     mode = intent.getStringExtra(GlobalConstant.TEMP_MODE);
+                    initResource();
                     setOnoffUI();
                     baseView.setTimeValue(timeValue);
-                    baseView.initViews(deviceType);
+                    baseView.initViewsByType(deviceType);
                     setRepeatUI();
                 }
             }

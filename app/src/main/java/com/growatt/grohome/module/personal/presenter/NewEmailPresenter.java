@@ -186,4 +186,11 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
         }
         return super.handleMessage(msg);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        handler.removeMessages(101);
+        handler.removeMessages(MESSAGE_SHOW_TIMING);
+    }
 }

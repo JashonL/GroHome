@@ -5,7 +5,7 @@ import com.growatt.grohome.base.BaseView;
 public interface IDeviceTimingSetView extends BaseView {
     void showViews(String action);
 
-    void initViews(String type);
+    void initViewsByType(String type);
 
     void setOnoffViews(String onoff);
 

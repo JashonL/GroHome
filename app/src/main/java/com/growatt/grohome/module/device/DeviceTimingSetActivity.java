@@ -3,7 +3,6 @@ package com.growatt.grohome.module.device;
 import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -94,7 +93,7 @@ public class DeviceTimingSetActivity extends BaseActivity<DeviceTimingSetPresent
     }
 
     @Override
-    public void initViews(String type) {
+    public void initViewsByType(String type) {
         if (DeviceTypeConstant.TYPE_THERMOSTAT.equals(type) || DeviceTypeConstant.TYPE_AIRCONDITION.equals(type)) {
             clTemp.setVisibility(View.VISIBLE);
         } else {

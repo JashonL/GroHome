@@ -141,4 +141,10 @@ public class NewEmailActivity extends BaseActivity<NewEmailPresenter> implements
     public void onError(String onError) {
         requestError(onError);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+    }
 }

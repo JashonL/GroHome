@@ -600,8 +600,10 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
         intent.putExtra(GlobalConstant.DEVICE_NAME, devName);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
-        String deviceJson = new Gson().toJson(mGroDeviceBean);
-        intent.putExtra(GlobalConstant.DEVICE_BEAN, deviceJson);
+        if (mGroDeviceBean!=null){
+            String deviceJson = new Gson().toJson(mGroDeviceBean);
+            intent.putExtra(GlobalConstant.DEVICE_BEAN, deviceJson);
+        }
         intent.putExtra(GlobalConstant.ROOM_ID, roomId);
         intent.putExtra(GlobalConstant.ROOM_NAME, roomName);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);

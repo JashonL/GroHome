@@ -363,4 +363,7 @@
     <string name="m307_colour">colour</string>
 
     <string name="m308_application_not_installed">Application not installed</string>
+    <string name="m309_when_status_changs">When device status changs</string>
+
+
 </resources>

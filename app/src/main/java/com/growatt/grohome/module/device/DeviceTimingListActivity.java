@@ -19,9 +19,13 @@ import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.base.BaseBean;
 import com.growatt.grohome.bean.DeviceTimingBean;
 import com.growatt.grohome.customview.LinearDivider;
+import com.growatt.grohome.eventbus.DeviceTimingMsg;
 import com.growatt.grohome.module.device.presenter.DeviceTimingPresenter;
 import com.growatt.grohome.module.device.view.IDeviceTimingView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -95,6 +99,7 @@ public class DeviceTimingListActivity extends BaseActivity<DeviceTimingPresenter
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
         try {
             presenter.refresh();
         } catch (JSONException e) {
@@ -191,5 +196,24 @@ public class DeviceTimingListActivity extends BaseActivity<DeviceTimingPresenter
     @Override
     public void onErrorCode(BaseBean bean) {
         super.onErrorCode(bean);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventUpdata(DeviceTimingMsg bean) {
+        if (bean != null) {
+            //获取列表设备列表
+            try {
+                presenter.refresh();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
