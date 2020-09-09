@@ -243,13 +243,13 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         itemBean.setHsv(defaultHsv);
         itemBean.setColour(defaultColor);
         itemBean.setIsColour(true);
-        itemBean.setWhiteHsv(whiteHsv);//设置一个默认的白光
+        itemBean.setWhiteHsv(whiteHsv);
         itemBean.setWhiteColor(whiteColor);
         itemBean.setSelected(false);
-        itemBean.setItemType(GlobalConstant.STATUS_ITEM_DATA);
-        colourBeanList.add(colourBeanList.size() - 1, itemBean);
+        itemBean.setItemType(GlobalConstant.STATUS_ITEM_DATA);//添加一个彩光
+        colourBeanList.add(itemBean);
         BulbSceneColourBean addBean = new BulbSceneColourBean();
-        addBean.setItemType(GlobalConstant.STATUS_ITEM_OTHER);
+        addBean.setItemType(GlobalConstant.STATUS_ITEM_OTHER);//添加按钮
         colourBeanList.add(addBean);
     }
 
@@ -569,19 +569,8 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         CircleDialogUtils.showSceneFlashMode((FragmentActivity) context, Arrays.asList(modes), new OnLvItemClickListener() {
             @Override
             public boolean onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        setCurrentFlashMode(0);
-                        break;
-                    case 1:
-                        setCurrentFlashMode(1);
-                        break;
-                    case 2:
-                        setCurrentFlashMode(2);
-                        break;
-                    case 3:
-                        break;
-                }
+                if (mCurrentFlashMode == position) return true;
+                setCurrentFlashMode(position);
                 return true;
             }
         });

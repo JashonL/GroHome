@@ -282,7 +282,7 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
 
     @Override
     public void isWhite(String isWhite) {
-        if (!GlobalConstant.STRING_STATUS_ON.equals(isWhite)){
+        if (!GlobalConstant.STRING_STATUS_ON.equals(isWhite)) {
             llWhite.setVisibility(View.GONE);
         }
     }
@@ -303,6 +303,7 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
                     }
                 }
                 mBulbSceneColourAdapter.replaceData(newList);
+
                 presenter.setCurrentColourBean(null);
                 hideColourViews();
                 hideEditViews();
@@ -311,28 +312,27 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
             case 1:
                 gpSpeed.setVisibility(View.VISIBLE);
                 tvFlashModeValue.setText(R.string.m164_flash);
-                if (mBulbSceneColourAdapter.getData().size() > 0) {
-                    if (removeBeans != null && removeBeans.size() > 0) {
-                        mBulbSceneColourAdapter.addData(removeBeans);
-                        removeBeans.clear();
-                    } else {
-                        presenter.modeChange(mBulbSceneColourAdapter.getData());
-                        mBulbSceneColourAdapter.notifyDataSetChanged();
-                    }
+
+                mBulbSceneColourAdapter.addData(removeBeans);
+                removeBeans.clear();
+
+                if (mBulbSceneColourAdapter.getData().size() < 2) {
+                    presenter.modeChange(mBulbSceneColourAdapter.getData());
+                    mBulbSceneColourAdapter.notifyDataSetChanged();
                 }
+
 
                 break;
             case 2:
                 gpSpeed.setVisibility(View.VISIBLE);
                 tvFlashModeValue.setText(R.string.m165_breath);
-                if (mBulbSceneColourAdapter.getData().size() > 0) {
-                    if (removeBeans != null && removeBeans.size() > 0) {
-                        mBulbSceneColourAdapter.addData(removeBeans);
-                        removeBeans.clear();
-                    } else {
-                        presenter.modeChange(mBulbSceneColourAdapter.getData());
-                        mBulbSceneColourAdapter.notifyDataSetChanged();
-                    }
+
+                mBulbSceneColourAdapter.addData(removeBeans);
+                removeBeans.clear();
+
+                if (mBulbSceneColourAdapter.getData().size() < 2) {
+                    presenter.modeChange(mBulbSceneColourAdapter.getData());
+                    mBulbSceneColourAdapter.notifyDataSetChanged();
                 }
                 break;
         }
@@ -500,9 +500,9 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
         switch (checkedId) {
             case R.id.ll_colour:
                 String isWhite = presenter.getIsWhite();
-                if (!GlobalConstant.STRING_STATUS_ON.equals(isWhite)){
+                if (!GlobalConstant.STRING_STATUS_ON.equals(isWhite)) {
                     llColour.setBackgroundResource(R.drawable.shape_radio_circle);
-                }else {
+                } else {
                     llColour.setBackgroundResource(R.drawable.shape_radio_left_selected);
                 }
                 llWhite.setBackgroundResource(R.drawable.shape_radio_right_normal);

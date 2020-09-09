@@ -80,7 +80,7 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
 
 
 
-    @OnClick({R.id.iv_avatar, R.id.tv_username,R.id.cl_cache,R.id.cl_about})
+    @OnClick({R.id.iv_avatar, R.id.tv_username,R.id.cl_cache,R.id.cl_about,R.id.cl_google,R.id.cl_alexa})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_avatar:
@@ -92,6 +92,12 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
                 break;
             case R.id.cl_about:
                 presenter.about();
+                break;
+            case R.id.cl_google:
+                presenter.startGoogleHome();
+                break;
+            case R.id.cl_alexa:
+                presenter.startAmazonAlexa();
                 break;
         }
     }
