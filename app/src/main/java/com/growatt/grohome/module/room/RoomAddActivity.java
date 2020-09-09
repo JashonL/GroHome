@@ -148,7 +148,7 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
 
     private void setImageView(int res){
         tvDefauted.setVisibility(View.GONE);
-        GlideUtils.showImageAct(this, R.drawable.liveroom_m, R.drawable.liveroom_m, R.drawable.liveroom_m, ivRoomImgSelect);
+        GlideUtils.showImageAct(this, R.drawable.liveroom_m, R.drawable.liveroom_m, res, ivRoomImgSelect);
         presenter.savePic(res);
     }
 

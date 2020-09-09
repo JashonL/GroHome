@@ -355,7 +355,7 @@ public class PhotoUtil {
         UCrop.Options options = new UCrop.Options();
         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
         options.setCompressionQuality(80);
-        options.setCircleDimmedLayer(true);
+//        options.setCircleDimmedLayer(true);
         return uCrop.withOptions(options);
     }
 

@@ -101,7 +101,7 @@
             <ImageView
                 android:id="@+id/ivRoomImgSelect"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_150"
+                android:layout_height="@dimen/dp_170"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_14"
@@ -149,7 +149,7 @@
             <ImageView
                 android:id="@+id/ivRoomImg1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_150"
+                android:layout_height="@dimen/dp_170"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_14"
@@ -182,7 +182,7 @@
             <ImageView
                 android:id="@+id/ivRoomImg2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_150"
+                android:layout_height="@dimen/dp_170"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_14"
@@ -215,7 +215,7 @@
             <ImageView
                 android:id="@+id/ivRoomImg3"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_150"
+                android:layout_height="@dimen/dp_170"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_14"
@@ -249,7 +249,7 @@
             <ImageView
                 android:id="@+id/ivRoomImg4"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_150"
+                android:layout_height="@dimen/dp_170"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_14"
