@@ -34,14 +34,15 @@ public class NewEmailActivity extends BaseActivity<NewEmailPresenter> implements
     EditText etEmail;
     @BindView(R.id.btn_send_code)
     Button btnSendCode;
-    @BindView(R.id.v_email_bottom)
-    View vEmailBottom;
     @BindView(R.id.et_code)
     EditText etCode;
-    @BindView(R.id.v_code_bottom)
-    View vCodeBottom;
-    @BindView(R.id.btn_ok)
-    Button btnOk;
+
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarView(statusBarView).init();
+    }
 
     @Override
     protected NewEmailPresenter createPresenter() {
@@ -121,7 +122,6 @@ public class NewEmailActivity extends BaseActivity<NewEmailPresenter> implements
             btnSendCode.setEnabled(false);
         }
     }
-
 
 
     @Override

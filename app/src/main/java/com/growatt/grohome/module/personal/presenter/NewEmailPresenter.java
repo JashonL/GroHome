@@ -14,6 +14,7 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.personal.view.INewEmailView;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
@@ -29,7 +30,8 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
     private String vCode;
 
     private final int TOTAL_TIME = 180;
-    private int TIME_COUNT = TOTAL_TIME;
+    private int count = TOTAL_TIME;
+    private static final int MESSAGE_SHOW_TIMING = 102;
 
     public NewEmailPresenter(INewEmailView baseView) {
         super(baseView);
@@ -42,6 +44,9 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
 
 
     public void sendSms(View v) {
+        //隐藏输入法
+        CommentUtils.hideKeyboard(v);
+
         String email = baseView.getEmail();
         if (TextUtils.isEmpty(email)){
             MyToastUtils.toast(R.string.m176_enter_email);
@@ -49,10 +54,10 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
         }
         //点击之后获取验证码按钮置为灰色
         baseView.getVerificationCode();
-        //隐藏输入法
-        CommentUtils.hideKeyboard(v);
-        vCode = "";
-        String userUrl = App.getUserBean().getUrl();
+
+        String userUrl = GlobalConstant.HTTP_PREFIX +App.getUserBean().getUrl()+ "/newLoginAPI.do?op=validate";
+        //发送消息
+        handler.sendEmptyMessage(MESSAGE_SHOW_TIMING);
         String type = "0";//0代表邮箱
         addDisposable(apiServer.validate(userUrl, type ,email), new BaseObserver<String>(baseView, true) {
             @Override
@@ -63,6 +68,7 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
                     if (result == 1) {
                         vCode = jsonObject.getJSONObject("obj").getString("validate");
                         MyToastUtils.toast(R.string.m200_success);
+                        baseView.getVerificationCode();
                     } else {
                         handler.sendEmptyMessage(101);
                     }
@@ -167,15 +173,14 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
                     }
                 });
                 break;
-            case 102://发送验证码后倒计时
-                TIME_COUNT--;
-                if (TIME_COUNT <= 0) {
-                    baseView.getVerificationCodeEnd();
-                } else {
-                    String countDown=TIME_COUNT+"s";
+            case MESSAGE_SHOW_TIMING://发送验证码后倒计时
+                count--;
+                if (count > 0) {
+                    String countDown=count+"s";
                     baseView.setCountDown(countDown);
-                    //发送消息
-                    handler.sendEmptyMessageDelayed(102, 1000);
+                    handler.sendEmptyMessageDelayed(MESSAGE_SHOW_TIMING, 1000);
+                } else {
+                    baseView.getVerificationCodeEnd();
                 }
                 break;
         }
