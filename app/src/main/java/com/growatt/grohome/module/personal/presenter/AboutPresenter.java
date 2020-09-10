@@ -11,6 +11,7 @@ import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.http.API;
+import com.growatt.grohome.module.personal.AgreementActivity;
 import com.growatt.grohome.module.personal.view.IAboutView;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
@@ -69,5 +70,19 @@ public class AboutPresenter extends BasePresenter<IAboutView> {
             intent.putExtra(GlobalConstant.WEB_URL,GlobalConstant.COMPANY_WEBSITE_EN);
         }
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
+
+    public void startAgreement(){
+        Intent intent =new Intent(context, AgreementActivity.class);
+        intent.putExtra(GlobalConstant.AGREEMENT_OR_POLICY,GlobalConstant.AGREEMENT);
+        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+    }
+
+
+    public void startPolicy(){
+        Intent intent =new Intent(context, AgreementActivity.class);
+        intent.putExtra(GlobalConstant.AGREEMENT_OR_POLICY,GlobalConstant.POLICY);
+        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
     }
 }

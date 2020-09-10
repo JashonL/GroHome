@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommentUtils {
     //判断WiFi是否打开
@@ -429,4 +431,19 @@ public class CommentUtils {
         });
         view.setClipToOutline(true);
     }
+
+
+    public static boolean regexPassword(String password) {
+        boolean flag;
+        try {
+            String check = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$";
+            Pattern regex = Pattern.compile(check);
+            Matcher matcher = regex.matcher(password);
+            flag = matcher.matches();
+        } catch (Exception e) {
+            flag = false;
+        }
+        return flag;
+    }
+
 }

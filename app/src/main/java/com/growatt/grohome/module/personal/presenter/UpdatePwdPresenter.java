@@ -9,6 +9,7 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.login.RegisterLoginActivity;
 import com.growatt.grohome.module.personal.view.IUpdatePwdView;
 import com.growatt.grohome.utils.ActivityUtils;
@@ -28,7 +29,7 @@ public class UpdatePwdPresenter extends BasePresenter<IUpdatePwdView> {
 
 
     public void changePassword() {
-        String userUrl = App.getUserBean().getUrl();
+        String userUrl = GlobalConstant.HTTP_PREFIX+ App.getUserBean().getUrl()+"/newUserAPI.do?op=updateUserPassword";
         String accountName = App.getUserBean().getAccountName();
         String passwordOld = baseView.getOldPassWord();
         String passwordNew = baseView.getNewPassWord();

@@ -138,8 +138,19 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements IAbou
     }
 
 
-    @OnClick(R.id.ll_about_website)
-    public void onViewClicked() {
-        presenter.toWebSite();
+    @OnClick({R.id.ll_about_website,R.id.ll_about_agreement,R.id.ll_about_policy})
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.ll_about_agreement:
+                presenter.startAgreement();
+                break;
+            case R.id.ll_about_website:
+                presenter.toWebSite();
+                break;
+
+            case R.id.ll_about_policy:
+                presenter.startPolicy();
+                break;
+        }
     }
 }

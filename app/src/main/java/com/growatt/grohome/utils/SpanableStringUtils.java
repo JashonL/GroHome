@@ -7,6 +7,7 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 
 /**
  * Created by Administrator on 2019/7/1.
@@ -35,6 +36,9 @@ public class SpanableStringUtils {
         private int flag;
         //设置比例
         private float proportion = -1;
+
+        //添加下划线
+        private boolean isUnderline = false;
 
         public Builder(String text) {
             this.text = text;
@@ -74,6 +78,13 @@ public class SpanableStringUtils {
             return this;
         }
 
+
+        public Builder setUnderLine(boolean isUnderLine) {
+            this.isUnderline = isUnderLine;
+            return this;
+        }
+
+
         private void setSpan() {
             int start = mBuilder.length();
             mBuilder.append(this.text);
@@ -93,6 +104,13 @@ public class SpanableStringUtils {
                 mBuilder.setSpan(new StyleSpan(Typeface.BOLD), start, end, flag);
                 isBold = false;
             }
+
+
+            if (isUnderline) {
+                mBuilder.setSpan(new UnderlineSpan(), start, end, flag);
+                isUnderline = false;
+            }
+
             if (proportion != -1) {
                 mBuilder.setSpan(new RelativeSizeSpan(proportion), start, end, flag);
                 proportion = -1;

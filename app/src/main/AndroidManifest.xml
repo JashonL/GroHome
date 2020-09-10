@@ -127,6 +127,7 @@
         <activity android:name=".module.personal.CacheClearActivity" />
         <activity android:name=".module.personal.AboutActivity"/>
         <activity android:name=".WebViewActivity"/>
+        <activity android:name=".module.personal.AgreementActivity"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

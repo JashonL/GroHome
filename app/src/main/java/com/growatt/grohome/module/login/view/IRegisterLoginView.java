@@ -22,4 +22,5 @@ public interface IRegisterLoginView extends BaseView {
 
     void setZone(String zone);
 
+    boolean isAgreement();
 }

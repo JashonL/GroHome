@@ -132,4 +132,11 @@ public class GlobalConstant {
     //***********************官网********************
     public static final String COMPANY_WEBSITE_CN = "http://www.growatt.com/";
     public static final String COMPANY_WEBSITE_EN = "http://ginverter.com/";
+
+    //************************用户协议***********************
+    public static final String AGREEMENT_OR_POLICY="agreement_or_policy";
+    public static final String AGREEMENT="agreement";
+    public static final String POLICY="policy";
+
+
 }

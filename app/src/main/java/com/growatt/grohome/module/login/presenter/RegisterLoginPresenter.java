@@ -21,6 +21,7 @@ import com.growatt.grohome.http.API;
 import com.growatt.grohome.module.login.CountryListActivity;
 import com.growatt.grohome.module.login.ForgotpasswordActivity;
 import com.growatt.grohome.module.login.view.IRegisterLoginView;
+import com.growatt.grohome.module.personal.AgreementActivity;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MD5andKL;
@@ -280,6 +281,17 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
             return;
         }
 
+        if (regPassword.length()<6) {
+            MyToastUtils.toast(R.string.m282_password_must_six_characters);
+            return;
+        }
+
+        if (!CommentUtils.regexPassword(regPassword)) {
+            MyToastUtils.toast(R.string.m311_password_requires_mix);
+            return;
+        }
+
+
         if (TextUtils.isEmpty(regPassword)) {
             MyToastUtils.toast(R.string.m180_enter_password);
             return;
@@ -291,6 +303,12 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
         }
 
 
+        if (TextUtils.isEmpty(repeatePassword)) {
+            MyToastUtils.toast(R.string.m176_enter_email);
+            return;
+        }
+
+
         if (TextUtils.isEmpty(regEmail)) {
             MyToastUtils.toast(R.string.m176_enter_email);
             return;
@@ -298,6 +316,11 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
 
         if (TextUtils.isEmpty(this.verificationCode)||TextUtils.isEmpty(verificationCode) || !verificationCode.equals(this.verificationCode)) {
             MyToastUtils.toast(R.string.m181_verificationcode_error);
+            return;
+        }
+
+        if (!baseView.isAgreement()) {
+            MyToastUtils.toast(R.string.m312_tick_user_agreement);
             return;
         }
 
@@ -363,6 +386,21 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
         baseView.setZone(currentTimeZone);
     }
 
+
+
+
+    public void startAgreement(){
+        Intent intent =new Intent(context, AgreementActivity.class);
+        intent.putExtra(GlobalConstant.AGREEMENT_OR_POLICY,GlobalConstant.AGREEMENT);
+        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+    }
+
+
+    public void startPolicy(){
+        Intent intent =new Intent(context, AgreementActivity.class);
+        intent.putExtra(GlobalConstant.AGREEMENT_OR_POLICY,GlobalConstant.POLICY);
+        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+    }
 
     @Override
     public boolean handleMessage(@NonNull Message msg) {

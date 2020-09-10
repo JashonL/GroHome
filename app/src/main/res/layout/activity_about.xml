@@ -72,6 +72,34 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/v_policy_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1" />
+
+            <LinearLayout
+                android:id="@+id/ll_about_policy"
+                style="@style/style_about_linearlayout_item">
+
+
+                <TextView
+                    style="@style/style_about_tittle_item"
+                    android:text="@string/m110_privacy_policy" />
+
+                <TextView
+                    android:id="@+id/tv_about_policy"
+                    style="@style/style_about_text_item" />
+
+                <ImageView
+                    android:id="@+id/iv_policy_more"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_sign_more" />
+            </LinearLayout>
+
+
+
+            <View
                 android:id="@+id/v_phone_divider"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1" />

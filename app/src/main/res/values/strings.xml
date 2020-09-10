@@ -364,6 +364,7 @@
 
     <string name="m308_application_not_installed">Application not installed</string>
     <string name="m309_when_status_changs">When device status changs</string>
-
+    <string name="m311_password_requires_mix">Password requires a mix of alphanumerics</string>
+    <string name="m312_tick_user_agreement">Please tick user Agreement</string>
 
 </resources>

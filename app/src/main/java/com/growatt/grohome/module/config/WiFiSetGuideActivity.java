@@ -16,6 +16,8 @@ import butterknife.BindView;
 public class WiFiSetGuideActivity extends BaseActivity<WiFiSetGuidePresenter> implements IWiFiSetGuideView {
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_content)
@@ -24,6 +26,12 @@ public class WiFiSetGuideActivity extends BaseActivity<WiFiSetGuidePresenter> im
     @Override
     protected WiFiSetGuidePresenter createPresenter() {
         return new WiFiSetGuidePresenter(this,this);
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView) .statusBarColor(R.color.white).init();
     }
 
     @Override
