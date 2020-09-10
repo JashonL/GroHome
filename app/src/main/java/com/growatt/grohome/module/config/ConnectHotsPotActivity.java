@@ -25,6 +25,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class ConnectHotsPotActivity extends BaseActivity<ConnectHotsPotPresenter> implements IConnectHotsPotView {
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
@@ -45,6 +47,14 @@ public class ConnectHotsPotActivity extends BaseActivity<ConnectHotsPotPresenter
 
     private boolean isfirst = true;
     private boolean mIsPaused = true;
+
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
+
 
     @Override
     protected ConnectHotsPotPresenter createPresenter() {

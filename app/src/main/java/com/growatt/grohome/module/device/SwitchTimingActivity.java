@@ -2,6 +2,7 @@ package com.growatt.grohome.module.device;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -65,7 +66,15 @@ public class SwitchTimingActivity extends BaseActivity<SwitchTimingPresenter> im
     Button btnDelete;
 
     private PanelTimingAdapter mPtaAdapter;
+    //头部
+    private TextView tvMenuRightText;
+    private MenuItem switchItem;
 
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView) .statusBarColor(R.color.white).init();
+    }
 
     @Override
     protected SwitchTimingPresenter createPresenter() {
@@ -83,6 +92,11 @@ public class SwitchTimingActivity extends BaseActivity<SwitchTimingPresenter> im
         tvTitle.setText(R.string.m146_timer);
         toolbar.setNavigationIcon(R.drawable.icon_return);
         toolbar.inflateMenu(R.menu.menu_right_text);
+        switchItem = toolbar.getMenu().findItem(R.id.item_save);
+        switchItem.setActionView(R.layout.menu_right_text);
+        tvMenuRightText = switchItem.getActionView().findViewById(R.id.tv_right_text);
+        tvMenuRightText.setTextColor(ContextCompat.getColor(this, R.color.white));
+        tvMenuRightText.setText("");
 
         tvName.setText(R.string.m37_panel_switch);
         ivHeadSwitch.setImageResource(R.drawable.scenes_on);

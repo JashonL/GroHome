@@ -65,6 +65,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
         ssid = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_SSID);
         password = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_PASSWORD);
+        tuyaToken = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_TOKEN);
     }
 
 
@@ -72,11 +73,12 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         if (TextUtils.isEmpty(ssid)) {
             return;
         }
-        if (TextUtils.isEmpty(tuyaToken)) {
+        if (mConfigMode == SelectConfigTypeActivity.EC_MODE) {
             getTokenForConfigDevice();
-        } else {
+        } else if (mConfigMode == SelectConfigTypeActivity.AP_MODE) {
             initConfigDevice(tuyaToken);
         }
+
 
     }
 
@@ -258,7 +260,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         context.startActivity(intent);
-        ((FragmentActivity)context).finish();
+        ((FragmentActivity) context).finish();
     }
 
 

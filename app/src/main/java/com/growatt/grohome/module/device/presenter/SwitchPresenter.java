@@ -212,8 +212,10 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
         intent.putExtra(GlobalConstant.ROOM_ID, roomId);
         intent.putExtra(GlobalConstant.ROOM_NAME, roomName);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_PANELSWITCH);
-        String deviceJson = new Gson().toJson(mGroDeviceBean);
-        intent.putExtra(GlobalConstant.DEVICE_BEAN, deviceJson);
+        if (mGroDeviceBean != null) {
+            String deviceJson = new Gson().toJson(mGroDeviceBean);
+            intent.putExtra(GlobalConstant.DEVICE_BEAN, deviceJson);
+        }
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -235,7 +237,7 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
     /**
      * 跳转到修改名字
      */
-    public void jumpEditName(int switchId,String customName) {
+    public void jumpEditName(int switchId, String customName) {
         Intent intent = new Intent(context, EditNameActivity.class);
         intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
         intent.putExtra(GlobalConstant.DEVICE_NAME, customName);
@@ -257,7 +259,7 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
         if (deviceNotOnline()) {
             LinkedHashMap<String, Object> dpMap = new LinkedHashMap<>();
             for (int i = 0; i < panelSwitchBean.getRoad(); i++) {
-                if (i<switchIds.size()){
+                if (i < switchIds.size()) {
                     dpMap.put(switchIds.get(i), isOpen);
                 }
             }
