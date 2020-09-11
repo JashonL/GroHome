@@ -1,5 +1,6 @@
 package com.growatt.grohome.module.device;
 
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -229,9 +230,11 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void isWhiteMode(String mode) {
-        if (!"1".equals(mode)){
-            whiteClude.setVisibility(View.GONE);
-            ivWhiteLight.setVisibility(View.GONE);
+        if (!TextUtils.isEmpty(mode)){
+            if (!"1".equals(mode)){
+                whiteClude.setVisibility(View.GONE);
+                ivWhiteLight.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -547,6 +547,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                         dialogFragment.dismiss();
                     } else {
                         countdown = String.valueOf(0);
+                        dialogFragment.dismiss();
                     }
                     bulbCountDown();
                 }

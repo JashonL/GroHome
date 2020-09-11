@@ -48,18 +48,18 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
         CommentUtils.hideKeyboard(v);
 
         String email = baseView.getEmail();
-        if (TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             MyToastUtils.toast(R.string.m176_enter_email);
             return;
         }
         //点击之后获取验证码按钮置为灰色
         baseView.getVerificationCode();
 
-        String userUrl = GlobalConstant.HTTP_PREFIX +App.getUserBean().getUrl()+ "/newLoginAPI.do?op=validate";
+        String userUrl = GlobalConstant.HTTP_PREFIX + App.getUserBean().getUrl() + "/newLoginAPI.do?op=validate";
         //发送消息
         handler.sendEmptyMessage(MESSAGE_SHOW_TIMING);
         String type = "0";//0代表邮箱
-        addDisposable(apiServer.validate(userUrl, type ,email), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.validate(userUrl, type, email), new BaseObserver<String>(baseView, false) {
             @Override
             public void onSuccess(String respon) {
                 try {
@@ -85,16 +85,15 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
     }
 
 
-
     public void updateUserEmail() {
-        String userUrl =GlobalConstant.HTTP_PREFIX +App.getUserBean().getUrl()+ "/newLoginAPI.do?op=updateValidate";
+        String userUrl = GlobalConstant.HTTP_PREFIX + App.getUserBean().getUrl() + "/newLoginAPI.do?op=updateValidate";
         String accountName = App.getUserBean().getAccountName();
         String email = baseView.getEmail();
-        if (TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             MyToastUtils.toast(R.string.m176_enter_email);
             return;
         }
-        addDisposable(apiServer.updateValidate(userUrl,"0", accountName, email), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.updateValidate(userUrl, "0", accountName, email), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String respon) {
                 try {
@@ -125,12 +124,11 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
     }
 
 
-
     public void updateUser() {
-        String userUrl = App.getUserBean().getUrl();
+        String userUrl = GlobalConstant.HTTP_PREFIX + App.getUserBean().getUrl() + "/newUserAPI.do?op=updateUser";
         String accountName = App.getUserBean().getAccountName();
         String email = baseView.getEmail();
-        if (TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             MyToastUtils.toast(R.string.m176_enter_email);
             return;
         }
@@ -142,12 +140,13 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
                     if (jsonObject.get("success").toString().equals("true")) {
                         Intent intent = new Intent();
                         intent.putExtra("email", email);
-                        ((Activity)context).setResult(Activity.RESULT_OK, intent);
-                        ((Activity)context).finish();
+                        ((Activity) context).setResult(Activity.RESULT_OK, intent);
+                        ((Activity) context).finish();
                     } else if ("701".equals(jsonObject.get("msg").toString())) {
                         MyToastUtils.toast(R.string.m201_fail);
                     } else {
-                        MyToastUtils.toast(R.string.m201_fail);
+                        String s = jsonObject.optString("msg");
+                        MyToastUtils.toast(s);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -176,7 +175,7 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
             case MESSAGE_SHOW_TIMING://发送验证码后倒计时
                 count--;
                 if (count > 0) {
-                    String countDown=count+"s";
+                    String countDown = count + "s";
                     baseView.setCountDown(countDown);
                     handler.sendEmptyMessageDelayed(MESSAGE_SHOW_TIMING, 1000);
                 } else {

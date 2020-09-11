@@ -41,7 +41,7 @@ public class NewEmailActivity extends BaseActivity<NewEmailPresenter> implements
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
-        mImmersionBar.reset().statusBarView(statusBarView).init();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
     }
 
     @Override

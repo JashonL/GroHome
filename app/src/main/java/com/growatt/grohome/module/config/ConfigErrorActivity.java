@@ -72,7 +72,7 @@ public class ConfigErrorActivity extends BaseActivity<ConfigErrorPresenter> impl
 
     @Override
     public void showTipsByMode(int mode) {
-        if (mode == SelectConfigTypeActivity.EC_MODE) {
+        if (mode == SelectConfigTypeActivity.EC_MODE||mode==SelectConfigTypeActivity.BLUETOOTH_MODE) {
             tvSubTitle.setText(R.string.m128_device_not_responding);
             tvErrorTip1.setText(R.string.m130_confirm_device_reset_fast);
             tvErrorTip2.setText(R.string.m135_check_is_2_4GHz);

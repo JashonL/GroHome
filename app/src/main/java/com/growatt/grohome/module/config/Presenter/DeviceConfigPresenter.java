@@ -18,6 +18,7 @@ import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.module.config.ConfigErrorActivity;
 import com.growatt.grohome.module.config.ConfigSuccessActivity;
+import com.growatt.grohome.module.config.DeviceLightStatusActivity;
 import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.model.DeviceBindModel;
@@ -184,7 +185,8 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
                     baseView.showBindDeviceSuccessFinalTip();
                     break;
                 }
-                baseView.showFailurePage(mConfigMode);
+                Result apActivityError = (Result) msg.obj;
+                baseView.showConfigFail(apActivityError.getError(), apActivityError.getError(), mConfigMode);
                 String currentSSID = WiFiUtil.getCurrentSSID(context);
 //                if (BindDeviceUtils.isAPMode())
 //                    WiFiUtil.removeNetwork(mContext, currentSSID);
@@ -192,11 +194,8 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
 
             case DeviceBindModel.WHTA_BLUETOOTH_ACTIVE_ERROR:
                 stopSearch();
-                if (mBindDeviceSuccess) {
-                    baseView.showBindDeviceSuccessFinalTip();
-                    break;
-                }
-                baseView.showFailurePage(mConfigMode);
+                Result bleActivityError = (Result) msg.obj;
+                baseView.showConfigFail(bleActivityError.getError(), bleActivityError.getError(), mConfigMode);
                 break;
 
             case DeviceBindModel.WHAT_EC_ACTIVE_SUCCESS:  //EC激活成功
@@ -290,7 +289,13 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
     }
 
     public void reTryConfig() {
-        Intent intent = new Intent(context, WiFiOptionsActivity.class);
+        Class clazz;
+        if (SelectConfigTypeActivity.BLUETOOTH_MODE==mConfigMode){
+            clazz= DeviceLightStatusActivity.class;
+        }else {
+            clazz=WiFiOptionsActivity.class;
+        }
+        Intent intent = new Intent(context, clazz);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         context.startActivity(intent);
