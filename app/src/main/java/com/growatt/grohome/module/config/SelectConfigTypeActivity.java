@@ -39,8 +39,9 @@ public class SelectConfigTypeActivity extends BaseActivity<SelectConfigPresenter
     @BindView(R.id.cl_slow_flash)
     ConstraintLayout clSlowFlash;
 
-    public static final int AP_MODE = 0;
-    public static final int EC_MODE = 1;
+    public static final int EC_MODE = 0;
+    public static final int AP_MODE = 1;
+    public static final int BLUETOOTH_MODE=2;
     public static final String CONFIG_MODE = "mode";
 
 

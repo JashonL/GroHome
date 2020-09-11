@@ -87,14 +87,14 @@ public class NewEmailPresenter extends BasePresenter<INewEmailView> {
 
 
     public void updateUserEmail() {
-        String userUrl = App.getUserBean().getUrl();
+        String userUrl =GlobalConstant.HTTP_PREFIX +App.getUserBean().getUrl()+ "/newLoginAPI.do?op=updateValidate";
         String accountName = App.getUserBean().getAccountName();
         String email = baseView.getEmail();
         if (TextUtils.isEmpty(email)){
             MyToastUtils.toast(R.string.m176_enter_email);
             return;
         }
-        addDisposable(apiServer.updateValidate(userUrl, accountName, email), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.updateValidate(userUrl,"0", accountName, email), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String respon) {
                 try {

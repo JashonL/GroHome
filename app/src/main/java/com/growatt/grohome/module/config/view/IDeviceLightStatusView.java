@@ -8,6 +8,8 @@ public interface IDeviceLightStatusView extends BaseView {
 
     void dissmissDialog();
 
+    void setMode(int mode);
+
     void getTuyaTokenSuccess();
 
     void getTuyaTokenFails(String errorCode,String errorMsg);

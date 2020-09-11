@@ -114,7 +114,7 @@ public class API {
 
         @FormUrlEncoded
         @POST
-        Observable<String> updateValidate(@Url String url, @Field("userName") String userName, @Field("content") String content);
+        Observable<String> updateValidate(@Url String url, @Field("type")String type,@Field("userName") String userName, @Field("content") String content);
 
 
         @FormUrlEncoded

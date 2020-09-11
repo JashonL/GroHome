@@ -19,7 +19,9 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.module.config.DeviceConfigActivity;
 import com.growatt.grohome.module.config.DeviceLightStatusActivity;
+import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.config.view.IWiFiOptionsView;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;
@@ -32,6 +34,8 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
 
     private String deviceType;
 
+    private String scanJson;
+
     public WiFiOptionsPresenter(IWiFiOptionsView baseView) {
         super(baseView);
     }
@@ -39,6 +43,7 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
     public WiFiOptionsPresenter(Context context, IWiFiOptionsView baseView) {
         super(context, baseView);
         deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
+        scanJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_SCAN_BEAN);
     }
 
 
@@ -145,7 +150,12 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
             show5gNetworkDialog(((FragmentActivity) context).getSupportFragmentManager());
             return;
         }
-        toConfig();
+
+        if (!TextUtils.isEmpty(scanJson)) {//蓝牙配网
+            toBlueToothConfig();
+        } else {
+            toConfig();
+        }
     }
 
 
@@ -154,6 +164,17 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
         intent.putExtra(GlobalConstant.WIFI_SSID, baseView.getWifissid());
         intent.putExtra(GlobalConstant.WIFI_PASSWORD, baseView.getWifiPassWord());
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
+
+    public void toBlueToothConfig() {
+        Intent intent = new Intent(context, DeviceConfigActivity.class);
+        intent.putExtra(GlobalConstant.WIFI_SSID, baseView.getWifissid());
+        intent.putExtra(GlobalConstant.WIFI_PASSWORD, baseView.getWifiPassWord());
+        intent.putExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.BLUETOOTH_MODE);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        intent.putExtra(GlobalConstant.DEVICE_SCAN_BEAN, scanJson);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 

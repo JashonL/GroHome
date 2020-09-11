@@ -225,6 +225,26 @@ public class CircleDialogUtils {
     }
 
 
+
+    /**
+     * 公共提示框
+     *
+     * @param activity
+     * @return
+     */
+    public static DialogFragment showCommentDialog(FragmentActivity activity, String title, String text, View.OnClickListener posiListener,View.OnClickListener negativeListener,boolean isCancelTouchOutsize) {
+        DialogFragment inputDialog = new CircleDialog.Builder()
+                .setTitle(title)
+                .setText(text)
+                .setGravity(Gravity.CENTER)
+                .setPositive(activity.getString(R.string.m90_ok), posiListener)
+                .setNegative(activity.getString(R.string.m89_cancel), negativeListener)
+                .setCanceledOnTouchOutside(isCancelTouchOutsize)
+                .show(activity.getSupportFragmentManager());
+        return inputDialog;
+    }
+
+
     /**
      * 公共复选框
      *

@@ -25,6 +25,8 @@ public class GlobalConstant {
     public static final String ACITION_DEVICE_TRANSFER = "device_transfer";
     public static final String ACITION_KEY = "action_key";
     public static final String DEVICE_ROAD = "road";
+    public static final String DEVICE_CONFIG_TYPE = "config_type";
+    public static final String DEVICE_SCAN_BEAN = "device_scan_bean";
     //**************************场景*****************************
     public static final int REQUEST_CODE_EDIT_SCENE_TIME = 102;
     public static final String SCENE_BEAN = "scene_bean";
@@ -138,5 +140,7 @@ public class GlobalConstant {
     public static final String AGREEMENT="agreement";
     public static final String POLICY="policy";
 
+    //************************打开系统设置*******************
+    public static final int ACTION_LOCATION_CODE=104;
 
 }

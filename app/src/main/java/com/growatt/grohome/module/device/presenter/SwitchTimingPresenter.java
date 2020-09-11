@@ -103,6 +103,7 @@ public class SwitchTimingPresenter extends BasePresenter<ISwitchTimingView> {
                 tempUnit = intent.getStringExtra(GlobalConstant.TEMP_UNIT);
                 mode = intent.getStringExtra(GlobalConstant.TEMP_MODE);
                 baseView.initViews(deviceType);
+                conf = deviceTimingBean.getConf();
             }
         }
 
@@ -244,7 +245,7 @@ public class SwitchTimingPresenter extends BasePresenter<ISwitchTimingView> {
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         intent.putExtra(GlobalConstant.TEMP_UNIT, tempUnit);
         intent.putExtra(GlobalConstant.TIMING_BEAN, timingBean);
-        ActivityUtils.startActivityForResult((Activity)context,intent,GlobalConstant.REQUEST_CODE_SELECT_TIME,ActivityUtils.ANIMATE_FORWARD,false);
+        ActivityUtils.startActivityForResult((Activity) context, intent, GlobalConstant.REQUEST_CODE_SELECT_TIME, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
@@ -259,7 +260,7 @@ public class SwitchTimingPresenter extends BasePresenter<ISwitchTimingView> {
         intent.putExtra(GlobalConstant.DEVICE_ID, mDevId);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         intent.putExtra(GlobalConstant.DEVICE_ROAD, road);
-        ActivityUtils.startActivityForResult((Activity)context,intent,GlobalConstant.REQUEST_CODE_SELECT_TIME,ActivityUtils.ANIMATE_FORWARD,false);
+        ActivityUtils.startActivityForResult((Activity) context, intent, GlobalConstant.REQUEST_CODE_SELECT_TIME, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
@@ -484,15 +485,15 @@ public class SwitchTimingPresenter extends BasePresenter<ISwitchTimingView> {
     }
 
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (resultCode==RESULT_OK){
-            if (requestCode== GlobalConstant.REQUEST_CODE_SELECT_TIME){
-                road=data.getStringExtra(GlobalConstant.DEVICE_ROAD);
-                timeValue=data.getStringExtra(GlobalConstant.TIME_VALUE);
-                loopType=data.getStringExtra(GlobalConstant.TIME_LOOPTYPE);
-                loopValue=data.getStringExtra(GlobalConstant.TIME_LOOPVALUE);
-                cKey=data.getStringExtra(GlobalConstant.TIMING_CKEY);
-                name=data.getStringExtra(GlobalConstant.DEVICE_NAME);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GlobalConstant.REQUEST_CODE_SELECT_TIME) {
+                road = data.getStringExtra(GlobalConstant.DEVICE_ROAD);
+                timeValue = data.getStringExtra(GlobalConstant.TIME_VALUE);
+                loopType = data.getStringExtra(GlobalConstant.TIME_LOOPTYPE);
+                loopValue = data.getStringExtra(GlobalConstant.TIME_LOOPVALUE);
+                cKey = data.getStringExtra(GlobalConstant.TIMING_CKEY);
+                name = data.getStringExtra(GlobalConstant.DEVICE_NAME);
                 List<SwitchTimingBean> dataList = baseView.getData();
                 if ("0".equals(road)) {//全部
                     for (int i = 0; i < dataList.size(); i++) {
@@ -503,7 +504,7 @@ public class SwitchTimingPresenter extends BasePresenter<ISwitchTimingView> {
                         switchTimingBean.setLoopValue(loopValue);
                         switchTimingBean.setTimeValue(timeValue);
                     }
-                   baseView.setAllOpen();
+                    baseView.setAllOpen();
                 } else {
                     int index = Integer.parseInt(road) - 1;
                     SwitchTimingBean switchTimingBean = dataList.get(index);

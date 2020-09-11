@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 
 import com.alibaba.fastjson.JSONObject;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
+import com.tuya.smart.android.ble.api.ScanType;
+import com.tuya.smart.android.ble.api.TyBleScanResponse;
 import com.tuya.smart.android.user.api.ILoginCallback;
 import com.tuya.smart.android.user.api.ILogoutCallback;
 import com.tuya.smart.android.user.api.IRegisterCallback;
@@ -185,6 +187,17 @@ public class TuyaApiUtils {
      */
     public static boolean isShowDevice(String deviceType){
         return DeviceTypeConstant.TYPE_BULB.equals(deviceType) || DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)||DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(deviceType);
+    }
+
+
+
+    public static void blueToothScan(TyBleScanResponse bleScanResponse){
+        TuyaHomeSdk.getBleOperator().startLeScan(60000, ScanType.SINGLE, bleScanResponse);
+    }
+
+
+    public static void blueToothStop(){
+        TuyaHomeSdk.getBleOperator().stopLeScan();
     }
 
 }

@@ -1,8 +1,6 @@
 package com.growatt.grohome.module.config;
 
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -10,8 +8,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.growatt.grohome.R;
@@ -28,13 +24,12 @@ import org.greenrobot.eventbus.ThreadMode;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPresenter> implements IDeviceLightStatusView, Toolbar.OnMenuItemClickListener, CompoundButton.OnCheckedChangeListener {
-    @BindView(R.id.tv_title)
-    AppCompatTextView tvTitle;
+public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPresenter> implements IDeviceLightStatusView, CompoundButton.OnCheckedChangeListener {
+
     @BindView(R.id.status_bar_view)
     View statusBarView;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.tv_mode)
+    TextView tvMode;
     @BindView(R.id.tv_sub_title)
     TextView tvSubTitle;
     @BindView(R.id.v_background)
@@ -54,8 +49,7 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
     public static final int START_FOR_RESULT_CONFIG = 100;
 
     private int ecMode;
-    private MenuItem switchItem;
-    private TextView tvSwitchItem;
+
 
     @Override
     protected DeviceLightStatusPresenter createPresenter() {
@@ -78,13 +72,8 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
     @Override
     protected void initViews() {
         //初始化头部
-        tvTitle.setVisibility(View.GONE);
-        toolbar.setNavigationIcon(R.drawable.icon_return);
-        toolbar.inflateMenu(R.menu.menu_device_light_status);
-        switchItem = toolbar.getMenu().findItem(R.id.action_switch_text);
-        switchItem.setActionView(R.layout.menu_config_switch);
-        tvSwitchItem = switchItem.getActionView().findViewById(R.id.tv_config_mode);
-        toolbar.setOnMenuItemClickListener(this);
+        tvMode.setText(R.string.m105_ez_mode);
+
         //默认不勾选
         cbFlashStatus.setChecked(false);
         btnNext.setEnabled(false);
@@ -110,37 +99,23 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
     @Override
     protected void initListener() {
         super.initListener();
-        toolbar.setNavigationOnClickListener(v -> finish());
         cbFlashStatus.setOnCheckedChangeListener(this);
-        tvSwitchItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.toSwitchMode();
-            }
-        });
     }
 
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_switch_pic:
-            case R.id.action_switch_text:
-                presenter.toSwitchMode();
-                break;
-        }
-        return true;
-    }
-
-
-    @OnClick({R.id.tv_device_reset, R.id.iv_toguide, R.id.btn_next})
+    @OnClick({R.id.iv_return, R.id.tv_mode, R.id.iv_switch, R.id.tv_device_reset, R.id.iv_toguide, R.id.btn_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.iv_return:
+                finish();
+                break;
             case R.id.btn_next:
                 if (ecMode == SelectConfigTypeActivity.EC_MODE) {
                     presenter.toEcbindConfig();
-                } else {
+                } else if (ecMode==SelectConfigTypeActivity.AP_MODE){
                     presenter.getTokenForConfigDevice();
+                }else {
+                    presenter.toBluetoothConfig();
                 }
                 break;
             case R.id.iv_toguide:
@@ -151,32 +126,43 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
                     presenter.toHostGuide();
                 }
                 break;
+            case R.id.tv_mode:
+            case R.id.iv_switch:
+                presenter.showRightMenu(tvMode);
+                break;
         }
     }
 
 
     private void showAnim() {
         vBackground.clearAnimation();
-        if (ecMode == SelectConfigTypeActivity.EC_MODE) {
-            tvSubTitle.setText(R.string.m49_flash_fast_set);
-            tvLightFlash.setText(R.string.m52_make_sure_flashing_fast);
-            switchItem.setTitle(R.string.m105_ez_mode);
-            tvSwitchItem.setText(R.string.m105_ez_mode);
-            mFastLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_on), 500);
-            mFastLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_off), 500);
-            mFastLightAnimation.setOneShot(false);
-            vBackground.setImageDrawable(mFastLightAnimation);
-            mFastLightAnimation.start();
-        } else {
+        if (ecMode == SelectConfigTypeActivity.AP_MODE) {
             tvSubTitle.setText(R.string.m120_flashing_slowly_set);
             tvLightFlash.setText(R.string.m121_make_sure_flashing_slowly);
-            switchItem.setTitle(R.string.m102_ap_mode);
-            tvSwitchItem.setText(R.string.m102_ap_mode);
+            tvMode.setText(R.string.m102_ap_mode);
             mSlowLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_on), 1500);
             mSlowLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_off), 1500);
             mSlowLightAnimation.setOneShot(false);
             vBackground.setImageDrawable(mSlowLightAnimation);
             mSlowLightAnimation.start();
+        } else if (ecMode==SelectConfigTypeActivity.EC_MODE){
+            tvSubTitle.setText(R.string.m49_flash_fast_set);
+            tvLightFlash.setText(R.string.m52_make_sure_flashing_fast);
+            tvMode.setText(R.string.m105_ez_mode);
+            mFastLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_on), 500);
+            mFastLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_off), 500);
+            mFastLightAnimation.setOneShot(false);
+            vBackground.setImageDrawable(mFastLightAnimation);
+            mFastLightAnimation.start();
+        }else if (ecMode==SelectConfigTypeActivity.BLUETOOTH_MODE){
+            tvSubTitle.setText(R.string.m49_flash_fast_set);
+            tvLightFlash.setText(R.string.m52_make_sure_flashing_fast);
+            tvMode.setText(R.string.m119_Bluetooth);
+            mFastLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_on), 500);
+            mFastLightAnimation.addFrame(ContextCompat.getDrawable(this, R.drawable.image_device_light_off), 500);
+            mFastLightAnimation.setOneShot(false);
+            vBackground.setImageDrawable(mFastLightAnimation);
+            mFastLightAnimation.start();
         }
     }
 
@@ -192,6 +178,12 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
     }
 
     @Override
+    public void setMode(int mode) {
+        ecMode = mode;
+        showAnim();
+    }
+
+    @Override
     public void getTuyaTokenSuccess() {
 
     }
@@ -199,18 +191,6 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
 
     @Override
     public void getTuyaTokenFails(String errorCode, String errorMsg) {
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == START_FOR_RESULT_CONFIG) {
-            if (resultCode == RESULT_OK) {
-                ecMode = data.getIntExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.EC_MODE);
-                showAnim();
-            }
-        }
 
     }
 

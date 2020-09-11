@@ -475,7 +475,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                     if (s.length >= 3) {
                         try {
                             int enable=Integer.parseInt(s[0]);
-                            if (enable==0)return;
+                            if (enable!=0){
                             int value = Integer.parseInt(s[2]);
                             seekPercent.setProgress(value - 10);
                             tvValue.setText(value + "");
@@ -490,6 +490,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                                 case "greater":
                                     radioGroup.check(R.id.rb_greater);
                                     break;
+                            }
                             }
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
@@ -603,7 +604,8 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                     if (s.length >= 3) {
                         try {
                             int enable=Integer.parseInt(s[0]);
-                            if (enable==0)return;
+                            if (enable!=0){
+
                             int value = Integer.parseInt(s[2]);
                             seekPercent.setProgress(value);
                             tvValue.setText(value + "");
@@ -618,6 +620,8 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                                 case "greater":
                                     radioGroup.check(R.id.rb_greater);
                                     break;
+                            }
+
                             }
                         } catch (NumberFormatException e) {
                             e.printStackTrace();

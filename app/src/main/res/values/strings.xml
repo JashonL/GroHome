@@ -366,5 +366,10 @@
     <string name="m309_when_status_changs">When device status changs</string>
     <string name="m311_password_requires_mix">Password requires a mix of alphanumerics</string>
     <string name="m312_tick_user_agreement">Please tick user Agreement</string>
+    <string name="m313_wants_turn_bluetooth">Grohome wants to turn on Bluetooth</string>
+    <string name="m314_bluetooth_not_turned_on">Bluetooth is not turned on</string>
+
+    <string name="m315_turn_on_gps">Please turn on GPS</string>
+
 
 </resources>

@@ -2,6 +2,7 @@ package com.growatt.grohome.module.config.model;
 
 import android.content.Context;
 
+import com.tuya.smart.android.ble.api.ITuyaBleConfigListener;
 import com.tuya.smart.android.common.utils.SafeHandler;
 import com.tuya.smart.android.mvp.model.BaseModel;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
@@ -12,6 +13,8 @@ import com.tuya.smart.sdk.bean.DeviceBean;
 import com.tuya.smart.sdk.enums.ActivatorAPStepCode;
 import com.tuya.smart.sdk.enums.ActivatorEZStepCode;
 import com.tuya.smart.sdk.enums.ActivatorModelEnum;
+
+import java.util.Map;
 
 import static com.tuya.smart.sdk.enums.ActivatorModelEnum.TY_AP;
 import static com.tuya.smart.sdk.enums.ActivatorModelEnum.TY_EZ;
@@ -28,6 +31,8 @@ public class DeviceBindModel extends BaseModel implements IDeviceBindModel {
     public static final int WHAT_EC_GET_TOKEN_ERROR = 0x06;
     public static final int WHAT_DEVICE_FIND = 0x07;
     public static final int WHAT_BIND_DEVICE_SUCCESS = 0x08;
+    public static final int WHTA_BLUETOOTH_ACTIVE_SUCCESS=0x09;
+    public static final int WHTA_BLUETOOTH_ACTIVE_ERROR=0x10;
     private static final long CONFIG_TIME_OUT = 100;
 
     private ITuyaActivator mTuyaActivator;
@@ -125,6 +130,25 @@ public class DeviceBindModel extends BaseModel implements IDeviceBindModel {
                 }));
 
     }
+
+
+    public void setBlueTooth(long homeId, String devUuid, Map<String, Object> params){
+        TuyaHomeSdk.getBleManager().startBleConfig(homeId, devUuid, params, new ITuyaBleConfigListener() {
+            @Override
+            public void onSuccess(DeviceBean bean) {
+                // 回调的 DeviceBean 数据说明 参见WiFI设备的配网回调。
+                resultSuccess(WHTA_BLUETOOTH_ACTIVE_SUCCESS, bean);
+            }
+
+            @Override
+            public void onFail(String code, String msg, Object handle) {
+                // code msg 说明 见本章节配网错误码
+                resultError(WHTA_BLUETOOTH_ACTIVE_ERROR, code, msg);
+            }
+        });
+    }
+
+
 
     @Override
     public void configFailure() {

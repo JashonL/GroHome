@@ -62,8 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_16"
-                android:src="@drawable/icon_add_wifi"
-                android:visibility="gone"
+                android:src="@drawable/icon_add_bluetooth"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_config_wifi"
                 app:layout_constraintLeft_toRightOf="@+id/iv_config_wifi"
                 app:layout_constraintTop_toTopOf="@+id/iv_config_wifi" />

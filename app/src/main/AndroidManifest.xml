@@ -14,6 +14,12 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
+    <!--蓝牙权限-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -128,6 +134,7 @@
         <activity android:name=".module.personal.AboutActivity"/>
         <activity android:name=".WebViewActivity"/>
         <activity android:name=".module.personal.AgreementActivity"/>
+        <activity android:name=".module.config.ConfigBlueToothActivity"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

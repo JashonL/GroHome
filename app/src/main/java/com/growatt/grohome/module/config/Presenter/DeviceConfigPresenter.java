@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.gson.Gson;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
@@ -22,10 +23,12 @@ import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.model.DeviceBindModel;
 import com.growatt.grohome.module.config.view.IDeviceConfigView;
 import com.growatt.grohome.tuya.FamilyManager;
+import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
+import com.tuya.smart.android.ble.api.ScanDeviceBean;
 import com.tuya.smart.android.device.utils.WiFiUtil;
 import com.tuya.smart.android.mvp.bean.Result;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
@@ -34,6 +37,9 @@ import com.tuya.smart.sdk.bean.DeviceBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -53,6 +59,9 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
     private int mTime;
     private boolean mStop;
 
+    private String scanJson;
+
+
     public DeviceConfigPresenter(IDeviceConfigView baseView) {
         super(baseView);
     }
@@ -66,6 +75,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         ssid = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_SSID);
         password = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_PASSWORD);
         tuyaToken = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_TOKEN);
+        scanJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_SCAN_BEAN);
     }
 
 
@@ -77,6 +87,8 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
             getTokenForConfigDevice();
         } else if (mConfigMode == SelectConfigTypeActivity.AP_MODE) {
             initConfigDevice(tuyaToken);
+        } else {//蓝牙配网
+            getTokenForConfigDevice();
         }
 
 
@@ -105,6 +117,18 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
 //            startSearch();
         } else if (mConfigMode == SelectConfigTypeActivity.AP_MODE) {
             mModel.setAP(ssid, password, token);
+        }else {
+            long homeId = TuyaApiUtils.getHomeId();
+            if (!TextUtils.isEmpty(scanJson)) {
+                ScanDeviceBean bean = new Gson().fromJson(scanJson, ScanDeviceBean.class);
+                if (bean!=null){
+                    Map<String,Object> wifiMap=new HashMap<>();
+                    wifiMap.put("ssid",ssid);
+                    wifiMap.put("password",password);
+                    wifiMap.put("token",token);
+                    mModel.setBlueTooth(homeId, bean.getUuid(), wifiMap);
+                }
+            }
         }
         startSearch();
     }
@@ -166,8 +190,18 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
 //                    WiFiUtil.removeNetwork(mContext, currentSSID);
                 break;
 
+            case DeviceBindModel.WHTA_BLUETOOTH_ACTIVE_ERROR:
+                stopSearch();
+                if (mBindDeviceSuccess) {
+                    baseView.showBindDeviceSuccessFinalTip();
+                    break;
+                }
+                baseView.showFailurePage(mConfigMode);
+                break;
+
             case DeviceBindModel.WHAT_EC_ACTIVE_SUCCESS:  //EC激活成功
             case DeviceBindModel.WHAT_AP_ACTIVE_SUCCESS:  //AP激活成功
+            case DeviceBindModel.WHTA_BLUETOOTH_ACTIVE_SUCCESS://蓝牙激活成功
                 DeviceBean bean = (DeviceBean) ((Result) (msg.obj)).getObj();
                 String deviceId = bean.getDevId();
                 String productId = bean.getProductId();

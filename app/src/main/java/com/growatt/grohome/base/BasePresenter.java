@@ -3,6 +3,7 @@ package com.growatt.grohome.base;
 
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -81,6 +82,10 @@ public class BasePresenter<V extends BaseView> implements Handler.Callback {
         }
     }
 
+
+    public void ActivityFinish(){
+        ((Activity)context).finish();
+    }
 
     @Override
     public boolean handleMessage(@NonNull Message msg) {

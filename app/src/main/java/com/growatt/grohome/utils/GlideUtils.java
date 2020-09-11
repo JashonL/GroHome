@@ -94,4 +94,10 @@ public class GlideUtils {
     public  void showImageContext(Context context,int placeholderRes,int errorRes,int path,ImageView iv,int dp){
         Glide.with(context).load(path).placeholder(placeholderRes).error(errorRes).dontAnimate().transform(new RoundedCornersTransformation(dp,0)).into(iv);
     }
+
+
+    //加载gif
+    public static void showGifContext(Context context,int path,ImageView iv){
+        Glide.with(context).load(path).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(iv);
+    }
 }

@@ -238,7 +238,12 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                                 onOff = String.valueOf(deviceBean.getDps().get(switchIds.get(i)));
                             }
                             if (GlobalConstant.SCENE_EDIT.equals(createOrEdit)) {
-                                onOff = String.valueOf(roadset.charAt(i));
+                                String roadChart = String.valueOf(roadset.charAt(i));
+                                if ("1".equals(roadChart)){
+                                    onOff="true";
+                                }else {
+                                    onOff="false";
+                                }
                             }
                             if (!TextUtils.isEmpty(onOff)) {
                                 swichBean.setOnOff("true".equals(onOff) ? 1 : 0);
@@ -445,11 +450,12 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                     if (s.length >= 3) {
                         try {
                             int enable=Integer.parseInt(s[0]);
-                            if (enable==0)return;
-                            int value = Integer.parseInt(s[2]);
-                            //亮度的范围是10-1000，所以计算百分比需要减去10
-                            seekPercent.setProgress(value - 10);
-                            tvValue.setText(value + "");
+                            if (enable!=0){
+                                int value = Integer.parseInt(s[2]);
+                                //亮度的范围是10-1000，所以计算百分比需要减去10
+                                seekPercent.setProgress(value - 10);
+                                tvValue.setText(value + "");
+                            }
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
                         }
@@ -549,10 +555,11 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                     if (s.length >= 3) {
                         try {
                             int enable=Integer.parseInt(s[0]);
-                            if (enable==0)return;
-                            int value = Integer.parseInt(s[2]);
-                            seekPercent.setProgress(value);
-                            tvValue.setText(value + "");
+                            if (enable!=0){
+                                int value = Integer.parseInt(s[2]);
+                                seekPercent.setProgress(value);
+                                tvValue.setText(value + "");
+                            }
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
                         }

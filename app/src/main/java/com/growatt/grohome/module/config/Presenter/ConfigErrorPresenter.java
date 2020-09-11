@@ -41,7 +41,7 @@ public class ConfigErrorPresenter extends BasePresenter<IConfigErrorView> {
     public void reTryConfig() {
         Intent intent = new Intent(context, WiFiOptionsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("type", deviceType);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         context.startActivity(intent);
         ((FragmentActivity)context).finish();
     }

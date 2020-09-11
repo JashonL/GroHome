@@ -35,6 +35,9 @@ public class DeviceTypeAdapter extends BaseQuickAdapter<DeviceTypeBean, BaseView
         View view = helper.getView(R.id.cl_content_background);
         ImageView ivIcon = helper.getView(R.id.iv_device_icon);
         setViewsByType(type,view,ivIcon);
+
+        helper.setVisible(R.id.iv_config_bluethooth,item.isBluethooth());
+        helper.setVisible(R.id.iv_config_wifi,item.isWiFi());
     }
 
 
