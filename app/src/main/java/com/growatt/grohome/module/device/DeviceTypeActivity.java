@@ -87,7 +87,7 @@ public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implem
             if (i==2){
                 bean.setConfigType(DeviceConfigConstant.CONFIG_WIFI_BLUETHOOTH);
             }else {
-                bean.setConfigType(DeviceConfigConstant.CONFIG_WIFI_BLUETHOOTH);
+                bean.setConfigType(DeviceConfigConstant.CONFIG_WIFI_SINGLE);
             }
             bean.setType(typeArray[i]);
             bean.setName(nameArray[i]);

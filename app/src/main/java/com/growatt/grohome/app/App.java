@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class App extends Application {
+
+//    final String[] sampleAssets = {"Smart Led Strip User Manua.pdf","US-Wall  Switch  User Manual.pdf"};
+
     /*
      * 单例模式获取Application:饿汉式
      */
@@ -39,6 +42,8 @@ public class App extends Application {
         initCirclerDialog();
 
         LogUtil.setIsLog(true);
+
+//        initSampleAssets();
     }
 
 
@@ -96,4 +101,12 @@ public class App extends Application {
     public static void setUserBean(User userBean) {
         App.userBean = userBean;
     }
+
+
+   /* private void initSampleAssets() {
+        CopyAsset copyAsset = new CopyAssetThreadImpl(this, new Handler());
+        for (String asset : sampleAssets) {
+            copyAsset.copy(asset, new File(getCacheDir(), asset).getAbsolutePath());
+        }
+    }*/
 }

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ServiceFragment extends BaseFragment<ServicePresenter> implements IServiceFragmentView, BaseQuickAdapter.OnItemClickListener {
 
@@ -145,5 +146,16 @@ public class ServiceFragment extends BaseFragment<ServicePresenter> implements I
         CommondityBean commondityBean = mServiceCommondityAdapter.getData().get(position);
         String url = commondityBean.getUrl();
         presenter.openWebView(url);
+    }
+
+    @OnClick({R.id.cl_manual, R.id.cl_faq})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.cl_manual:
+                presenter.toManual();
+                break;
+            case R.id.cl_faq:
+                break;
+        }
     }
 }

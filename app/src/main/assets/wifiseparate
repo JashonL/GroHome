@@ -1,0 +1,7 @@
+（For most of Routers）How to configure separate Wi-Fi SSIDs for 2.4 GHz and 5 GHz bands?
+
+If your router supports both the 2.4 GHz and 5 GHz bands, but only one Wi-Fi name is displayed on the Wi-Fi search page of your mobile phone, perform these steps:
+Go to the Wireless page of the router. (The entry address is usually provided on the label attached to the back of the router).
+Go to the 2.4 GHz setting page, and set the Wi-Fi name (SSID) to （XXX）-2.4G, where xxx indicates the Wi-Fi name. Save setting.
+Go to the 5 GHz setting page, and set the Wi-Fi name (SSID) to （XXX）-5G, where xxx indicates the Wi-Fi name. Save setting.
+When the preceding settings are complete, the new Wi-Fi names will appear on the Wi-Fi settings page of your mobile phone.

@@ -12,9 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
-    <!--蓝牙权限-->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- 蓝牙权限 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -29,6 +27,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".module.service.FqaListActivity"></activity>
+        <activity android:name=".module.service.ManualActivity" />
 
         <meta-data
             android:name="TUYA_SMART_APPKEY"
@@ -56,7 +56,6 @@
                 android:resource="@xml/file_provider_paths" />
         </provider>
 
-
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -69,7 +68,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask">
@@ -77,31 +75,18 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".module.login.RegisterLoginActivity"/>
-
+        <activity android:name=".module.login.RegisterLoginActivity" />
         <activity android:name=".module.room.RoomListActivity" />
-
         <activity android:name=".module.device.DeviceTypeActivity" />
-
         <activity android:name=".module.config.WiFiOptionsActivity" />
-
         <activity android:name=".module.config.DeviceLightStatusActivity" />
-
         <activity android:name=".module.config.DeviceConfigActivity" />
-
         <activity android:name=".module.config.ConnectHotsPotActivity" />
-
         <activity android:name=".module.config.DeviceEZLightActivity" />
-
         <activity android:name=".module.config.DeviceAPLightActivity" />
-
         <activity android:name=".module.config.WiFiSetGuideActivity" />
-
         <activity android:name=".module.config.SelectConfigTypeActivity" />
-
         <activity android:name=".module.config.ConfigErrorActivity" />
-
         <activity android:name=".module.config.ConfigSuccessActivity" />
         <activity android:name=".module.device.BulbActivity" />
         <activity android:name=".module.device.BulbSceneEditActivity" />
@@ -131,11 +116,10 @@
         <activity android:name=".module.personal.NewEmailActivity" />
         <activity android:name=".module.login.ForgotpasswordActivity" />
         <activity android:name=".module.personal.CacheClearActivity" />
-        <activity android:name=".module.personal.AboutActivity"/>
-        <activity android:name=".WebViewActivity"/>
-        <activity android:name=".module.personal.AgreementActivity"/>
-        <activity android:name=".module.config.ConfigBlueToothActivity"/>
-
+        <activity android:name=".module.personal.AboutActivity" />
+        <activity android:name=".WebViewActivity" />
+        <activity android:name=".module.personal.AgreementActivity" />
+        <activity android:name=".module.config.ConfigBlueToothActivity" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
