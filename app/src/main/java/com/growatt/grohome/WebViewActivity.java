@@ -184,8 +184,8 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements I
 
     @Override
     public void openWebView(String url) {
-        if (url.startsWith("http")){
+//        if (url.startsWith("http")){
             webview.loadUrl(url);//加载url
-        }
+//        }
     }
 }

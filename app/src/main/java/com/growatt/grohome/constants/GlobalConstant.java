@@ -66,9 +66,12 @@ public class GlobalConstant {
     public static final String SP_USER_NAME = "user_name";
     public static final String SP_USER_PASSWORD = "user_password";
 
-    //*************************中    国********************************
+    //*************************国  家********************************
     public static final String STRING_CHINA_CHINESE = "中国";
     public static final String STRING_CHINA_ENLISH = "china";
+
+    public static final String STRING_COUNTY_UNITEDKINGDOM="UnitedKingdom";
+    public static final String STRING_COUNTY_UNITEDSTATES="UnitedStates";
 
     //**************************开关********************************
     public static final int STATUS_ON = 1;
@@ -121,7 +124,13 @@ public class GlobalConstant {
     public static final String HTTP_PREFIX = "http://";
     //***********************设备相关网页******************************
     public static final String SWITCH_PANEL_WEB="https://www.amazon.com/dp/B08BLCJB2C";
-    public static final String LIGHT_BULB_WEB="https://www.amazon.com/dp/B08F4VBGZY";
+
+    public static final String LIGHT_BULB_US_WEB="https://www.amazon.com/dp/B08F4VBGZY?ref=myi_title_dp";
+    public static final String LIGHT_BULB_UK_WEB="https://www.amazon.co.uk/dp/B08F9RL1SJ?ref=myi_title_dp";
+
+    public static final String LIGHT_STRIP_US_WEB="https://www.amazon.com/dp/B08GCLY2LX?ref=myi_title_dp";
+    public static final String LIGHT_STRIP_UK_WEB="https://www.amazon.co.uk/dp/B08GFR2VQT?ref=myi_title_dp";
+
     public static final String WEB_URL="web_url";
 
     //***********************区号***********************

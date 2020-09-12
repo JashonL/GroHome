@@ -29,17 +29,21 @@ public class ServiceCommondityAdapter extends BaseQuickAdapter<CommondityBean, B
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, CommondityBean item) {
-        helper.setText(R.id.tv_detail,item.getDetail());
+        helper.setText(R.id.tv_detail, item.getDetail());
         String deviceType = item.getDeviceType();
         ImageView ivPicture = helper.getView(R.id.iv_commondity_picture);
-        switch (deviceType){
+        switch (deviceType) {
             case DeviceTypeConstant.TYPE_PANELSWITCH:
                 GlideUtils.showImageContext(mContext, R.drawable.banner_switch, R.drawable.banner_switch, R.drawable.banner_switch, ivPicture);
                 break;
             case DeviceTypeConstant.TYPE_BULB:
-                GlideUtils.showImageContext(mContext, R.drawable.banner_bulb, R.drawable.banner_bulb,  R.drawable.banner_bulb, ivPicture);
+                GlideUtils.showImageContext(mContext, R.drawable.banner_bulb, R.drawable.banner_bulb, R.drawable.banner_bulb, ivPicture);
                 break;
-                default:break;
+            case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
+                GlideUtils.showImageContext(mContext, R.drawable.banner_bulb, R.drawable.banner_bulb, R.drawable.banner_bulb, ivPicture);
+                break;
+            default:
+                break;
         }
     }
 }

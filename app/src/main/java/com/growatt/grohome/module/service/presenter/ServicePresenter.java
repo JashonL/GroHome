@@ -36,9 +36,16 @@ public class ServicePresenter extends BasePresenter<IServiceFragmentView> {
 
     public ServicePresenter(Context context, IServiceFragmentView baseView) {
         super(context, baseView);
-        String[] details = new String[]{context.getString(R.string.m289_schedule_detail), context.getString(R.string.m290_light_bulbs_detail)};
-        String[] deviceTypes = new String[]{DeviceTypeConstant.TYPE_PANELSWITCH, DeviceTypeConstant.TYPE_BULB};
-        String[] webUrl = new String[]{GlobalConstant.SWITCH_PANEL_WEB, GlobalConstant.LIGHT_BULB_WEB};
+        String[] details = new String[]{context.getString(R.string.m289_schedule_detail), context.getString(R.string.m290_light_bulbs_detail),context.getString(R.string.m290_light_bulbs_detail)};
+        String[] deviceTypes = new String[]{DeviceTypeConstant.TYPE_PANELSWITCH, DeviceTypeConstant.TYPE_BULB,DeviceTypeConstant.TYPE_STRIP_LIGHTS};
+
+        String counrty = App.getUserBean().getCounrty();
+        String[] webUrl;
+        if (GlobalConstant.STRING_COUNTY_UNITEDKINGDOM.equals(counrty)){
+            webUrl = new String[]{GlobalConstant.SWITCH_PANEL_WEB, GlobalConstant.LIGHT_BULB_UK_WEB,GlobalConstant.LIGHT_STRIP_UK_WEB};
+        }else {
+            webUrl = new String[]{GlobalConstant.SWITCH_PANEL_WEB, GlobalConstant.LIGHT_BULB_US_WEB,GlobalConstant.LIGHT_STRIP_US_WEB};
+        }
         for (int i = 0; i < webUrl.length; i++) {
             CommondityBean commondityBean = new CommondityBean();
             commondityBean.setDetail(details[i]);
