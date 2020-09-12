@@ -370,6 +370,7 @@
     <string name="m314_bluetooth_not_turned_on">Bluetooth is not turned on</string>
 
     <string name="m315_turn_on_gps">Please turn on GPS</string>
+    <string name="m316_more">more &gt;&gt;</string>
 
 
 </resources>
