@@ -15,7 +15,8 @@ import com.growatt.grohome.bean.CommondityBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.http.API;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
-import com.growatt.grohome.module.service.ManualActivity;
+import com.growatt.grohome.module.service.FqaListActivity;
+import com.growatt.grohome.module.service.ManualListActivity;
 import com.growatt.grohome.module.service.view.IServiceFragmentView;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
@@ -119,7 +120,14 @@ public class ServicePresenter extends BasePresenter<IServiceFragmentView> {
 
     //跳转到知识手册
     public void toManual(){
-        Intent intent=new Intent(context, ManualActivity.class);
+        Intent intent=new Intent(context, ManualListActivity.class);
+        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+    }
+
+
+    //跳转到知识问题列表
+    public void toFqa(){
+        Intent intent=new Intent(context, FqaListActivity.class);
         ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
     }
 

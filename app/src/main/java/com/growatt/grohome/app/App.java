@@ -2,6 +2,7 @@ package com.growatt.grohome.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.os.Handler;
 
 import com.growatt.grohome.bean.User;
 import com.growatt.grohome.utils.LogUtil;
@@ -9,13 +10,17 @@ import com.hjq.toast.ToastUtils;
 import com.mylhyl.circledialog.res.values.CircleColor;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.voghdev.pdfviewpager.library.asset.CopyAsset;
+import es.voghdev.pdfviewpager.library.asset.CopyAssetThreadImpl;
+
 public class App extends Application {
 
-//    final String[] sampleAssets = {"Smart Led Strip User Manua.pdf","US-Wall  Switch  User Manual.pdf"};
+    final String[] sampleAssets = {"Smart Led Strip User Manua.pdf","US-Wall  Switch  User Manual.pdf"};
 
     /*
      * 单例模式获取Application:饿汉式
@@ -43,7 +48,7 @@ public class App extends Application {
 
         LogUtil.setIsLog(true);
 
-//        initSampleAssets();
+        initSampleAssets();
     }
 
 
@@ -103,10 +108,10 @@ public class App extends Application {
     }
 
 
-   /* private void initSampleAssets() {
+    private void initSampleAssets() {
         CopyAsset copyAsset = new CopyAssetThreadImpl(this, new Handler());
         for (String asset : sampleAssets) {
             copyAsset.copy(asset, new File(getCacheDir(), asset).getAbsolutePath());
         }
-    }*/
+    }
 }

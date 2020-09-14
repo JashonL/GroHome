@@ -155,6 +155,7 @@ public class ServiceFragment extends BaseFragment<ServicePresenter> implements I
                 presenter.toManual();
                 break;
             case R.id.cl_faq:
+                presenter.toFqa();
                 break;
         }
     }

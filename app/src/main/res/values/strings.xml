@@ -30,7 +30,7 @@
     <string name="m27_company_website">Company website</string>
     <string name="m28_forget_password">Forget password</string>
     <string name="m29_user_agreement">Agree to user agreement</string>
-    <string name="m30_verification_code">verification code</string>
+    <string name="m30_verification_code">Verification code</string>
     <string name="m31_room">Room</string>
     <string name="m32_all">All</string>
     <string name="m33_device">Device</string>
@@ -38,7 +38,7 @@
     <string name="m35_add_device">Add device</string>
     <string name="m36_socket">Socket</string>
     <string name="m37_panel_switch">Panel switch</string>
-    <string name="m38_thermostat">thermostat</string>
+    <string name="m38_thermostat">Thermostat</string>
     <string name="m39_bulb">Bulb</string>
     <string name="m40_light_strip">Light strip</string>
     <string name="m41_air_con">Air-con</string>
@@ -372,6 +372,14 @@
     <string name="m315_turn_on_gps">Please turn on GPS</string>
     <string name="m316_more">more &gt;&gt;</string>
     <string name="m317_common_problem">Common problem</string>
+    <string name="m318_how_to_distinguish">How to distinguish whether I am using 2.4G or 5G Wi-Fi network?</string>
+    <string name="m319_how_to_reset_device">Device was disconnected，How can I reset it?</string>
+    <string name="m320_how_to_config_separate">How to configure separate Wi-Fi SSIDs for 2.4 GHz and 5 GHz bands?</string>
+
+    <string name="m321_strip_user_manual">Smart Led Strip User Manua</string>
+    <string name="m322_switch_user_manual">US-Wall  Switch  User Manual</string>
+    <string name="m323_bulb_user_manual">WIFI Smart Bulb User Manual</string>
+    <string name="m324_repeat_password">Repeat password</string>
 
 
 

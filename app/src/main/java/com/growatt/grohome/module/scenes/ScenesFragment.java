@@ -145,13 +145,14 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
 
         pagers.add(launchView);
         pagers.add(linkageView);
-        pagers.add(logsView);
+//        pagers.add(logsView);
         mSceneViewPagerAdapter = new SceneViewPagerAdapter(pagers);
         viewPager.setAdapter(mSceneViewPagerAdapter);
         //将tablayout和Viewpager绑定
         tabTitle.setupWithViewPager(viewPager);
         //tablayout设置标题
-        String[] titles = new String[]{getString(R.string.m81_launch_tap_to_run), getString(R.string.m82_smart), getString(R.string.m83_logs)};
+//        String[] titles = new String[]{getString(R.string.m81_launch_tap_to_run), getString(R.string.m82_smart), getString(R.string.m83_logs)};
+        String[] titles = new String[]{getString(R.string.m81_launch_tap_to_run), getString(R.string.m82_smart)};
         tabTitle.removeAllTabs();
         for (String title : titles) {
             TabLayout.Tab tab = tabTitle.newTab();

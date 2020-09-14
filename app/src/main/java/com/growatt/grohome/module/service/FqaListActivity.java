@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.FqaAdapter;
 import com.growatt.grohome.base.BaseActivity;
@@ -15,10 +16,11 @@ import com.growatt.grohome.module.service.presenter.FQAPresenter;
 import com.growatt.grohome.module.service.view.IFQAView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
-public class FqaListActivity extends BaseActivity<FQAPresenter> implements IFQAView {
+public class FqaListActivity extends BaseActivity<FQAPresenter> implements IFQAView, BaseQuickAdapter.OnItemClickListener {
 
 
     @BindView(R.id.status_bar_view)
@@ -34,12 +36,12 @@ public class FqaListActivity extends BaseActivity<FQAPresenter> implements IFQAV
     private FqaAdapter mFqaAdapter;
 
 
+
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
         mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
     }
-
     @Override
     protected FQAPresenter createPresenter() {
         return new FQAPresenter(this, this);
@@ -65,7 +67,8 @@ public class FqaListActivity extends BaseActivity<FQAPresenter> implements IFQAV
 
     @Override
     protected void initData() {
-
+        List<String> fqaList = presenter.getFqaList();
+        mFqaAdapter.replaceData(fqaList);
     }
 
     @Override
@@ -77,5 +80,11 @@ public class FqaListActivity extends BaseActivity<FQAPresenter> implements IFQAV
                 finish();
             }
         });
+        mFqaAdapter.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+       presenter.toFqaDetail(position);
     }
 }

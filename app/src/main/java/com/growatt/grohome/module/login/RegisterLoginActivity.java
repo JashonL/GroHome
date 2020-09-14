@@ -103,7 +103,7 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
         tvCountry.setHint(R.string.m16_select_country);
         tvZone.setHint(R.string.m17_select_time_zone);
         etRegisterPassword.setHint(R.string.m8_password);
-        etRepeatPassword.setHint(R.string.m8_password);
+        etRepeatPassword.setHint(R.string.m324_repeat_password);
         tvEmail.setHint(R.string.m15_email);
         tvVerificationCode.setHint(R.string.m30_verification_code);
 

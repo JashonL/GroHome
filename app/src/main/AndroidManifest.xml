@@ -27,7 +27,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".module.service.FqaListActivity"></activity>
+        <activity android:name=".module.service.ManualListActivity"></activity>
+        <activity android:name=".module.service.CommonProblemActivity" />
+        <activity android:name=".module.service.FqaListActivity" />
         <activity android:name=".module.service.ManualActivity" />
 
         <meta-data
