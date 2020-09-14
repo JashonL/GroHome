@@ -116,5 +116,7 @@ dependencies {
     //加载弹框
     implementation 'com.github.maning0303:MNProgressHUD:V2.0.0X'
     //打开pdf的库
-    implementation 'es.voghdev.pdfviewpager:library:1.1.2'
+//    implementation 'es.voghdev.pdfviewpager:library:1.1.2'
+
+    implementation 'com.github.MikeOrtiz:TouchImageView:3.0.1'
 }

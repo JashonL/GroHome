@@ -48,7 +48,7 @@ public class ManualListPresenter extends BasePresenter<IManualListView> {
                 break;
         }
         Intent intent=new Intent(context, ManualActivity.class);
-        intent.putExtra(GlobalConstant.FQA_GUIDE,guide);
+        intent.putExtra(GlobalConstant.MANUAL_GUIDE,guide);
         ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
     }
 

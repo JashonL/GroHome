@@ -152,12 +152,13 @@ public class GlobalConstant {
     //************************打开系统设置*******************
     public static final int ACTION_LOCATION_CODE=104;
 
-    //************************知识手册**********************
+    //************************操作手册**********************
     public static final String FQA_GUIDE="fqa_guide";
     public static final String FQA_WIFI_SEPARATE="wifi_separate";
     public static final String FQA_CONFIG_ERROR="config_error";
     public static final String FQA_WIFI_CONFIG="wifi_config";
 
+    public static final String MANUAL_GUIDE="manual_guide";
     public static final String MANUAL_STRIP_MANUAL="strip_manual";
     public static final String MANUAL_BULB_MANUAL="bulb_manual";
     public static final String MANUAL_SWITCH_MANUAL="switch_manual";
