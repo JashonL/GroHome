@@ -96,7 +96,6 @@ public class RoomImageActivity extends BaseActivity<RoomImagePresenter> implemen
         //头部
         tvTitle.setText(R.string.m190_select_cover_image);
         toolbar.setNavigationIcon(R.drawable.icon_return);
-        toolbar.inflateMenu(R.menu.menu_grohome);
         toolbar.inflateMenu(R.menu.menu_right_text);
         switchItem = toolbar.getMenu().findItem(R.id.item_save);
         switchItem.setActionView(R.layout.menu_right_text);
