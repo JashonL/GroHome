@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
+import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.module.config.Presenter.ConfigErrorPresenter;
 import com.growatt.grohome.module.config.view.IConfigErrorView;
 
@@ -72,7 +73,7 @@ public class ConfigErrorActivity extends BaseActivity<ConfigErrorPresenter> impl
 
     @Override
     public void showTipsByMode(int mode) {
-        if (mode == SelectConfigTypeActivity.EC_MODE||mode==SelectConfigTypeActivity.BLUETOOTH_MODE) {
+        if (mode == DeviceConfigConstant.EC_MODE||mode== DeviceConfigConstant.BLUETOOTH_MODE) {
             tvSubTitle.setText(R.string.m128_device_not_responding);
             tvErrorTip1.setText(R.string.m130_confirm_device_reset_fast);
             tvErrorTip2.setText(R.string.m135_check_is_2_4GHz);

@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.RightMenuAdapter;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.config.ConfigBlueToothActivity;
 import com.growatt.grohome.module.config.ConnectHotsPotActivity;
 import com.growatt.grohome.module.config.DeviceAPLightActivity;
 import com.growatt.grohome.module.config.DeviceConfigActivity;
 import com.growatt.grohome.module.config.DeviceEZLightActivity;
-import com.growatt.grohome.module.config.SelectConfigTypeActivity;
+import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.view.IDeviceLightStatusView;
 import com.growatt.grohome.tuya.FamilyManager;
 import com.growatt.grohome.utils.ActivityUtils;
@@ -39,6 +40,7 @@ public class DeviceLightStatusPresenter extends BasePresenter<IDeviceLightStatus
     private String ssid;
     private String password;
     private String tuyaToken;
+    private String configType;
 
 
     private CommonPopupWindow modeWindow;
@@ -52,22 +54,37 @@ public class DeviceLightStatusPresenter extends BasePresenter<IDeviceLightStatus
 
     public DeviceLightStatusPresenter(Context context, IDeviceLightStatusView baseView) {
         super(context, baseView);
-        deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
-        ssid = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_SSID);
-        password = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_PASSWORD);
+        //先获取设备配网的类型
+        configType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_CONFIG_TYPE);
 
+
+        deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
         String defalut = context.getString(R.string.m105_ez_mode);
-        modeArray = new String[]{defalut, context.getString(R.string.m102_ap_mode), context.getString(R.string.m119_Bluetooth)};
+
+        if (DeviceConfigConstant.CONFIG_WIFI_BLUETHOOTH.equals(configType)) {
+            modeArray = new String[]{defalut, context.getString(R.string.m102_ap_mode), context.getString(R.string.m119_Bluetooth)};
+        } else {
+            ssid = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_SSID);
+            password = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_PASSWORD);
+            modeArray = new String[]{defalut, context.getString(R.string.m102_ap_mode)};
+        }
     }
 
 
     public void toEcbindConfig() {
-        Intent intent = new Intent(context, DeviceConfigActivity.class);
+        Class clazz;
+        if (DeviceConfigConstant.CONFIG_WIFI_BLUETHOOTH.equals(configType)){
+            clazz= WiFiOptionsActivity.class;
+        }else {
+            clazz=DeviceConfigActivity.class;
+        }
+        Intent intent = new Intent(context, clazz);
         intent.putExtra(GlobalConstant.WIFI_SSID, ssid);
         intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         intent.putExtra(GlobalConstant.WIFI_TOKEN, tuyaToken);
-        intent.putExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.EC_MODE);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+        intent.putExtra(DeviceConfigConstant.CONFIG_MODE, DeviceConfigConstant.EC_MODE);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -78,18 +95,27 @@ public class DeviceLightStatusPresenter extends BasePresenter<IDeviceLightStatus
         intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         intent.putExtra(GlobalConstant.WIFI_TOKEN, tuyaToken);
-        intent.putExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.EC_MODE);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+        intent.putExtra(DeviceConfigConstant.CONFIG_MODE, DeviceConfigConstant.EC_MODE);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
     private void toApConfig() {
-        Intent intent = new Intent(context, ConnectHotsPotActivity.class);
+        Class clazz;
+        if (DeviceConfigConstant.CONFIG_WIFI_BLUETHOOTH.equals(configType)){
+            clazz= WiFiOptionsActivity.class;
+        }else {
+            clazz=ConnectHotsPotActivity.class;
+        }
+
+        Intent intent = new Intent(context, clazz);
         intent.putExtra(GlobalConstant.WIFI_SSID, ssid);
         intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         intent.putExtra(GlobalConstant.WIFI_TOKEN, tuyaToken);
-        intent.putExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.AP_MODE);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+        intent.putExtra(DeviceConfigConstant.CONFIG_MODE, DeviceConfigConstant.AP_MODE);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -119,6 +145,7 @@ public class DeviceLightStatusPresenter extends BasePresenter<IDeviceLightStatus
         intent.putExtra(GlobalConstant.WIFI_SSID, ssid);
         intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -128,12 +155,13 @@ public class DeviceLightStatusPresenter extends BasePresenter<IDeviceLightStatus
         intent.putExtra(GlobalConstant.WIFI_SSID, ssid);
         intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
     public void toSwitchMode() {
-        Intent intent = new Intent(context, SelectConfigTypeActivity.class);
+        Intent intent = new Intent(context, DeviceConfigConstant.class);
         ActivityUtils.startActivityForResult((Activity) context, intent, START_FOR_RESULT_CONFIG, ActivityUtils.ANIMATE_FORWARD, false);
     }
 

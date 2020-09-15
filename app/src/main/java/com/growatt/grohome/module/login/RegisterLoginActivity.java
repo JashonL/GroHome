@@ -79,7 +79,7 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
-        mImmersionBar.reset().statusBarDarkFont(true).init();
+        mImmersionBar.reset().statusBarDarkFont(true).keyboardEnable(true).init();
     }
 
     @Override

@@ -15,12 +15,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.gson.Gson;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
+import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.view.IBluetoothConfigView;
@@ -37,6 +39,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class BluetoothPresenter extends BasePresenter<IBluetoothConfigView> {
 
     private String scanJson;
+    private DialogFragment dialogFragment;
+    private String configType;
 
     public BluetoothPresenter(IBluetoothConfigView baseView) {
         super(baseView);
@@ -44,6 +48,8 @@ public class BluetoothPresenter extends BasePresenter<IBluetoothConfigView> {
 
     public BluetoothPresenter(Context context, IBluetoothConfigView baseView) {
         super(context, baseView);
+        //先获取设备配网的类型
+        configType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_CONFIG_TYPE);
     }
 
 
@@ -217,25 +223,28 @@ public class BluetoothPresenter extends BasePresenter<IBluetoothConfigView> {
 
 
     public void showAddDialog(){
-        View bodyView = LayoutInflater.from(context).inflate(R.layout.blue_find_device, null, false);
-        CircleDialogUtils.showCommentBodyDialog(bodyView, ((FragmentActivity) context).getSupportFragmentManager(), new OnCreateBodyViewListener() {
-            @Override
-            public void onCreateBodyView(View view) {
-                view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ActivityFinish();
-                    }
-                });
+        if (dialogFragment==null){
+            View bodyView = LayoutInflater.from(context).inflate(R.layout.blue_find_device, null, false);
+            dialogFragment = CircleDialogUtils.showCommentBodyDialog(bodyView, ((FragmentActivity) context).getSupportFragmentManager(), new OnCreateBodyViewListener() {
+                @Override
+                public void onCreateBodyView(View view) {
+                    view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ActivityFinish();
+                        }
+                    });
 
-                view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        toConfig();
-                    }
-                });
-            }
-        });
+                    view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            toConfig();
+                        }
+                    });
+                }
+            });
+        }
+
     }
 
 
@@ -247,6 +256,9 @@ public class BluetoothPresenter extends BasePresenter<IBluetoothConfigView> {
         Intent intent = new Intent(context, WiFiOptionsActivity.class);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_STRIP_LIGHTS);
         intent.putExtra(GlobalConstant.DEVICE_SCAN_BEAN,scanJson);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+        intent.putExtra(DeviceConfigConstant.CONFIG_MODE, DeviceConfigConstant.BLUETOOTH_MODE);
+        intent.putExtra(DeviceConfigConstant.CONFIG_MODE,DeviceConfigConstant.BLUETOOTH_MODE);
         context.startActivity(intent);
         ((FragmentActivity)context).finish();
     }

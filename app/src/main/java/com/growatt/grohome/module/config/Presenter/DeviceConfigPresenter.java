@@ -14,12 +14,12 @@ import com.google.gson.Gson;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.module.config.ConfigErrorActivity;
 import com.growatt.grohome.module.config.ConfigSuccessActivity;
 import com.growatt.grohome.module.config.DeviceLightStatusActivity;
-import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.model.DeviceBindModel;
 import com.growatt.grohome.module.config.view.IDeviceConfigView;
@@ -61,6 +61,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
     private boolean mStop;
 
     private String scanJson;
+    private String configType;
 
 
     public DeviceConfigPresenter(IDeviceConfigView baseView) {
@@ -71,12 +72,16 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         super(context, baseView);
         initHandler(context);
         mModel = new DeviceBindModel(context, handler);
-        mConfigMode = ((Activity) context).getIntent().getIntExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.EC_MODE);
+        //先获取设备配网的类型
+        configType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_CONFIG_TYPE);
+
+        mConfigMode = ((Activity) context).getIntent().getIntExtra(DeviceConfigConstant.CONFIG_MODE, DeviceConfigConstant.EC_MODE);
         deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
         ssid = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_SSID);
         password = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_PASSWORD);
         tuyaToken = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_TOKEN);
         scanJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_SCAN_BEAN);
+
     }
 
 
@@ -84,9 +89,9 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         if (TextUtils.isEmpty(ssid)) {
             return;
         }
-        if (mConfigMode == SelectConfigTypeActivity.EC_MODE) {
+        if (mConfigMode == DeviceConfigConstant.EC_MODE) {
             getTokenForConfigDevice();
-        } else if (mConfigMode == SelectConfigTypeActivity.AP_MODE) {
+        } else if (mConfigMode == DeviceConfigConstant.AP_MODE) {
             initConfigDevice(tuyaToken);
         } else {//蓝牙配网
             getTokenForConfigDevice();
@@ -113,10 +118,10 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
 
 
     private void initConfigDevice(String token) {
-        if (mConfigMode == SelectConfigTypeActivity.EC_MODE) {
+        if (mConfigMode == DeviceConfigConstant.EC_MODE) {
             mModel.setEC(ssid, password, token);
 //            startSearch();
-        } else if (mConfigMode == SelectConfigTypeActivity.AP_MODE) {
+        } else if (mConfigMode == DeviceConfigConstant.AP_MODE) {
             mModel.setAP(ssid, password, token);
         }else {
             long homeId = TuyaApiUtils.getHomeId();
@@ -284,13 +289,14 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         intent.putExtra(GlobalConstant.WIFI_TOKEN, tuyaToken);
         intent.putExtra(GlobalConstant.WIFI_SSID, ssid);
         intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
-        intent.putExtra(SelectConfigTypeActivity.CONFIG_MODE, mConfigMode);
+        intent.putExtra(DeviceConfigConstant.CONFIG_MODE, mConfigMode);
+        intent.putExtra(GlobalConstant.DEVICE_SCAN_BEAN, scanJson);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, true);
     }
 
     public void reTryConfig() {
         Class clazz;
-        if (SelectConfigTypeActivity.BLUETOOTH_MODE==mConfigMode){
+        if (DeviceConfigConstant.BLUETOOTH_MODE==mConfigMode){
             clazz= DeviceLightStatusActivity.class;
         }else {
             clazz=WiFiOptionsActivity.class;
@@ -298,6 +304,8 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         Intent intent = new Intent(context, clazz);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+        intent.putExtra(GlobalConstant.DEVICE_SCAN_BEAN, scanJson);
         context.startActivity(intent);
         ((FragmentActivity) context).finish();
     }

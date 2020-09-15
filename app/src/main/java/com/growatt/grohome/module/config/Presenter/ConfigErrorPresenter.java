@@ -7,9 +7,9 @@ import android.content.Intent;
 import androidx.fragment.app.FragmentActivity;
 
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.config.DeviceLightStatusActivity;
-import com.growatt.grohome.module.config.SelectConfigTypeActivity;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.config.view.IConfigErrorView;
 
@@ -19,6 +19,7 @@ public class ConfigErrorPresenter extends BasePresenter<IConfigErrorView> {
     private  String password;
     private  String tuyaToken;
     private  int mConfigMode;
+    private String configType;
 
     public ConfigErrorPresenter(IConfigErrorView baseView) {
         super(baseView);
@@ -26,10 +27,14 @@ public class ConfigErrorPresenter extends BasePresenter<IConfigErrorView> {
 
     public ConfigErrorPresenter(Context context, IConfigErrorView baseView) {
         super(context, baseView);
+        //先获取设备配网的类型
+        configType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_CONFIG_TYPE);
+
         deviceType = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_TYPE);
         ssid = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_SSID);
+        tuyaToken=((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_TOKEN);
         password = ((Activity) context).getIntent().getStringExtra(GlobalConstant.WIFI_PASSWORD);
-        mConfigMode = ((Activity) context).getIntent().getIntExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.EC_MODE);
+        mConfigMode = ((Activity) context).getIntent().getIntExtra(DeviceConfigConstant.CONFIG_MODE, DeviceConfigConstant.EC_MODE);
     }
 
 
@@ -39,9 +44,17 @@ public class ConfigErrorPresenter extends BasePresenter<IConfigErrorView> {
 
 
     public void reTryConfig() {
-        Intent intent = new Intent(context, WiFiOptionsActivity.class);
+        Class clazz;
+        if (DeviceConfigConstant.BLUETOOTH_MODE==mConfigMode){
+            clazz= DeviceLightStatusActivity.class;
+        }else {
+            clazz=WiFiOptionsActivity.class;
+        }
+        Intent intent = new Intent(context, clazz);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+
         context.startActivity(intent);
         ((FragmentActivity)context).finish();
     }
@@ -54,7 +67,8 @@ public class ConfigErrorPresenter extends BasePresenter<IConfigErrorView> {
         intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
         intent.putExtra(GlobalConstant.WIFI_TOKEN, tuyaToken);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
-        intent.putExtra(SelectConfigTypeActivity.CONFIG_MODE, SelectConfigTypeActivity.AP_MODE);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+        intent.putExtra(DeviceConfigConstant.CONFIG_MODE, DeviceConfigConstant.AP_MODE);
         context.startActivity(intent);
         ((FragmentActivity)context).finish();
     }

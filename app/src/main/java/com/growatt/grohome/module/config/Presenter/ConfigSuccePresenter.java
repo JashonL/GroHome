@@ -275,7 +275,7 @@ public class ConfigSuccePresenter extends BasePresenter<IConfigSuccessView> {
                     TransferDevMsg transferBean = new TransferDevMsg();
                     transferBean.setRoomId(roomId);
                     transferBean.setRoomName(roomName);
-                    EventBus.getDefault().post(bean);
+                    EventBus.getDefault().post(transferBean);
                     jumpToDeviceDetail();
                 } catch (Exception e) {
                     e.printStackTrace();

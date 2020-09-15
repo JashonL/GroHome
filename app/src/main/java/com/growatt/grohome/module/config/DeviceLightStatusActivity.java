@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
+import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.module.config.Presenter.DeviceLightStatusPresenter;
 import com.growatt.grohome.module.config.view.IDeviceLightStatusView;
@@ -83,7 +84,7 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
     protected void initData() {
         EventBus.getDefault().register(this);
         //默认EC模式
-        ecMode = SelectConfigTypeActivity.EC_MODE;
+        ecMode = DeviceConfigConstant.EC_MODE;
         //动画
         mFastLightAnimation = new AnimationDrawable();
         mSlowLightAnimation = new AnimationDrawable();
@@ -110,9 +111,9 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
                 finish();
                 break;
             case R.id.btn_next:
-                if (ecMode == SelectConfigTypeActivity.EC_MODE) {
+                if (ecMode == DeviceConfigConstant.EC_MODE) {
                     presenter.toEcbindConfig();
-                } else if (ecMode==SelectConfigTypeActivity.AP_MODE){
+                } else if (ecMode==DeviceConfigConstant.AP_MODE){
                     presenter.getTokenForConfigDevice();
                 }else {
                     presenter.toBluetoothConfig();
@@ -120,7 +121,7 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
                 break;
             case R.id.iv_toguide:
             case R.id.tv_device_reset:
-                if (ecMode == SelectConfigTypeActivity.EC_MODE) {
+                if (ecMode == DeviceConfigConstant.EC_MODE||ecMode==DeviceConfigConstant.BLUETOOTH_MODE) {
                     presenter.toLightReset();
                 } else {
                     presenter.toHostGuide();
@@ -136,7 +137,7 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
 
     private void showAnim() {
         vBackground.clearAnimation();
-        if (ecMode == SelectConfigTypeActivity.AP_MODE) {
+        if (ecMode == DeviceConfigConstant.AP_MODE) {
             tvSubTitle.setText(R.string.m120_flashing_slowly_set);
             tvLightFlash.setText(R.string.m121_make_sure_flashing_slowly);
             tvMode.setText(R.string.m102_ap_mode);
@@ -145,7 +146,7 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
             mSlowLightAnimation.setOneShot(false);
             vBackground.setImageDrawable(mSlowLightAnimation);
             mSlowLightAnimation.start();
-        } else if (ecMode==SelectConfigTypeActivity.EC_MODE){
+        } else if (ecMode==DeviceConfigConstant.EC_MODE){
             tvSubTitle.setText(R.string.m49_flash_fast_set);
             tvLightFlash.setText(R.string.m52_make_sure_flashing_fast);
             tvMode.setText(R.string.m105_ez_mode);
@@ -154,7 +155,7 @@ public class DeviceLightStatusActivity extends BaseActivity<DeviceLightStatusPre
             mFastLightAnimation.setOneShot(false);
             vBackground.setImageDrawable(mFastLightAnimation);
             mFastLightAnimation.start();
-        }else if (ecMode==SelectConfigTypeActivity.BLUETOOTH_MODE){
+        }else if (ecMode==DeviceConfigConstant.BLUETOOTH_MODE){
             tvSubTitle.setText(R.string.m49_flash_fast_set);
             tvLightFlash.setText(R.string.m52_make_sure_flashing_fast);
             tvMode.setText(R.string.m119_Bluetooth);

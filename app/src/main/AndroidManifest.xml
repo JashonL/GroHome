@@ -87,7 +87,6 @@
         <activity android:name=".module.config.DeviceEZLightActivity" />
         <activity android:name=".module.config.DeviceAPLightActivity" />
         <activity android:name=".module.config.WiFiSetGuideActivity" />
-        <activity android:name=".module.config.SelectConfigTypeActivity" />
         <activity android:name=".module.config.ConfigErrorActivity" />
         <activity android:name=".module.config.ConfigSuccessActivity" />
         <activity android:name=".module.device.BulbActivity" />
