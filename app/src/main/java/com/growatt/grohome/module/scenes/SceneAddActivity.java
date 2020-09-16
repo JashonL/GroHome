@@ -1,7 +1,6 @@
 package com.growatt.grohome.module.scenes;
 
 import android.content.Intent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -112,23 +111,23 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
         //条件列表
         rlvCondition.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mSceneConditionAdapter = new SceneConditionAdapter(R.layout.item_scene_condition, new ArrayList<>());
-        View linkageEmpty = LayoutInflater.from(this).inflate(R.layout.device_empty_view, rlvCondition, false);
+   /*     View linkageEmpty = LayoutInflater.from(this).inflate(R.layout.device_empty_view, rlvCondition, false);
         TextView llAddConditionView = linkageEmpty.findViewById(R.id.tv_add);
         llAddConditionView.setOnClickListener(v -> {
             presenter.addCondition(GlobalConstant.SCENE_ADD_CONDITION);
         });
-        mSceneConditionAdapter.setEmptyView(linkageEmpty);
+        mSceneConditionAdapter.setEmptyView(linkageEmpty);*/
         rlvCondition.setAdapter(mSceneConditionAdapter);
 
         //任务列表
         rlvTaskList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mSceneTaskAdapter = new SceneTaskAdapter(R.layout.item_scene_task, new ArrayList<>());
-        View taskEmpty = LayoutInflater.from(this).inflate(R.layout.device_empty_view, rlvCondition, false);
+/*        View taskEmpty = LayoutInflater.from(this).inflate(R.layout.device_empty_view, rlvCondition, false);
         TextView llAddTaskView = taskEmpty.findViewById(R.id.tv_add);
         llAddTaskView.setOnClickListener(v -> {
             presenter.selectDevice(GlobalConstant.SCENE_ADD_TASK);
         });
-        mSceneTaskAdapter.setEmptyView(taskEmpty);
+        mSceneTaskAdapter.setEmptyView(taskEmpty);*/
         rlvTaskList.setAdapter(mSceneTaskAdapter);
 
     }

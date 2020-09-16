@@ -40,7 +40,7 @@ public class API {
 
     public static final String UPDATEUSER = "/newUserAPI.do?op=updateUser";
 
-    public static final String TEST_URL = "http://192.168.3.214:8082/eic_web/";
+    public static final String TEST_URL = "http://192.168.3.214:8082/eic_web";
 
     public static final String GET_ADVERTISING_LIST = "/newPlantAPI.do?op=getAdvertisingList&language=";
 

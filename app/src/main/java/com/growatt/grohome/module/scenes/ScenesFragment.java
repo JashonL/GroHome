@@ -27,6 +27,7 @@ import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.customview.GridDivider;
+import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.customview.MySwipeRefreshLayout;
 import com.growatt.grohome.eventbus.FreshScenesMsg;
 import com.growatt.grohome.module.scenes.presenter.ScenesPresenter;
@@ -126,7 +127,7 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         //条件执行
         mRlvLinkage = linkageView.findViewById(R.id.rlv_linkage_detail);
         mRlvLinkage.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-//        mRlvLinkage.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, div, ContextCompat.getColor(getActivity(), R.color.nocolor)));
+        mRlvLinkage.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, div, ContextCompat.getColor(getActivity(), R.color.nocolor)));
         mLinkageSceneAdapter = new LinkageSceneAdapter(new ArrayList<>());
         linkageEmpty = LayoutInflater.from(getContext()).inflate(R.layout.scene_linkage_empty_view, mRlvLinkage, false);
         llAddLinkageView = linkageEmpty.findViewById(R.id.ll_add_linkage_background);
