@@ -96,7 +96,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
-        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.white).statusBarDarkFont(true, 0.2f).init();
+        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.gray_f7).statusBarDarkFont(true, 0.2f).init();
     }
 
     @Override
@@ -104,6 +104,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         //头部toolBar
         tvTitle.setVisibility(View.GONE);
         toolbar.setTitle(R.string.m34_welcome_groHome);
+        toolbar.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.gray_f7));
         toolbar.setOverflowIcon(ContextCompat.getDrawable(getContext(), R.drawable.icon_home_add));
         toolbar.inflateMenu(R.menu.men_grohome_home);
         toolbar.setOnMenuItemClickListener(this);
@@ -163,6 +164,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         rlvDevice.addItemDecoration(new GridDivider(ContextCompat.getColor(getActivity(), R.color.nocolor), div, div));
         //设置空布局
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_empty_view, rlvDevice, false);
+        view.findViewById(R.id.cl_empty).setBackgroundColor(ContextCompat.getColor(getContext(),R.color.gray_f7));
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,6 +187,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         ivSwitchDevList.setImageResource(R.drawable.icon_list);
         //设置空布局
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_empty_view, rlvDevice, false);
+        view.findViewById(R.id.cl_empty).setBackgroundColor(ContextCompat.getColor(getContext(),R.color.gray_f7));
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

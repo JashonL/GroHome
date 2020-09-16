@@ -21,36 +21,16 @@ import butterknife.OnClick;
 public class SceneCustomizeActivity extends BaseActivity<SceneCustomPresenter> implements ISceneCustomizeView {
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.gl_start)
-    Guideline glStart;
-    @BindView(R.id.gl_end)
-    Guideline glEnd;
-    @BindView(R.id.tv_scene_customize)
-    TextView tvSceneCustomize;
-    @BindView(R.id.iv_launch_tap_icon)
-    ImageView ivLaunchTapIcon;
-    @BindView(R.id.tv_launch_tap)
-    TextView tvLaunchTap;
-    @BindView(R.id.iv_launch_more)
-    ImageView ivLaunchMore;
-    @BindView(R.id.card_launch_tap)
-    CardView cardLaunchTap;
-    @BindView(R.id.iv_timer_icon)
-    ImageView ivTimerIcon;
-    @BindView(R.id.tv_timer)
-    TextView tvTimer;
-    @BindView(R.id.iv_timer_more)
-    ImageView ivTimerMore;
-    @BindView(R.id.iv_condition_icon)
-    ImageView ivConditionIcon;
-    @BindView(R.id.tv_scene)
-    TextView tvScene;
-    @BindView(R.id.iv_condition_more)
-    ImageView ivConditionMore;
-    @BindView(R.id.card_condition)
-    CardView cardCondition;
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
 
     @Override
     protected SceneCustomPresenter createPresenter() {

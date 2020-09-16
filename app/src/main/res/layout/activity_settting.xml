@@ -30,7 +30,13 @@
 
             <LinearLayout
                 android:id="@+id/ll_personal_photo"
-                style="@style/style_mine_linearlayout_item">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_90"
+                android:background="@drawable/selector_list_item_click"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_9"
+                android:paddingEnd="@dimen/dp_9">
 
 
                 <TextView
@@ -48,33 +54,38 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1" />
+                android:layout_height="@dimen/dp_10" />
 
-            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_username">
+            <LinearLayout
+                android:id="@+id/ll_username"
+                style="@style/style_mine_linearlayout_item">
 
 
                 <TextView
                     style="@style/style_mine_tittle_item"
                     android:text="@string/m7_username" />
 
-                <TextView style="@style/style_mine_text_item" android:id="@+id/tv_username"/>
+                <TextView
+                    android:id="@+id/tv_username"
+                    style="@style/style_mine_text_item" />
 
                 <ImageView
                     android:id="@+id/iv_user_more"
                     android:layout_width="@dimen/dp_7"
                     android:layout_height="@dimen/dp_14"
-                    android:visibility="invisible"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/icon_sign_more" />
+                    android:src="@drawable/icon_sign_more"
+                    android:visibility="invisible" />
             </LinearLayout>
-
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1" />
+                android:layout_height="@dimen/dp_10" />
 
-            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_edit_password">
+            <LinearLayout
+                android:id="@+id/ll_edit_password"
+                style="@style/style_mine_linearlayout_item">
 
 
                 <TextView
@@ -96,43 +107,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1" />
 
-            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_phone">
-
-
-                <TextView
-                    style="@style/style_mine_tittle_item"
-                    android:text="@string/m22_phone_number" />
-
-                <TextView style="@style/style_mine_text_item" />
-
-                <ImageView
-                    android:id="@+id/iv_phone_more"
-                    android:layout_width="@dimen/dp_7"
-                    android:layout_height="@dimen/dp_14"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/icon_sign_more" />
-            </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1" />
-
-            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_email">
+            <LinearLayout
+                android:id="@+id/ll_email"
+                style="@style/style_mine_linearlayout_item">
 
 
                 <TextView
                     style="@style/style_mine_tittle_item"
                     android:text="@string/m15_email" />
 
-                <TextView style="@style/style_mine_text_item" android:id="@+id/tv_email" />
+                <TextView
+                    android:id="@+id/tv_email"
+                    style="@style/style_mine_text_item" />
 
                 <ImageView
                     android:id="@+id/iv_email_more"
                     android:layout_width="@dimen/dp_7"
                     android:layout_height="@dimen/dp_14"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/icon_sign_more" />
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
 
 
@@ -140,21 +132,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1" />
 
-            <LinearLayout style="@style/style_mine_linearlayout_item" android:id="@+id/ll_code">
+            <LinearLayout
+                android:id="@+id/ll_code"
+                style="@style/style_mine_linearlayout_item">
 
 
                 <TextView
                     style="@style/style_mine_tittle_item"
-                    android:text="@string/m23_installer_code" />
+                    android:text="@string/m173_country" />
 
-                <TextView style="@style/style_mine_text_item" />
+                <TextView android:id="@+id/tv_country" style="@style/style_mine_text_item" />
 
                 <ImageView
                     android:id="@+id/iv_code_more"
                     android:layout_width="@dimen/dp_7"
                     android:layout_height="@dimen/dp_14"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/icon_sign_more" />
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1" />
+
+            <LinearLayout
+                android:id="@+id/ll_phone"
+                style="@style/style_mine_linearlayout_item">
+
+
+                <TextView
+                    style="@style/style_mine_tittle_item"
+                    android:text="@string/m185_zone" />
+
+                <TextView android:id="@+id/tv_time_zone" style="@style/style_mine_text_item" />
+
+                <ImageView
+                    android:id="@+id/iv_phone_more"
+                    android:layout_width="@dimen/dp_7"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_gravity="center_vertical" />
             </LinearLayout>
 
 

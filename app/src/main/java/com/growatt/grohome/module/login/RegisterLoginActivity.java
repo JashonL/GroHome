@@ -43,16 +43,16 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     @BindView(R.id.tv_zone)
     TextView tvZone;
     @BindView(R.id.et_register_password)
-    TextView etRegisterPassword;
+    EditText etRegisterPassword;
     @BindView(R.id.et_repeat_register_password)
-    TextView etRepeatPassword;
+    EditText etRepeatPassword;
     @BindView(R.id.tv_email)
     TextView tvEmail;
     @BindView(R.id.tv_verification_code)
     TextView tvVerificationCode;
     @BindView(R.id.ctl_group_register)
     ConstraintLayout ctlGroupRegister;
-    @BindView(R.id.iv_passwor_view)
+    @BindView(R.id.iv_password_view)
     ImageView ivPasswordView;
     @BindView(R.id.tv_get_code)
     TextView tvGetCode;
@@ -63,7 +63,18 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     @BindView(R.id.tv_policy)
     TextView tvPolicy;
 
+    @BindView(R.id.iv_password_register_view)
+    ImageView ivPwdRegister;
+    @BindView(R.id.iv_repeat_password_view)
+    ImageView ivRepeatePwd;
+
+
     private boolean passwordOn = false;
+
+    private boolean registerPassordOn=false;
+
+    private boolean repeatePassordOn=false;
+
 
 
     @Override
@@ -162,7 +173,8 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
 
     }
 
-    @OnClick({R.id.btn_login, R.id.btn_register, R.id.iv_passwor_view, R.id.ll_country, R.id.tv_get_code, R.id.ll_zone, R.id.tv_forgot_pwd,R.id.tv_agreement,R.id.tv_policy})
+    @OnClick({R.id.btn_login, R.id.btn_register, R.id.iv_password_view, R.id.ll_country, R.id.tv_get_code,
+            R.id.ll_zone, R.id.tv_forgot_pwd,R.id.tv_agreement,R.id.tv_policy,R.id.iv_password_register_view,R.id.iv_repeat_password_view})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
@@ -193,8 +205,17 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
                 String verification = tvVerificationCode.getText().toString();
                 presenter.register(email, rePassword, rePasswordRepeat, zone, email, country, verification);
                 break;
-            case R.id.iv_passwor_view:
-                clickPasswordSwitch();
+            case R.id.iv_password_view:
+                passwordOn = !passwordOn;
+                clickPasswordSwitch(ivPasswordView,etPassword,passwordOn);
+                break;
+            case R.id.iv_password_register_view:
+                registerPassordOn = !registerPassordOn;
+                clickPasswordSwitch(ivPwdRegister,etRegisterPassword,registerPassordOn);
+                break;
+            case R.id.iv_repeat_password_view:
+                repeatePassordOn = !repeatePassordOn;
+                clickPasswordSwitch(ivRepeatePwd,etRepeatPassword,repeatePassordOn);
                 break;
             case R.id.ll_country:
                 presenter.getCountry();
@@ -218,19 +239,20 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     }
 
 
-    public void clickPasswordSwitch() {
-        passwordOn = !passwordOn;
-        if (passwordOn) {
-            ivPasswordView.setImageResource(R.drawable.icon_signin_see);
-            etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+    public void clickPasswordSwitch(ImageView imageView,EditText editText,boolean visible) {
+        if (visible) {
+            imageView.setImageResource(R.drawable.icon_signin_see);
+            editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         } else {
-            ivPasswordView.setImageResource(R.drawable.icon_signin_see);
-            etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            imageView.setImageResource(R.drawable.icon_signin_conceal);
+            editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         }
-        if (etPassword.getText().length() > 0) {
-            etPassword.setSelection(etPassword.getText().length());
+        if (editText.getText().length() > 0) {
+            editText.setSelection(editText.getText().length());
         }
     }
+
+
 
     @Override
     public String getUserName() {

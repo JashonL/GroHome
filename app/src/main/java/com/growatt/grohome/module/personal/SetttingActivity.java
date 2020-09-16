@@ -52,6 +52,11 @@ public class SetttingActivity extends BaseActivity<SettingPresenter> implements 
     TextView tvUsername;
     @BindView(R.id.tv_email)
     TextView tvEmail;
+    @BindView(R.id.tv_country)
+    TextView tvCountry;
+    @BindView(R.id.tv_time_zone)
+    TextView tvTimeZone;
+
 
     @Override
     protected void initImmersionBar() {
@@ -85,6 +90,18 @@ public class SetttingActivity extends BaseActivity<SettingPresenter> implements 
         if (!TextUtils.isEmpty(email)) {
             tvEmail.setText(email);
         }
+        //国家
+        String country=App.getUserBean().getCounrty();
+        if (!TextUtils.isEmpty(country)) {
+            tvCountry.setText(country);
+        }
+        //国家
+        String timeZone=App.getUserBean().getTimeZone();
+        if (!TextUtils.isEmpty(timeZone)) {
+            tvTimeZone.setText(timeZone);
+        }
+
+
         //头像
         try {
             String path = App.getInstance().getFilesDir().getPath() + "/" + GlobalConstant.IMAGE_FILE_LOCATION;
@@ -122,7 +139,7 @@ public class SetttingActivity extends BaseActivity<SettingPresenter> implements 
                 presenter.changePassword();
                 break;
             case R.id.ll_email:
-                presenter.changeEmail();
+//                presenter.changeEmail();
                 break;
             case R.id.btn_logout:
                 presenter.showLogoutDialog();

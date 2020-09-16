@@ -654,11 +654,13 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                     if (s.length >= 3) {
                         try {
                             int enable=Integer.parseInt(s[0]);
-                            if (enable==0)return;
-                            int value = Integer.parseInt(s[2]);
-                            seekPercent.setProgress(value);
-                            String time = value + "  " + context.getString(R.string.m303_second);
-                            tvValue.setText(time);
+                            if (enable!=0){
+                                int value = Integer.parseInt(s[2]);
+                                seekPercent.setProgress(value);
+                                String time = value + "  " + context.getString(R.string.m303_second);
+                                tvValue.setText(time);
+                            }
+
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
                         }

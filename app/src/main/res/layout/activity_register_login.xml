@@ -82,7 +82,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_50"
-                        android:visibility="visible"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tab_title">
@@ -139,11 +138,11 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:id="@+id/iv_passwor_view"
+                                    android:id="@+id/iv_password_view"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:padding="@dimen/dp_2"
-                                    android:src="@drawable/icon_signin_see" />
+                                    android:src="@drawable/icon_signin_conceal" />
 
                             </LinearLayout>
 
@@ -301,6 +300,21 @@
                                 android:textColorHint="@color/color_text_99"
                                 android:textSize="@dimen/size_title_sp_12" />
 
+                            <LinearLayout
+                                android:layout_width="@dimen/dp_40"
+                                android:layout_height="match_parent"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/iv_password_register_view"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/dp_2"
+                                    android:src="@drawable/icon_signin_conceal" />
+
+                            </LinearLayout>
+
+
                         </LinearLayout>
 
 
@@ -329,6 +343,20 @@
                                 android:textColor="@color/color_text_00"
                                 android:textColorHint="@color/color_text_99"
                                 android:textSize="@dimen/size_title_sp_12" />
+
+                            <LinearLayout
+                                android:layout_width="@dimen/dp_40"
+                                android:layout_height="match_parent"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/iv_repeat_password_view"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/dp_2"
+                                    android:src="@drawable/icon_signin_conceal" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 

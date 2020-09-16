@@ -731,23 +731,25 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                     if (s.length >= 3) {
                         try {
                             int enable=Integer.parseInt(s[0]);
-                            if (enable==0)return;
-                            int value = Integer.parseInt(s[2]);
-                            seekPercent.setProgress(value);
-                            String time = value + "  " + context.getString(R.string.m303_second);
-                            tvValue.setText(time);
-                            String symbol=s[1];
-                            switch (symbol){
-                                case "less":
-                                    radioGroup.check(R.id.rb_less);
-                                    break;
-                                case "equal":
-                                    radioGroup.check(R.id.rb_equal);
-                                    break;
-                                case "greater":
-                                    radioGroup.check(R.id.rb_greater);
-                                    break;
+                            if (enable!=0){
+                                int value = Integer.parseInt(s[2]);
+                                seekPercent.setProgress(value);
+                                String time = value + "  " + context.getString(R.string.m303_second);
+                                tvValue.setText(time);
+                                String symbol=s[1];
+                                switch (symbol){
+                                    case "less":
+                                        radioGroup.check(R.id.rb_less);
+                                        break;
+                                    case "equal":
+                                        radioGroup.check(R.id.rb_equal);
+                                        break;
+                                    case "greater":
+                                        radioGroup.check(R.id.rb_greater);
+                                        break;
+                                }
                             }
+
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
                         }

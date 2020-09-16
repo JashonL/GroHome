@@ -289,6 +289,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         intent.putExtra(GlobalConstant.WIFI_TOKEN, tuyaToken);
         intent.putExtra(GlobalConstant.WIFI_SSID, ssid);
         intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE, configType);
         intent.putExtra(DeviceConfigConstant.CONFIG_MODE, mConfigMode);
         intent.putExtra(GlobalConstant.DEVICE_SCAN_BEAN, scanJson);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, true);
@@ -302,9 +303,12 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
             clazz=WiFiOptionsActivity.class;
         }
         Intent intent = new Intent(context, clazz);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
-        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+        intent.putExtra(GlobalConstant.WIFI_TOKEN, tuyaToken);
+        intent.putExtra(GlobalConstant.WIFI_SSID, ssid);
+        intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE, configType);
+        intent.putExtra(DeviceConfigConstant.CONFIG_MODE, mConfigMode);
         intent.putExtra(GlobalConstant.DEVICE_SCAN_BEAN, scanJson);
         context.startActivity(intent);
         ((FragmentActivity) context).finish();

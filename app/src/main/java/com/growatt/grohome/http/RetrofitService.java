@@ -74,6 +74,7 @@ public class RetrofitService {
                 .addInterceptor(httpLoggingInterceptor)
                 //设置超时时间
                 .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
                 //设置Cookie持久化
                 .cookieJar(new CookiesManager(App.getInstance()))
                 .build();

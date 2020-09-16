@@ -13,7 +13,7 @@
         android:foreground="@drawable/card_foreground"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/dp_12"
-        app:cardElevation="@dimen/dp_2"
+        app:cardElevation="@dimen/dp_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

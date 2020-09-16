@@ -27,7 +27,6 @@ import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.customview.GridDivider;
-import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.customview.MySwipeRefreshLayout;
 import com.growatt.grohome.eventbus.FreshScenesMsg;
 import com.growatt.grohome.module.scenes.presenter.ScenesPresenter;
@@ -93,7 +92,7 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
-        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.white).statusBarDarkFont(true,0.2f).init();
+        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.gray_f7).statusBarDarkFont(true,0.2f).init();
     }
 
     @Override
@@ -104,6 +103,7 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         toolbar.setTitle(R.string.m87_scenes);
         toolbar.inflateMenu(R.menu.menu_grohome);
         toolbar.setOnMenuItemClickListener(this);
+        toolbar.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.gray_f7));
 
         srlPull.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.color_theme_green));
 
@@ -126,17 +126,17 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         //条件执行
         mRlvLinkage = linkageView.findViewById(R.id.rlv_linkage_detail);
         mRlvLinkage.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mRlvLinkage.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, ContextCompat.getColor(getActivity(), R.color.nocolor), 32));
+//        mRlvLinkage.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, div, ContextCompat.getColor(getActivity(), R.color.nocolor)));
         mLinkageSceneAdapter = new LinkageSceneAdapter(new ArrayList<>());
         linkageEmpty = LayoutInflater.from(getContext()).inflate(R.layout.scene_linkage_empty_view, mRlvLinkage, false);
         llAddLinkageView = linkageEmpty.findViewById(R.id.ll_add_linkage_background);
         mLinkageSceneAdapter.setEmptyView(linkageEmpty);
         mRlvLinkage.setAdapter(mLinkageSceneAdapter);
-        mRlvLinkage.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, div, ContextCompat.getColor(getActivity(), R.color.nocolor)));
+
         //日志
         mRlvLogs = logsView.findViewById(R.id.rlv_logs);
         mRlvLogs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mRlvLogs.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, ContextCompat.getColor(getActivity(), R.color.nocolor), 32));
+//        mRlvLogs.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, ContextCompat.getColor(getActivity(), R.color.nocolor), 32));
         mLogsSceneAdapter = new LogsSceneAdapter(R.layout.item_logs_detail, new ArrayList<>());
         LogsEmpty = LayoutInflater.from(getContext()).inflate(R.layout.scene_logs_empty_view, mRlvLogs, false);
         mLogsSceneAdapter.setEmptyView(LogsEmpty);

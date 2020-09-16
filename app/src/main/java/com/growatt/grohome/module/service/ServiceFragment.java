@@ -73,12 +73,13 @@ public class ServiceFragment extends BaseFragment<ServicePresenter> implements I
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
-        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.white).statusBarDarkFont(true, 0.2f).init();
+        mImmersionBar.reset().statusBarView(statusBarView).statusBarColor(R.color.gray_f7).statusBarDarkFont(true, 0.2f).init();
     }
 
     @Override
     protected void initView() {
         toolbar.setVisibility(View.GONE);
+
         //设备列表
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

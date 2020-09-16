@@ -13,6 +13,7 @@ public class User {
     public String email;
     public String userTuyaCode;//用户的国家区号，只有国内和法国，不能变
     public String counrty;
+    public String timeZone;
 
 
     public String getAccountName() {
@@ -77,5 +78,13 @@ public class User {
 
     public void setCounrty(String counrty) {
         this.counrty = counrty;
+    }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
     }
 }
