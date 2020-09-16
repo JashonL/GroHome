@@ -55,13 +55,16 @@ public class AllDevicePrensenter extends BasePresenter<IAllDeviceView> {
                     obj = new JSONObject(bean);
                     int code = obj.getInt("code");
                     if (0 == code) {
-                        JSONArray dataArray = obj.getJSONArray("data");
+                        JSONArray dataArray = obj.optJSONArray("data");
                         List<GroDeviceBean> data = new ArrayList<>();
-                        for (int i = 0; i < dataArray.length(); i++) {
-                            JSONObject jsonObject = dataArray.optJSONObject(i);
-                            GroDeviceBean deviceBean = new Gson().fromJson(jsonObject.toString(), GroDeviceBean.class);
-                            data.add(deviceBean);
+                        if (dataArray!=null){
+                            for (int i = 0; i < dataArray.length(); i++) {
+                                JSONObject jsonObject = dataArray.optJSONObject(i);
+                                GroDeviceBean deviceBean = new Gson().fromJson(jsonObject.toString(), GroDeviceBean.class);
+                                data.add(deviceBean);
+                            }
                         }
+
                         baseView.setAllDeviceSuccess(data);
                     }
                 } catch (Exception e) {

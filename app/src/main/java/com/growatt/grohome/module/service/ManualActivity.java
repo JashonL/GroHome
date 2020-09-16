@@ -1,12 +1,15 @@
 package com.growatt.grohome.module.service;
 
+import android.view.View;
+
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.ManualAdapter;
 import com.growatt.grohome.base.BaseActivity;
-import com.growatt.grohome.customview.MySwipeRefreshLayout;
 import com.growatt.grohome.module.service.presenter.ManualPresenter;
 import com.growatt.grohome.module.service.view.IManualView;
 
@@ -20,10 +23,15 @@ public class ManualActivity extends BaseActivity<ManualPresenter> implements IMa
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-    @BindView(R.id.srl_pull)
-    MySwipeRefreshLayout srlPull;
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
+    @BindView(R.id.tv_title)
+    AppCompatTextView tvTitle;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private ManualAdapter mSceneViewPagerAdapter;
+
 
     @Override
     protected ManualPresenter createPresenter() {
@@ -37,25 +45,33 @@ public class ManualActivity extends BaseActivity<ManualPresenter> implements IMa
 
     @Override
     protected void initViews() {
-        mSceneViewPagerAdapter = new ManualAdapter(this,new ArrayList<>());
+        //头部初始化
+        toolbar.setNavigationIcon(R.drawable.icon_return_w);
+        tvTitle.setText("");
+
+        toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.nocolor));
+
+        mSceneViewPagerAdapter = new ManualAdapter(this, new ArrayList<>());
         viewPager.setAdapter(mSceneViewPagerAdapter);
 
-        srlPull.setColorSchemeColors(ContextCompat.getColor(this, R.color.color_theme_green));
     }
 
     @Override
     protected void initData() {
         presenter.getImageList();
+     /*   if (!TextUtils.isEmpty(presenter.title)){
+            tvTitle.setText(presenter.title);
+        }*/
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-        srlPull.setOnRefreshListener(() -> {
-            try {
-                presenter.getImageList();
-            } catch (Exception e) {
-                e.printStackTrace();
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -67,13 +83,8 @@ public class ManualActivity extends BaseActivity<ManualPresenter> implements IMa
 
     @Override
     public void error(String msg) {
-        if (srlPull != null && srlPull.isRefreshing()) {
-            srlPull.setRefreshing(false);
-        }
         requestError(msg);
     }
-
-
 
 
 

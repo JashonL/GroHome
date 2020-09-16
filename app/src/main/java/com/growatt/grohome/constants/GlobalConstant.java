@@ -158,9 +158,8 @@ public class GlobalConstant {
     public static final String FQA_CONFIG_ERROR="config_error";
     public static final String FQA_WIFI_CONFIG="wifi_config";
 
-    public static final String MANUAL_GUIDE="manual_guide";
-    public static final String MANUAL_STRIP_MANUAL="strip_manual";
-    public static final String MANUAL_BULB_MANUAL="bulb_manual";
-    public static final String MANUAL_SWITCH_MANUAL="switch_manual";
+    public static final String MANUAL_GUIDE_TITLE="manual_guide_title";
+    public static final String MANUAL_GUIDE_CONTENT="manual_guide_content";
+
 
 }

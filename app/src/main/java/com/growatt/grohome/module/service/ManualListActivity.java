@@ -2,17 +2,20 @@ package com.growatt.grohome.module.service;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.Guideline;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.ManulListAdapter;
 import com.growatt.grohome.base.BaseActivity;
+import com.growatt.grohome.bean.ManualBean;
 import com.growatt.grohome.module.service.presenter.ManualListPresenter;
 import com.growatt.grohome.module.service.view.IManualListView;
 
@@ -30,12 +33,10 @@ public class ManualListActivity extends BaseActivity<ManualListPresenter> implem
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.gl_start)
-    Guideline glStart;
-    @BindView(R.id.gl_end)
-    Guideline glEnd;
     @BindView(R.id.rv_manual)
     RecyclerView rvManual;
+    @BindView(R.id.srl_pull)
+    SwipeRefreshLayout swipeRefresh;
 
     private ManulListAdapter mManualAdapter;
 
@@ -65,14 +66,18 @@ public class ManualListActivity extends BaseActivity<ManualListPresenter> implem
         rvManual.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mManualAdapter = new ManulListAdapter(R.layout.item_faq, new ArrayList<>());
         View emptyView = LayoutInflater.from(this).inflate(R.layout.comment_empty_view, rvManual, false);
+        TextView tvTips = emptyView.findViewById(R.id.tv_empty_tips);
+        tvTips.setText(R.string.m260_no_data);
         mManualAdapter.setEmptyView(emptyView);
         rvManual.setAdapter(mManualAdapter);
+
+        //下拉刷新
+        swipeRefresh.setColorSchemeColors(ContextCompat.getColor(this, R.color.color_theme_green));
     }
 
     @Override
     protected void initData() {
-        List<String> newlist = presenter.getManulList();
-        mManualAdapter.replaceData(newlist);
+       presenter.getManulList();
     }
 
     @Override
@@ -85,10 +90,46 @@ public class ManualListActivity extends BaseActivity<ManualListPresenter> implem
             }
         });
         mManualAdapter.setOnItemClickListener(this);
+
+        swipeRefresh.setOnRefreshListener(() -> {
+            try {
+                presenter.getManulList();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        presenter.toManualDetail(position);
+        ManualBean bean = mManualAdapter.getData().get(position);
+        if (bean!=null){
+            String content = bean.getContent();
+            String title = bean.getTitle();
+            presenter.toManualDetail(content,title);
+        }
     }
+
+    @Override
+    public void updata(List<ManualBean> list) {
+        mManualAdapter.replaceData(list);
+    }
+
+    @Override
+    public void onError(String onError) {
+        if (swipeRefresh != null && swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+        requestError(onError);
+    }
+
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        if (swipeRefresh != null && swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+    }
+
 }

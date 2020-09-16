@@ -1,11 +1,8 @@
 package com.growatt.grohome.module.service;
 
 import android.view.View;
-import android.widget.ImageView;
 
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,26 +31,10 @@ public class ServiceFragment extends BaseFragment<ServicePresenter> implements I
 
     @BindView(R.id.status_bar_view)
     View statusBarView;
-    @BindView(R.id.tv_title)
-    AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.banner)
     Banner banner;
-    @BindView(R.id.icon_manual)
-    ImageView iconManual;
-    @BindView(R.id.tv_manual)
-    AppCompatTextView tvManual;
-    @BindView(R.id.cl_manual)
-    ConstraintLayout clManual;
-    @BindView(R.id.icon_faq)
-    ImageView iconFaq;
-    @BindView(R.id.tv_faq)
-    AppCompatTextView tvFaq;
-    @BindView(R.id.cl_faq)
-    ConstraintLayout clFaq;
-    @BindView(R.id.tv_selection)
-    AppCompatTextView tvSelection;
     @BindView(R.id.rlv_device)
     RecyclerView rlvDevice;
 

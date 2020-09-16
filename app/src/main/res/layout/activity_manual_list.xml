@@ -11,40 +11,21 @@
         android:id="@+id/headerView"
         layout="@layout/toobar_title" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="393dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/dp_16"
-        app:layout_constraintRight_toRightOf="parent" />
-
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/dp_10"
-        app:cardElevation="@dimen/dp_1"
-        android:layout_marginTop="@dimen/dp_20"
-        app:layout_constraintLeft_toLeftOf="@+id/gl_start"
-        app:layout_constraintRight_toRightOf="@+id/gl_end"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/srl_pull"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerView">
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_manual"
+            android:paddingTop="@dimen/dp_20"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-    </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

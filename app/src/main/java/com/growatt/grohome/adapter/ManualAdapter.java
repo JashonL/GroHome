@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -38,6 +39,7 @@ public class ManualAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         String url = urls.get(position);
         TouchImageView imageView = new TouchImageView(context);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         GlideUtils.showImageAct((Activity) context,url,imageView);
         container.addView(imageView);
         return imageView;

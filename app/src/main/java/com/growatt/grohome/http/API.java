@@ -40,11 +40,11 @@ public class API {
 
     public static final String UPDATEUSER = "/newUserAPI.do?op=updateUser";
 
-    public static final String TEST_URL = "http://192.168.3.214:8082/eic_web";
+    public static final String TEST_URL = "http://192.168.3.214:8082/eic_web/";
 
     public static final String GET_ADVERTISING_LIST = "/newPlantAPI.do?op=getAdvertisingList&language=";
 
-    public static final String GET_SERVICE_PHONENUM="/newUserAPI.do?op=getServicePhoneNum&language=";
+    public static final String GET_SERVICE_PHONENUM = "/newUserAPI.do?op=getServicePhoneNum&language=";
 
     public static final String URL_HOST = "server-api.growatt.com";//注册时用
     public static final String URL_CN_HOST = "server-cn-api.growatt.com";//注册时用
@@ -52,9 +52,8 @@ public class API {
     public static final String GET_SERVER_URLBY_PARAM = "/newForgetAPI.do?op=getServerUrlByParam";
     public static final String SEND_RESET_EMAIL_BY_ACCOUNT = "/newForgetAPI.do?op=sendResetEmailByAccount";
 
-    public static final String CREATACCOUNT ="/newTwoRegisterAPI.do?op=creatAccount";
-    public static final String NEWTWOLOGINAPI ="/newTwoLoginAPI.do";
-
+    public static final String CREATACCOUNT = "/newTwoRegisterAPI.do?op=creatAccount";
+    public static final String NEWTWOLOGINAPI = "/newTwoLoginAPI.do";
 
 
     public interface WAZApi {
@@ -114,7 +113,7 @@ public class API {
 
         @FormUrlEncoded
         @POST
-        Observable<String> updateValidate(@Url String url, @Field("type")String type,@Field("userName") String userName, @Field("content") String content);
+        Observable<String> updateValidate(@Url String url, @Field("type") String type, @Field("userName") String userName, @Field("content") String content);
 
 
         @FormUrlEncoded
@@ -199,6 +198,13 @@ public class API {
         //首页文章列表 这里的{}是填入页数
         @GET
         Observable<String> getAdvertisingList(@Url String url);
+
+        @POST(TEST_URL+"appService/manualList")
+        Observable<String> manualList(@Body RequestBody body);
+
+        @POST(TEST_URL+"appService/methodFile ")
+        Observable<String> methodFile(@Body RequestBody body);
+
 
         //---------------------------【    关于      】------------------------------------------
         @GET

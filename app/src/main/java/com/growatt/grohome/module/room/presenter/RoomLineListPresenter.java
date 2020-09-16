@@ -87,18 +87,21 @@ public class RoomLineListPresenter extends BasePresenter<IRoomLineListView> {
                     JSONObject obj = new JSONObject(bean);
                     int code = obj.getInt("code");
                     if (code == 0) {
-                        JSONArray dataArray = obj.getJSONArray("data");
+                        JSONArray dataArray = obj.optJSONArray("data");
                         List<HomeRoomBean> roomList = new ArrayList<>();
-                        for (int i = 0; i < dataArray.length(); i++) {
-                            JSONObject jsonObject = dataArray.getJSONObject(i);
-                            HomeRoomBean roomBean = new Gson().fromJson(jsonObject.toString(), HomeRoomBean.class);
-                            int cid = roomBean.getCid();
-                            roomBean.setSelect(false);
-                            if (currentRoomId.equals(String.valueOf(cid))) {
-                                roomBean.setSelect(true);
+                        if (dataArray!=null){
+                            for (int i = 0; i < dataArray.length(); i++) {
+                                JSONObject jsonObject = dataArray.getJSONObject(i);
+                                HomeRoomBean roomBean = new Gson().fromJson(jsonObject.toString(), HomeRoomBean.class);
+                                int cid = roomBean.getCid();
+                                roomBean.setSelect(false);
+                                if (currentRoomId.equals(String.valueOf(cid))) {
+                                    roomBean.setSelect(true);
+                                }
+                                roomList.add(roomBean);
                             }
-                            roomList.add(roomBean);
                         }
+
                         baseView.updata(roomList);
                     }
                 } catch (Exception e) {

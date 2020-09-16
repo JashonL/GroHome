@@ -101,49 +101,52 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                         HomeDeviceBean infoData = new Gson().fromJson(bean, HomeDeviceBean.class);
 
                         //---------------------------这段代码用来控制相对应的设备是否动态匹配功能点,如果不用动态(注释掉对应的设备类型即可)的就会使用固定的----------------------------------
-                        JSONArray data = obj.getJSONArray("data");
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject device = data.optJSONObject(i);
-                            JSONObject dpdObject = device.optJSONObject("dpd");
-                            String devType = device.optString("devType","");
-                            String deviceId = device.optString("devId","");
-                            if (dpdObject!=null){
-                                switch (devType) {
-                                    case DeviceTypeConstant.TYPE_BULB:
-                                    case DeviceTypeConstant.TYPE_STRIP_LIGHTS: {
-                                        BulbDpBean schma = new Gson().fromJson(dpdObject.toString(), BulbDpBean.class);
-                                        DeviceBulb.sechMap.put(deviceId, schma);
-                                        break;
-                                    }
-                                    case DeviceTypeConstant.TYPE_PANELSWITCH:
-                                        SwitchDpBean switchSechMap = new SwitchDpBean();
-                                        String countdown = dpdObject.getString("countdown");
-                                        String countdown_scale = dpdObject.getString("countdown_scale");
-                                        switchSechMap.setCountdown(countdown);
-                                        switchSechMap.setCountdown_scale(countdown_scale);
-                                        List<String> switchDpIds = new ArrayList<>();
-                                        Iterator<String> keys = dpdObject.keys();
-                                        while (keys.hasNext()) {
-                                            String key = keys.next();
-                                            if (key.contains("switch_")) {
-                                                String value = dpdObject.getString(key);
-                                                if (!"-1".equals(value)) {
-                                                    switchDpIds.add(value);
+                        JSONArray data = obj.optJSONArray("data");
+                        if (data!=null){
+                            for (int i = 0; i < data.length(); i++) {
+                                JSONObject device = data.optJSONObject(i);
+                                JSONObject dpdObject = device.optJSONObject("dpd");
+                                String devType = device.optString("devType","");
+                                String deviceId = device.optString("devId","");
+                                if (dpdObject!=null){
+                                    switch (devType) {
+                                        case DeviceTypeConstant.TYPE_BULB:
+                                        case DeviceTypeConstant.TYPE_STRIP_LIGHTS: {
+                                            BulbDpBean schma = new Gson().fromJson(dpdObject.toString(), BulbDpBean.class);
+                                            DeviceBulb.sechMap.put(deviceId, schma);
+                                            break;
+                                        }
+                                        case DeviceTypeConstant.TYPE_PANELSWITCH:
+                                            SwitchDpBean switchSechMap = new SwitchDpBean();
+                                            String countdown = dpdObject.getString("countdown");
+                                            String countdown_scale = dpdObject.getString("countdown_scale");
+                                            switchSechMap.setCountdown(countdown);
+                                            switchSechMap.setCountdown_scale(countdown_scale);
+                                            List<String> switchDpIds = new ArrayList<>();
+                                            Iterator<String> keys = dpdObject.keys();
+                                            while (keys.hasNext()) {
+                                                String key = keys.next();
+                                                if (key.contains("switch_")) {
+                                                    String value = dpdObject.getString(key);
+                                                    if (!"-1".equals(value)) {
+                                                        switchDpIds.add(value);
+                                                    }
                                                 }
                                             }
-                                        }
-                                        Collections.sort(switchDpIds, (o1, o2) -> {
-                                            Integer v1 = Integer.valueOf(o1);
-                                            Integer v2 = Integer.valueOf(o2);
-                                            return v1 - v2;
-                                        });
-                                        switchSechMap.setSwitchDpIds(switchDpIds);
-                                        DevicePanel.sechMap.put(deviceId, switchSechMap);
-                                        break;
+                                            Collections.sort(switchDpIds, (o1, o2) -> {
+                                                Integer v1 = Integer.valueOf(o1);
+                                                Integer v2 = Integer.valueOf(o2);
+                                                return v1 - v2;
+                                            });
+                                            switchSechMap.setSwitchDpIds(switchDpIds);
+                                            DevicePanel.sechMap.put(deviceId, switchSechMap);
+                                            break;
+                                    }
                                 }
-                            }
 
+                            }
                         }
+
 
                         //---------------------------------------------------------------------------------------------
 
@@ -183,12 +186,14 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                     JSONObject obj = new JSONObject(bean);
                     int code = obj.getInt("code");
                     if (code == 0) {
-                        JSONArray dataArray = obj.getJSONArray("data");
+                        JSONArray dataArray = obj.optJSONArray("data");
                         List<HomeRoomBean> roomList = new ArrayList<>();
-                        for (int i = 0; i < dataArray.length(); i++) {
-                            JSONObject jsonObject = dataArray.getJSONObject(i);
-                            HomeRoomBean roomBean = new Gson().fromJson(jsonObject.toString(), HomeRoomBean.class);
-                            roomList.add(roomBean);
+                        if (dataArray!=null){
+                            for (int i = 0; i < dataArray.length(); i++) {
+                                JSONObject jsonObject = dataArray.getJSONObject(i);
+                                HomeRoomBean roomBean = new Gson().fromJson(jsonObject.toString(), HomeRoomBean.class);
+                                roomList.add(roomBean);
+                            }
                         }
                         RoomManager.getInstance().setHoomRoomList(roomList);
                         baseView.setRoomListSuccess(roomList);
