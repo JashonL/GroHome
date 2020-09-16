@@ -37,7 +37,7 @@ public class ScenesPanelConditionAdapter extends BaseQuickAdapter<ScenesRoadBean
              helper.setText(R.id.tv_switch_onoff,statusOff);
              helper.setImageResource(R.id.iv_switch_onoff,R.drawable.scenes_off);
          }
-         helper.setImageResource(R.id.iv_switch_use,scenesConditionEnable?R.drawable.icon_sign_check:R.drawable.icon_sign_checkoff);
+         helper.setImageResource(R.id.iv_switch_use,scenesConditionEnable?R.drawable.icon_sign_check:R.drawable.icon_sign_unselect);
          helper.addOnClickListener(R.id.iv_switch_onoff);
          helper.addOnClickListener(R.id.iv_switch_use);
     }

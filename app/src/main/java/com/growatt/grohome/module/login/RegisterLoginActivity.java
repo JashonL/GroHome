@@ -19,6 +19,7 @@ import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.login.presenter.RegisterLoginPresenter;
 import com.growatt.grohome.module.login.view.IRegisterLoginView;
+import com.growatt.grohome.utils.SharedPreferencesUnit;
 import com.growatt.grohome.utils.SpanableStringUtils;
 import com.hjq.toast.ToastUtils;
 
@@ -62,6 +63,8 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     TextView tvAgreement;
     @BindView(R.id.tv_policy)
     TextView tvPolicy;
+    @BindView(R.id.iv_remmenber)
+    ImageView ivRemmenber;
 
     @BindView(R.id.iv_password_register_view)
     ImageView ivPwdRegister;
@@ -71,10 +74,9 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
 
     private boolean passwordOn = false;
 
-    private boolean registerPassordOn=false;
+    private boolean registerPassordOn = false;
 
-    private boolean repeatePassordOn=false;
-
+    private boolean repeatePassordOn = false;
 
 
     @Override
@@ -122,6 +124,8 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
         tvAgreement.setText(agreement);
         SpannableStringBuilder policy = SpanableStringUtils.getSpanableBuilder(getString(R.string.m110_privacy_policy)).setUnderLine(true).create();
         tvPolicy.setText(policy);
+
+        ivRemmenber.setImageResource(presenter.isRemmenberPassword ? R.drawable.icon_sign_check : R.drawable.icon_sign_unselect);
     }
 
 
@@ -136,8 +140,16 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
                 etUsername.setText(username);
                 etUsername.setSelection(username.length());
             }
-            if (!TextUtils.isEmpty(password)) {
-                etPassword.setText(password);
+            if (presenter.isRemmenberPassword) {
+                if (!TextUtils.isEmpty(password)) {
+                    etPassword.setText(password);
+                }
+            }
+
+            //自动登录
+            boolean autoLogin = SharedPreferencesUnit.getInstance(this).getBoolean(GlobalConstant.SP_AUTO_LOGIN);
+            if (autoLogin) {
+                autologin();
             }
         }
     }
@@ -174,23 +186,13 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
     }
 
     @OnClick({R.id.btn_login, R.id.btn_register, R.id.iv_password_view, R.id.ll_country, R.id.tv_get_code,
-            R.id.ll_zone, R.id.tv_forgot_pwd,R.id.tv_agreement,R.id.tv_policy,R.id.iv_password_register_view,R.id.iv_repeat_password_view})
+            R.id.ll_zone, R.id.tv_forgot_pwd, R.id.tv_agreement, R.id.tv_policy, R.id.iv_password_register_view, R.id.iv_repeat_password_view,
+            R.id.ll_remember_password
+    })
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                if (TextUtils.isEmpty(username)) {
-                    ToastUtils.show(R.string.m143_username_empty);
-                    return;
-                }
-                if (TextUtils.isEmpty(password)) {
-                    ToastUtils.show(R.string.m144_password_empty);
-                    return;
-                }
-//                startActivity(new Intent(this, MainActivity.class));
-//                presenter.userLogin(username,password);
-                presenter.getUserType();
+                login();
                 break;
             case R.id.btn_register:
                 String country = tvCountry.getText().toString();
@@ -207,15 +209,15 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
                 break;
             case R.id.iv_password_view:
                 passwordOn = !passwordOn;
-                clickPasswordSwitch(ivPasswordView,etPassword,passwordOn);
+                clickPasswordSwitch(ivPasswordView, etPassword, passwordOn);
                 break;
             case R.id.iv_password_register_view:
                 registerPassordOn = !registerPassordOn;
-                clickPasswordSwitch(ivPwdRegister,etRegisterPassword,registerPassordOn);
+                clickPasswordSwitch(ivPwdRegister, etRegisterPassword, registerPassordOn);
                 break;
             case R.id.iv_repeat_password_view:
                 repeatePassordOn = !repeatePassordOn;
-                clickPasswordSwitch(ivRepeatePwd,etRepeatPassword,repeatePassordOn);
+                clickPasswordSwitch(ivRepeatePwd, etRepeatPassword, repeatePassordOn);
                 break;
             case R.id.ll_country:
                 presenter.getCountry();
@@ -235,11 +237,45 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
             case R.id.tv_policy:
                 presenter.startPolicy();
                 break;
+            case R.id.ll_remember_password:
+                clickRemmenber();
+                break;
         }
     }
 
 
-    public void clickPasswordSwitch(ImageView imageView,EditText editText,boolean visible) {
+    public void login() {
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
+        if (TextUtils.isEmpty(username)) {
+            ToastUtils.show(R.string.m143_username_empty);
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            ToastUtils.show(R.string.m144_password_empty);
+            return;
+        }
+//                startActivity(new Intent(this, MainActivity.class));
+//                presenter.userLogin(username,password);
+        presenter.getUserType();
+    }
+
+
+    public void autologin() {
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
+        if (TextUtils.isEmpty(username)) {
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            return;
+        }
+        presenter.getUserType();
+    }
+
+
+
+    public void clickPasswordSwitch(ImageView imageView, EditText editText, boolean visible) {
         if (visible) {
             imageView.setImageResource(R.drawable.icon_signin_see);
             editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
@@ -252,6 +288,16 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
         }
     }
 
+
+    public void clickRemmenber() {
+        boolean isRemmenberPassword = presenter.isRemmenberPassword = !presenter.isRemmenberPassword;
+        if (isRemmenberPassword) {
+            ivRemmenber.setImageResource(R.drawable.icon_sign_check);
+        } else {
+            ivRemmenber.setImageResource(R.drawable.icon_sign_unselect);
+        }
+
+    }
 
 
     @Override

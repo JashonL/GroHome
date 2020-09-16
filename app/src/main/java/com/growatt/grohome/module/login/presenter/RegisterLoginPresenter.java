@@ -52,6 +52,10 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     private String verificationCode;
     private String userUrl;//用户所属服务器
 
+    public boolean isRemmenberPassword = false;
+
+
+
 
     public RegisterLoginPresenter(IRegisterLoginView baseView) {
         super(baseView);
@@ -60,6 +64,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     public RegisterLoginPresenter(Context context, IRegisterLoginView baseView) {
         super(context, baseView);
         initHandler(context);
+        isRemmenberPassword=SharedPreferencesUnit.getInstance(context).getBoolean(GlobalConstant.SP_REMMENER_PASSWORD);
     }
 
     /**
@@ -281,7 +286,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
             return;
         }
 
-        if (regPassword.length()<6) {
+        if (regPassword.length() < 6) {
             MyToastUtils.toast(R.string.m282_password_must_six_characters);
             return;
         }
@@ -314,7 +319,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
             return;
         }
 
-        if (TextUtils.isEmpty(this.verificationCode)||TextUtils.isEmpty(verificationCode) || !verificationCode.equals(this.verificationCode)) {
+        if (TextUtils.isEmpty(this.verificationCode) || TextUtils.isEmpty(verificationCode) || !verificationCode.equals(this.verificationCode)) {
             MyToastUtils.toast(R.string.m181_verificationcode_error);
             return;
         }
@@ -361,8 +366,14 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
      * 登录成功，保存用户信息
      */
     public void savaUserInfo(String username, String password, User user) {
+        SharedPreferencesUnit.getInstance(context).putBoolean(GlobalConstant.SP_REMMENER_PASSWORD,isRemmenberPassword);
+        SharedPreferencesUnit.getInstance(context).putBoolean(GlobalConstant.SP_AUTO_LOGIN,true);
         SharedPreferencesUnit.getInstance(context).put(GlobalConstant.SP_USER_NAME, username);
-        SharedPreferencesUnit.getInstance(context).put(GlobalConstant.SP_USER_PASSWORD, password);
+        if (isRemmenberPassword){
+            SharedPreferencesUnit.getInstance(context).put(GlobalConstant.SP_USER_PASSWORD, password);
+        }else {
+            SharedPreferencesUnit.getInstance(context).remove(GlobalConstant.SP_USER_PASSWORD);
+        }
         App.setUserBean(user);
     }
 
@@ -387,19 +398,17 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     }
 
 
-
-
-    public void startAgreement(){
-        Intent intent =new Intent(context, AgreementActivity.class);
-        intent.putExtra(GlobalConstant.AGREEMENT_OR_POLICY,GlobalConstant.AGREEMENT);
-        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+    public void startAgreement() {
+        Intent intent = new Intent(context, AgreementActivity.class);
+        intent.putExtra(GlobalConstant.AGREEMENT_OR_POLICY, GlobalConstant.AGREEMENT);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
-    public void startPolicy(){
-        Intent intent =new Intent(context, AgreementActivity.class);
-        intent.putExtra(GlobalConstant.AGREEMENT_OR_POLICY,GlobalConstant.POLICY);
-        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+    public void startPolicy() {
+        Intent intent = new Intent(context, AgreementActivity.class);
+        intent.putExtra(GlobalConstant.AGREEMENT_OR_POLICY, GlobalConstant.POLICY);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
     @Override

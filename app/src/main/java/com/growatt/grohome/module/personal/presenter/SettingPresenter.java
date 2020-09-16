@@ -24,6 +24,7 @@ import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.PhotoUtil;
+import com.growatt.grohome.utils.SharedPreferencesUnit;
 import com.mylhyl.circledialog.view.listener.OnLvItemClickListener;
 
 import java.io.IOException;
@@ -140,6 +141,7 @@ public class SettingPresenter extends BasePresenter<ISettingView> {
             }
         }
         activityStack.clear();
+        SharedPreferencesUnit.getInstance(context).putBoolean(GlobalConstant.SP_AUTO_LOGIN,false);
         Intent intent=new Intent(context,RegisterLoginActivity.class);
         ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_BACK,true);
     }

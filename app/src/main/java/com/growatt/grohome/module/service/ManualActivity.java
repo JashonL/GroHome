@@ -67,7 +67,6 @@ public class ManualActivity extends BaseActivity<ManualPresenter> implements IMa
     @Override
     protected void initListener() {
         super.initListener();
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

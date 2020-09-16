@@ -62,7 +62,7 @@ public class FqaListActivity extends BaseActivity<FQAPresenter> implements IFQAV
     protected void initViews() {
         //头部初始化
         toolbar.setNavigationIcon(R.drawable.icon_return);
-        tvTitle.setText(R.string.m317_common_problem);
+        tvTitle.setText(R.string.m78_faq);
 
         rvFaq.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mFqaAdapter = new FqaAdapter(R.layout.item_faq, new ArrayList<>());

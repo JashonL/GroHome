@@ -1,5 +1,7 @@
 package com.growatt.grohome.module.device.manager;
 
+import android.text.TextUtils;
+
 import com.growatt.grohome.R;
 import com.growatt.grohome.bean.BulbDpBean;
 import com.growatt.grohome.utils.CommentUtils;
@@ -108,6 +110,9 @@ public class DeviceBulb extends BaseDevice {
     public static String getBulbSwitchLed(String deviceId) {
         BulbDpBean dpBean = sechMap.get(deviceId);
         if (dpBean!=null){
+            if (TextUtils.isEmpty(dpBean.getSwitch_led())){
+                return BULB_SWITCH_LED;
+            }
             return dpBean.getSwitch_led();
         }
         return BULB_SWITCH_LED;
@@ -116,6 +121,9 @@ public class DeviceBulb extends BaseDevice {
     public static String getBulbWorkMode(String deviceId) {
         BulbDpBean dpBean = sechMap.get(deviceId);
         if (dpBean!=null){
+            if (TextUtils.isEmpty(dpBean.getWork_mode())){
+                return BULB_WORK_MODE;
+            }
             return dpBean.getWork_mode();
         }
         return BULB_WORK_MODE;
@@ -124,6 +132,9 @@ public class DeviceBulb extends BaseDevice {
     public static String getBulbBrightValue(String deviceId) {
         BulbDpBean dpBean = sechMap.get(deviceId);
         if (dpBean!=null){
+            if (TextUtils.isEmpty(dpBean.getBright_value())){
+                return BULB_BRIGHT_VALUE;
+            }
             return dpBean.getBright_value();
         }
         return BULB_BRIGHT_VALUE;
@@ -132,6 +143,9 @@ public class DeviceBulb extends BaseDevice {
     public static String getBulbTempValue(String deviceId) {
         BulbDpBean dpBean = sechMap.get(deviceId);
         if (dpBean!=null){
+            if (TextUtils.isEmpty(dpBean.getTemp_value())){
+                return BULB_TEMP_VALUE;
+            }
             return dpBean.getTemp_value();
         }
         return BULB_TEMP_VALUE;
@@ -140,6 +154,9 @@ public class DeviceBulb extends BaseDevice {
     public static String getBulbColourData(String deviceId) {
         BulbDpBean dpBean = sechMap.get(deviceId);
         if (dpBean!=null){
+            if (TextUtils.isEmpty(dpBean.getColour_data())){
+                return BULB_COLOUR_DATA;
+            }
             return dpBean.getColour_data();
         }
         return BULB_COLOUR_DATA;
@@ -148,6 +165,9 @@ public class DeviceBulb extends BaseDevice {
     public static String getBulbSceneData(String deviceId) {
         BulbDpBean dpBean = sechMap.get(deviceId);
         if (dpBean!=null){
+            if (TextUtils.isEmpty(dpBean.getScene_data())){
+                return BULB_SCENE_DATA;
+            }
             return dpBean.getScene_data();
         }
         return BULB_SCENE_DATA;
@@ -156,6 +176,9 @@ public class DeviceBulb extends BaseDevice {
     public static String getBulbCountdown(String deviceId) {
         BulbDpBean dpBean = sechMap.get(deviceId);
         if (dpBean!=null){
+            if (TextUtils.isEmpty(dpBean.getCountdown())){
+                return BULB_COUNTDOWN;
+            }
             return dpBean.getCountdown();
         }
         return BULB_COUNTDOWN;
@@ -164,6 +187,9 @@ public class DeviceBulb extends BaseDevice {
     public static String getBulbControlData(String deviceId) {
         BulbDpBean dpBean = sechMap.get(deviceId);
         if (dpBean!=null){
+            if (TextUtils.isEmpty(dpBean.getControl_data())){
+                return BULB_CONTROL_DATA;
+            }
             return dpBean.getControl_data();
         }
         return BULB_CONTROL_DATA;
@@ -174,6 +200,9 @@ public class DeviceBulb extends BaseDevice {
     public static String getBulbIsWhite(String deviceId) {
         BulbDpBean dpBean = sechMap.get(deviceId);
         if (dpBean!=null){
+            if (TextUtils.isEmpty(dpBean.getIsWhite())){
+                return "1";
+            }
             return dpBean.getIsWhite();
         }
         return "1";

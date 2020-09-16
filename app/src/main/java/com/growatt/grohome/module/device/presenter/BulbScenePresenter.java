@@ -182,6 +182,10 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
                     hsv[2] = (float) CommentUtils.hexStringToInter(lightness.substring(0, 4)) / 1000f;
                     bulbSceneColourBean.setWhiteHsv(hsv);
                     int color = Color.HSVToColor(hsv);
+                    if (hsv[2] < 0.3) {
+                        float[] newHsv = new float[]{hsv[0], hsv[1], 0.3f};
+                        color = Color.HSVToColor(newHsv);
+                    }
                     bulbSceneColourBean.setWhiteColor(color);
                     bulbSceneColourBean.setIsColour(false);
                     bulbSceneColourBean.setHsv(defaultHsv);//设置一个默认的彩光
@@ -192,6 +196,10 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
                     hsv[2] = (float) CommentUtils.hexStringToInter(hsvValue.substring(8)) / 1000f;
                     bulbSceneColourBean.setHsv(hsv);
                     int color = Color.HSVToColor(hsv);
+                    if (hsv[2] < 0.3) {
+                        float[] newHsv = new float[]{hsv[0], hsv[1], 0.3f};
+                        color = Color.HSVToColor(newHsv);
+                    }
                     bulbSceneColourBean.setColour(color);
                     bulbSceneColourBean.setIsColour(true);
                     bulbSceneColourBean.setWhiteHsv(whiteHsv);//设置一个默认的白光
@@ -338,7 +346,13 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
     public void bulbLightness(int light) {
         float[] hsv = mCurrentColourBean.getWhiteHsv();
         hsv[2] = (float) light / 100f;
-        int newColor = Color.HSVToColor(new float[]{hsv[0], 1f - hsv[1], hsv[2]});
+
+        float vLight = hsv[2];
+        if (hsv[2] < 0.3) {
+            vLight = 0.3f;
+        }
+
+        int newColor = Color.HSVToColor(new float[]{hsv[0], 1f - hsv[1], vLight});
         mCurrentColourBean.setWhiteColor(newColor);
         mCurrentColourBean.setWhiteHsv(hsv);
         baseView.updataSelected();
@@ -364,7 +378,12 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         float mHue = hsv[0];
         float mSat = hsv[1];
         float mVal = hsv[2];
-        int newColor = Color.HSVToColor(new float[]{hsv[0], hsv[1], hsv[2]});
+
+        float vLight = hsv[2];
+        if (hsv[2] < 0.3) {
+            vLight = 0.3f;
+        }
+        int newColor = Color.HSVToColor(new float[]{hsv[0], hsv[1], vLight});
         mCurrentColourBean.setColour(newColor);
         mCurrentColourBean.setHsv(hsv);
         String angle = CommentUtils.integerToHexstring((int) mHue, 4);
@@ -390,7 +409,13 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         float mHue = hsv[0];
         float mSat = hsv[1];
         float mVal = hsv[2];
-        int newColor = Color.HSVToColor(new float[]{hsv[0], hsv[1], hsv[2]});
+
+        float vLight = hsv[2];
+        if (hsv[2] < 0.3) {
+            vLight = 0.3f;
+        }
+
+        int newColor = Color.HSVToColor(new float[]{hsv[0], hsv[1], vLight});
         mCurrentColourBean.setColour(newColor);
         mCurrentColourBean.setHsv(hsv);
         String angle = CommentUtils.integerToHexstring((int) mHue, 4);
@@ -417,7 +442,13 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         float mSat = hsv[1];
         float mVal = hsv[2];
         hsv[0] = mHue;
-        int newColor = Color.HSVToColor(new float[]{hsv[0], hsv[1], hsv[2]});
+
+        float vLight = hsv[2];
+        if (hsv[2] < 0.3) {
+            vLight = 0.3f;
+        }
+
+        int newColor = Color.HSVToColor(new float[]{hsv[0], hsv[1], vLight});
         mCurrentColourBean.setColour(newColor);
         mCurrentColourBean.setHsv(hsv);
         String angle = CommentUtils.integerToHexstring((int) mHue, 4);

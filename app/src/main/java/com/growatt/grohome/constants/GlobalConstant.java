@@ -63,9 +63,10 @@ public class GlobalConstant {
     public static final String SET_TIMEPERIOD = "timeperiod";
 
     //************shareperferen保存常量********************************
+    public static final String SP_REMMENER_PASSWORD="remmenber_password";
     public static final String SP_USER_NAME = "user_name";
     public static final String SP_USER_PASSWORD = "user_password";
-
+    public static final String SP_AUTO_LOGIN="auto_login";
     //*************************国  家********************************
     public static final String STRING_CHINA_CHINESE = "中国";
     public static final String STRING_CHINA_ENLISH = "china";

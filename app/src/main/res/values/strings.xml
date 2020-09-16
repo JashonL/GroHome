@@ -380,7 +380,7 @@
     <string name="m322_switch_user_manual">US-Wall  Switch  User Manual</string>
     <string name="m323_bulb_user_manual">WIFI Smart Bulb User Manual</string>
     <string name="m324_repeat_password">Repeat password</string>
-
+    <string name="m325_remember_password">Remember password</string>
 
 
 </resources>

@@ -97,6 +97,13 @@ public class SharedPreferencesUnit {
     public boolean getBoolean(String key) {
         return sharedPreferences.getBoolean(key, false);
     }
+
+    //删除
+    public void remove(String key) {
+        editor.remove(key);
+        editor.commit();
+    }
+
     public void clear(){
         editor.clear();
         editor.commit();

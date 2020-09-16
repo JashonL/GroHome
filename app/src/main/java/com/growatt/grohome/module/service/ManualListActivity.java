@@ -61,7 +61,7 @@ public class ManualListActivity extends BaseActivity<ManualListPresenter> implem
     protected void initViews() {
         //头部初始化
         toolbar.setNavigationIcon(R.drawable.icon_return);
-        tvTitle.setText(R.string.m317_common_problem);
+        tvTitle.setText(R.string.m77_manual);
 
         rvManual.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mManualAdapter = new ManulListAdapter(R.layout.item_faq, new ArrayList<>());
