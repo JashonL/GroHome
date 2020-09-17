@@ -152,7 +152,7 @@
         android:layout_width="@dimen/dp_20"
         android:layout_height="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_18"
-        android:src="@drawable/icon_signin_see"
+        android:src="@drawable/icon_signin_conceal"
         app:layout_constraintBottom_toBottomOf="@+id/iv_password"
         app:layout_constraintRight_toRightOf="@+id/v_background" />
 

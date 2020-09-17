@@ -156,7 +156,7 @@ public class WiFiOptionsActivity extends BaseActivity<WiFiOptionsPresenter> impl
             ivSwitchPassword.setImageResource(R.drawable.icon_signin_see);
             etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         } else {
-            ivSwitchPassword.setImageResource(R.drawable.icon_signin_see);
+            ivSwitchPassword.setImageResource(R.drawable.icon_signin_conceal);
             etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         }
         if (etPassword.getText().length() > 0) {

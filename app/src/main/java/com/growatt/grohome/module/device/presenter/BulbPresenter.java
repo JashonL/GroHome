@@ -215,6 +215,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                 hsv[0] = (float) mColourHue;
                 hsv[1] = (float) mSat / 1000f;
                 hsv[2] = (float) (mVal - 10) / 990f;
+                if (hsv[1] < 0.1) hsv[1] = 0.1f;
                 if (hsv[2] < 0.3) hsv[2] = 0.3f;
                 mColor = Color.HSVToColor(hsv);
                 mColourSatProgrees = mSat;
@@ -223,7 +224,6 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         }
 
 
-        baseView.setOnoff(onOff);
         baseView.setTemp(temp);
         baseView.setBright(bright);
         baseView.setSatProgress(mColourSatProgrees);
@@ -236,6 +236,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         baseView.setScene(scene);
         baseView.setMode(mode);
         baseView.isWhiteMode(isWhite);
+        baseView.setOnoff(onOff);
 
         //从服务器获取场景
         requestBulbScene();
@@ -268,7 +269,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
                         JSONObject data = obj.getJSONObject("data");
                         musicOnoff = obj.optString("musicOnoff");
                         JSONArray modeArray = data.optJSONArray("bulbMode");
-                        if (modeArray!=null){
+                        if (modeArray != null) {
                             for (int i = 0; i < modeArray.length(); i++) {
                                 BulbSceneBean sceneBean = new BulbSceneBean();
                                 JSONObject modeObjcte = modeArray.getJSONObject(i);
@@ -403,6 +404,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
         hsv[1] = mSat / 1000f;
         hsv[2] = (mVal - 10) / 990f;
+        if (hsv[1] < 0.1) hsv[1] = 0.1f;
         if (hsv[2] < 0.3) hsv[2] = 0.3f;
         //中心圆颜色赋值
         int newColor = Color.HSVToColor(hsv);
@@ -425,6 +427,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         hsv[0] = mColourHue;
         hsv[1] = (float) progress / 1000f;
         hsv[2] = mVal / 1000f;
+        if (hsv[1] < 0.1) hsv[1] = 0.1f;
         if (hsv[2] < 0.3) hsv[2] = 0.3f;
 
 
@@ -455,6 +458,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         hsv[0] = mColourHue;
         hsv[1] = mSat / 1000f;
         hsv[2] = (float) progress / 1000f;
+        if (hsv[1] < 0.1) hsv[1] = 0.1f;
         if (hsv[2] < 0.3) hsv[2] = 0.3f;
 
         //中心圆颜色赋值
@@ -576,7 +580,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         intent.putExtra(GlobalConstant.BULB_SCENE_BEAN_LIST, beanListJson);
         intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
-        intent.putExtra(GlobalConstant.BULB_ISWHITE,isWhite);
+        intent.putExtra(GlobalConstant.BULB_ISWHITE, isWhite);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -601,7 +605,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         intent.putExtra(GlobalConstant.DEVICE_ID, deviceId);
         intent.putExtra(GlobalConstant.DEVICE_NAME, devName);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
-        if (mGroDeviceBean!=null){
+        if (mGroDeviceBean != null) {
             String deviceJson = new Gson().toJson(mGroDeviceBean);
             intent.putExtra(GlobalConstant.DEVICE_BEAN, deviceJson);
         }

@@ -98,15 +98,16 @@
             </LinearLayout>
 
 
-
             <View
                 android:id="@+id/v_phone_divider"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1" />
+                android:layout_height="@dimen/dp_1"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_about_phone"
-                style="@style/style_about_linearlayout_item">
+                style="@style/style_about_linearlayout_item"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/style_about_tittle_item"
@@ -132,7 +133,8 @@
 
             <LinearLayout
                 android:id="@+id/ll_about_email"
-                style="@style/style_about_linearlayout_item">
+                style="@style/style_about_linearlayout_item"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/style_about_tittle_item"
@@ -153,9 +155,13 @@
             <View
                 android:id="@+id/v_website_divider"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1" />
+                android:layout_height="@dimen/dp_1"
+                android:visibility="gone" />
 
-            <LinearLayout style="@style/style_about_linearlayout_item" android:id="@+id/ll_about_website">
+            <LinearLayout
+                android:id="@+id/ll_about_website"
+                android:visibility="gone"
+                style="@style/style_about_linearlayout_item">
 
                 <TextView
                     style="@style/style_about_tittle_item"

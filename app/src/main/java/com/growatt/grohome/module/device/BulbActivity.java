@@ -167,7 +167,11 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     public void setOnoff(String onoff) {
         if ("true".equals(onoff)) {//状态开启
             ivSwitch.setImageResource(R.drawable.icon_on);
+
+
         } else {//关闭
+
+
             ivSwitch.setImageResource(R.drawable.icon_off);
         }
     }
