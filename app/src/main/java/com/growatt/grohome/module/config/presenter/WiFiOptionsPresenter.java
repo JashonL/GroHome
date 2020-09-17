@@ -1,4 +1,4 @@
-package com.growatt.grohome.module.config.Presenter;
+package com.growatt.grohome.module.config.presenter;
 
 import android.Manifest;
 import android.app.Activity;
@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.growatt.grohome.R;
+import com.growatt.grohome.module.commom.WebViewActivity;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
 import com.growatt.grohome.constants.DeviceConfigConstant;
@@ -276,6 +277,24 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
         }
 
     }
+
+
+    /**
+     * 跳转显示本地引导
+     *
+     */
+    public void  showConfigHtml(){
+        String url;
+        if (CommentUtils.getLanguage()==0){
+            url=GlobalConstant.ROUTER_SETTING_METHOD_CN;
+        }else {
+            url=GlobalConstant.ROUTER_SETTING_METHOD_EN;
+        }
+        Intent intent=new Intent(context, WebViewActivity.class);
+        intent.putExtra(GlobalConstant.WEB_URL,url);
+        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+    }
+
 
 
 }

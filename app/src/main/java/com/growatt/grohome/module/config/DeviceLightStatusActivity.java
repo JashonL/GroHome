@@ -14,7 +14,7 @@ import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
-import com.growatt.grohome.module.config.Presenter.DeviceLightStatusPresenter;
+import com.growatt.grohome.module.config.presenter.DeviceLightStatusPresenter;
 import com.growatt.grohome.module.config.view.IDeviceLightStatusView;
 import com.growatt.grohome.utils.Mydialog;
 

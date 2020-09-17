@@ -142,14 +142,14 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements IAbou
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.ll_about_agreement:
-                presenter.startAgreement();
+                presenter.getUserAgreement();
                 break;
             case R.id.ll_about_website:
                 presenter.toWebSite();
                 break;
 
             case R.id.ll_about_policy:
-                presenter.startPolicy();
+                presenter.getPrivacyPolicy();
                 break;
         }
     }

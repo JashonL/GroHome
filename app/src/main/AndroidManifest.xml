@@ -27,10 +27,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".module.service.ManualListActivity"></activity>
-        <activity android:name=".module.service.CommonProblemActivity" />
-        <activity android:name=".module.service.FqaListActivity" />
-        <activity android:name=".module.service.ManualActivity" />
+
 
         <meta-data
             android:name="TUYA_SMART_APPKEY"
@@ -86,7 +83,6 @@
         <activity android:name=".module.config.ConnectHotsPotActivity" />
         <activity android:name=".module.config.DeviceEZLightActivity" />
         <activity android:name=".module.config.DeviceAPLightActivity" />
-        <activity android:name=".module.config.WiFiSetGuideActivity" />
         <activity android:name=".module.config.ConfigErrorActivity" />
         <activity android:name=".module.config.ConfigSuccessActivity" />
         <activity android:name=".module.device.BulbActivity" />
@@ -118,9 +114,13 @@
         <activity android:name=".module.login.ForgotpasswordActivity" />
         <activity android:name=".module.personal.CacheClearActivity" />
         <activity android:name=".module.personal.AboutActivity" />
-        <activity android:name=".WebViewActivity" />
-        <activity android:name=".module.personal.AgreementActivity" />
+        <activity android:name=".module.commom.WebViewActivity" />
         <activity android:name=".module.config.ConfigBlueToothActivity" />
+        <activity android:name=".module.service.ManualListActivity"/>
+        <activity android:name=".module.commom.ReadFileActivity" />
+        <activity android:name=".module.service.FqaListActivity" />
+        <activity android:name=".module.service.ManualActivity" />
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

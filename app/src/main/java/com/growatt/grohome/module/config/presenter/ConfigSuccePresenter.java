@@ -1,4 +1,4 @@
-package com.growatt.grohome.module.config.Presenter;
+package com.growatt.grohome.module.config.presenter;
 
 import android.app.Activity;
 import android.content.Context;

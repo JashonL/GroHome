@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
-import com.growatt.grohome.module.config.Presenter.BluetoothPresenter;
+import com.growatt.grohome.module.config.presenter.BluetoothPresenter;
 import com.growatt.grohome.module.config.view.IBluetoothConfigView;
 import com.growatt.grohome.utils.GlideUtils;
 

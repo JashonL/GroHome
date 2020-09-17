@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.growatt.grohome.R;
-import com.growatt.grohome.WebViewActivity;
+import com.growatt.grohome.module.commom.WebViewActivity;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;

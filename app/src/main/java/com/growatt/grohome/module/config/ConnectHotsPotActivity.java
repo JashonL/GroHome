@@ -13,7 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
-import com.growatt.grohome.module.config.Presenter.ConnectHotsPotPresenter;
+import com.growatt.grohome.module.config.presenter.ConnectHotsPotPresenter;
 import com.growatt.grohome.module.config.view.IConnectHotsPotView;
 import com.growatt.grohome.utils.GlideUtils;
 

@@ -15,9 +15,7 @@
             app:assetFileName="US-Wall  Switch  User Manual.pdf"/>-->
 
 
-    <include
-        android:id="@+id/headerView"
-        layout="@layout/toobar_title" />
+
 
 
     <com.growatt.grohome.customview.MySwipeRefreshLayout
@@ -36,6 +34,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </com.growatt.grohome.customview.MySwipeRefreshLayout>
+
+
+    <include
+        android:id="@+id/headerView"
+        layout="@layout/toobar_title" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

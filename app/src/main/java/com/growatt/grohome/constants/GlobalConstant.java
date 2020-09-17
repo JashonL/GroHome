@@ -155,12 +155,21 @@ public class GlobalConstant {
 
     //************************操作手册**********************
     public static final String FQA_GUIDE="fqa_guide";
-    public static final String FQA_WIFI_SEPARATE="wifi_separate";
-    public static final String FQA_CONFIG_ERROR="config_error";
-    public static final String FQA_WIFI_CONFIG="wifi_config";
-
     public static final String MANUAL_GUIDE_TITLE="manual_guide_title";
     public static final String MANUAL_GUIDE_CONTENT="manual_guide_content";
+    //*************************本地文件名称**********************
+    public static final String PRIVACY_POLICY_CN="file:///android_asset/privacyPolicy_cn.html";
+    public static final String PRIVACY_POLICY_EN="file:///android_asset/privacyPolicy_en.html";
 
+    public static final String RESETDEVICE_CN="file:///android_asset/resetDevice_cn.html";
+    public static final String RESETDEVICE_EN="file:///android_asset/resetDevice_en.html";
 
+    public static final String ROUTER_SETTING_METHOD_CN="file:///android_asset/routerSettingMethod_cn.html";
+    public static final String ROUTER_SETTING_METHOD_EN="file:///android_asset/routerSettingMethod_en.html";
+
+    public static final String SPLIT_FREQUENCY_BANDS_CN="file:///android_asset/splitFrequencyBands_cn.html";
+    public static final String SPLIT_FREQUENCY_BANDS_EN="file:///android_asset/splitFrequencyBands_en.html";
+
+    public static final String USER_AGREEMENT_CN="file:///android_asset/userAgreement_cn.html";
+    public static final String USER_AGREEMENT_EN="file:///android_asset/userAgreement_en.html";
 }

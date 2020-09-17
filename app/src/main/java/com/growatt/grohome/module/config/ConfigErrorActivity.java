@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.constants.DeviceConfigConstant;
-import com.growatt.grohome.module.config.Presenter.ConfigErrorPresenter;
+import com.growatt.grohome.module.config.presenter.ConfigErrorPresenter;
 import com.growatt.grohome.module.config.view.IConfigErrorView;
 
 import butterknife.BindView;

@@ -13,7 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.customview.NodeProgressView;
-import com.growatt.grohome.module.config.Presenter.DeviceConfigPresenter;
+import com.growatt.grohome.module.config.presenter.DeviceConfigPresenter;
 import com.growatt.grohome.module.config.view.IDeviceConfigView;
 import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.MyToastUtils;

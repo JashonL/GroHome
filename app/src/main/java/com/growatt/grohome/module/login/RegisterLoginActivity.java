@@ -232,10 +232,10 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
                 presenter.resetPassword();
                 break;
             case R.id.tv_agreement:
-                presenter.startAgreement();
+                presenter.getUserAgreement();
                 break;
             case R.id.tv_policy:
-                presenter.startPolicy();
+                presenter.getPrivacyPolicy();
                 break;
             case R.id.ll_remember_password:
                 clickRemmenber();

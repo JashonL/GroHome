@@ -15,7 +15,7 @@ import com.growatt.grohome.adapter.SelectRoomAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.customview.GridDivider;
-import com.growatt.grohome.module.config.Presenter.ConfigSuccePresenter;
+import com.growatt.grohome.module.config.presenter.ConfigSuccePresenter;
 import com.growatt.grohome.module.config.view.IConfigSuccessView;
 import com.growatt.grohome.utils.CommentUtils;
 

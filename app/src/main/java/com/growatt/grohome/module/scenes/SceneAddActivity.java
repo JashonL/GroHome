@@ -2,7 +2,6 @@ package com.growatt.grohome.module.scenes;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,7 +10,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.Group;
-import androidx.constraintlayout.widget.Guideline;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,42 +39,18 @@ import butterknife.OnClick;
 
 public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements ISceneAddView, BaseQuickAdapter.OnItemChildClickListener {
 
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.guideline_begin)
-    Guideline guidelineBegin;
-    @BindView(R.id.guideline_end)
-    Guideline guidelineEnd;
-    @BindView(R.id.tv_scene_name_title)
-    AppCompatTextView tvSceneNameTitle;
     @BindView(R.id.tv_scene_name_value)
     AppCompatTextView tvSceneNameValue;
-    @BindView(R.id.iv_name_more)
-    ImageView ivNameMore;
-    @BindView(R.id.card_view_name)
-    CardView cardViewName;
-    @BindView(R.id.tv_scene_condition_execution)
-    AppCompatTextView tvSceneConditionExecution;
-    @BindView(R.id.iv_onekey)
-    ImageView ivOnekey;
-    @BindView(R.id.tv_onekey)
-    AppCompatTextView tvOnekey;
-    @BindView(R.id.card_view_condition)
-    CardView cardViewCondition;
-    @BindView(R.id.tv_scene_task)
-    AppCompatTextView tvSceneTask;
     @BindView(R.id.rlv_task_list)
     RecyclerView rlvTaskList;
     @BindView(R.id.rlv_condition)
     RecyclerView rlvCondition;
-    @BindView(R.id.iv_task_add)
-    ImageView ivTaskAdd;
-    @BindView(R.id.card_view_task)
-    CardView cardViewTask;
-    @BindView(R.id.btn_save)
-    Button btnSave;
     @BindView(R.id.condition_onkey_group)
     Group groupOnkey;
     @BindView(R.id.condition_compose_group)
@@ -91,6 +65,13 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
 
     private SceneTaskAdapter mSceneTaskAdapter;
     private SceneConditionAdapter mSceneConditionAdapter;
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
+
 
     @Override
     protected SceneAddPresenter createPresenter() {

@@ -12,7 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
-import com.growatt.grohome.module.config.Presenter.DeviceAPLightPresenter;
+import com.growatt.grohome.module.config.presenter.DeviceAPLightPresenter;
 import com.growatt.grohome.module.config.view.IDeviceAPLightView;
 import com.growatt.grohome.utils.GlideUtils;
 import com.growatt.grohome.utils.Mydialog;

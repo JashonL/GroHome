@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
-import com.growatt.grohome.module.config.Presenter.DeviceEZLightPresenter;
+import com.growatt.grohome.module.config.presenter.DeviceEZLightPresenter;
 import com.growatt.grohome.module.config.view.IDeviceEZLightView;
 import com.growatt.grohome.utils.GlideUtils;
 import com.growatt.grohome.utils.SpanableStringUtils;

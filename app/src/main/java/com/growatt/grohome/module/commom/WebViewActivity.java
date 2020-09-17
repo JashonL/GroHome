@@ -1,4 +1,4 @@
-package com.growatt.grohome;
+package com.growatt.grohome.module.commom;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -17,6 +17,9 @@ import android.webkit.WebViewClient;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.growatt.grohome.module.commom.view.IWebViewView;
+import com.growatt.grohome.R;
+import com.growatt.grohome.module.commom.presenter.WebViewPresenter;
 import com.growatt.grohome.base.BaseActivity;
 
 import butterknife.BindView;
@@ -32,6 +35,12 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements I
     WebView webview;
 
     private boolean isDownload = true;
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
 
     @Override
     protected WebViewPresenter createPresenter() {

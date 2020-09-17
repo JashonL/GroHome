@@ -13,7 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
-import com.growatt.grohome.module.config.Presenter.WiFiOptionsPresenter;
+import com.growatt.grohome.module.config.presenter.WiFiOptionsPresenter;
 import com.growatt.grohome.module.config.view.IWiFiOptionsView;
 import com.growatt.grohome.utils.ActivityUtils;
 
@@ -144,7 +144,7 @@ public class WiFiOptionsActivity extends BaseActivity<WiFiOptionsPresenter> impl
                 break;
             case R.id.iv_toguide:
             case R.id.tv_setwifi_guide:
-                ActivityUtils.gotoActivity(this,WiFiSetGuideActivity.class,ActivityUtils.ANIMATE_FORWARD,false);
+                presenter.showConfigHtml();
                 break;
         }
     }

@@ -199,16 +199,24 @@ public class API {
         @GET
         Observable<String> getAdvertisingList(@Url String url);
 
-        @POST(TEST_URL+"appService/manualList")
+        @POST("appService/manualList")
         Observable<String> manualList(@Body RequestBody body);
 
-        @POST(TEST_URL+"appService/methodFile ")
+        @POST("appService/methodFile ")
         Observable<String> methodFile(@Body RequestBody body);
 
 
         //---------------------------【    关于      】------------------------------------------
         @GET
         Observable<String> getServicePhoneNum(@Url String url);
+
+        //----------------------------【  隐私政策&用户协议  】-----------------------------------------
+        @POST("appService/privacyPolicy")
+        Observable<String> privacyPolicy(@Body RequestBody body);
+
+        @POST("appService/userAgreement ")
+        Observable<String> userAgreement(@Body RequestBody body);
+
 
     }
 
