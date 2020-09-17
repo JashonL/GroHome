@@ -532,7 +532,7 @@ public class BulbScenePresenter extends BasePresenter<IBulbSceneView> implements
         if (deviceNotOnline()) {
             TuyaApiUtils.sendCommand(DeviceBulb.getBulbSceneData(deviceId), sceneValue, mTuyaDevice, this);
         }
-        ((Activity) context).finish();
+
     }
 
 

@@ -3,6 +3,7 @@ package com.growatt.grohome.module.service;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,6 +70,18 @@ public class ServiceFragment extends BaseFragment<ServicePresenter> implements I
         rlvDevice.setAdapter(mServiceCommondityAdapter);
         int div = CommentUtils.dip2px(getActivity(), 20);
         rlvDevice.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, div, ContextCompat.getColor(getActivity(), R.color.nocolor)));
+
+
+        /**
+         * 动态设置轮播图的宽高
+         */
+        float ratio=1029/420f;
+        float dimension = getResources().getDimension(R.dimen.dp_10);
+        int px = CommentUtils.dip2px(getContext(), dimension);
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) banner.getLayoutParams();
+        int width=getResources().getDisplayMetrics().widthPixels-px*2;
+        layoutParams.height= (int) (width/ratio);
+        banner.setLayoutParams(layoutParams);
 
     }
 

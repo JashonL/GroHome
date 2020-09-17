@@ -15,6 +15,7 @@ import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.personal.presenter.PersonalPresenter;
 import com.growatt.grohome.module.personal.view.IPersonalFragmentView;
 import com.growatt.grohome.utils.GlideUtils;
+import com.growatt.grohome.utils.MyToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -80,7 +81,7 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
 
 
 
-    @OnClick({R.id.iv_avatar, R.id.tv_username,R.id.cl_cache,R.id.cl_about,R.id.cl_google,R.id.cl_alexa})
+    @OnClick({R.id.iv_avatar, R.id.tv_username,R.id.cl_share_device,R.id.cl_cache,R.id.cl_about,R.id.cl_google,R.id.cl_alexa})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_avatar:
@@ -98,6 +99,9 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
                 break;
             case R.id.cl_alexa:
                 presenter.startAmazonAlexa();
+                break;
+            case R.id.cl_share_device:
+                MyToastUtils.toast(R.string.m275_function_is_not_ready);
                 break;
         }
     }

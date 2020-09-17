@@ -167,11 +167,13 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
     public void setOnoff(String onoff) {
         if ("true".equals(onoff)) {//状态开启
             ivSwitch.setImageResource(R.drawable.icon_on);
-
-
+            setMode(presenter.getMode());
         } else {//关闭
-
-
+            whiteClude.setVisibility(View.GONE);
+            colourClude.setVisibility(View.GONE);
+            sceneClude.setVisibility(View.GONE);
+            layoutOffline.setVisibility(View.VISIBLE);
+            vBulbOffline.setColor(ContextCompat.getColor(this, R.color.white_1a));
             ivSwitch.setImageResource(R.drawable.icon_off);
         }
     }
@@ -234,8 +236,8 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @Override
     public void isWhiteMode(String mode) {
-        if (!TextUtils.isEmpty(mode)){
-            if (!"1".equals(mode)){
+        if (!TextUtils.isEmpty(mode)) {
+            if (!"1".equals(mode)) {
                 whiteClude.setVisibility(View.GONE);
                 ivWhiteLight.setVisibility(View.GONE);
             }
@@ -379,7 +381,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @OnClick({R.id.iv_white_light, R.id.iv_colour_light, R.id.iv_scenec_light, R.id.iv_switch, R.id.iv_edit, R.id.tv_edit,
             R.id.tv_leftdown, R.id.tv_left_time_value, R.id.tv_left_time_title, R.id.tv_timer,
-            R.id.v_bulb_backgroud_white,R.id.v_bulb_background_scene,R.id.v_bulb_backgroud_colour})
+            R.id.v_bulb_backgroud_white, R.id.v_bulb_background_scene, R.id.v_bulb_backgroud_colour})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_white_light:

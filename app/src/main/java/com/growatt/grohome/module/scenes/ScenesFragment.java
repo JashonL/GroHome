@@ -137,7 +137,7 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         //日志
         mRlvLogs = logsView.findViewById(R.id.rlv_logs);
         mRlvLogs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-//        mRlvLogs.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, ContextCompat.getColor(getActivity(), R.color.nocolor), 32));
+        mRlvLogs.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, div, ContextCompat.getColor(getActivity(), R.color.nocolor)));
         mLogsSceneAdapter = new LogsSceneAdapter(R.layout.item_logs_detail, new ArrayList<>());
         LogsEmpty = LayoutInflater.from(getContext()).inflate(R.layout.scene_logs_empty_view, mRlvLogs, false);
         mLogsSceneAdapter.setEmptyView(LogsEmpty);
@@ -146,14 +146,14 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
 
         pagers.add(launchView);
         pagers.add(linkageView);
-//        pagers.add(logsView);
+        pagers.add(logsView);
         mSceneViewPagerAdapter = new SceneViewPagerAdapter(pagers);
         viewPager.setAdapter(mSceneViewPagerAdapter);
         //将tablayout和Viewpager绑定
         tabTitle.setupWithViewPager(viewPager);
         //tablayout设置标题
-//        String[] titles = new String[]{getString(R.string.m81_launch_tap_to_run), getString(R.string.m82_smart), getString(R.string.m83_logs)};
-        String[] titles = new String[]{getString(R.string.m81_launch_tap_to_run), getString(R.string.m82_smart)};
+        String[] titles = new String[]{getString(R.string.m81_launch_tap_to_run), getString(R.string.m82_smart), getString(R.string.m83_logs)};
+//        String[] titles = new String[]{getString(R.string.m81_launch_tap_to_run), getString(R.string.m82_smart)};
         tabTitle.removeAllTabs();
         for (String title : titles) {
             TabLayout.Tab tab = tabTitle.newTab();

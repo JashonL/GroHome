@@ -70,9 +70,11 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
                 sceneType = GlobalConstant.SCENE_SMART;
             }
             status = scenesBean.getStatus();
+            satisfy= Integer.parseInt(scenesBean.getSatisfy());
             baseView.setStatus(status);
             baseView.setViewBySceneType(sceneType);
             baseView.updataViews(scenesBean);
+            baseView.setConditionMet(satisfy);
         }
     }
 

@@ -59,8 +59,6 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     public boolean isRemmenberPassword = false;
 
 
-
-
     public RegisterLoginPresenter(IRegisterLoginView baseView) {
         super(baseView);
     }
@@ -68,7 +66,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     public RegisterLoginPresenter(Context context, IRegisterLoginView baseView) {
         super(context, baseView);
         initHandler(context);
-        isRemmenberPassword=SharedPreferencesUnit.getInstance(context).getBoolean(GlobalConstant.SP_REMMENER_PASSWORD);
+        isRemmenberPassword = SharedPreferencesUnit.getInstance(context).getBoolean(GlobalConstant.SP_REMMENER_PASSWORD);
     }
 
     /**
@@ -251,7 +249,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
         String url = GlobalConstant.HTTP_PREFIX + registerUrl + API.VERIFICATION_CODE;
         //发送消息
         handler.sendEmptyMessage(MESSAGE_SHOW_TIMING);
-        addDisposable(apiServer.getVerificationCode(url, email, email, String.valueOf(CommentUtils.getLanguage())), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.getVerificationCode(url, email, email, String.valueOf(CommentUtils.getLanguage())), new BaseObserver<String>(baseView, false) {
             @Override
             public void onSuccess(String result) {
                 try {
@@ -340,17 +338,49 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                 try {
                     JSONObject jsonObject = new JSONObject(result).getJSONObject("back");
                     String msg = jsonObject.optString("msg");
-                    if (jsonObject.opt("success").toString().equals("true")) {
-                        if (msg.equals("200")) {
-                            MyToastUtils.toast(R.string.m182_register_success);
-                            userLogin(registerUrl, regUserName, regPassword);
-                        }
+                    if (jsonObject.optString("success", "false").equals("true")) {
+                        MyToastUtils.toast(R.string.m182_register_success);
+                        userLogin(registerUrl, regUserName, regPassword);
                     } else {
-                        if (msg.equals("503")) {
-                            MyToastUtils.toast(R.string.m183_registered_name);
 
-                        } else {
+                        if (msg.equals("501")) {
                             MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("502")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("503")) {
+                            MyToastUtils.toast(R.string.m183_registered_name);
+                        } else if (msg.equals("602")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("504")) {
+                            MyToastUtils.toast(R.string.m144_password_empty);
+                        } else if (msg.equals("506")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("603")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("604")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("605")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("606")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("607")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        }  else if (msg.equals("505")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("509")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("608")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("609")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("701")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("702")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else if (msg.equals("507")) {
+                            MyToastUtils.toast(R.string.m184_register_error);
+                        } else {
+                            MyToastUtils.toast(msg);
                         }
                     }
                 } catch (Exception e) {
@@ -370,12 +400,12 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
      * 登录成功，保存用户信息
      */
     public void savaUserInfo(String username, String password, User user) {
-        SharedPreferencesUnit.getInstance(context).putBoolean(GlobalConstant.SP_REMMENER_PASSWORD,isRemmenberPassword);
-        SharedPreferencesUnit.getInstance(context).putBoolean(GlobalConstant.SP_AUTO_LOGIN,true);
+        SharedPreferencesUnit.getInstance(context).putBoolean(GlobalConstant.SP_REMMENER_PASSWORD, isRemmenberPassword);
+        SharedPreferencesUnit.getInstance(context).putBoolean(GlobalConstant.SP_AUTO_LOGIN, true);
         SharedPreferencesUnit.getInstance(context).put(GlobalConstant.SP_USER_NAME, username);
-        if (isRemmenberPassword){
+        if (isRemmenberPassword) {
             SharedPreferencesUnit.getInstance(context).put(GlobalConstant.SP_USER_PASSWORD, password);
-        }else {
+        } else {
             SharedPreferencesUnit.getInstance(context).remove(GlobalConstant.SP_USER_PASSWORD);
         }
         App.setUserBean(user);
@@ -402,20 +432,17 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     }
 
 
-
-
-
     public void getUserAgreement() {
-        String lan= String.valueOf(CommentUtils.getLanguage());
-        JSONObject jsonObject=new JSONObject();
+        String lan = String.valueOf(CommentUtils.getLanguage());
+        JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("lan",lan);
+            jsonObject.put("lan", lan);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         String s = jsonObject.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.userAgreement(body), new BaseObserver<String>(baseView,true) {
+        addDisposable(apiServer.userAgreement(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String result) {
                 try {
@@ -423,14 +450,14 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         JSONArray data = jsonObject.optJSONArray("data");
-                        if (data!=null){
+                        if (data != null) {
                             String url = null;
                             for (int i = 0; i < data.length(); i++) {
                                 JSONObject object = data.optJSONObject(i);
-                                url= object.optString("content","");
+                                url = object.optString("content", "");
                             }
                             startAgreement(url);
-                        }else {
+                        } else {
                             startAgreement("");
                         }
 
@@ -449,37 +476,31 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     }
 
 
-
-
-
     private void startAgreement(String url) {
-        if (TextUtils.isEmpty(url)){
-            if (CommentUtils.getLanguage()==0){
-                url=GlobalConstant.USER_AGREEMENT_CN;
-            }else {
-                url=GlobalConstant.USER_AGREEMENT_EN;
+        if (TextUtils.isEmpty(url)) {
+            if (CommentUtils.getLanguage() == 0) {
+                url = GlobalConstant.USER_AGREEMENT_CN;
+            } else {
+                url = GlobalConstant.USER_AGREEMENT_EN;
             }
         }
         Intent intent = new Intent(context, WebViewActivity.class);
-        intent.putExtra(GlobalConstant.WEB_URL,url);
+        intent.putExtra(GlobalConstant.WEB_URL, url);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
-
-
-
     public void getPrivacyPolicy() {
-        String lan= String.valueOf(CommentUtils.getLanguage());
-        JSONObject jsonObject=new JSONObject();
+        String lan = String.valueOf(CommentUtils.getLanguage());
+        JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("lan",lan);
+            jsonObject.put("lan", lan);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         String s = jsonObject.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.userAgreement(body), new BaseObserver<String>(baseView,true) {
+        addDisposable(apiServer.userAgreement(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String result) {
                 try {
@@ -487,14 +508,14 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         JSONArray data = jsonObject.optJSONArray("data");
-                        if (data!=null){
+                        if (data != null) {
                             String url = null;
                             for (int i = 0; i < data.length(); i++) {
                                 JSONObject object = data.optJSONObject(i);
-                                url= object.optString("content","");
+                                url = object.optString("content", "");
                             }
                             startPolicy(url);
-                        }else {
+                        } else {
                             startPolicy("");
                         }
 
@@ -513,19 +534,17 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     }
 
 
-
-
     private void startPolicy(String url) {
-        if (TextUtils.isEmpty(url)){
-            if (CommentUtils.getLanguage()==0){
-                url=GlobalConstant.PRIVACY_POLICY_CN;
-            }else {
-                url=GlobalConstant.PRIVACY_POLICY_EN;
+        if (TextUtils.isEmpty(url)) {
+            if (CommentUtils.getLanguage() == 0) {
+                url = GlobalConstant.PRIVACY_POLICY_CN;
+            } else {
+                url = GlobalConstant.PRIVACY_POLICY_EN;
             }
         }
 
         Intent intent = new Intent(context, WebViewActivity.class);
-        intent.putExtra(GlobalConstant.WEB_URL,url);
+        intent.putExtra(GlobalConstant.WEB_URL, url);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -537,6 +556,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                 baseView.timing(count);
                 handler.sendEmptyMessageDelayed(MESSAGE_SHOW_TIMING, 1000);
             } else {
+                count = TOTAL_TIME;
                 baseView.getCodeEnd();
             }
         }

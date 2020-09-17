@@ -233,6 +233,7 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
             @Override
             public void onClick(View v) {
                 presenter.resetScene();
+                finish();
             }
         });
 
@@ -622,6 +623,7 @@ public class BulbSceneEditActivity extends BaseActivity<BulbScenePresenter> impl
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             presenter.resetScene();
+            finish();
             return true;
         }
         return super.onKeyDown(keyCode, event);

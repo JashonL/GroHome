@@ -13,7 +13,9 @@ import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.login.RegisterLoginActivity;
 import com.growatt.grohome.module.personal.view.IUpdatePwdView;
 import com.growatt.grohome.utils.ActivityUtils;
+import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
+import com.growatt.grohome.utils.SharedPreferencesUnit;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,10 +45,18 @@ public class UpdatePwdPresenter extends BasePresenter<IUpdatePwdView> {
             MyToastUtils.toast(R.string.m282_password_must_six_characters);
             return;
         }
+
+        if (!CommentUtils.regexPassword(passwordNew)) {
+            MyToastUtils.toast(R.string.m311_password_requires_mix);
+            return;
+        }
+
         if(!passwordNew.equals(passwordRepeat)){
             MyToastUtils.toast(R.string.m283_enter_the_same_password);
             return;
         }
+
+
 
         addDisposable(apiServer.updateUserPassword(userUrl, accountName, passwordOld, passwordNew), new BaseObserver<String>(baseView, true) {
             @Override
@@ -78,6 +88,7 @@ public class UpdatePwdPresenter extends BasePresenter<IUpdatePwdView> {
 
 
     private void toLoginActivity(){
+        SharedPreferencesUnit.getInstance(context).putBoolean(GlobalConstant.SP_AUTO_LOGIN, false);
         Intent intent = new Intent(context, RegisterLoginActivity.class);
         ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,true);
     }

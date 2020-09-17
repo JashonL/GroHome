@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -243,6 +244,14 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     }
 
 
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
     public boolean getMusicOnoff() {
         return "1".equals(musicOnoff);
     }
@@ -331,7 +340,14 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
      */
     public void bulbMode(String mode) {
         if (deviceNotOnline()) {
-            TuyaApiUtils.sendCommand(DeviceBulb.getBulbWorkMode(deviceId), mode, mTuyaDevice, this);
+            LinkedHashMap<String, Object> sendMap = new LinkedHashMap<>();
+            boolean bulb_onoff = "true".equals(onOff);
+            if (!bulb_onoff){
+                sendMap.put(DeviceBulb.getBulbSwitchLed(deviceId), true);
+            }
+            sendMap.put(DeviceBulb.getBulbWorkMode(deviceId), mode);
+//            TuyaApiUtils.sendCommand(DeviceBulb.getBulbWorkMode(deviceId), mode, mTuyaDevice, this);
+            TuyaApiUtils.sendCommand(sendMap, mTuyaDevice, this);
         }
     }
 
