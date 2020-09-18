@@ -19,7 +19,7 @@ import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.login.presenter.RegisterLoginPresenter;
 import com.growatt.grohome.module.login.view.IRegisterLoginView;
-import com.growatt.grohome.utils.SharedPreferencesUnit;
+import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.SpanableStringUtils;
 import com.hjq.toast.ToastUtils;
 
@@ -146,11 +146,11 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
                 }
             }
 
-            //自动登录
+          /*  //自动登录
             boolean autoLogin = SharedPreferencesUnit.getInstance(this).getBoolean(GlobalConstant.SP_AUTO_LOGIN);
             if (autoLogin) {
                 autologin();
-            }
+            }*/
         }
     }
 
@@ -317,7 +317,8 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
 
     @Override
     public void loginSuccess(String user) {
-        startActivity(new Intent(this, MainActivity.class));
+        Intent intent=new Intent(this,MainActivity.class);
+        ActivityUtils.startActivity(this,intent,ActivityUtils.ANIMATE_FORWARD,true);
     }
 
 

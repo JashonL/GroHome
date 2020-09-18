@@ -81,7 +81,7 @@ public class BluetoothPresenter extends BasePresenter<IBluetoothConfigView> {
         }, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityFinish();
+                activityFinish();
             }
         }, false);
     }
@@ -101,7 +101,7 @@ public class BluetoothPresenter extends BasePresenter<IBluetoothConfigView> {
         }, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityFinish();
+                activityFinish();
             }
         },false);
     }
@@ -123,7 +123,7 @@ public class BluetoothPresenter extends BasePresenter<IBluetoothConfigView> {
         }, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityFinish();
+                activityFinish();
             }
         }, false);
     }
@@ -231,7 +231,7 @@ public class BluetoothPresenter extends BasePresenter<IBluetoothConfigView> {
                     view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ActivityFinish();
+                            activityFinish();
                         }
                     });
 

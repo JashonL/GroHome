@@ -129,7 +129,7 @@ public class DeviceTimingAdapter extends BaseQuickAdapter<DeviceTimingBean, Base
         }
         String onOffTime = onOff + timeValue;
         if(!TextUtils.isEmpty(name)){
-            onOffTime = name+onOff + timeValue;
+            onOffTime = name+"  "+onOff +" " +timeValue;
         }
         tvOnoff.setText(onOffTime);
         StringBuilder loopStyle = new StringBuilder();

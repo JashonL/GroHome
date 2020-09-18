@@ -271,7 +271,7 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
             }, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ActivityFinish();
+                    activityFinish();
                 }
             }, false);
         }

@@ -83,7 +83,7 @@ public class BasePresenter<V extends BaseView> implements Handler.Callback {
     }
 
 
-    public void ActivityFinish(){
+    public void activityFinish(){
         ((Activity)context).finish();
     }
 
