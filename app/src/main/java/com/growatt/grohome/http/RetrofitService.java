@@ -86,7 +86,7 @@ public class RetrofitService {
 //                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(StringConvertFactory.create())//自定义
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(API.BASE_URL)
+                .baseUrl(API.TEST_URL)
                 .build();
 
         apiServer = retrofit.create(API.WAZApi.class);

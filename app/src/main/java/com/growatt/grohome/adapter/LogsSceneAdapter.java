@@ -1,25 +1,27 @@
 package com.growatt.grohome.adapter;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.growatt.grohome.R;
 import com.growatt.grohome.bean.LogsSceneBean;
+import com.growatt.grohome.constants.GlobalConstant;
 
 import java.util.List;
 
-public class LogsSceneAdapter extends BaseQuickAdapter<LogsSceneBean, BaseViewHolder> {
-    public LogsSceneAdapter(int layoutResId, @Nullable List<LogsSceneBean> data) {
-        super(layoutResId, data);
-    }
+public class LogsSceneAdapter extends BaseMultiItemQuickAdapter<LogsSceneBean, BaseViewHolder> {
 
-    public LogsSceneAdapter(@Nullable List<LogsSceneBean> data) {
+    /**
+     * Same as QuickAdapter#QuickAdapter(Context,int) but with
+     * some initialization data.
+     *
+     * @param data A new list is created out of this one to avoid mutable list
+     */
+    public LogsSceneAdapter(List<LogsSceneBean> data) {
         super(data);
-    }
-
-    public LogsSceneAdapter(int layoutResId) {
-        super(layoutResId);
+        addItemType(GlobalConstant.STATUS_ITEM_OTHER, R.layout.item_scene_time);
+        addItemType(GlobalConstant.STATUS_ITEM_DATA, R.layout.item_scenes_log);
     }
 
     @Override

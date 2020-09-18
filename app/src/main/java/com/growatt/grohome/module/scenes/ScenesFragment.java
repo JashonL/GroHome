@@ -23,6 +23,7 @@ import com.growatt.grohome.adapter.LogsSceneAdapter;
 import com.growatt.grohome.adapter.SceneViewPagerAdapter;
 import com.growatt.grohome.adapter.ScenesDivceListAdapter;
 import com.growatt.grohome.base.BaseFragment;
+import com.growatt.grohome.bean.LogsSceneBean;
 import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.constants.GlobalConstant;
@@ -47,7 +48,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class ScenesFragment extends BaseFragment<ScenesPresenter> implements IScenesView, Toolbar.OnMenuItemClickListener, View.OnClickListener, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener {
+public class ScenesFragment extends BaseFragment<ScenesPresenter> implements IScenesView, Toolbar.OnMenuItemClickListener, View.OnClickListener, BaseQuickAdapter.OnItemChildClickListener,
+        BaseQuickAdapter.OnItemClickListener, ViewPager.OnPageChangeListener {
 
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
@@ -138,7 +140,7 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         mRlvLogs = logsView.findViewById(R.id.rlv_logs);
         mRlvLogs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRlvLogs.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, div, ContextCompat.getColor(getActivity(), R.color.nocolor)));
-        mLogsSceneAdapter = new LogsSceneAdapter(R.layout.item_logs_detail, new ArrayList<>());
+        mLogsSceneAdapter = new LogsSceneAdapter(new ArrayList<>());
         LogsEmpty = LayoutInflater.from(getContext()).inflate(R.layout.scene_logs_empty_view, mRlvLogs, false);
         mLogsSceneAdapter.setEmptyView(LogsEmpty);
         mRlvLogs.setAdapter(mLogsSceneAdapter);
@@ -149,6 +151,7 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         pagers.add(logsView);
         mSceneViewPagerAdapter = new SceneViewPagerAdapter(pagers);
         viewPager.setAdapter(mSceneViewPagerAdapter);
+        viewPager.addOnPageChangeListener(this);
         //将tablayout和Viewpager绑定
         tabTitle.setupWithViewPager(viewPager);
         //tablayout设置标题
@@ -270,6 +273,11 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
     }
 
     @Override
+    public void updataLogs(List<LogsSceneBean> list) {
+        mLogsSceneAdapter.replaceData(list);
+    }
+
+    @Override
     public void onError(String onError) {
         if (srlPull != null && srlPull.isRefreshing()) {
             srlPull.setRefreshing(false);
@@ -335,5 +343,27 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
     public void onDestroyView() {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        List<LogsSceneBean> data = mLogsSceneAdapter.getData();
+        if (position==2&&data.size()==0){
+            try {
+                presenter.getSceneLogList();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

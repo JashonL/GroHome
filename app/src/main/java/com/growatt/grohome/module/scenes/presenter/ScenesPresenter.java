@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
+import com.growatt.grohome.bean.LogsSceneBean;
 import com.growatt.grohome.bean.ScenesBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.module.scenes.SceneAddActivity;
@@ -18,6 +19,7 @@ import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -105,6 +107,59 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
         });
 
     }
+
+
+
+
+    /**
+     * 获取场景执行日志
+     *
+     * @throws Exception
+     */
+    public void getSceneLogList() throws Exception {
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("userId", App.getUserBean().getAccountName());
+        requestJson.put("cmd", "sceneLogList");
+        requestJson.put("lan", CommentUtils.getLanguage());
+        String s = requestJson.toString();
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        addDisposable(apiServer.smartHomeRequest(body), new BaseObserver<String>(baseView, true) {
+            @Override
+            public void onSuccess(String jsonBean) {
+                try {
+                    JSONObject object = new JSONObject(jsonBean);
+                    int code = object.getInt("code");
+                    if (code == 0) {
+                        JSONArray array = object.optJSONArray("data");
+                        List<LogsSceneBean>logs=new ArrayList<>();
+                        if (array!=null){
+                            String time="";
+                            for (int i = 0; i < array.length(); i++) {
+                                LogsSceneBean bean=new LogsSceneBean();
+                                bean.setItemType(1);
+                                JSONObject jsonObject = array.optJSONObject(i);
+                                bean.setCname(jsonObject.optString("cname",""));
+                                bean.setRunTime(jsonObject.optString("runTime",""));
+                                bean.setRunStatus(jsonObject.optString("runStatus","0"));
+                                logs.add(bean);
+                            }
+                        }
+                        baseView.updataLogs(logs);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String msg) {
+                baseView.onError(msg);
+            }
+        });
+
+    }
+
+
 
 
 

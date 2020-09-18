@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_5"
+        android:text="7"
+        android:textColor="@color/color_text_00"
+        android:textSize="@dimen/size_title_sp_18"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_5"
+        android:text="9月"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_title_sp_14"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_day"
+        app:layout_constraintLeft_toRightOf="@+id/tv_day"
+      />
+
+    <TextView
+        android:id="@+id/tv_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_5"
+        android:text="2018年"
+        android:textColor="@color/color_text_33"
+        android:textSize="@dimen/size_title_sp_14"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_day"
+        app:layout_constraintLeft_toRightOf="@+id/tv_month"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
