@@ -586,7 +586,7 @@ public class ColorPicker extends View {
 
         return (float) Math.toRadians(-colors[0]);
     }
-
+    boolean isMove=false;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         getParent().requestDisallowInterceptTouchEvent(true);
@@ -594,7 +594,7 @@ public class ColorPicker extends View {
         // Convert coordinates to our internal coordinate system
         float x = event.getX() - mTranslationOffset;
         float y = event.getY() - mTranslationOffset;
-
+        isMove=false;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 // Check whether the user pressed on the pointer.
@@ -630,29 +630,9 @@ public class ColorPicker extends View {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
+                isMove=true;
                 if (mUserIsMovingPointer) {
-                    mAngle = (float) Math.atan2(y - mSlopY, x - mSlopX);
-                    mPointerColor.setColor(calculateColor(mAngle));
-
-                    setNewCenterColor(mCenterNewColor = calculateColor(mAngle));
-
-                    if (mOpacityBar != null) {
-                        mOpacityBar.setColor(mColor);
-                    }
-
-                    if (mValueBar != null) {
-                        mValueBar.setColor(mColor);
-                    }
-
-                    if (mSaturationBar != null) {
-                        mSaturationBar.setColor(mColor);
-                    }
-
-                    if (mSVbar != null) {
-                        mSVbar.setColor(mColor);
-                    }
-
-                    invalidate();
+                    moveBar(x, y);
                 }
                 // If user did not press pointer or center, report event not handled
                 else{
@@ -661,6 +641,18 @@ public class ColorPicker extends View {
                 }
                 break;
             case MotionEvent.ACTION_UP:
+                if (!isMove){
+                    if (mUserIsMovingPointer) {
+                        moveBar(x, y);
+                    }
+                    // If user did not press pointer or center, report event not handled
+                    else{
+                        getParent().requestDisallowInterceptTouchEvent(false);
+                        return false;
+                    }
+                }
+                isMove=false;
+
                 mUserIsMovingPointer = false;
                 mCenterHaloPaint.setAlpha(0x00);
 
@@ -679,6 +671,31 @@ public class ColorPicker extends View {
                 break;
         }
         return true;
+    }
+
+    private void moveBar(float x, float y) {
+        mAngle = (float) Math.atan2(y - mSlopY, x - mSlopX);
+        mPointerColor.setColor(calculateColor(mAngle));
+
+        setNewCenterColor(mCenterNewColor = calculateColor(mAngle));
+
+        if (mOpacityBar != null) {
+            mOpacityBar.setColor(mColor);
+        }
+
+        if (mValueBar != null) {
+            mValueBar.setColor(mColor);
+        }
+
+        if (mSaturationBar != null) {
+            mSaturationBar.setColor(mColor);
+        }
+
+        if (mSVbar != null) {
+            mSVbar.setColor(mColor);
+        }
+
+        invalidate();
     }
 
     /**
