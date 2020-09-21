@@ -13,6 +13,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class App extends Application {
 
 //    final String[] sampleAssets = {"Smart Led Strip User Manua.pdf","US-Wall  Switch  User Manual.pdf"};
@@ -44,6 +46,9 @@ public class App extends Application {
         LogUtil.setIsLog(true);
 
 //        initSampleAssets();
+
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);
     }
 
 

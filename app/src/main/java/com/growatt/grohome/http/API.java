@@ -217,7 +217,6 @@ public class API {
         @POST("appService/userAgreement ")
         Observable<String> userAgreement(@Body RequestBody body);
 
-
     }
 
 }
