@@ -49,6 +49,7 @@ public class LogsSceneBean implements MultiItemEntity {
         this.runTime = runTime;
     }
 
+
     public int getIndex() {
         return index;
     }

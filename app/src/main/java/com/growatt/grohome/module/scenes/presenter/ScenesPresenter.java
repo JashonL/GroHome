@@ -132,7 +132,7 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
                         List<LogsSceneBean> logs = new ArrayList<>();
                         if (array != null) {
                             String time = "";
-                            int index=0;
+                            int index=1;//0代表第一个，1表示中间，2表示末尾
                             for (int i = 0; i < array.length(); i++) {
                                 LogsSceneBean bean = new LogsSceneBean();
                                 JSONObject jsonObject = array.optJSONObject(i);
@@ -149,12 +149,24 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
                                     titlebean.setItemType(GlobalConstant.STATUS_ITEM_OTHER);
                                     logs.add(titlebean);
                                 }
-                                bean.setIndex(i);
-                                bean.setItemType(1);
+                                bean.setIndex(index);
+                                bean.setItemType(GlobalConstant.STATUS_ITEM_DATA);
                                 logs.add(bean);
-                                index++;
+                                index=1;
                             }
                         }
+
+                        for (int i = 0; i < logs.size(); i++){
+                            LogsSceneBean bean = logs.get(i);
+                            int itemType = bean.getItemType();
+                            if (itemType==GlobalConstant.STATUS_ITEM_OTHER){
+                                if (i!=0){
+                                    LogsSceneBean bean1 = logs.get(i - 1);
+                                    bean1.setIndex(2);
+                                }
+                            }
+                        }
+                        logs.get(logs.size()-1).setIndex(2);
                         baseView.updataLogs(logs);
                     }
                 } catch (Exception e) {

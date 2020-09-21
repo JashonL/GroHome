@@ -42,6 +42,21 @@ public class LogsSceneAdapter extends BaseMultiItemQuickAdapter<LogsSceneBean, B
             String time=item.getRunTime();
             helper.setText(R.id.tv_title,title);
             helper.setText(R.id.tv_content,time);
+            int index = item.getIndex();
+            switch (index){
+                case 0:
+                    helper.setVisible(R.id.line_half_top,false);
+                    helper.setVisible(R.id.line_half_bottom,true);
+                    break;
+                case 1:
+                    helper.setVisible(R.id.line_half_top,true);
+                    helper.setVisible(R.id.line_half_bottom,true);
+                    break;
+                case 2:
+                    helper.setVisible(R.id.line_half_top,true);
+                    helper.setVisible(R.id.line_half_bottom,false);
+                    break;
+            }
         }
     }
 }
