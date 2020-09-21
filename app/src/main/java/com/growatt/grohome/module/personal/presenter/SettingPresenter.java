@@ -15,6 +15,7 @@ import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.constants.AllPermissionRequestCode;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.jpush.TagAliasOperatorHelper;
 import com.growatt.grohome.module.login.RegisterLoginActivity;
 import com.growatt.grohome.module.personal.NewEmailActivity;
 import com.growatt.grohome.module.personal.SetttingActivity;
@@ -33,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.growatt.grohome.jpush.TagAliasOperatorHelper.sequence;
 
 public class SettingPresenter extends BasePresenter<ISettingView> {
 
@@ -130,6 +133,7 @@ public class SettingPresenter extends BasePresenter<ISettingView> {
 
 
     public void applogout() {
+        setJpushAlias();
         TuyaApiUtils.setIsHomeInit(false);
         TuyaApiUtils.logoutTuya();
         List<WeakReference<Activity>> activityStack = App.getInstance().getActivityList();
@@ -144,6 +148,22 @@ public class SettingPresenter extends BasePresenter<ISettingView> {
         SharedPreferencesUnit.getInstance(context).putBoolean(GlobalConstant.SP_AUTO_LOGIN,false);
         Intent intent=new Intent(context,RegisterLoginActivity.class);
         ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_BACK,true);
+    }
+
+
+    public  void setJpushAlias() {
+        //删除别名和Tag
+        TagAliasOperatorHelper.TagAliasBean tagAliasBean = new TagAliasOperatorHelper.TagAliasBean();
+        tagAliasBean.action = TagAliasOperatorHelper.ACTION_DELETE;
+        tagAliasBean.isAliasAction = true;
+        tagAliasBean.alias = App.getUserBean().getAccountName();
+        sequence++;
+        TagAliasOperatorHelper.getInstance().handleAction(context, sequence, tagAliasBean);
+
+     /*   tagAliasBean.action = TagAliasOperatorHelper.ACTION_CLEAN;
+        tagAliasBean.isAliasAction = false;
+        sequence++;
+        TagAliasOperatorHelper.getInstance().handleAction(context.getApplicationContext(), sequence, tagAliasBean);*/
     }
 
 }

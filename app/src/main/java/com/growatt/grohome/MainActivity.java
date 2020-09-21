@@ -22,6 +22,7 @@ import com.growatt.grohome.bean.Article;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.jpush.ExampleUtil;
 import com.growatt.grohome.jpush.LocalBroadcastManager;
+import com.growatt.grohome.jpush.TagAliasOperatorHelper;
 import com.growatt.grohome.module.home.GrohomeFragment;
 import com.growatt.grohome.module.personal.PersonalFragment;
 import com.growatt.grohome.module.scenes.ScenesFragment;
@@ -32,6 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.growatt.grohome.jpush.TagAliasOperatorHelper.TagAliasBean;
+import static com.growatt.grohome.jpush.TagAliasOperatorHelper.sequence;
 
 public class MainActivity extends BaseActivity<HomePresenter> implements IMainActivityView, BaseQuickAdapter.OnItemChildClickListener, BottomNavigationBar.OnTabSelectedListener {
     private long keydownTime;
@@ -115,6 +119,7 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
 
     @Override
     protected void initData() {
+        setJpushAliasTag();
         presenter.loginTuya(this);
     }
 
@@ -245,6 +250,18 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
         }
     }
 
+
+    private void setJpushAliasTag() {
+        TagAliasBean tagAliasBean = new TagAliasBean();
+        tagAliasBean.action = TagAliasOperatorHelper.ACTION_SET;
+        tagAliasBean.alias = App.getUserBean().accountName;
+        tagAliasBean.isAliasAction = true;
+        sequence++;
+        TagAliasOperatorHelper.getInstance().handleAction(getApplicationContext(), sequence, tagAliasBean);
+    /*    tagAliasBean.isAliasAction = false;
+        sequence++;
+        TagAliasOperatorHelper.getInstance().handleAction(getApplicationContext(), sequence, tagAliasBean);*/
+    }
 
 
 
