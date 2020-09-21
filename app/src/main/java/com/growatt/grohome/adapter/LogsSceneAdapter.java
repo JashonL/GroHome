@@ -26,6 +26,22 @@ public class LogsSceneAdapter extends BaseMultiItemQuickAdapter<LogsSceneBean, B
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, LogsSceneBean item) {
+        int itemType = item.getItemType();
+        if (itemType == GlobalConstant.STATUS_ITEM_OTHER) {
+            String runTime = item.getRunTime();
+            String[] time = runTime.split("[\\D]");
+            String year = time[0];
+            String month = time[1];
+            String day = time[2];
+            helper.setText(R.id.tv_day,day);
+            helper.setText(R.id.tv_month,month);
+            helper.setText(R.id.tv_year,year);
 
+        } else {
+            String title = item.getCname();
+            String time=item.getRunTime();
+            helper.setText(R.id.tv_title,title);
+            helper.setText(R.id.tv_content,time);
+        }
     }
 }

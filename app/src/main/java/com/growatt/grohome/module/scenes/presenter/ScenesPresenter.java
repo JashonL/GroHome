@@ -77,9 +77,9 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
                                 List<ScenesBean.DataBean> conditionList = new ArrayList<>();
                                 for (ScenesBean.DataBean bean : data) {
                                     String status = bean.getStatus();
-                                    if ("0".equals(status)){
+                                    if ("0".equals(status)) {
                                         bean.setItemType(1);
-                                    }else {
+                                    } else {
                                         bean.setItemType(0);
                                     }
                                     if (TextUtils.isEmpty(bean.getIsCondition()))
@@ -109,8 +109,6 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
     }
 
 
-
-
     /**
      * 获取场景执行日志
      *
@@ -131,17 +129,30 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
                     int code = object.getInt("code");
                     if (code == 0) {
                         JSONArray array = object.optJSONArray("data");
-                        List<LogsSceneBean>logs=new ArrayList<>();
-                        if (array!=null){
-                            String time="";
+                        List<LogsSceneBean> logs = new ArrayList<>();
+                        if (array != null) {
+                            String time = "";
+                            int index=0;
                             for (int i = 0; i < array.length(); i++) {
-                                LogsSceneBean bean=new LogsSceneBean();
-                                bean.setItemType(1);
+                                LogsSceneBean bean = new LogsSceneBean();
                                 JSONObject jsonObject = array.optJSONObject(i);
-                                bean.setCname(jsonObject.optString("cname",""));
-                                bean.setRunTime(jsonObject.optString("runTime",""));
-                                bean.setRunStatus(jsonObject.optString("runStatus","0"));
+                                bean.setCname(jsonObject.optString("cname", ""));
+                                bean.setRunStatus(jsonObject.optString("runStatus", "0"));
+                                String runTime = jsonObject.optString("runTime", "0");
+                                String[] s1 = runTime.split(" ");
+                                bean.setRunTime(s1[1]);
+                                if (!time.equals(s1[0])) {
+                                    index=0;
+                                    time = s1[0];
+                                    LogsSceneBean titlebean = new LogsSceneBean();
+                                    titlebean.setRunTime(s1[0]);
+                                    titlebean.setItemType(GlobalConstant.STATUS_ITEM_OTHER);
+                                    logs.add(titlebean);
+                                }
+                                bean.setIndex(i);
+                                bean.setItemType(1);
                                 logs.add(bean);
+                                index++;
                             }
                         }
                         baseView.updataLogs(logs);
@@ -158,9 +169,6 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
         });
 
     }
-
-
-
 
 
     /**
@@ -210,15 +218,14 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
     }
 
 
-
     /**
      * 修改场景模式
      */
-    public void upScenesData(int position,ScenesBean.DataBean dataBean) throws JSONException {
+    public void upScenesData(int position, ScenesBean.DataBean dataBean) throws JSONException {
         String requestJson = new Gson().toJson(dataBean);
         //封装json
         JSONObject jsonObject = new JSONObject(requestJson);
-        jsonObject.put("cmd","updateSceneNew");
+        jsonObject.put("cmd", "updateSceneNew");
         jsonObject.put("userId", App.getUserBean().getAccountName());
         jsonObject.put("onoff", 1);
         jsonObject.put("lan", CommentUtils.getLanguage());
@@ -231,7 +238,7 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
                     JSONObject object = new JSONObject(bean);
                     int code = object.getInt("code");
                     if (code == 0) {
-                       baseView.updataSuccess(position,dataBean);
+                        baseView.updataSuccess(position, dataBean);
                     }
                     String data = object.getString("data");
                     MyToastUtils.toast(data);
@@ -246,8 +253,6 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
             }
         });
     }
-
-
 
 
 }

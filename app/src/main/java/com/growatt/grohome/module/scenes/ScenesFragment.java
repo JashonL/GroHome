@@ -139,7 +139,7 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         //日志
         mRlvLogs = logsView.findViewById(R.id.rlv_logs);
         mRlvLogs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mRlvLogs.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, div, ContextCompat.getColor(getActivity(), R.color.nocolor)));
+//        mRlvLogs.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, div, ContextCompat.getColor(getActivity(), R.color.nocolor)));
         mLogsSceneAdapter = new LogsSceneAdapter(new ArrayList<>());
         LogsEmpty = LayoutInflater.from(getContext()).inflate(R.layout.scene_logs_empty_view, mRlvLogs, false);
         mLogsSceneAdapter.setEmptyView(LogsEmpty);
@@ -174,7 +174,11 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
         }
         srlPull.setOnRefreshListener(() -> {
             try {
-                presenter.getSceneList();
+                if (viewPager.getCurrentItem()==2){
+                    presenter.getSceneLogList();
+                }else {
+                    presenter.getSceneList();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

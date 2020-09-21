@@ -10,6 +10,7 @@ public class LogsSceneBean implements MultiItemEntity {
     private String  cname;
     private String  runStatus;
     private String  runTime;
+    private int   index;
 
 
     public void setItemType(int itemType) {
@@ -46,6 +47,14 @@ public class LogsSceneBean implements MultiItemEntity {
 
     public void setRunTime(String runTime) {
         this.runTime = runTime;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     @Override
