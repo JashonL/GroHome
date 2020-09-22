@@ -40,9 +40,17 @@ public class LogsSceneAdapter extends BaseMultiItemQuickAdapter<LogsSceneBean, B
         } else {
             String title = item.getCname();
             String time=item.getRunTime();
+            String runStatus = item.getRunStatus();
             helper.setText(R.id.tv_title,title);
             helper.setText(R.id.tv_content,time);
             int index = item.getIndex();
+            if (GlobalConstant.STRING_STATUS_ON.equals(runStatus)){//开启状态
+                String status = mContext.getString(R.string.m328_starting);
+                helper.setText(R.id.tv_title,status);
+            }else {
+                String status = mContext.getString(R.string.m329_terminated);
+                helper.setText(R.id.tv_title,status);
+            }
             switch (index){
                 case 0:
                     helper.setVisible(R.id.line_half_top,false);

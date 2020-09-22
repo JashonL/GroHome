@@ -157,6 +157,7 @@
         <activity android:name=".module.commom.ReadFileActivity" />
         <activity android:name=".module.service.FqaListActivity" />
         <activity android:name=".module.service.ManualActivity" />
+        <activity android:name=".module.personal.MessageCenterActivity"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

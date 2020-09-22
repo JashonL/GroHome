@@ -132,7 +132,7 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
                         List<LogsSceneBean> logs = new ArrayList<>();
                         if (array != null) {
                             String time = "";
-                            int index=1;//0代表第一个，1表示中间，2表示末尾
+                            int index=1;//0代表第一个，1表示中间，2表示末尾,3表示只有一个数据
                             for (int i = 0; i < array.length(); i++) {
                                 LogsSceneBean bean = new LogsSceneBean();
                                 JSONObject jsonObject = array.optJSONObject(i);

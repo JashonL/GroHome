@@ -71,6 +71,20 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
 
+
+            <TextView
+                android:id="@+id/tv_runstatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_5"
+                android:text="@string/m245_start_time"
+                android:textColor="@color/color_text_33"
+                android:textSize="@dimen/size_title_sp_16"
+                app:layout_constraintLeft_toRightOf="@+id/tv_title"
+                app:layout_constraintTop_toTopOf="@+id/tv_title"
+           />
+
+
             <TextView
                 android:id="@+id/tv_content"
                 android:layout_width="wrap_content"

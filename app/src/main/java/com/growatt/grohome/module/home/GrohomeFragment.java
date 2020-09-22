@@ -183,17 +183,12 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         rlvDevice.setLayoutManager(layoutManager);
         mGroHomeDevLineAdapter = new GroHomeDevLineAdapter(deviceList);
         rlvDevice.setAdapter(mGroHomeDevLineAdapter);
-        rlvDevice.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.HORIZONTAL, ContextCompat.getColor(getActivity(), R.color.nocolor), 32));
+        rlvDevice.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL,  32,ContextCompat.getColor(getActivity(), R.color.nocolor)));
         ivSwitchDevList.setImageResource(R.drawable.icon_list);
         //设置空布局
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_empty_view, rlvDevice, false);
         view.findViewById(R.id.cl_empty).setBackgroundColor(ContextCompat.getColor(getContext(),R.color.gray_f7));
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), DeviceTypeActivity.class));
-            }
-        });
+        view.setOnClickListener(v -> startActivity(new Intent(getContext(), DeviceTypeActivity.class)));
         mGroHomeDevLineAdapter.setEmptyView(view);
         mGroHomeDevLineAdapter.setOnItemChildClickListener(this);
         mGroHomeDevLineAdapter.setOnItemClickListener(this);

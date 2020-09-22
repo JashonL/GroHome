@@ -217,6 +217,10 @@ public class API {
         @POST("appService/userAgreement ")
         Observable<String> userAgreement(@Body RequestBody body);
 
+        //-----------------------------【         消息中心           】-----------------------------------------
+        @POST("appService/getLoginRecord")
+        Observable<String> getLoginRecord(@Body RequestBody body);
+
     }
 
 }

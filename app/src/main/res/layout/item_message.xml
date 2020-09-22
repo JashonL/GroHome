@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="@drawable/card_foreground"
+    android:orientation="vertical"
+    android:layout_marginStart="@dimen/dp_20"
+    android:layout_marginEnd="@dimen/dp_20"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/dp_10">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_100">
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/icon_message_notify"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:padding="@dimen/dp_5"
+            android:text="@string/m245_start_time"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_text_33"
+            android:textSize="@dimen/size_title_sp_16"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_right"
+            app:layout_constraintLeft_toRightOf="@+id/iv_right"
+            app:layout_constraintRight_toRightOf="@+id/tv_time"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:textColor="@color/color_text_99"
+            android:textSize="@dimen/size_title_sp_12"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_title" />
+
+
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:text="@string/m245_start_time"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_text_99"
+            android:textSize="@dimen/size_title_sp_12"
+            app:layout_constraintLeft_toRightOf="@+id/iv_right"
+            app:layout_constraintRight_toRightOf="@+id/tv_time"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

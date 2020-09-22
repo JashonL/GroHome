@@ -172,4 +172,7 @@ public class GlobalConstant {
 
     public static final String USER_AGREEMENT_CN="file:///android_asset/userAgreement_cn.html";
     public static final String USER_AGREEMENT_EN="file:///android_asset/userAgreement_en.html";
+
+    //***************************消息列表**************************
+    public static final String MESSAGELIST="message_list";
 }
