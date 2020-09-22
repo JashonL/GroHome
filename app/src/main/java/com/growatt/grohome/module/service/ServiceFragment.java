@@ -75,7 +75,7 @@ public class ServiceFragment extends BaseFragment<ServicePresenter> implements I
         /**
          * 动态设置轮播图的宽高
          */
-        float ratio=1029/420f;
+        float ratio=686/320f;
         float dimension = getResources().getDimension(R.dimen.dp_10);
         int px = CommentUtils.dip2px(getContext(), dimension);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) banner.getLayoutParams();

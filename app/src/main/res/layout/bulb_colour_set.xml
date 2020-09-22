@@ -17,9 +17,11 @@
 
     <com.growatt.grohome.customview.colorpicker.ColorPicker
         android:id="@+id/color_picker"
-        android:layout_width="@dimen/dp_250"
-        android:layout_height="@dimen/dp_250"
-        app:color_wheel_thickness="@dimen/dp_30"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="@dimen/dp_300"
+        app:color_wheel_thickness="@dimen/dp_40"
+        app:color_pointer_halo_radius="@dimen/dp_20"
+        app:color_pointer_radius="@dimen/dp_18"
         app:layout_constraintBottom_toBottomOf="@+id/v_bulb_background_colour"
         app:layout_constraintLeft_toLeftOf="@+id/v_bulb_background_colour"
         app:layout_constraintRight_toRightOf="@+id/v_bulb_background_colour"

@@ -28,6 +28,7 @@ import com.growatt.grohome.utils.MD5andKL;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.growatt.grohome.utils.PickViewUtils;
 import com.growatt.grohome.utils.SharedPreferencesUnit;
+import com.growatt.grohome.utils.SystemUtil;
 import com.growatt.grohome.utils.UrlUtil;
 import com.hjq.toast.ToastUtils;
 
@@ -126,8 +127,15 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     public void userLogin(String url, String username, String password) {
         userUrl = UrlUtil.replaceUrl(url);
         String userServerUrl = GlobalConstant.HTTP_PREFIX + userUrl + API.NEWTWOLOGINAPI;
+
+
+        String systemModel = SystemUtil.getSystemModel();
+        String serialNumber = SystemUtil.getSerialNumber(context);
+        String language = String.valueOf(CommentUtils.getLanguage());
+        String apptype="GroHome";
+
         //正式登录
-        addDisposable(apiServer.login(userServerUrl, username, MD5andKL.encryptPassword(password)), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.login(userServerUrl, username, MD5andKL.encryptPassword(password),apptype,serialNumber,systemModel,language), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
                 try {

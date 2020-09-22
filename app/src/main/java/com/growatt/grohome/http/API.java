@@ -75,7 +75,7 @@ public class API {
 
         @FormUrlEncoded
         @POST
-        Observable<String> login(@Url String url, @Field("userName") String username, @Field("password") String password);
+        Observable<String> login(@Url String url, @Field("userName") String username, @Field("password") String password, @Field("appType") String appType, @Field("phoneSn") String phoneSn,@Field("phoneModel")String phoneModel,@Field("language")String language);
 
 
         //注册

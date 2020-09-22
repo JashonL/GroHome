@@ -17,6 +17,7 @@ import com.growatt.grohome.utils.ActivityUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MD5andKL;
 import com.growatt.grohome.utils.SharedPreferencesUnit;
+import com.growatt.grohome.utils.SystemUtil;
 import com.growatt.grohome.utils.UrlUtil;
 
 import org.json.JSONObject;
@@ -105,8 +106,14 @@ public class SplashPresenter extends BasePresenter<ISplashView> {
     public void userLogin(String url, String username, String password) {
         userUrl = UrlUtil.replaceUrl(url);
         String userServerUrl = GlobalConstant.HTTP_PREFIX + userUrl + API.NEWTWOLOGINAPI;
+
+        String systemModel = SystemUtil.getSystemModel();
+        String serialNumber = SystemUtil.getSerialNumber(context);
+        String language = String.valueOf(CommentUtils.getLanguage());
+        String apptype="GroHome";
+
         //正式登录
-        addDisposable(apiServer.login(userServerUrl, username, MD5andKL.encryptPassword(password)), new BaseObserver<String>(baseView, false) {
+        addDisposable(apiServer.login(userServerUrl, username, MD5andKL.encryptPassword(password),apptype,serialNumber,systemModel,language), new BaseObserver<String>(baseView, false) {
             @Override
             public void onSuccess(String bean) {
                 try {

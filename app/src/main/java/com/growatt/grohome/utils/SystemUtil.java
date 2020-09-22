@@ -1,6 +1,10 @@
 package com.growatt.grohome.utils;
 
+import android.content.Context;
+
 import java.util.Locale;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class SystemUtil {
 
@@ -47,6 +51,11 @@ public class SystemUtil {
      */
     public static String getDeviceBrand() {
         return android.os.Build.BRAND;
+    }
+
+
+    public static String getSerialNumber(Context context) {
+        return JPushInterface.getRegistrationID(context);
     }
 
 }
