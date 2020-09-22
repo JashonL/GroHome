@@ -264,6 +264,7 @@ public class WiFiOptionsPresenter extends BasePresenter<IWiFiOptionsView> {
             dialogFragment = CircleDialogUtils.showCommentDialog((FragmentActivity) context, context.getString(R.string.m208_note), context.getString(R.string.m315_turn_on_gps), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    dialogFragment=null;
                     Intent intent = new Intent();
                     intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     ((Activity) context).startActivityForResult(intent, GlobalConstant.ACTION_LOCATION_CODE);

@@ -232,6 +232,25 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
         return cbTimeUse.isChecked();
     }
 
+    @Override
+    public String getModeValue() {
+        return tvBulbModeValue.getText().toString();
+    }
+
+    @Override
+    public String getBrightValue() {
+        return tvBulbBrightValue.getText().toString();
+    }
+
+    @Override
+    public String getTempValue() {
+        return tvBulbTempValue.getText().toString();
+    }
+
+    @Override
+    public String getTimeValue() {
+        return tvBulbTimeValue.getText().toString();
+    }
 
 
     @Override

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -90,7 +89,7 @@ public class ExampleUtil {
 			@Override
 			public void run() {
 				Looper.prepare();
-				Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
 				Looper.loop();
 			}
 		}).start();

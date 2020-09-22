@@ -36,6 +36,15 @@ public interface ISceneConditionView extends BaseView {
     boolean getTimeChecked();
 
 
+    String getModeValue();
+
+    String getBrightValue();
+
+    String getTempValue();
+
+    String getTimeValue();
+
+
     void selectedMode(String mode);
 
     void setBright(String bright);

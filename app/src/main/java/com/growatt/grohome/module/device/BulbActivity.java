@@ -131,7 +131,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         rlvScene.setAdapter(mBulbSceneAdapter);
         int div = CommentUtils.dip2px(this, 24);
         rlvScene.addItemDecoration(new LinearDivider(this, LinearLayoutManager.HORIZONTAL, div, ContextCompat.getColor(this, R.color.nocolor)));
-
+        whiteMaskView.setVisibility(View.GONE);
 
         //底部控件
         tvLeftTimeValue.setVisibility(View.GONE);

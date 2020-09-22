@@ -238,6 +238,7 @@ public class BluetoothPresenter extends BasePresenter<IBluetoothConfigView> {
                     view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            dialogFragment=null;
                             toConfig();
                         }
                     });

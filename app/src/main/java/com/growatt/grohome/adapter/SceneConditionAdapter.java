@@ -88,10 +88,12 @@ public class SceneConditionAdapter extends BaseQuickAdapter<SceneConditionBean, 
                 } else {
                     helper.setImageResource(R.id.iv_device_icon, DeviceStripLights.getCloseIcon(1));
                 }
-                if (GlobalConstant.SCENE_DEVICE_SHUT.equals(linkType)) {
-                    setting.append(mContext.getString(R.string.m240_on_off)).append(":").append(mContext.getString(R.string.m168_off)).append(",");
-                } else {
-                    setting.append(mContext.getString(R.string.m240_on_off)).append(":").append(mContext.getString(R.string.m167_on)).append(",");
+                if (!TextUtils.isEmpty( linkType)){
+                    if (GlobalConstant.SCENE_DEVICE_SHUT.equals(linkType)) {
+                        setting.append(mContext.getString(R.string.m240_on_off)).append(":").append(mContext.getString(R.string.m168_off)).append(",");
+                    } else {
+                        setting.append(mContext.getString(R.string.m240_on_off)).append(":").append(mContext.getString(R.string.m167_on)).append(",");
+                    }
                 }
                 SceneBulbSetInfo setInfo = item.getSetInfo();
                 if (setInfo != null) {

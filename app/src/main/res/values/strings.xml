@@ -382,5 +382,6 @@
     <string name="m324_repeat_password">Repeat password</string>
     <string name="m325_remember_password">Remember password</string>
     <string name="m326_is_not_ready">Function is not ready</string>
+    <string name="m327_value_not_set">Value not set</string>
 
 </resources>

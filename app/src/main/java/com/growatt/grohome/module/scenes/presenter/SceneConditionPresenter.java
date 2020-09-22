@@ -100,6 +100,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
             devType = groDeviceBean.getDevType();
             deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
             baseView.setViewsByDevice(groDeviceBean);
+            baseView.setSocketUi(linkType);
         } else {
             String taskJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.SCENE_CONDITION_BEAN);
             if (TextUtils.isEmpty(taskJson)) return;
@@ -121,7 +122,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                     if (s.length >= 3) {
                         try {
                             int isEnable = Integer.parseInt(s[0]);
-                            if (isEnable != 0){
+                            if (isEnable != 0) {
                                 index = Integer.parseInt(s[2]);
                                 baseView.selectedMode(modes[index - 1]);
                             }
@@ -136,10 +137,10 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                     if (s.length >= 3) {
                         try {
                             int isEnable = Integer.parseInt(s[0]);
-                            if (isEnable != 0){
+                            if (isEnable != 0) {
                                 String symbol = s[1];
                                 int value = Integer.parseInt(s[2]);
-                                String currenTemp = symbol +"  "+ value;
+                                String currenTemp = symbol + "  " + value;
                                 baseView.setTemp(currenTemp);
                             }
                         } catch (NumberFormatException e) {
@@ -153,10 +154,10 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                     if (s.length >= 3) {
                         try {
                             int isEnable = Integer.parseInt(s[0]);
-                            if (isEnable != 0){
+                            if (isEnable != 0) {
                                 String symbol = s[1];
                                 int value = Integer.parseInt(s[2]);
-                                String currenBright = symbol +"  "+ value;
+                                String currenBright = symbol + "  " + value;
                                 baseView.setBright(currenBright);
                             }
                         } catch (NumberFormatException e) {
@@ -304,28 +305,58 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
         switch (devType) {
             case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
             case DeviceTypeConstant.TYPE_BULB:
-                if (!baseView.getSwitchChecked() && !baseView.getBrightChecked() && !baseView.getTimeChecked() && !baseView.getTempChecked()) {
+                if (!baseView.getSwitchChecked() && !baseView.getModeChecked() && !baseView.getBrightChecked() && !baseView.getTimeChecked() && !baseView.getTempChecked()) {
                     MyToastUtils.toast(R.string.m299_least_one_condition);
                     return;
                 }
-                if (!baseView.getSwitchChecked()){
+                if (baseView.getSwitchChecked()) {
+                    if (TextUtils.isEmpty(linkType)) {
+                        linkType = GlobalConstant.SCENE_DEVICE_SHUT;
+                    }
                     bean.setLinkType(linkType);
                 }
 
                 SceneBulbSetInfo setInfo = new SceneBulbSetInfo();
-                if (!baseView.getModeChecked()||TextUtils.isEmpty(mode)) {
-                    mode="0_equal_1";
-                }
-                if (!baseView.getBrightChecked()||TextUtils.isEmpty(bright)) {
-                    bright="0_equal_10";
+                String modeValue = baseView.getModeValue();
+                if (baseView.getModeChecked()) {
+                    if (TextUtils.isEmpty(modeValue)) {
+                        MyToastUtils.toast(R.string.m327_value_not_set);
+                        return;
+                    }
+                } else {
+                    mode = "0_equal_1";
                 }
 
-                if (!baseView.getTimeChecked()||TextUtils.isEmpty(countdown)) {
-                    countdown="0_equal_0";
+                String brightValue = baseView.getBrightValue();
+                if (baseView.getBrightChecked()) {
+                    if (TextUtils.isEmpty(brightValue)) {
+                        MyToastUtils.toast(R.string.m327_value_not_set);
+                        return;
+                    }
+                } else {
+                    bright = "0_equal_10";
                 }
 
-                if (!baseView.getTempChecked()||TextUtils.isEmpty(temp)) {
-                    temp="0_equal_0";
+                String timeValue = baseView.getTimeValue();
+                if (baseView.getTimeChecked()) {
+                    if (TextUtils.isEmpty(timeValue)) {
+                        MyToastUtils.toast(R.string.m327_value_not_set);
+                        return;
+                    }
+                } else {
+                    countdown = "0_equal_0";
+
+                }
+
+                String tempValue = baseView.getTempValue();
+                if (baseView.getTempChecked()) {
+                    if (TextUtils.isEmpty(tempValue)) {
+                        MyToastUtils.toast(R.string.m327_value_not_set);
+                        return;
+                    }
+                } else {
+                    temp = "0_equal_0";
+
                 }
                 setInfo.setMode(mode);
                 setInfo.setBright(bright);
@@ -474,23 +505,23 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                     String[] s = bright.split("_");
                     if (s.length >= 3) {
                         try {
-                            int enable=Integer.parseInt(s[0]);
-                            if (enable!=0){
-                            int value = Integer.parseInt(s[2]);
-                            seekPercent.setProgress(value - 10);
-                            tvValue.setText(value + "");
-                            String symbol=s[1];
-                            switch (symbol){
-                                case "less":
-                                    radioGroup.check(R.id.rb_less);
-                                    break;
-                                case "equal":
-                                    radioGroup.check(R.id.rb_equal);
-                                    break;
-                                case "greater":
-                                    radioGroup.check(R.id.rb_greater);
-                                    break;
-                            }
+                            int enable = Integer.parseInt(s[0]);
+                            if (enable != 0) {
+                                int value = Integer.parseInt(s[2]);
+                                seekPercent.setProgress(value - 10);
+                                tvValue.setText(value + "");
+                                String symbol = s[1];
+                                switch (symbol) {
+                                    case "less":
+                                        radioGroup.check(R.id.rb_less);
+                                        break;
+                                    case "equal":
+                                        radioGroup.check(R.id.rb_equal);
+                                        break;
+                                    case "greater":
+                                        radioGroup.check(R.id.rb_greater);
+                                        break;
+                                }
                             }
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
@@ -603,24 +634,24 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                     String[] s = temp.split("_");
                     if (s.length >= 3) {
                         try {
-                            int enable=Integer.parseInt(s[0]);
-                            if (enable!=0){
+                            int enable = Integer.parseInt(s[0]);
+                            if (enable != 0) {
 
-                            int value = Integer.parseInt(s[2]);
-                            seekPercent.setProgress(value);
-                            tvValue.setText(value + "");
-                            String symbol=s[1];
-                            switch (symbol){
-                                case "less":
-                                    radioGroup.check(R.id.rb_less);
-                                    break;
-                                case "equal":
-                                    radioGroup.check(R.id.rb_equal);
-                                    break;
-                                case "greater":
-                                    radioGroup.check(R.id.rb_greater);
-                                    break;
-                            }
+                                int value = Integer.parseInt(s[2]);
+                                seekPercent.setProgress(value);
+                                tvValue.setText(value + "");
+                                String symbol = s[1];
+                                switch (symbol) {
+                                    case "less":
+                                        radioGroup.check(R.id.rb_less);
+                                        break;
+                                    case "equal":
+                                        radioGroup.check(R.id.rb_equal);
+                                        break;
+                                    case "greater":
+                                        radioGroup.check(R.id.rb_greater);
+                                        break;
+                                }
 
                             }
                         } catch (NumberFormatException e) {
@@ -730,14 +761,14 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                     String[] s = countdown.split("_");
                     if (s.length >= 3) {
                         try {
-                            int enable=Integer.parseInt(s[0]);
-                            if (enable!=0){
+                            int enable = Integer.parseInt(s[0]);
+                            if (enable != 0) {
                                 int value = Integer.parseInt(s[2]);
                                 seekPercent.setProgress(value);
                                 String time = value + "  " + context.getString(R.string.m303_second);
                                 tvValue.setText(time);
-                                String symbol=s[1];
-                                switch (symbol){
+                                String symbol = s[1];
+                                switch (symbol) {
                                     case "less":
                                         radioGroup.check(R.id.rb_less);
                                         break;
