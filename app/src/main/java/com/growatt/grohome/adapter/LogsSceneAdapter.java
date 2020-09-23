@@ -43,7 +43,7 @@ public class LogsSceneAdapter extends BaseMultiItemQuickAdapter<LogsSceneBean, B
             String runStatus = item.getRunStatus();
             helper.setText(R.id.tv_title,title);
             helper.setText(R.id.tv_content,time);
-            int index = item.getIndex();
+            String dataType = item.getDataType();
             if (GlobalConstant.STRING_STATUS_ON.equals(runStatus)){//开启状态
                 String status = mContext.getString(R.string.m328_starting);
                 helper.setText(R.id.tv_title,status);
@@ -51,16 +51,20 @@ public class LogsSceneAdapter extends BaseMultiItemQuickAdapter<LogsSceneBean, B
                 String status = mContext.getString(R.string.m329_terminated);
                 helper.setText(R.id.tv_title,status);
             }
-            switch (index){
-                case 0:
+            switch (dataType){
+                case GlobalConstant.SCENE_LOG_TYPE_HEADER:
                     helper.setVisible(R.id.line_half_top,false);
                     helper.setVisible(R.id.line_half_bottom,true);
                     break;
-                case 1:
+                case GlobalConstant.SCENE_LOG_TYPE_BODY:
                     helper.setVisible(R.id.line_half_top,true);
                     helper.setVisible(R.id.line_half_bottom,true);
                     break;
-                case 2:
+                case GlobalConstant.SCENE_LOG_TYPE_SINGLE:
+                    helper.setVisible(R.id.line_half_top,false);
+                    helper.setVisible(R.id.line_half_bottom,false);
+                    break;
+                case GlobalConstant.SCENE_LOG_TYPE_FOOT:
                     helper.setVisible(R.id.line_half_top,true);
                     helper.setVisible(R.id.line_half_bottom,false);
                     break;

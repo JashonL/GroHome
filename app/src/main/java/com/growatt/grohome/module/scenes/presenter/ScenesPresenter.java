@@ -24,7 +24,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -108,7 +110,6 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
 
     }
 
-
     /**
      * 获取场景执行日志
      *
@@ -121,66 +122,76 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
         requestJson.put("lan", CommentUtils.getLanguage());
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.smartHomeRequest(body), new BaseObserver<String>(baseView, true) {
-            @Override
-            public void onSuccess(String jsonBean) {
-                try {
-                    JSONObject object = new JSONObject(jsonBean);
-                    int code = object.getInt("code");
-                    if (code == 0) {
-                        JSONArray array = object.optJSONArray("data");
-                        List<LogsSceneBean> logs = new ArrayList<>();
-                        if (array != null) {
-                            String time = "";
-                            int index=1;//0代表第一个，1表示中间，2表示末尾,3表示只有一个数据
-                            for (int i = 0; i < array.length(); i++) {
-                                LogsSceneBean bean = new LogsSceneBean();
-                                JSONObject jsonObject = array.optJSONObject(i);
-                                bean.setCname(jsonObject.optString("cname", ""));
-                                bean.setRunStatus(jsonObject.optString("runStatus", "0"));
-                                String runTime = jsonObject.optString("runTime", "0");
-                                String[] s1 = runTime.split(" ");
-                                bean.setRunTime(s1[1]);
-                                if (!time.equals(s1[0])) {
-                                    index=0;
-                                    time = s1[0];
-                                    LogsSceneBean titlebean = new LogsSceneBean();
-                                    titlebean.setRunTime(s1[0]);
-                                    titlebean.setItemType(GlobalConstant.STATUS_ITEM_OTHER);
-                                    logs.add(titlebean);
+                addDisposable(apiServer.smartHomeRequest(body), new BaseObserver<String>(baseView,
+                        true) {
+                    @Override
+                    public void onSuccess(String jsonBean) {
+                        try {
+                            JSONObject object = new JSONObject(jsonBean);
+                            int code = object.getInt("code");
+                            if (code == 0) {
+                                JSONArray array = object.optJSONArray("data");
+                                Map<String,List<LogsSceneBean>> listMap=new LinkedHashMap<>();
+                                List<String>timeList=new ArrayList<>();
+                                List<LogsSceneBean> logs = new ArrayList<>();
+                                if (array != null) {
+                                    String time = "";
+                                    for (int i = 0; i < array.length(); i++) {
+                                        JSONObject jsonObject = array.optJSONObject(i);
+                                        String runTime = jsonObject.optString("runTime", "0");
+                                        String[] s1 = runTime.split(" ");
+                                        if (!time.equals(s1[0])) {
+                                            time=s1[0];
+                                            List<LogsSceneBean> list=new ArrayList<>();
+                                            listMap.put(time,list);
+                                            timeList.add(time);
+                                        }
+                                        List<LogsSceneBean> logsSceneBeans = listMap.get(s1[0]);
+                                        LogsSceneBean bean = new LogsSceneBean();
+                                        bean.setCname(jsonObject.optString("cname", ""));
+                                        bean.setRunStatus(jsonObject.optString("runStatus", "0"));
+                                        bean.setRunTime(s1[1]);
+                                        bean.setDataType(GlobalConstant.SCENE_LOG_TYPE_BODY);
+                                        bean.setItemType(GlobalConstant.STATUS_ITEM_DATA);
+                                        if (logsSceneBeans!=null){
+                                            logsSceneBeans.add(bean);
+                                        }
+                                    }
                                 }
-                                bean.setIndex(index);
-                                bean.setItemType(GlobalConstant.STATUS_ITEM_DATA);
-                                logs.add(bean);
-                                index=1;
-                            }
-                        }
+                                for (String time:timeList) {
+                                    List<LogsSceneBean> logsSceneBeans = listMap.get(time);
+                                    if (logsSceneBeans!=null){
+                                        int size = logsSceneBeans.size();
+                                        if (size==1){
+                                            logsSceneBeans.get(0).setDataType(GlobalConstant.SCENE_LOG_TYPE_SINGLE);
+                                        }else {
+                                            logsSceneBeans.get(0).setDataType(GlobalConstant.SCENE_LOG_TYPE_HEADER);
+                                            logsSceneBeans.get(size-1).setDataType(GlobalConstant.SCENE_LOG_TYPE_FOOT);
+                                        }
+                                        LogsSceneBean titlebean = new LogsSceneBean();
+                                        titlebean.setRunTime(time);
+                                        titlebean.setItemType(GlobalConstant.STATUS_ITEM_OTHER);
+                                        logsSceneBeans.add(0,titlebean);
+                                        logs.addAll(logsSceneBeans);
+                                    }
 
-                        for (int i = 0; i < logs.size(); i++){
-                            LogsSceneBean bean = logs.get(i);
-                            int itemType = bean.getItemType();
-                            if (itemType==GlobalConstant.STATUS_ITEM_OTHER){
-                                if (i!=0){
-                                    LogsSceneBean bean1 = logs.get(i - 1);
-                                    bean1.setIndex(2);
                                 }
+                                baseView.updataLogs(logs);
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        logs.get(logs.size()-1).setIndex(2);
-                        baseView.updataLogs(logs);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void onError(String msg) {
-                baseView.onError(msg);
-            }
-        });
+                    @Override
+                    public void onError(String msg) {
+                        baseView.onError(msg);
+                    }
+                });
 
     }
+
+
 
 
     /**

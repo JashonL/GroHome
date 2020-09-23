@@ -175,4 +175,10 @@ public class GlobalConstant {
 
     //***************************消息列表**************************
     public static final String MESSAGELIST="message_list";
+    //***************************场景日志**************************
+    public static final String SCENE_LOG_TYPE_HEADER="log_header";
+    public static final String SCENE_LOG_TYPE_FOOT="log_foot";
+    public static final String SCENE_LOG_TYPE_BODY="log_body";
+    public static final String SCENE_LOG_TYPE_SINGLE="log_sigle";
+
 }

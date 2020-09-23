@@ -6,11 +6,11 @@ public class LogsSceneBean implements MultiItemEntity {
 
     private int itemType;
 
-    private String  title;
-    private String  cname;
-    private String  runStatus;
-    private String  runTime;
-    private int   index;
+    private String title;
+    private String cname;
+    private String runStatus;
+    private String runTime;
+    private String dataType;
 
 
     public void setItemType(int itemType) {
@@ -50,12 +50,12 @@ public class LogsSceneBean implements MultiItemEntity {
     }
 
 
-    public int getIndex() {
-        return index;
+    public String getDataType() {
+        return dataType;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
 
     @Override
