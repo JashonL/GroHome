@@ -13,7 +13,7 @@ import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.BulbDpBean;
-import com.growatt.grohome.bean.HomeDeviceBean;
+import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.bean.SwitchDpBean;
 import com.growatt.grohome.constants.GlobalConstant;
@@ -21,6 +21,7 @@ import com.growatt.grohome.constants.GlobalVariable;
 import com.growatt.grohome.module.device.BulbActivity;
 import com.growatt.grohome.module.device.SwitchActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
+import com.growatt.grohome.module.device.manager.DeviceManager;
 import com.growatt.grohome.module.device.manager.DevicePanel;
 import com.growatt.grohome.module.device.manager.DevicePlug;
 import com.growatt.grohome.module.device.manager.DeviceStripLights;
@@ -84,11 +85,12 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
 
 
     public void getAlldevice() throws Exception {
+        String userServerUrl=GlobalConstant.HTTP_PREFIX+App.getUserBean().getUrl();
         JSONObject requestJson = new JSONObject();
         requestJson.put("userId", App.getUserBean().accountName);
         requestJson.put("cmd", "devList");
         requestJson.put("userServerId", "0");
-        requestJson.put("userServerUrl", "http://server-cn.growatt.com/");
+        requestJson.put("userServerUrl", userServerUrl);
         requestJson.put("lan", String.valueOf(CommentUtils.getLanguage()));
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
@@ -103,10 +105,17 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                         String filterEnable = obj.optString("filterEnable", "1");
                         //是否控制场景添加设备为不重复
                         GlobalVariable.filterEnable = "1".equals(filterEnable);
-                        HomeDeviceBean infoData = new Gson().fromJson(bean, HomeDeviceBean.class);
+                        JSONArray data = obj.optJSONArray("data");
+                        List<GroDeviceBean> deviceList = new ArrayList<>();
+                        if (data != null) {
+                            for (int i = 0; i < data.length(); i++) {
+                                JSONObject jsonObject = data.optJSONObject(i);
+                                GroDeviceBean deviceBean = new Gson().fromJson(jsonObject.toString(), GroDeviceBean.class);
+                                deviceList.add(deviceBean);
+                            }
+                        }
 
                         //---------------------------这段代码用来控制相对应的设备是否动态匹配功能点,如果不用动态(注释掉对应的设备类型即可)的就会使用固定的----------------------------------
-                        JSONArray data = obj.optJSONArray("data");
                         if (data!=null){
                             for (int i = 0; i < data.length(); i++) {
                                 JSONObject device = data.optJSONObject(i);
@@ -151,11 +160,9 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
 
                             }
                         }
-
-
                         //---------------------------------------------------------------------------------------------
-
-                        baseView.setAllDeviceSuccess(infoData);
+                        DeviceManager.getInstance().setDeviceBeans(deviceList);
+                        baseView.setAllDeviceSuccess(deviceList);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -233,7 +240,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     /**
      * 跳转到设备操作页面
      */
-    public void jumpTodevice(HomeDeviceBean.DataBean bean) {
+    public void jumpTodevice(GroDeviceBean bean) {
         String devType = bean.getDevType();
         Class clazz;
         if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(devType)) {
@@ -258,7 +265,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
      *
      * @param device 设备
      */
-    public int initDevOnOff(HomeDeviceBean.DataBean device) {
+    public int initDevOnOff(GroDeviceBean device) {
         String devId = device.getDevId();
         String devType = device.getDevType();
         DeviceBean deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
@@ -454,8 +461,8 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     @Override
     public void onDpUpdate(String devId, String dpStr) {
         try {
-            List<HomeDeviceBean.DataBean> deviceList = baseView.getDeviceList();
-            HomeDeviceBean.DataBean allDeviceBean = new HomeDeviceBean.DataBean();
+            List<GroDeviceBean> deviceList = baseView.getDeviceList();
+            GroDeviceBean allDeviceBean = new GroDeviceBean();
             allDeviceBean.setDevId(devId);
             int allDevice = deviceList.indexOf(allDeviceBean);
             if (allDevice != -1) {

@@ -146,9 +146,11 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                         //用户解析
                         User userInfo = new Gson().fromJson(user.toString(), User.class);
                         userInfo.setUrl(userUrl);
-                        if (userUrl.contains("-cn"))
+                        if (userUrl.contains("-cn")) {
                             userInfo.setUserTuyaCode(GlobalConstant.CHINA_AREA_CODE);
-                        else userInfo.setUserTuyaCode(GlobalConstant.EUROPE_AREA_CODE);
+                        }else {
+                            userInfo.setUserTuyaCode(GlobalConstant.EUROPE_AREA_CODE);
+                        }
                         savaUserInfo(username, password, userInfo);
                         baseView.loginSuccess(bean);
                     } else {

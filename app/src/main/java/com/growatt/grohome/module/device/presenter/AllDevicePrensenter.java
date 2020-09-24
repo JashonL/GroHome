@@ -10,6 +10,7 @@ import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.module.device.manager.DeviceManager;
 import com.growatt.grohome.module.device.view.IAllDeviceView;
 import com.growatt.grohome.module.scenes.SceneConditionActivity;
 import com.growatt.grohome.module.scenes.SceneTaskSettingActivity;
@@ -38,12 +39,28 @@ public class AllDevicePrensenter extends BasePresenter<IAllDeviceView> {
     }
 
 
+
+    public void getDeviceList() {
+        List<GroDeviceBean> deviceBeans = DeviceManager.getInstance().getDeviceBeans();
+        if (deviceBeans != null) {
+            baseView.setAllDeviceSuccess(deviceBeans);
+        } else {
+            try {
+                getAlldevice();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     public void getAlldevice() throws Exception {
+        String userServerUrl = GlobalConstant.HTTP_PREFIX + App.getUserBean().getUrl();
         JSONObject requestJson = new JSONObject();
         requestJson.put("userId", App.getUserBean().getAccountName());
         requestJson.put("cmd", "devList");
         requestJson.put("userServerId", "0");
-        requestJson.put("userServerUrl", "http://server-cn.growatt.com/");
+        requestJson.put("userServerUrl", userServerUrl);
         requestJson.put("lan", String.valueOf(CommentUtils.getLanguage()));
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
@@ -57,7 +74,7 @@ public class AllDevicePrensenter extends BasePresenter<IAllDeviceView> {
                     if (0 == code) {
                         JSONArray dataArray = obj.optJSONArray("data");
                         List<GroDeviceBean> data = new ArrayList<>();
-                        if (dataArray!=null){
+                        if (dataArray != null) {
                             for (int i = 0; i < dataArray.length(); i++) {
                                 JSONObject jsonObject = dataArray.optJSONObject(i);
                                 GroDeviceBean deviceBean = new Gson().fromJson(jsonObject.toString(), GroDeviceBean.class);
@@ -83,8 +100,8 @@ public class AllDevicePrensenter extends BasePresenter<IAllDeviceView> {
 
 
     public void toSetDevice(GroDeviceBean deviceBean) {
-        if (deviceBean==null)return;
-        switch (devSelectType){
+        if (deviceBean == null) return;
+        switch (devSelectType) {
             case GlobalConstant.SCENE_ADD_CONDITION:
                 setSceneCondition(deviceBean);
                 break;
@@ -95,24 +112,22 @@ public class AllDevicePrensenter extends BasePresenter<IAllDeviceView> {
     }
 
     private void setSceneCondition(GroDeviceBean deviceBean) {
-        if (deviceBean==null)return;
-        String bean =new Gson().toJson(deviceBean);
+        if (deviceBean == null) return;
+        String bean = new Gson().toJson(deviceBean);
         Intent intent = new Intent(context, SceneConditionActivity.class);
-        intent.putExtra(GlobalConstant.DEVICE_BEAN,bean);
-        intent.putExtra(GlobalConstant.SCENE_CREATE_OR_EDIT,GlobalConstant.SCENE_CREATE);
-        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+        intent.putExtra(GlobalConstant.DEVICE_BEAN, bean);
+        intent.putExtra(GlobalConstant.SCENE_CREATE_OR_EDIT, GlobalConstant.SCENE_CREATE);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
-
-
     private void setSceneRunDevice(GroDeviceBean deviceBean) {
-        if (deviceBean==null)return;
-        String bean =new Gson().toJson(deviceBean);
+        if (deviceBean == null) return;
+        String bean = new Gson().toJson(deviceBean);
         Intent intent = new Intent(context, SceneTaskSettingActivity.class);
-        intent.putExtra(GlobalConstant.DEVICE_BEAN,bean);
-        intent.putExtra(GlobalConstant.SCENE_CREATE_OR_EDIT,GlobalConstant.SCENE_CREATE);
-        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+        intent.putExtra(GlobalConstant.DEVICE_BEAN, bean);
+        intent.putExtra(GlobalConstant.SCENE_CREATE_OR_EDIT, GlobalConstant.SCENE_CREATE);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 

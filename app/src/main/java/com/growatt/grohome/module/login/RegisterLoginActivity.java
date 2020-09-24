@@ -224,7 +224,7 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
                     country = "China";
                 }
                 String zone = tvZone.getText().toString();
-                zone = zone.replace("GMT", "");
+                zone = zone.replace("GMT+", "");
                 String rePassword = etRegisterPassword.getText().toString();
                 String rePasswordRepeat = etRepeatPassword.getText().toString();
                 String email = tvEmail.getText().toString();

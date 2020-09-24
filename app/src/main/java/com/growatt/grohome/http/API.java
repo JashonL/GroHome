@@ -52,7 +52,7 @@ public class API {
     public static final String GET_SERVER_URLBY_PARAM = "/newForgetAPI.do?op=getServerUrlByParam";
     public static final String SEND_RESET_EMAIL_BY_ACCOUNT = "/newForgetAPI.do?op=sendResetEmailByAccount";
 
-    public static final String CREATACCOUNT = "/newTwoRegisterAPI.do?op=creatAccount";
+    public static final String CREATACCOUNT = "/newTwoRegisterAPI.do?op=register_GroHome";
     public static final String NEWTWOLOGINAPI = "/newTwoLoginAPI.do";
 
 

@@ -244,10 +244,10 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
 
 
     private void checkLoop() {
-        if (mStop) return;
         if (mTime >= 100) {
             stopSearch();
             // mModel.configFailure();
+            baseView.showConfigFail("", "", mConfigMode);
         } else {
             baseView.setConnectProgress(mTime++, 1000);
             handler.sendEmptyMessageDelayed(MESSAGE_CONFIG_WIFI_OUT_OF_TIME, 1000);
@@ -306,6 +306,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         intent.putExtra(GlobalConstant.WIFI_TOKEN, tuyaToken);
         intent.putExtra(GlobalConstant.WIFI_SSID, ssid);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(GlobalConstant.WIFI_PASSWORD, password);
         intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE, configType);
         intent.putExtra(DeviceConfigConstant.CONFIG_MODE, mConfigMode);

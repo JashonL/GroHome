@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.growatt.grohome.R;
-import com.growatt.grohome.bean.HomeDeviceBean;
+import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.module.device.manager.DeviceAirCon;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
@@ -20,20 +20,20 @@ import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 
 import java.util.List;
 
-public class GroHomeDevGridAdapter extends BaseMultiItemQuickAdapter<HomeDeviceBean.DataBean, BaseViewHolder> {
+public class GroHomeDevGridAdapter extends BaseMultiItemQuickAdapter<GroDeviceBean, BaseViewHolder> {
 
     public final static int STATUS_ON = 1;
     public final static int STATUS_OFF = 0;
 
 
-    public GroHomeDevGridAdapter(@Nullable List<HomeDeviceBean.DataBean> data) {
+    public GroHomeDevGridAdapter(@Nullable List<GroDeviceBean> data) {
         super(data);
         addItemType(STATUS_ON, R.layout.item_device_grid_open);
         addItemType(STATUS_OFF, R.layout.item_device_grid_close);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, HomeDeviceBean.DataBean item) {
+    protected void convert(@NonNull BaseViewHolder helper, GroDeviceBean item) {
         //设备名称
         helper.setText(R.id.tv_device_name, item.getName());
 

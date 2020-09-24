@@ -45,7 +45,7 @@ public class GroDeviceBean implements MultiItemEntity {
     //shineBoost
     private String temperature;
 
-
+    private String isConfHave;
 
     private SchemaDpdBean  dpd;
 
@@ -301,7 +301,13 @@ public class GroDeviceBean implements MultiItemEntity {
     }
 
 
+    public String getIsConfHave() {
+        return isConfHave;
+    }
 
+    public void setIsConfHave(String isConfHave) {
+        this.isConfHave = isConfHave;
+    }
 
     @Override
     public boolean equals(Object obj) {

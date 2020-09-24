@@ -80,7 +80,7 @@ public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> impleme
     @Override
     protected void initData() {
         try {
-            presenter.getAlldevice();
+            presenter.getDeviceList();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -77,14 +77,15 @@ public class DeviceConfigActivity extends BaseActivity<DeviceConfigPresenter> im
             view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    presenter.reTryConfig();
+                    presenter.dialogFail();
+
                 }
             });
 
             view.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {//回到选择wifi界面
-                    presenter.dialogFail();
+                    presenter.reTryConfig();
                 }
             });
         });

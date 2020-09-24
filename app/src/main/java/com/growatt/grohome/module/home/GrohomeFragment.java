@@ -22,7 +22,7 @@ import com.growatt.grohome.adapter.GroHomeDevGridAdapter;
 import com.growatt.grohome.adapter.GroHomeDevLineAdapter;
 import com.growatt.grohome.adapter.RoomAdapter;
 import com.growatt.grohome.base.BaseFragment;
-import com.growatt.grohome.bean.HomeDeviceBean;
+import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.customview.GridDivider;
 import com.growatt.grohome.customview.LinearDivider;
@@ -81,7 +81,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
 
     private int mLayoutType = TYPE_GRID;
 
-    private List<HomeDeviceBean.DataBean> deviceList = new ArrayList<>();
+    private List<GroDeviceBean> deviceList = new ArrayList<>();
 
     @Override
     protected GrohomePresenter createPresenter() {
@@ -208,13 +208,13 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         return true;
     }
 
+
     @Override
-    public void setAllDeviceSuccess(HomeDeviceBean bean) {
-        if (bean == null) return;
+    public void setAllDeviceSuccess(List<GroDeviceBean> list) {
+        if (list == null) return;
         deviceList.clear();
-        List<HomeDeviceBean.DataBean> newList = bean.getData();
-        for (int i = 0; i < newList.size(); i++) {
-            HomeDeviceBean.DataBean deviceBean = newList.get(i);
+        for (int i = 0; i < list.size(); i++) {
+            GroDeviceBean deviceBean = list.get(i);
             String devType = deviceBean.getDevType();
             if (!TuyaApiUtils.isShowDevice(devType)) continue;
             String devId = deviceBean.getDevId();
@@ -227,7 +227,6 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         mGrohomeGridAdapter.replaceData(deviceList);
     }
 
-
     @Override
     public void onError(String onError) {
         if (srlPull != null && srlPull.isRefreshing()) {
@@ -237,7 +236,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     }
 
     @Override
-    public List<HomeDeviceBean.DataBean> getDeviceList() {
+    public List<GroDeviceBean> getDeviceList() {
         if (mLayoutType == TYPE_GRID) {
             return mGrohomeGridAdapter.getData();
         } else {
@@ -248,13 +247,13 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
 
     @Override
     public void upDataStatus(String devId, String value) {
-        List<HomeDeviceBean.DataBean> data;
+        List<GroDeviceBean> data;
         if (mLayoutType == TYPE_GRID) {
             data = mGrohomeGridAdapter.getData();
         } else {
             data = mGroHomeDevLineAdapter.getData();
         }
-        HomeDeviceBean.DataBean bean = new HomeDeviceBean.DataBean();
+        GroDeviceBean bean = new GroDeviceBean();
         bean.setDevId(devId);
         int homeAllDevice = data.indexOf(bean);
         if (homeAllDevice != -1) {
@@ -274,10 +273,10 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
 
     @Override
     public void deleteDevice(String deviceId) {
-        List<HomeDeviceBean.DataBean> data = mGroHomeDevLineAdapter.getData();
+        List<GroDeviceBean> data = mGroHomeDevLineAdapter.getData();
         int index = -1;
         for (int i = 0; i < data.size(); i++) {
-            HomeDeviceBean.DataBean bean = data.get(i);
+            GroDeviceBean bean = data.get(i);
             String id = bean.getDevId();
             if (id.equals(deviceId)) {
                 index = i;
@@ -287,10 +286,10 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         if (index != -1) {
             mGroHomeDevLineAdapter.remove(index);
         }
-        List<HomeDeviceBean.DataBean> data1 = mGrohomeGridAdapter.getData();
+        List<GroDeviceBean> data1 = mGrohomeGridAdapter.getData();
         int index2 = -1;
         for (int i = 0; i < data1.size(); i++) {
-            HomeDeviceBean.DataBean bean = data1.get(i);
+            GroDeviceBean bean = data1.get(i);
             String id = bean.getDevId();
             if (id.equals(deviceId)) {
                 index2 = i;
@@ -305,7 +304,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean) adapter.getData().get(position);
+        GroDeviceBean bean = (GroDeviceBean) adapter.getData().get(position);
         String deviceType = bean.getDevType();
         String id = bean.getDevId();
         switch (view.getId()) {
@@ -331,7 +330,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             String roomlist = new Gson().toJson(mRoomAdapter.getData());
             presenter.jumpToRoom(roomlist, position);
         } else {
-            HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean) adapter.getData().get(position);
+            GroDeviceBean bean = (GroDeviceBean) adapter.getData().get(position);
             presenter.jumpTodevice(bean);
         }
     }
@@ -369,14 +368,14 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     public void showEditSuccess(DevEditNameBean msg) {
         if (msg != null) {
             String devId = msg.getDevId();
-            List<HomeDeviceBean.DataBean> data;
+            List<GroDeviceBean> data;
             //布局切换方法
             if (mLayoutType == TYPE_LINE) {
                 data = mGroHomeDevLineAdapter.getData();
             } else {
                 data = mGrohomeGridAdapter.getData();
             }
-            for (HomeDeviceBean.DataBean bean : data) {
+            for (GroDeviceBean bean : data) {
                 String deviceId = bean.getDevId();
                 if (deviceId.equals(devId)) {
                     bean.setName(msg.getName());
@@ -418,7 +417,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventDevTransferBean(DeviceStatusMessage bean) {
         if (bean != null) {
-            List<HomeDeviceBean.DataBean> newList;
+            List<GroDeviceBean> newList;
             if (mLayoutType == TYPE_LINE) {
                 newList = mGroHomeDevLineAdapter.getData();
             } else {
@@ -426,7 +425,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             }
 
             for (int i = 0; i < newList.size(); i++) {
-                HomeDeviceBean.DataBean deviceBean = newList.get(i);
+                GroDeviceBean deviceBean = newList.get(i);
                 String devId = deviceBean.getDevId();
                 presenter.initTuyaDevices(devId);
                 int onOff = presenter.initDevOnOff(deviceBean);
