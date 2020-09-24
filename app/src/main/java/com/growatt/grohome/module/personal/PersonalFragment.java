@@ -183,6 +183,7 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
         if (list.size()==0){
             tvMessageCount.setVisibility(View.GONE);
         }else {
+            tvMessageCount.setVisibility(View.VISIBLE);
             tvMessageCount.setText(String.valueOf(list.size()));
         }
     }

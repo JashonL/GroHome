@@ -5,6 +5,15 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+
+    <com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout
+        android:id="@+id/es"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:contentView="@+id/card_item"
+        app:rightMenuView="@+id/right">
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_item"
         android:layout_width="match_parent"
@@ -90,5 +99,35 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dp_7"
+            android:foreground="@drawable/card_foreground"
+            android:orientation="horizontal"
+            app:cardCornerRadius="@dimen/dp_12"
+            app:cardElevation="@dimen/dp_0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/tv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/color_app_main"
+                android:clickable="true"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:padding="@dimen/dp_10"
+                android:text="@string/m206_delete"
+                android:textSize="@dimen/size_content_sp_14"
+                android:focusable="true" />
+
+        </androidx.cardview.widget.CardView>
+    </com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

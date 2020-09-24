@@ -46,10 +46,10 @@ public class LogsSceneAdapter extends BaseMultiItemQuickAdapter<LogsSceneBean, B
             String dataType = item.getDataType();
             if (GlobalConstant.STRING_STATUS_ON.equals(runStatus)){//开启状态
                 String status = mContext.getString(R.string.m328_starting);
-                helper.setText(R.id.tv_title,status);
+                helper.setText(R.id.tv_runstatus,status);
             }else {
                 String status = mContext.getString(R.string.m329_terminated);
-                helper.setText(R.id.tv_title,status);
+                helper.setText(R.id.tv_runstatus,status);
             }
             switch (dataType){
                 case GlobalConstant.SCENE_LOG_TYPE_HEADER:

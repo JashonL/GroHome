@@ -76,6 +76,8 @@ dependencies {
 
     /*BRVAH*/
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
+    /*侧滑删除*/
+    implementation 'com.github.anzaizai:EasySwipeMenuLayout:1.1.4'
 
     /*banner*/
     implementation 'com.youth.banner:banner:2.1.0'

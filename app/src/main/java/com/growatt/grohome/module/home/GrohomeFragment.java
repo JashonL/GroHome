@@ -104,7 +104,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         //头部toolBar
         tvTitle.setVisibility(View.GONE);
         toolbar.setTitle(R.string.m34_welcome_groHome);
-        toolbar.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.gray_f7));
+        toolbar.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.gray_f7));
         toolbar.setOverflowIcon(ContextCompat.getDrawable(getContext(), R.drawable.icon_home_add));
         toolbar.inflateMenu(R.menu.men_grohome_home);
         toolbar.setOnMenuItemClickListener(this);
@@ -164,7 +164,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         rlvDevice.addItemDecoration(new GridDivider(ContextCompat.getColor(getActivity(), R.color.nocolor), div, div));
         //设置空布局
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_empty_view, rlvDevice, false);
-        view.findViewById(R.id.cl_empty).setBackgroundColor(ContextCompat.getColor(getContext(),R.color.gray_f7));
+        view.findViewById(R.id.cl_empty).setBackgroundColor(ContextCompat.getColor(getContext(), R.color.gray_f7));
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,11 +183,11 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         rlvDevice.setLayoutManager(layoutManager);
         mGroHomeDevLineAdapter = new GroHomeDevLineAdapter(deviceList);
         rlvDevice.setAdapter(mGroHomeDevLineAdapter);
-        rlvDevice.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL,  32,ContextCompat.getColor(getActivity(), R.color.nocolor)));
+        rlvDevice.addItemDecoration(new LinearDivider(getActivity(), LinearLayoutManager.VERTICAL, 32, ContextCompat.getColor(getActivity(), R.color.nocolor)));
         ivSwitchDevList.setImageResource(R.drawable.icon_list);
         //设置空布局
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.list_empty_view, rlvDevice, false);
-        view.findViewById(R.id.cl_empty).setBackgroundColor(ContextCompat.getColor(getContext(),R.color.gray_f7));
+        view.findViewById(R.id.cl_empty).setBackgroundColor(ContextCompat.getColor(getContext(), R.color.gray_f7));
         view.setOnClickListener(v -> startActivity(new Intent(getContext(), DeviceTypeActivity.class)));
         mGroHomeDevLineAdapter.setEmptyView(view);
         mGroHomeDevLineAdapter.setOnItemChildClickListener(this);
@@ -220,7 +220,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             String devId = deviceBean.getDevId();
             presenter.initTuyaDevices(devId);
             int onOff = presenter.initDevOnOff(deviceBean);
-            LogUtil.d("获取设备开关状态：   setAllDeviceSuccess" +onOff);
+            LogUtil.d("获取设备开关状态：   setAllDeviceSuccess" + onOff);
             deviceBean.setOnoff(onOff);
             deviceList.add(deviceBean);
         }
@@ -272,11 +272,42 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
         mRoomAdapter.replaceData(roomList);
     }
 
+    @Override
+    public void deleteDevice(String deviceId) {
+        List<HomeDeviceBean.DataBean> data = mGroHomeDevLineAdapter.getData();
+        int index = -1;
+        for (int i = 0; i < data.size(); i++) {
+            HomeDeviceBean.DataBean bean = data.get(i);
+            String id = bean.getDevId();
+            if (id.equals(deviceId)) {
+                index = i;
+                break;
+            }
+        }
+        if (index != -1) {
+            mGroHomeDevLineAdapter.remove(index);
+        }
+        List<HomeDeviceBean.DataBean> data1 = mGrohomeGridAdapter.getData();
+        int index2 = -1;
+        for (int i = 0; i < data1.size(); i++) {
+            HomeDeviceBean.DataBean bean = data1.get(i);
+            String id = bean.getDevId();
+            if (id.equals(deviceId)) {
+                index2 = i;
+                break;
+            }
+        }
+        if (index2 != -1) {
+            mGroHomeDevLineAdapter.remove(index2);
+        }
+    }
+
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         HomeDeviceBean.DataBean bean = (HomeDeviceBean.DataBean) adapter.getData().get(position);
         String deviceType = bean.getDevType();
+        String id = bean.getDevId();
         switch (view.getId()) {
             case R.id.card_item:
                 presenter.jumpTodevice(bean);
@@ -287,6 +318,9 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
                 } else {
                     presenter.deviceSwitch(bean.getDevId(), bean.getDevType());
                 }
+                break;
+            case R.id.tv_delete:
+                presenter.showWarnDialog(id, deviceType);
                 break;
         }
     }
@@ -397,12 +431,12 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
                 presenter.initTuyaDevices(devId);
                 int onOff = presenter.initDevOnOff(deviceBean);
                 deviceBean.setOnoff(onOff);
-                LogUtil.d("获取设备开关状态：   onEventDevTransferBean" +onOff);
+                LogUtil.d("获取设备开关状态：   onEventDevTransferBean" + onOff);
             }
             if (mLayoutType == TYPE_LINE) {
                 mGroHomeDevLineAdapter.notifyDataSetChanged();
             } else {
-               mGrohomeGridAdapter.notifyDataSetChanged();
+                mGrohomeGridAdapter.notifyDataSetChanged();
             }
         }
     }

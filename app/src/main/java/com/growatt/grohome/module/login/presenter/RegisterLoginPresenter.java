@@ -54,7 +54,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     private final int TOTAL_TIME = 180;
     private int count = TOTAL_TIME;
     private String registerUrl;
-    private String verificationCode;
+    public String verificationCode;
     private String userUrl;//用户所属服务器
 
     public boolean isRemmenberPassword = false;
@@ -257,6 +257,8 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
         String url = GlobalConstant.HTTP_PREFIX + registerUrl + API.VERIFICATION_CODE;
         //发送消息
         handler.sendEmptyMessage(MESSAGE_SHOW_TIMING);
+        baseView.getCodeStart();
+
         addDisposable(apiServer.getVerificationCode(url, email, email, String.valueOf(CommentUtils.getLanguage())), new BaseObserver<String>(baseView, false) {
             @Override
             public void onSuccess(String result) {
@@ -266,7 +268,6 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                     if ("true".equals(success)) {
                         verificationCode = jsonObject.optString("msg");
                         MyToastUtils.toast(R.string.m178_verification_send_email);
-                        baseView.getCodeStart();
                     } else {
                         String s = jsonObject.optString("msg");
                         if (!TextUtils.isEmpty(s)) {
@@ -351,44 +352,64 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                         userLogin(registerUrl, regUserName, regPassword);
                     } else {
 
-                        if (msg.equals("501")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("502")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("503")) {
-                            MyToastUtils.toast(R.string.m183_registered_name);
-                        } else if (msg.equals("602")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("504")) {
-                            MyToastUtils.toast(R.string.m144_password_empty);
-                        } else if (msg.equals("506")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("603")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("604")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("605")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("606")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("607")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        }  else if (msg.equals("505")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("509")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("608")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("609")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("701")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("702")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else if (msg.equals("507")) {
-                            MyToastUtils.toast(R.string.m184_register_error);
-                        } else {
-                            MyToastUtils.toast(msg);
+                        switch (msg) {
+                            case "501":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "502":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "503":
+                                MyToastUtils.toast(R.string.m183_registered_name);
+                                break;
+                            case "602":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "504":
+                                MyToastUtils.toast(R.string.m144_password_empty);
+                                break;
+                            case "506":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "603":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "604":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "605":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "606":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "607":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "505":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "509":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "608":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "609":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "701":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "702":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            case "507":
+                                MyToastUtils.toast(R.string.m184_register_error);
+                                break;
+                            default:
+                                MyToastUtils.toast(msg);
+                                break;
                         }
                     }
                 } catch (Exception e) {

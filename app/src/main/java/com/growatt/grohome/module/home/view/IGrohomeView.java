@@ -16,4 +16,6 @@ public interface IGrohomeView extends BaseView {
         void upDataStatus(String devId, String value);
 
         void setRoomListSuccess(List<HomeRoomBean> roomList);
+
+        void deleteDevice(String deviceId);
 }

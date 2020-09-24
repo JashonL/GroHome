@@ -1,9 +1,11 @@
 package com.growatt.grohome.module.login;
 
 import android.content.Intent;
+import android.text.Editable;
 import android.text.InputType;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -159,6 +161,28 @@ public class RegisterLoginActivity extends BaseActivity<RegisterLoginPresenter> 
         presenter.getCurrentZone();
     }
 
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        tvEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tvVerificationCode.setText("");
+                presenter.verificationCode=null;
+            }
+        });
+    }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {

@@ -3,6 +3,9 @@ package com.growatt.grohome.module.home.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.gson.Gson;
 import com.growatt.grohome.R;
@@ -30,6 +33,7 @@ import com.growatt.grohome.module.room.RoomManager;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
+import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.LogUtil;
 import com.growatt.grohome.utils.MyToastUtils;
@@ -39,6 +43,7 @@ import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -394,6 +399,57 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
         }
         return true;
     }
+
+
+
+    public void showWarnDialog(String deviceId,String deviceType){
+        CircleDialogUtils.showCommentDialog((FragmentActivity) context, context.getString(R.string.m208_note), context.getString(R.string.m206_delete), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    deleteDevice(deviceId,deviceType);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+
+    public void deleteDevice(String deviceId,String deviceType) throws JSONException {
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("devId", deviceId);
+        requestJson.put("devType", deviceType);
+        requestJson.put("userId", App.getUserBean().getAccountName());
+        requestJson.put("lan", CommentUtils.getLanguage());
+        String s = requestJson.toString();
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        addDisposable(apiServer.deleteDevice(body), new BaseObserver<String>(baseView, true) {
+            @Override
+            public void onSuccess(String jsonBean) {
+                try {
+                    JSONObject obj = new JSONObject(jsonBean);
+                    int code = obj.getInt("code");
+                    if (code == 0) {
+                        MyToastUtils.toast(R.string.m200_success);
+                        //通知首页更新
+                        baseView.deleteDevice(deviceId);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String msg) {
+                baseView.onError(msg);
+            }
+        });
+    }
+
+
+
 
     @Override
     public void onDpUpdate(String devId, String dpStr) {
