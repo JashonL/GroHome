@@ -29,6 +29,16 @@
         app:layout_constraintTop_toTopOf="@+id/ivIcon" />
 
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_more"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+
 
     <View
         android:layout_width="match_parent"
