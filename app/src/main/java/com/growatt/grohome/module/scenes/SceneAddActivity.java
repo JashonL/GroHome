@@ -191,7 +191,7 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
 
     @Override
     public void setConditionMet(int satisfy) {
-        switch (satisfy){
+        switch (satisfy) {
             case 0:
                 tvEexecutionMet.setText(R.string.m217_all_conditions_are_met);
                 break;
@@ -207,9 +207,9 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
     }
 
 
-    @OnClick({R.id.card_view_name,R.id.iv_task_add,R.id.btn_save,R.id.iv_condition_add,R.id.tv_execution_met})
+    @OnClick({R.id.card_view_name, R.id.iv_task_add, R.id.btn_save, R.id.iv_condition_add, R.id.tv_execution_met})
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.card_view_name:
                 presenter.showInuptNameDialog();
                 break;
@@ -221,10 +221,22 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
                 }
                 break;
             case R.id.iv_task_add:
-                presenter.selectDevice(GlobalConstant.SCENE_ADD_TASK);
+                List<SceneConditionBean> data = mSceneConditionAdapter.getData();
+                List<String> deviceIds = new ArrayList<>();
+                for (SceneConditionBean bean : data) {
+                    String id = bean.getDevId();
+                    deviceIds.add(id);
+                }
+                presenter.selectDevice(GlobalConstant.SCENE_ADD_TASK, deviceIds);
                 break;
             case R.id.iv_condition_add:
-                presenter.addCondition(GlobalConstant.SCENE_ADD_CONDITION);
+                List<SceneTaskBean> data1 = mSceneTaskAdapter.getData();
+                List<String> deviceIds1 = new ArrayList<>();
+                for (SceneTaskBean bean : data1) {
+                    String id = bean.getDevId();
+                    deviceIds1.add(id);
+                }
+                presenter.addCondition(GlobalConstant.SCENE_ADD_CONDITION, deviceIds1);
                 break;
             case R.id.iv_execution_pull:
             case R.id.tv_execution_met:
@@ -264,21 +276,21 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
         if (data.size() <= 0) {
             mSceneConditionAdapter.addData(conditionBean);
         }
-        if ("time".equals(devType)){
+        if ("time".equals(devType)) {
             int index = -1;
             for (int i = 0; i < data.size(); i++) {
-                if ("time".equals(data.get(i).getDevType())){
-                    index=i;
+                if ("time".equals(data.get(i).getDevType())) {
+                    index = i;
                     break;
                 }
             }
             if (index == -1) {
                 mSceneConditionAdapter.addData(conditionBean);
-            }else {
+            } else {
                 data.set(index, conditionBean);
                 mSceneConditionAdapter.notifyDataSetChanged();
             }
-        }else {
+        } else {
             int index = -1;
             for (int i = 0; i < data.size(); i++) {
                 String devId = data.get(i).getDevId();
@@ -322,8 +334,6 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
     }
 
 
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -332,7 +342,7 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        if (adapter==mSceneTaskAdapter){
+        if (adapter == mSceneTaskAdapter) {
             SceneTaskBean sceneTaskBean = mSceneTaskAdapter.getData().get(position);
             switch (view.getId()) {
                 case R.id.iv_edit:
@@ -344,7 +354,7 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
             }
         }
 
-        if (adapter==mSceneConditionAdapter){
+        if (adapter == mSceneConditionAdapter) {
             SceneConditionBean conditionBean = mSceneConditionAdapter.getData().get(position);
             switch (view.getId()) {
                 case R.id.iv_edit:
@@ -362,9 +372,9 @@ public class SceneAddActivity extends BaseActivity<SceneAddPresenter> implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK){
-            if (requestCode==GlobalConstant.REQUEST_CODE_EDIT_SCENE_TIME){
-                SceneConditionBean scenesConditionBean=new SceneConditionBean();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GlobalConstant.REQUEST_CODE_EDIT_SCENE_TIME) {
+                SceneConditionBean scenesConditionBean = new SceneConditionBean();
                 scenesConditionBean.setLinkType(data.getStringExtra(GlobalConstant.TIME_LOOPTYPE));
                 scenesConditionBean.setLinkValue(data.getStringExtra(GlobalConstant.TIME_LOOPVALUE));
                 scenesConditionBean.setTimeValue(data.getStringExtra(GlobalConstant.TIME_VALUE));

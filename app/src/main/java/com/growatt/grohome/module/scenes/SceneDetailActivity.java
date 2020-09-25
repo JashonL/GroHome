@@ -2,7 +2,6 @@ package com.growatt.grohome.module.scenes;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -105,23 +104,11 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
         //条件列表
         rlvCondition.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mSceneConditionAdapter = new SceneConditionAdapter(R.layout.item_scene_condition, new ArrayList<>());
-        View linkageEmpty = LayoutInflater.from(this).inflate(R.layout.device_empty_view, rlvCondition, false);
-        TextView llAddConditionView = linkageEmpty.findViewById(R.id.tv_add);
-        llAddConditionView.setOnClickListener(v -> {
-            presenter.addCondition(GlobalConstant.SCENE_ADD_CONDITION);
-        });
-        mSceneConditionAdapter.setEmptyView(linkageEmpty);
         rlvCondition.setAdapter(mSceneConditionAdapter);
 
         //任务列表
         rlvTaskList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mSceneTaskAdapter = new SceneTaskAdapter(R.layout.item_scene_task, new ArrayList<>());
-        View taskEmpty = LayoutInflater.from(this).inflate(R.layout.device_empty_view, rlvCondition, false);
-        TextView llAddTaskView = taskEmpty.findViewById(R.id.tv_add);
-        llAddTaskView.setOnClickListener(v -> {
-            presenter.selectDevice(GlobalConstant.SCENE_ADD_TASK);
-        });
-        mSceneTaskAdapter.setEmptyView(taskEmpty);
         rlvTaskList.setAdapter(mSceneTaskAdapter);
     }
 
@@ -264,10 +251,22 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
                 presenter.deleteScene();
                 break;
             case R.id.iv_task_add:
-                presenter.selectDevice(GlobalConstant.SCENE_ADD_TASK);
+                List<SceneConditionBean> data = mSceneConditionAdapter.getData();
+                List<String> deviceIds = new ArrayList<>();
+                for (SceneConditionBean bean : data) {
+                    String id = bean.getDevId();
+                    deviceIds.add(id);
+                }
+                presenter.selectDevice(GlobalConstant.SCENE_ADD_TASK, deviceIds);
                 break;
             case R.id.iv_condition_add:
-                presenter.addCondition(GlobalConstant.SCENE_ADD_CONDITION);
+                List<SceneTaskBean> data1 = mSceneTaskAdapter.getData();
+                List<String> deviceIds1 = new ArrayList<>();
+                for (SceneTaskBean bean : data1) {
+                    String id = bean.getDevId();
+                    deviceIds1.add(id);
+                }
+                presenter.addCondition(GlobalConstant.SCENE_ADD_CONDITION, deviceIds1);
                 break;
             case R.id.iv_execution_pull:
             case R.id.tv_execution_met:
@@ -345,6 +344,7 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
 
     //执行任务
     private void setRvDevice(SceneTaskBean deviceBean) {
+
         String devIdBack = deviceBean.getDevId();
         List<SceneTaskBean> data = mSceneTaskAdapter.getData();
         if (data.size() <= 0) {

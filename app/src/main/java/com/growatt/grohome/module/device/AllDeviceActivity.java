@@ -2,6 +2,7 @@ package com.growatt.grohome.module.device;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -14,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.growatt.grohome.R;
 import com.growatt.grohome.adapter.AllDeviceAdapter;
+import com.growatt.grohome.adapter.CannotAddAdapter;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.SceneConditionBean;
@@ -42,8 +44,15 @@ public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> impleme
     RecyclerView rvDevice;
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
+    @BindView(R.id.rv_cannot_add)
+    RecyclerView rvConnotAdd;
+    @BindView(R.id.tv_cannot_add)
+    TextView tvCannotAdd;
+
+
 
     private AllDeviceAdapter mAllDeviceAdapter;
+    private CannotAddAdapter mCannotAddapter;
 
     @Override
     protected void initImmersionBar() {
@@ -73,6 +82,13 @@ public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> impleme
         mAllDeviceAdapter.setEmptyView(emptyView);
         rvDevice.setAdapter(mAllDeviceAdapter);
 
+        //不能添加
+        rvConnotAdd.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mCannotAddapter = new CannotAddAdapter(R.layout.item_all_canot_add, new ArrayList<>());
+        View emptyView2 = LayoutInflater.from(this).inflate(R.layout.comment_empty_view, rvConnotAdd, false);
+        mCannotAddapter.setEmptyView(emptyView2);
+        rvConnotAdd.setAdapter(mCannotAddapter);
+
         //下拉刷新
         swipeRefresh.setColorSchemeColors(ContextCompat.getColor(this, R.color.color_theme_green));
     }
@@ -80,7 +96,7 @@ public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> impleme
     @Override
     protected void initData() {
         try {
-            presenter.getDeviceList();
+            presenter.getData();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,11 +129,38 @@ public class AllDeviceActivity extends BaseActivity<AllDevicePrensenter> impleme
     }
 
     @Override
+    public void setNoAddDevices(List<GroDeviceBean> deviceList) {
+        mCannotAddapter.replaceData(deviceList);
+    }
+
+    @Override
     public void onError(String onError) {
         if (swipeRefresh != null && swipeRefresh.isRefreshing()) {
             swipeRefresh.setRefreshing(false);
         }
         requestError(onError);
+    }
+
+    @Override
+    public void alreadyTask() {
+        tvCannotAdd.setText(R.string.m331_device_already_condition);
+    }
+
+    @Override
+    public void alreadyConditon() {
+        tvCannotAdd.setText(R.string.m251_device_already_task);
+    }
+
+    @Override
+    public void lunchTabTorun() {
+        tvCannotAdd.setVisibility(View.GONE);
+        rvConnotAdd.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void smart() {
+        tvCannotAdd.setVisibility(View.VISIBLE);
+        rvConnotAdd.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -10,7 +10,7 @@
         android:id="@+id/ivIcon"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
-        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,24 +19,16 @@
         android:id="@+id/tvDeviceName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginStart="@dimen/dp_15"
         android:gravity="center_vertical"
         android:textColor="@color/color_text_33"
         android:textSize="@dimen/size_content_sp_16"
         app:layout_constraintBottom_toBottomOf="@+id/ivIcon"
         app:layout_constraintLeft_toRightOf="@+id/ivIcon"
-        app:layout_constraintRight_toLeftOf="@+id/iv_more"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ivIcon" />
 
 
-    <ImageView
-        android:id="@+id/iv_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_more"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
     <View

@@ -8,5 +8,15 @@ import java.util.List;
 public interface IAllDeviceView extends BaseView {
     void setAllDeviceSuccess(List<GroDeviceBean> deviceList);
 
+    void setNoAddDevices(List<GroDeviceBean> deviceList);
+
     void onError(String onError);
+
+    void alreadyTask();
+
+    void alreadyConditon();
+
+    void lunchTabTorun();
+
+    void smart();
 }

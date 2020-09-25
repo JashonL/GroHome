@@ -239,7 +239,7 @@ public class SwitchTimingPresenter extends BasePresenter<ISwitchTimingView> {
             timingBean = new Gson().toJson(bean);
         }
         Intent intent = new Intent(context, DeviceTimingSetActivity.class);
-        intent.putExtra(GlobalConstant.ACTION, GlobalConstant.ADD);
+        intent.putExtra(GlobalConstant.ACTION, GlobalConstant.EDIT);
         intent.putExtra(GlobalConstant.DEVICE_NAME, deviceName);
         intent.putExtra(GlobalConstant.TEMP_MODE, mode);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);

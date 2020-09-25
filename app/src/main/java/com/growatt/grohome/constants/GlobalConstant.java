@@ -27,6 +27,7 @@ public class GlobalConstant {
     public static final String DEVICE_ROAD = "road";
     public static final String DEVICE_CONFIG_TYPE = "config_type";
     public static final String DEVICE_SCAN_BEAN = "device_scan_bean";
+    public static final String ALL_JSON_BEAN= "all_json_bean";
     //**************************场景*****************************
     public static final int REQUEST_CODE_EDIT_SCENE_TIME = 102;
     public static final String SCENE_BEAN = "scene_bean";

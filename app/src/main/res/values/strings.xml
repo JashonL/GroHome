@@ -387,5 +387,8 @@
 
     <string name="m328_starting">Starting</string>
     <string name="m329_terminated">Terminated</string>
+    <string name="m330_can_be_added">Devices that can be added</string>
+    <string name="m331_device_already_condition">The device has been added to the execution conditions, it cannot be added as an execution device</string>
+
 
 </resources>

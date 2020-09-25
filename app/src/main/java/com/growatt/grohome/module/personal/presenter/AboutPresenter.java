@@ -147,7 +147,7 @@ public class AboutPresenter extends BasePresenter<IAboutView> {
         }
         String s = jsonObject.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.userAgreement(body), new BaseObserver<String>(baseView,true) {
+        addDisposable(apiServer.privacyPolicy(body), new BaseObserver<String>(baseView,true) {
             @Override
             public void onSuccess(String result) {
                 try {

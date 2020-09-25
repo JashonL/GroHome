@@ -108,17 +108,19 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
     }
 
 
-    public void addCondition(String deviceSelect) {
-        String[] conditions = new String[]{context.getString(R.string.m146_timer), context.getString(R.string.m243_device_status_changes)};
+
+
+    public void addCondition(String deviceSelect, List<String>alreadyIds) {
+        String [] conditions=new String[]{context.getString(R.string.m146_timer),context.getString(R.string.m243_device_status_changes)};
         CircleDialogUtils.showCommentItemDialog((FragmentActivity) context, context.getString(R.string.m244_add_new_condition), Arrays.asList(conditions), Gravity.CENTER, new OnLvItemClickListener() {
             @Override
             public boolean onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
+                switch (position){
                     case 0:
                         selectTime(deviceSelect);
                         break;
                     case 1:
-                        selectDevice(deviceSelect);
+                        selectDevice(deviceSelect,alreadyIds);
                         break;
                 }
                 return true;
@@ -150,9 +152,14 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
     }
 
 
-    public void selectDevice(String deviceSelect) {
+
+    public void selectDevice(String deviceSelect, List<String>alreadyIds) {
+        String s = new Gson().toJson(alreadyIds);
+
         Intent intent = new Intent(context, AllDeviceActivity.class);
         intent.putExtra(GlobalConstant.SCENE_DEVICE_SELECT, deviceSelect);
+        intent.putExtra(GlobalConstant.ALL_JSON_BEAN,s);
+        intent.putExtra(GlobalConstant.SCENE_TYPE, sceneType);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -202,6 +209,11 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
             @Override
             public void onClick(View v) {
                 baseView.deleteTaskDevice(pos);
+                try {
+                    upScenesData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -212,6 +224,11 @@ public class SceneDetailPresenter extends BasePresenter<ISceneDetailView> {
             @Override
             public void onClick(View v) {
                 baseView.deleteCondition(pos);
+                try {
+                    upScenesData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

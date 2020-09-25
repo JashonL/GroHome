@@ -76,7 +76,7 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
     }
 
 
-    public void addCondition(String deviceSelect) {
+    public void addCondition(String deviceSelect, List<String>alreadyIds) {
         String [] conditions=new String[]{context.getString(R.string.m146_timer),context.getString(R.string.m243_device_status_changes)};
         CircleDialogUtils.showCommentItemDialog((FragmentActivity) context, context.getString(R.string.m244_add_new_condition), Arrays.asList(conditions), Gravity.CENTER, new OnLvItemClickListener() {
             @Override
@@ -86,7 +86,7 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
                         selectTime(deviceSelect);
                         break;
                     case 1:
-                        selectDevice(deviceSelect);
+                        selectDevice(deviceSelect,alreadyIds);
                         break;
                 }
                 return true;
@@ -120,9 +120,13 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
 
 
 
-    public void selectDevice(String deviceSelect) {
+    public void selectDevice(String deviceSelect, List<String>alreadyIds) {
+        String s = new Gson().toJson(alreadyIds);
+
         Intent intent = new Intent(context, AllDeviceActivity.class);
         intent.putExtra(GlobalConstant.SCENE_DEVICE_SELECT, deviceSelect);
+        intent.putExtra(GlobalConstant.ALL_JSON_BEAN,s);
+        intent.putExtra(GlobalConstant.SCENE_TYPE, sceneType);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
@@ -150,6 +154,11 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
             @Override
             public void onClick(View v) {
                 baseView.deleteTaskDevice(pos);
+                try {
+                    upScenesData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -160,6 +169,11 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
             @Override
             public void onClick(View v) {
                 baseView.deleteCondition(pos);
+                try {
+                    upScenesData();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
