@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/iv_scene_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
                 android:layout_marginTop="@dimen/dp_30"
                 android:src="@drawable/sence_gorgeous"
                 app:layout_constraintLeft_toLeftOf="parent"

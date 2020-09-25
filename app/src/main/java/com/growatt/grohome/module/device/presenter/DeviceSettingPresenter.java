@@ -15,10 +15,12 @@ import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.ScenesBean;
+import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.eventbus.DevEditNameBean;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.eventbus.TransferDevMsg;
+import com.growatt.grohome.module.config.DeviceLightStatusActivity;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.device.DeviceUpdataActivity;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
@@ -51,7 +53,7 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
     private String deviceId;
     private String roomName;
     private List<String> nameList;
-    private int roomId;
+    private String roomId;
 
     private ITuyaDevice mTuyaDevice;
 
@@ -73,17 +75,17 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
         deviceId = intent.getStringExtra(GlobalConstant.DEVICE_ID);
         mTuyaDevice = TuyaHomeSdk.newDeviceInstance(deviceId);
         roomName = intent.getStringExtra(GlobalConstant.ROOM_NAME);
-        roomId = intent.getIntExtra(GlobalConstant.ROOM_ID, -1);
+        roomId = intent.getStringExtra(GlobalConstant.ROOM_ID);
         String deviceJson = ((Activity) context).getIntent().getStringExtra(GlobalConstant.DEVICE_BEAN);
         if (!TextUtils.isEmpty(deviceJson)) {
             mGroDeviceBean = new Gson().fromJson(deviceJson, GroDeviceBean.class);
             deviceId = mGroDeviceBean.getDevId();
             devName = mGroDeviceBean.getName();
-            roomId = mGroDeviceBean.getRoomId();
+            roomId = String.valueOf(mGroDeviceBean.getRoomId());
             roomName = mGroDeviceBean.getRoomName();
         }
 
-        if (deviceType.equals(DeviceTypeConstant.TYPE_PANELSWITCH)){
+        if (deviceType.equals(DeviceTypeConstant.TYPE_PANELSWITCH)) {
             nameList = intent.getStringArrayListExtra(GlobalConstant.NAME_LIST);
         }
         baseView.setViewsByType(deviceType);
@@ -142,8 +144,8 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
 
     public void setRoomInfo(TransferDevMsg bean) {
         roomName = bean.getRoomName();
-        roomId= Integer.parseInt(bean.getRoomId());
-        if (mGroDeviceBean!=null){
+        roomId = bean.getRoomId();
+        if (mGroDeviceBean != null) {
             mGroDeviceBean.setRoomId(Integer.parseInt(bean.getRoomId()));
             mGroDeviceBean.setRoomName(bean.getRoomName());
         }
@@ -170,6 +172,7 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
                     JSONObject object = new JSONObject(jsonBean);
                     int code = object.getInt("code");
                     if (code == 0) {
+                        devName = reName;
                         baseView.setDeviceName(reName);
                         DevEditNameBean bean = new DevEditNameBean();
                         bean.setDevId(deviceId);
@@ -191,8 +194,6 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
             }
         });
     }
-
-
 
 
     /**
@@ -231,15 +232,25 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
     /**
      * 设备配网
      */
-    public void toConfigDeviceByType(){
-        Intent intent=new Intent(context, WiFiOptionsActivity.class);
-        intent.putExtra(GlobalConstant.DEVICE_TYPE,deviceType);
-        ActivityUtils.startActivity((Activity) context,intent,ActivityUtils.ANIMATE_FORWARD,false);
+    public void toConfigDeviceByType() {
+        String configType;
+        Class clazz;
+        if (DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(deviceType)){
+            clazz= DeviceLightStatusActivity.class;
+            configType=DeviceConfigConstant.CONFIG_WIFI_BLUETHOOTH;
+
+        }else {
+            clazz=WiFiOptionsActivity.class;
+            configType=DeviceConfigConstant.CONFIG_WIFI_SINGLE;
+        }
+        Intent intent = new Intent(context, clazz);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
 
-
-    public void showWarnDialog(){
+    public void showWarnDialog() {
         CircleDialogUtils.showCommentDialog((FragmentActivity) context, context.getString(R.string.m208_note), context.getString(R.string.m206_delete), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,7 +262,6 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
             }
         });
     }
-
 
 
     public void deleteDevice() throws JSONException {
@@ -276,7 +286,7 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
                         deviceAddOrDelMsg.setDevType(deviceType);
                         deviceAddOrDelMsg.setDevId(deviceId);
                         EventBus.getDefault().post(deviceAddOrDelMsg);
-                        ((Activity)context).finish();
+                        ((Activity) context).finish();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

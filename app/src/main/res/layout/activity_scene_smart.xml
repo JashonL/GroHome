@@ -353,6 +353,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rlv_task_list"
                         android:layout_width="@dimen/dp_0"
+                        android:nestedScrollingEnabled="false"
                         android:layout_height="wrap_content"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"

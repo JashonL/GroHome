@@ -381,7 +381,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
 
     @OnClick({R.id.iv_white_light, R.id.iv_colour_light, R.id.iv_scenec_light, R.id.iv_switch, R.id.iv_edit, R.id.tv_edit,
             R.id.tv_leftdown, R.id.tv_left_time_value, R.id.tv_left_time_title, R.id.tv_timer,
-            R.id.v_bulb_backgroud_white, R.id.v_bulb_background_scene, R.id.v_bulb_backgroud_colour})
+            R.id.v_bulb_backgroud_white, R.id.v_bulb_background_scene,R.id.v_bulb_backgroud_offline, R.id.v_bulb_backgroud_colour})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_white_light:
@@ -393,6 +393,7 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
             case R.id.iv_scenec_light:
                 presenter.bulbMode(DeviceBulb.BULB_MODE_SCENE);
                 break;
+            case R.id.v_bulb_backgroud_offline:
             case R.id.v_bulb_backgroud_colour:
             case R.id.v_bulb_background_scene:
             case R.id.v_bulb_backgroud_white:
@@ -505,7 +506,9 @@ public class BulbActivity extends BaseActivity<BulbPresenter> implements IBulbVi
         if (msg != null) {
             String name = msg.getName();
             presenter.setDevName(name);
-            setTitle(name);
+           if (!TextUtils.isEmpty(name)){
+               tvTitle.setText(name);
+           }
         }
     }
 
