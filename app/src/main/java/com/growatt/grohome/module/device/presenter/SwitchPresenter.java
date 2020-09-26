@@ -11,8 +11,10 @@ import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.PanelSwitchBean;
+import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.eventbus.TransferDevMsg;
+import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.device.DeviceSettingActivity;
 import com.growatt.grohome.module.device.DeviceTimingListActivity;
 import com.growatt.grohome.module.device.EditNameActivity;
@@ -111,6 +113,7 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
         deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(deviceId);
         if (deviceBean == null) {
             MyToastUtils.toast(R.string.m149_device_does_not_exist);
+            toConfigDeviceByType();
             ((Activity) context).finish();
             return;
         }
@@ -122,12 +125,24 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
     }
 
 
+
+    /**
+     * 设备配网
+     */
+    private void toConfigDeviceByType() {
+        Intent intent = new Intent(context, WiFiOptionsActivity.class);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,DeviceConfigConstant.CONFIG_WIFI_SINGLE);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, DeviceTypeConstant.TYPE_PANELSWITCH);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
+
     /**
      * 获取面板详情
      *
      * @throws Exception
      */
-    public void getDetailData() throws Exception {
+    private void getDetailData() throws Exception {
         JSONObject requestJson = new JSONObject();
         requestJson.put("devId", deviceId);
         requestJson.put("lan", String.valueOf(CommentUtils.getLanguage()));

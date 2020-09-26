@@ -16,9 +16,12 @@ import com.growatt.grohome.bean.DeviceTypeBean;
 import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.customview.LinearDivider;
 import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
+import com.growatt.grohome.module.device.manager.DeviceAirCon;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
+import com.growatt.grohome.module.device.manager.DevicePlug;
 import com.growatt.grohome.module.device.manager.DeviceStripLights;
+import com.growatt.grohome.module.device.manager.DeviceThermostat;
 import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.presenter.DeviceTypePresenter;
 import com.growatt.grohome.module.device.view.IDeviceTypeView;
@@ -78,13 +81,19 @@ public class DeviceTypeActivity extends BaseActivity<DeviceTypePresenter> implem
     protected void initData() {
         EventBus.getDefault().register(this);
         List<DeviceTypeBean> newList = new ArrayList<>();
-        String[] typeArray = new String[]{DeviceTypeConstant.TYPE_PANELSWITCH, DeviceTypeConstant.TYPE_BULB, DeviceTypeConstant.TYPE_STRIP_LIGHTS};
-        String[] nameArray = new String[]{getString(DevicePanel.getNameRes()), getString(DeviceBulb.getNameRes()), getString(DeviceStripLights.getNameRes())};
+
+//        String[] typeArray = new String[]{DeviceTypeConstant.TYPE_PANELSWITCH, DeviceTypeConstant.TYPE_BULB, DeviceTypeConstant.TYPE_STRIP_LIGHTS};
+//        String[] nameArray = new String[]{getString(DevicePanel.getNameRes()), getString(DeviceBulb.getNameRes()), getString(DeviceStripLights.getNameRes())};
+
+
+        String[] typeArray = new String[]{DeviceTypeConstant.TYPE_PADDLE, DeviceTypeConstant.TYPE_PANELSWITCH, DeviceTypeConstant.TYPE_THERMOSTAT, DeviceTypeConstant.TYPE_BULB, DeviceTypeConstant.TYPE_STRIP_LIGHTS,DeviceTypeConstant.TYPE_AIRCONDITION};
+        String[] nameArray = new String[]{getString(DevicePlug.getNameRes()), getString(DevicePanel.getNameRes()), getString(DeviceThermostat.getNameRes()), getString(DeviceBulb.getNameRes()), getString(DeviceStripLights.getNameRes()),getString(DeviceAirCon.getNameRes())};
+
         for (int i = 0; i < typeArray.length; i++) {
             DeviceTypeBean bean = new DeviceTypeBean();
-            bean.setBluethooth(i == 2);
+            bean.setBluethooth(i == 4);
             bean.setWiFi(true);
-            if (i==2){
+            if (i==4){
                 bean.setConfigType(DeviceConfigConstant.CONFIG_WIFI_BLUETHOOTH);
             }else {
                 bean.setConfigType(DeviceConfigConstant.CONFIG_WIFI_SINGLE);

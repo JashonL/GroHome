@@ -92,7 +92,7 @@ public class PersonalPresenter extends BasePresenter<IPersonalFragmentView> {
         requestJson.put("lan", CommentUtils.getLanguage());
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.getLoginRecord(body), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.getLoginRecord(body), new BaseObserver<String>(baseView, false) {
             @Override
             public void onSuccess(String bean) {
                 parserJson(bean);

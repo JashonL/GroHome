@@ -12,7 +12,10 @@ import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.HomeRoomBean;
+import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.module.config.DeviceLightStatusActivity;
+import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.device.BulbActivity;
 import com.growatt.grohome.module.device.SwitchActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
@@ -272,7 +275,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
         String onOff;
         boolean bulb_onoff;
         LinkedHashMap<String, Object> sendMap = new LinkedHashMap<>();
-        if (deviceNotOnline()) {
+        if (deviceNotOnline(devType)) {
             switch (devType) {
                 case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
                 case DeviceTypeConstant.TYPE_BULB:
@@ -306,7 +309,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
         deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
         boolean bulb_onoff = onOff == 1;
         LinkedHashMap<String, Object> sendMap = new LinkedHashMap<>();
-        if (deviceNotOnline()) {
+        if (deviceNotOnline(DeviceTypeConstant.TYPE_PANELSWITCH)) {
             List<String> switchIds = DevicePanel.getSwitchIds(devId, road);
             for (int i = 0; i < road; i++) {
                 if (i<switchIds.size()){
@@ -326,9 +329,10 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
      *
      * @return
      */
-    private boolean deviceNotOnline() {
+    private boolean deviceNotOnline(String deviceType) {
         if (deviceBean == null) {
             MyToastUtils.toast(R.string.m149_device_does_not_exist);
+            toConfigDeviceByType(deviceType);
             return false;
         }
         if (!deviceBean.getIsOnline()) {
@@ -337,6 +341,31 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
         }
         return true;
     }
+
+
+
+
+    /**
+     * 设备配网
+     */
+    private void toConfigDeviceByType(String deviceType) {
+        String configType;
+        Class clazz;
+        if (DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(deviceType)){
+            clazz= DeviceLightStatusActivity.class;
+            configType= DeviceConfigConstant.CONFIG_WIFI_BLUETHOOTH;
+
+        }else {
+            clazz= WiFiOptionsActivity.class;
+            configType=DeviceConfigConstant.CONFIG_WIFI_SINGLE;
+        }
+        Intent intent = new Intent(context, clazz);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
+
 
     @Override
     public void sendCommandSucces() {

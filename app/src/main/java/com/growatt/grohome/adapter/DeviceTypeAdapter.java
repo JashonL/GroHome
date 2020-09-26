@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.growatt.grohome.R;
 import com.growatt.grohome.bean.DeviceTypeBean;
+import com.growatt.grohome.module.device.manager.DeviceAirCon;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
 import com.growatt.grohome.module.device.manager.DevicePanel;
 import com.growatt.grohome.module.device.manager.DevicePlug;
@@ -63,6 +64,10 @@ public class DeviceTypeAdapter extends BaseQuickAdapter<DeviceTypeBean, BaseView
             case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
                 ivIcon.setImageResource(DeviceStripLights.getCloseIcon(3));
                 view.setBackgroundColor(ContextCompat.getColor(mContext,R.color.color_add_strip_background));
+                break;
+            case DeviceTypeConstant.TYPE_AIRCONDITION:
+                ivIcon.setImageResource(DeviceAirCon.getCloseIcon(3));
+                view.setBackgroundColor(ContextCompat.getColor(mContext,R.color.color_add_air_background));
                 break;
         }
     }

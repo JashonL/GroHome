@@ -21,12 +21,16 @@ import com.growatt.grohome.base.BaseObserver;
 import com.growatt.grohome.base.BasePresenter;
 import com.growatt.grohome.bean.BulbSceneBean;
 import com.growatt.grohome.bean.GroDeviceBean;
+import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.eventbus.TransferDevMsg;
+import com.growatt.grohome.module.config.DeviceLightStatusActivity;
+import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.device.BulbSceneEditActivity;
 import com.growatt.grohome.module.device.DeviceSettingActivity;
 import com.growatt.grohome.module.device.DeviceTimingListActivity;
 import com.growatt.grohome.module.device.manager.DeviceBulb;
+import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.device.view.IBulbView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
@@ -157,6 +161,7 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
         deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(deviceId);
         if (deviceBean == null) {
             MyToastUtils.toast(R.string.m149_device_does_not_exist);
+            toConfigDeviceByType();
             ((Activity) context).finish();
             return;
         }
@@ -255,6 +260,28 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
     public boolean getMusicOnoff() {
         return "1".equals(musicOnoff);
     }
+
+
+    /**
+     * 设备配网
+     */
+    private void toConfigDeviceByType() {
+        String configType;
+        Class clazz;
+        if (DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(deviceType)){
+            clazz= DeviceLightStatusActivity.class;
+            configType=DeviceConfigConstant.CONFIG_WIFI_BLUETHOOTH;
+
+        }else {
+            clazz=WiFiOptionsActivity.class;
+            configType=DeviceConfigConstant.CONFIG_WIFI_SINGLE;
+        }
+        Intent intent = new Intent(context, clazz);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+        intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
+        ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
 
 
     /**
