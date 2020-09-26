@@ -23,6 +23,10 @@ import butterknife.OnClick;
 public class EffectivePeriodActivity extends BaseActivity<EffectivePeriodPresenter> implements IEffectivePeriodView, Toolbar.OnMenuItemClickListener {
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
+
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.tv_time_period_value)
@@ -36,6 +40,12 @@ public class EffectivePeriodActivity extends BaseActivity<EffectivePeriodPresent
     @BindView(R.id.card_timing)
     CardView cardTiming;
 
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
 
     @Override
     protected EffectivePeriodPresenter createPresenter() {
@@ -112,7 +122,7 @@ public class EffectivePeriodActivity extends BaseActivity<EffectivePeriodPresent
 
     @Override
     public void upLoop(String looptype, String loopValue) {
-        if (!TextUtils.isEmpty(looptype) && !TextUtils.isEmpty(loopValue)) {
+        if (!TextUtils.isEmpty(looptype)) {
             StringBuilder loopStyle = new StringBuilder();
             switch (looptype) {
                 case "-1":
@@ -122,7 +132,7 @@ public class EffectivePeriodActivity extends BaseActivity<EffectivePeriodPresent
                     loopStyle = new StringBuilder(getString(R.string.m224_everyday));
                     break;
                 case "1":
-                    if (loopValue.equals("1111111")) {
+                    if ("1111111".equals(loopValue)) {
                         loopStyle = new StringBuilder(getString(R.string.m224_everyday));
                     } else {
                         List<String> weeks = CommentUtils.getWeeks(this);

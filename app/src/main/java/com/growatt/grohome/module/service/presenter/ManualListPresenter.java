@@ -71,7 +71,7 @@ public class ManualListPresenter extends BasePresenter<IManualListView> {
 
             @Override
             public void onError(String msg) {
-                baseView.onError(msg);
+//                baseView.onError(msg);
             }
         });
     }

@@ -281,6 +281,7 @@
                         android:id="@+id/rlv_condition"
                         android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_execution_met" />
@@ -353,8 +354,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rlv_task_list"
                         android:layout_width="@dimen/dp_0"
-                        android:nestedScrollingEnabled="false"
                         android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/v_task_diver" />

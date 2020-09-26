@@ -100,7 +100,7 @@ public class PersonalPresenter extends BasePresenter<IPersonalFragmentView> {
 
             @Override
             public void onError(String msg) {
-                baseView.onError(msg);
+//                baseView.onError(msg);
             }
         });
     }

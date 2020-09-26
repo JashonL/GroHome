@@ -71,7 +71,7 @@ public class FQAPresenter extends BasePresenter<IFQAView> {
 
             @Override
             public void onError(String msg) {
-                baseView.onError(msg);
+//                baseView.onError(msg);
             }
         });
     }

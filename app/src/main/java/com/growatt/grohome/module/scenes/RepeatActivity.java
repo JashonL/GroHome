@@ -24,6 +24,10 @@ import butterknife.BindView;
 public class RepeatActivity extends BaseActivity<RepeatPresenter> implements IRepeatActivityView, Toolbar.OnMenuItemClickListener {
     @BindView(R.id.tv_title)
     AppCompatTextView tvTitle;
+
+    @BindView(R.id.status_bar_view)
+    View statusBarView;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.week_onetime)
@@ -48,6 +52,12 @@ public class RepeatActivity extends BaseActivity<RepeatPresenter> implements IRe
 
     private List<WeekSelectView> weekViews=new ArrayList<>();
     private List<WeekSelectView> timeViews=new ArrayList<>();
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.reset().statusBarDarkFont(true, 0.2f).statusBarView(statusBarView).statusBarColor(R.color.white).init();
+    }
 
     @Override
     protected RepeatPresenter createPresenter() {

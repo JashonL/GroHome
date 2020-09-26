@@ -168,26 +168,22 @@ public class SceneConditionAdapter extends BaseQuickAdapter<SceneConditionBean, 
                 helper.setImageResource(R.id.iv_device_icon, R.drawable.scenes_timer);
                 setting.append(mContext.getString(R.string.m252_time)).append(":").append(item.getTimeValue()).append("(");
                 if ("-1".equals(linkType)) {
-                    setting.append(mContext.getString(R.string.m222_single));
+                    setting.append(mContext.getString(R.string.m222_single)).append(")");
                 } else if ("0".equals(linkType)) {
-                    setting.append(mContext.getString(R.string.m224_everyday));
+                    setting.append(mContext.getString(R.string.m224_everyday)).append(")");
                 } else if ("1".equals(linkType)) {
                     if (linkValue.equals("1111111")) {
-                        setting.append(mContext.getString(R.string.m224_everyday));
+                        setting.append(mContext.getString(R.string.m224_everyday)).append(")");
                     } else {
                         char[] charsTime = linkValue.toCharArray();
                         for (int i = 0; i < charsTime.length; i++) {
                             if (String.valueOf(charsTime[i]).equals("1")) {
                                 String week = CommentUtils.getWeeks(mContext).get(i);
                                 setting.append(week);
-                                if (i==charsTime.length-1){
-                                    setting.append(")");
-                                }else {
-                                    setting.append(",");
-                                }
-
+                                setting.append(",");
                             }
                         }
+                        setting.setCharAt(setting.length()-1,')');
                     }
                 }
                 break;

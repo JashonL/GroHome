@@ -20,6 +20,7 @@ import com.growatt.grohome.bean.SceneTaskBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.eventbus.FreshScenesMsg;
 import com.growatt.grohome.module.device.AllDeviceActivity;
+import com.growatt.grohome.module.device.manager.DeviceTypeConstant;
 import com.growatt.grohome.module.scenes.EffectivePeriodActivity;
 import com.growatt.grohome.module.scenes.SceneConditionActivity;
 import com.growatt.grohome.module.scenes.SceneTaskSettingActivity;
@@ -130,8 +131,30 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
+
+
     public void toEditCondition(SceneConditionBean sceneConditionBean) {
         if (sceneConditionBean == null) return;
+        String devType = sceneConditionBean.getDevType();
+        if (DeviceTypeConstant.TYPE_TIME.equals(devType)) {
+            toEditConditionTime(sceneConditionBean);
+        } else {
+            toEditConditionDevice(sceneConditionBean);
+        }
+    }
+
+    private void toEditConditionTime(SceneConditionBean sceneConditionBean) {
+        Intent intent = new Intent(context, EffectivePeriodActivity.class);
+        intent.putExtra(GlobalConstant.SCENE_DEVICE_SELECT, GlobalConstant.SCENE_EDIT);
+        intent.putExtra(GlobalConstant.SET_TIMEVALUE_OR_TIMEPERIOD, GlobalConstant.SET_TIMEVALUE);
+        intent.putExtra(GlobalConstant.TIME_VALUE, sceneConditionBean.getTimeValue());
+        intent.putExtra(GlobalConstant.TIME_LOOPTYPE, sceneConditionBean.getLinkType());
+        intent.putExtra(GlobalConstant.TIME_LOOPVALUE, sceneConditionBean.getLinkValue());
+        ActivityUtils.startActivityForResult((Activity) context, intent, GlobalConstant.REQUEST_CODE_EDIT_SCENE_TIME, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
+
+    private void toEditConditionDevice(SceneConditionBean sceneConditionBean) {
         String bean = new Gson().toJson(sceneConditionBean);
         Intent intent = new Intent(context, SceneConditionActivity.class);
         intent.putExtra(GlobalConstant.SCENE_CONDITION_BEAN, bean);
