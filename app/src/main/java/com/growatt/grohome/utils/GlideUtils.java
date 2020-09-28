@@ -98,6 +98,6 @@ public class GlideUtils {
 
     //加载gif
     public static void showGifContext(Context context,int path,ImageView iv){
-        Glide.with(context).load(path).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(iv);
+        Glide.with(context).asGif().load(path).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC).into(iv);
     }
 }

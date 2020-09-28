@@ -44,6 +44,16 @@ public class LogsSceneAdapter extends BaseMultiItemQuickAdapter<LogsSceneBean, B
             helper.setText(R.id.tv_title,title);
             helper.setText(R.id.tv_content,time);
             String dataType = item.getDataType();
+            String runType = item.getRunType();
+
+            if ("1".equals(runType)){
+                String sceneType = mContext.getString(R.string.m81_launch_tap_to_run);
+                helper.setText(R.id.tv_run_type,sceneType);
+            }else {
+                String sceneType = mContext.getString(R.string.m82_smart);
+                helper.setText(R.id.tv_run_type,sceneType);
+            }
+
             if (GlobalConstant.STRING_STATUS_ON.equals(runStatus)){//开启状态
                 String status = mContext.getString(R.string.m328_starting);
                 helper.setText(R.id.tv_runstatus,status);

@@ -150,6 +150,7 @@ public class ScenesPresenter extends BasePresenter<IScenesView> {
                                         LogsSceneBean bean = new LogsSceneBean();
                                         bean.setCname(jsonObject.optString("cname", ""));
                                         bean.setRunStatus(jsonObject.optString("runStatus", "0"));
+                                        bean.setRunType(jsonObject.optString("runType","0"));
                                         bean.setRunTime(s1[1]);
                                         bean.setDataType(GlobalConstant.SCENE_LOG_TYPE_BODY);
                                         bean.setItemType(GlobalConstant.STATUS_ITEM_DATA);

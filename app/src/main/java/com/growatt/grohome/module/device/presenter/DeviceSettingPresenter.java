@@ -42,7 +42,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -159,13 +158,7 @@ public class DeviceSettingPresenter extends BasePresenter<IDeviceSettingView> {
         requestJson.put("lan", CommentUtils.getLanguage());
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        Observable<String> stringObservable;
-        if (DeviceTypeConstant.TYPE_PANELSWITCH.equals(deviceType)) {
-            stringObservable = apiServer.updateSwitchName(body);
-        } else {
-            stringObservable = apiServer.editDevName(body);
-        }
-        addDisposable(stringObservable, new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.editDevName(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String jsonBean) {
                 try {

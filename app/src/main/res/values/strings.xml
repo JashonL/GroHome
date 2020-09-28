@@ -389,6 +389,9 @@
     <string name="m329_terminated">Terminated</string>
     <string name="m330_can_be_added">Devices that can be added</string>
     <string name="m331_device_already_condition">The device has been added to the execution conditions, it cannot be added as an execution device</string>
+    <string name="m332_login_failed">Home energy account login failed, temporarily unavailable</string>
+    <string name="m333_re_login">Please click to re-login</string>
 
 
+    <string name="m334_information_expired">The login information has expired, please log in again</string>
 </resources>

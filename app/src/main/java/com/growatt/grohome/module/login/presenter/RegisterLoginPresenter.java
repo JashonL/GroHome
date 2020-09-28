@@ -132,10 +132,10 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
         String systemModel = SystemUtil.getSystemModel();
         String serialNumber = SystemUtil.getSerialNumber(context);
         String language = String.valueOf(CommentUtils.getLanguage());
-        String apptype="GroHome";
+        String apptype = "GroHome";
 
         //正式登录
-        addDisposable(apiServer.login(userServerUrl, username, MD5andKL.encryptPassword(password),apptype,serialNumber,systemModel,language), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.login(userServerUrl, username, MD5andKL.encryptPassword(password), apptype, serialNumber, systemModel, language), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
                 try {
@@ -146,13 +146,14 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                         //用户解析
                         User userInfo = new Gson().fromJson(user.toString(), User.class);
                         userInfo.setUrl(userUrl);
-                        if (userUrl.contains("-cn")) {
+                     /*   if (userUrl.contains("-cn")) {
                             userInfo.setUserTuyaCode(GlobalConstant.CHINA_AREA_CODE);
-                        }else {
+                        } else {
                             userInfo.setUserTuyaCode(GlobalConstant.EUROPE_AREA_CODE);
-                        }
+                        }*/
                         savaUserInfo(username, password, userInfo);
-                        baseView.loginSuccess(bean);
+                        getCountryCode();
+//                        baseView.loginSuccess(bean);
                     } else {
                         String msg = context.getString(R.string.m221_username_password_error);
                         baseView.onError(msg);
@@ -168,6 +169,48 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
             }
         });
     }
+
+
+    /**
+     * 根据国家获取国家码
+     */
+    public void getCountryCode() throws JSONException {
+        String counrty = App.getUserBean().getCounrty();
+        String lan = String.valueOf(CommentUtils.getLanguage());
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("country", counrty);
+        requestJson.put("lan", lan);
+        String s = requestJson.toString();
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        //正式登录
+        addDisposable(apiServer.getCodeByCountry(body), new BaseObserver<String>(baseView, false) {
+            @Override
+            public void onSuccess(String bean) {
+                try {
+                    JSONObject jsonObject = new JSONObject(bean);
+                    int code = jsonObject.optInt("code");
+                    if (code == 0) {
+                        String data = jsonObject.optString("data","");
+                        if (!TextUtils.isEmpty(data)){
+                            App.getUserBean().setUserTuyaCode(data);
+                            baseView.loginSuccess(bean);
+                        }
+                    } else {
+                        String msg = context.getString(R.string.m4_connect_error_msg);
+                        baseView.onError(msg);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String msg) {
+                baseView.onError(msg);
+            }
+        });
+    }
+
 
     /**
      * 选择国家

@@ -320,7 +320,12 @@ public class ScenesFragment extends BaseFragment<ScenesPresenter> implements ISc
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         if (adapter == mLaunchTapAdapter) {//执行
             ScenesBean.DataBean dataBean = mLaunchTapAdapter.getData().get(position);
-            presenter.launchTapToRun(dataBean);
+            List<SceneTaskBean> conf = dataBean.getConf();
+            if (conf == null || conf.size() == 0 ) {
+                presenter.toSceneDetail(dataBean);
+            } else {
+                presenter.launchTapToRun(dataBean);
+            }
         }
         if (adapter == mLinkageSceneAdapter) {
             ScenesBean.DataBean dataBean = mLinkageSceneAdapter.getData().get(position);

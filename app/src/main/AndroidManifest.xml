@@ -25,7 +25,6 @@
         android:protectionLevel="signature" />
 
 
-
     <!-- Required  一些系统要求的权限，如访问网络等-->
     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
@@ -38,8 +37,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!--华为角标-->
-    <uses-permission
-        android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
 
 
     <!-- Optional for location -->
@@ -51,8 +49,8 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /><!-- Android Q后台定位权限-->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
 
     <application
@@ -111,53 +109,194 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".module.login.RegisterLoginActivity" />
-        <activity android:name=".module.room.RoomListActivity" />
-        <activity android:name=".module.device.DeviceTypeActivity" />
-        <activity android:name=".module.config.WiFiOptionsActivity" />
-        <activity android:name=".module.config.DeviceLightStatusActivity" />
-        <activity android:name=".module.config.DeviceConfigActivity" />
-        <activity android:name=".module.config.ConnectHotsPotActivity" />
-        <activity android:name=".module.config.DeviceEZLightActivity" />
-        <activity android:name=".module.config.DeviceAPLightActivity" />
-        <activity android:name=".module.config.ConfigErrorActivity" />
-        <activity android:name=".module.config.ConfigSuccessActivity" />
-        <activity android:name=".module.device.BulbActivity" />
-        <activity android:name=".module.device.BulbSceneEditActivity" />
-        <activity android:name=".module.device.SwitchActivity" />
-        <activity android:name=".module.login.CountryListActivity" />
-        <activity android:name=".module.room.RoomAddActivity" />
-        <activity android:name=".module.room.RoomEditActivity" />
-        <activity android:name=".module.room.RoomImageActivity" />
-        <activity android:name=".module.room.RoomLineListActivity" />
-        <activity android:name=".module.scenes.SceneAddActivity" />
-        <activity android:name=".module.device.AllDeviceActivity" />
-        <activity android:name=".module.scenes.SceneTaskSettingActivity" />
-        <activity android:name=".module.scenes.SceneCustomizeActivity" />
-        <activity android:name=".module.scenes.SceneDetailActivity" />
-        <activity android:name=".module.scenes.EffectivePeriodActivity" />
-        <activity android:name=".module.scenes.RepeatActivity" />
-        <activity android:name=".module.scenes.PeriodCommentSetActivity" />
-        <activity android:name=".module.scenes.SceneConditionActivity" />
-        <activity android:name=".module.device.DeviceTimingListActivity" />
-        <activity android:name=".module.device.DeviceTimingSetActivity" />
-        <activity android:name=".module.device.DeviceSettingActivity" />
-        <activity android:name=".module.device.DeviceUpdataActivity" />
-        <activity android:name=".module.device.SwitchTimingActivity" />
-        <activity android:name=".module.device.EditNameActivity" />
-        <activity android:name=".module.personal.SetttingActivity" />
-        <activity android:name=".module.personal.UpdatepwdActivity" />
-        <activity android:name=".module.personal.NewEmailActivity" />
-        <activity android:name=".module.login.ForgotpasswordActivity" />
-        <activity android:name=".module.personal.CacheClearActivity" />
-        <activity android:name=".module.personal.AboutActivity" />
-        <activity android:name=".module.commom.WebViewActivity" />
-        <activity android:name=".module.config.ConfigBlueToothActivity" />
-        <activity android:name=".module.service.ManualListActivity"/>
-        <activity android:name=".module.commom.ReadFileActivity" />
-        <activity android:name=".module.service.FqaListActivity" />
-        <activity android:name=".module.service.ManualActivity" />
-        <activity android:name=".module.personal.MessageCenterActivity"/>
+        <activity
+            android:name=".module.login.RegisterLoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.room.RoomListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.DeviceTypeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.config.WiFiOptionsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.config.DeviceLightStatusActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.config.DeviceConfigActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.config.ConnectHotsPotActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.config.DeviceEZLightActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.config.DeviceAPLightActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.config.ConfigErrorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.config.ConfigSuccessActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.BulbActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.BulbSceneEditActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.SwitchActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.login.CountryListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.room.RoomAddActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.room.RoomEditActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.room.RoomImageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.room.RoomLineListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.scenes.SceneAddActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.AllDeviceActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.scenes.SceneTaskSettingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.scenes.SceneCustomizeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.scenes.SceneDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.scenes.EffectivePeriodActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.scenes.RepeatActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.scenes.PeriodCommentSetActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.scenes.SceneConditionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.DeviceTimingListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.DeviceTimingSetActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.DeviceSettingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.DeviceUpdataActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.SwitchTimingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.EditNameActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.personal.SetttingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.personal.UpdatepwdActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.personal.NewEmailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.login.ForgotpasswordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.personal.CacheClearActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.personal.AboutActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.commom.WebViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.config.ConfigBlueToothActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.service.ManualListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.commom.ReadFileActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.service.FqaListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.service.ManualActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.personal.MessageCenterActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
@@ -165,21 +304,23 @@
             android:screenOrientation="portrait" />
 
 
+        <!--==================================极光推送=======================================-->
+
         <!-- Rich push 核心功能 since 2.0.6-->
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
-            android:theme="@style/MyDialogStyle"
-            android:exported="false">
-        </activity>
+            android:exported="false"
+            android:theme="@style/MyDialogStyle"/>
 
         <!-- Required SDK核心功能-->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="${applicationId}" />
             </intent-filter>
@@ -200,19 +341,17 @@
 
         <!-- since 3.0.9 Required SDK 核心功能-->
         <provider
-            android:authorities="${applicationId}.DataProvider"
             android:name="cn.jpush.android.service.DataProvider"
-            android:process=":pushcore"
+            android:authorities="${applicationId}.DataProvider"
             android:exported="false"
-            />
+            android:process=":pushcore" />
 
 
         <!-- since 3.1.0 Required SDK 核心功能-->
         <provider
-            android:authorities="${applicationId}.DownloadProvider"
             android:name="cn.jpush.android.service.DownloadProvider"
-            android:exported="true"
-            />
+            android:authorities="${applicationId}.DownloadProvider"
+            android:exported="true" />
 
         <!-- Required SDK核心功能-->
         <receiver
@@ -237,7 +376,9 @@
 
 
         <!-- Required SDK核心功能-->
-        <receiver android:name="cn.jpush.android.service.AlarmReceiver" android:exported="false"/>
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" />
 
         <!-- User defined.  For test only  用户自定义的广播接收器-->
         <receiver
@@ -264,7 +405,6 @@
         </receiver>
 
 
-
         <!--since 3.3.0 Required SDK核心功能-->
         <activity
             android:name="cn.jpush.android.service.JNotifyActivity"
@@ -279,7 +419,8 @@
         <!-- since 3.3.0 Required SDK 核心功能-->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <!--User defined.  For test only 继承自cn.jpush.android.service.JCommonService-->
-        <service android:name=".jpush.PushService"
+        <service
+            android:name=".jpush.PushService"
             android:process=":pushcore">
             <intent-filter>
                 <action android:name="cn.jiguang.user.service.action" />
@@ -288,8 +429,13 @@
         <!-- since 3.5.6 新增华硕通道  -->
         <receiver android:name="cn.jpush.android.asus.AsusPushMessageReceiver" />
         <!-- Required  . Enable it you can get statistics data with channel -->
-        <meta-data android:name="JPUSH_CHANNEL" android:value="${JPUSH_CHANNEL}"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}" /> <!--  </>值来自开发者平台取得的AppKey-->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="${JPUSH_CHANNEL}" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="${JPUSH_APPKEY}" /> <!--  </>值来自开发者平台取得的AppKey-->
+        <!--==================================极光推送=======================================-->
 
     </application>
 

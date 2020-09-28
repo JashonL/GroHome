@@ -10,6 +10,7 @@ public class LogsSceneBean implements MultiItemEntity {
     private String cname;
     private String runStatus;
     private String runTime;
+    private String runType;
     private String dataType;
 
 
@@ -56,6 +57,14 @@ public class LogsSceneBean implements MultiItemEntity {
 
     public void setDataType(String dataType) {
         this.dataType = dataType;
+    }
+
+    public String getRunType() {
+        return runType;
+    }
+
+    public void setRunType(String runType) {
+        this.runType = runType;
     }
 
     @Override

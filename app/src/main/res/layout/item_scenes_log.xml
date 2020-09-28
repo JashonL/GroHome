@@ -59,11 +59,10 @@
             android:padding="@dimen/dp_10">
 
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tv_run_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_5"
-                android:text="@string/m245_start_time"
                 android:textColor="@color/color_text_33"
                 android:textSize="@dimen/size_title_sp_16"
                 app:layout_constraintBottom_toTopOf="@+id/tv_content"
@@ -73,16 +72,26 @@
 
 
             <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_5"
+                android:textColor="@color/color_text_33"
+                android:textSize="@dimen/size_title_sp_16"
+                app:layout_constraintLeft_toRightOf="@+id/tv_run_type"
+                app:layout_constraintTop_toTopOf="@+id/tv_run_type"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+
+            <TextView
                 android:id="@+id/tv_runstatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_5"
-                android:text="@string/m245_start_time"
                 android:textColor="@color/color_text_33"
                 android:textSize="@dimen/size_title_sp_16"
                 app:layout_constraintLeft_toRightOf="@+id/tv_title"
-                app:layout_constraintTop_toTopOf="@+id/tv_title"
-           />
+                app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
 
             <TextView
@@ -90,7 +99,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_5"
-                android:text="@string/m325_remember_password"
                 android:textColor="@color/color_text_66"
                 android:textSize="@dimen/size_title_sp_14"
                 app:layout_constraintBottom_toBottomOf="parent"

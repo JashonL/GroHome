@@ -337,6 +337,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         requestJson.put("uid", App.getUserBean().accountName);
         requestJson.put("pid", pid);
         requestJson.put("devId", devId);
+        requestJson.put("countryCode", App.getUserBean().getUserTuyaCode());
         int serverId = 1;
         if (App.getUserBean().getUserTuyaCode().equals(GlobalConstant.CHINA_AREA_CODE)) {
             serverId = 0;
@@ -346,7 +347,7 @@ public class DeviceConfigPresenter extends BasePresenter<IDeviceConfigView> {
         requestJson.put("lan", String.valueOf(CommentUtils.getLanguage()));
         String s = requestJson.toString();
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
-        addDisposable(apiServer.addDevice(body), new BaseObserver<String>(baseView, true) {
+        addDisposable(apiServer.addDeviceNew(body), new BaseObserver<String>(baseView, true) {
             @Override
             public void onSuccess(String bean) {
                 try {

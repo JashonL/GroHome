@@ -20,7 +20,11 @@ import com.growatt.grohome.utils.SharedPreferencesUnit;
 import com.growatt.grohome.utils.SystemUtil;
 import com.growatt.grohome.utils.UrlUtil;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class SplashPresenter extends BasePresenter<ISplashView> {
 
@@ -124,11 +128,13 @@ public class SplashPresenter extends BasePresenter<ISplashView> {
                         //用户解析
                         User userInfo = new Gson().fromJson(user.toString(), User.class);
                         userInfo.setUrl(userUrl);
-                        if (userUrl.contains("-cn"))
+                    /*    if (userUrl.contains("-cn"))
                             userInfo.setUserTuyaCode(GlobalConstant.CHINA_AREA_CODE);
-                        else userInfo.setUserTuyaCode(GlobalConstant.EUROPE_AREA_CODE);
+                        else userInfo.setUserTuyaCode(GlobalConstant.EUROPE_AREA_CODE);*/
                         savaUserInfo(username, password, userInfo);
-                        baseView.loginSuccess(bean);
+                        getCountryCode();
+
+//                        baseView.loginSuccess(bean);
                     } else {
                         toLogin();
                     }
@@ -143,6 +149,47 @@ public class SplashPresenter extends BasePresenter<ISplashView> {
             }
         });
     }
+
+
+    /**
+     * 根据国家获取国家码
+     */
+    public void getCountryCode() throws JSONException {
+        String counrty = App.getUserBean().getCounrty();
+        String lan = String.valueOf(CommentUtils.getLanguage());
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("country", counrty);
+        requestJson.put("lan", lan);
+        String s = requestJson.toString();
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        //正式登录
+        addDisposable(apiServer.getCodeByCountry(body), new BaseObserver<String>(baseView, false) {
+            @Override
+            public void onSuccess(String bean) {
+                try {
+                    JSONObject jsonObject = new JSONObject(bean);
+                    int code = jsonObject.optInt("code");
+                    if (code == 0) {
+                        String data = jsonObject.optString("data","");
+                        if (!TextUtils.isEmpty(data)){
+                            App.getUserBean().setUserTuyaCode(data);
+                            baseView.loginSuccess(bean);
+                        }
+                    } else {
+                        toLogin();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String msg) {
+                toLogin();
+            }
+        });
+    }
+
 
 
     /**

@@ -11,7 +11,7 @@ public class User {
     public String accountName;
     public String url;
     public String email;
-    public String userTuyaCode;//用户的国家区号，只有国内和法国，不能变
+    public String userTuyaCode;//用户的国家区号，设备配网会根据这个区号配置到不同的服务器
     public String counrty;
     public String timeZone;
 

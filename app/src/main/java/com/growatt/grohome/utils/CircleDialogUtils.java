@@ -4,6 +4,7 @@ package com.growatt.grohome.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -331,6 +332,60 @@ public class CircleDialogUtils {
         return commentBodyDialog;
     }
 
+
+
+    /**
+     * 公共自定义框
+     *
+     * @return
+     */
+    public static DialogFragment showCostomBodyViewDialog(Context context, View bodyView, String title, FragmentManager fragmentManager, OnCreateBodyViewListener listener,
+                                                          String negative,View.OnClickListener negativeListner,String positive ,View.OnClickListener positiveListner) {
+
+        CircleDialog.Builder builder = new CircleDialog.Builder();
+
+        if (!TextUtils.isEmpty(title)){
+            builder.setTitle(title);
+        }
+        builder.setGravity(Gravity.CENTER);
+        builder.setBodyView(bodyView,listener);
+        if (negativeListner!=null){
+            builder.setNegative(negative,negativeListner);
+        }
+        if (positiveListner!=null){
+            builder.setPositive(positive,positiveListner);
+        }
+
+        return builder.show(fragmentManager);
+    }
+
+
+    /**
+     * 公共自定义框
+     *
+     * @return
+     */
+    public static DialogFragment showCostomBodyViewDialog(Context context, View bodyView, String title, FragmentManager fragmentManager, OnCreateBodyViewListener listener,
+                                                          String negative,View.OnClickListener negativeListner,String positive ,View.OnClickListener positiveListner,boolean isCancel) {
+
+        CircleDialog.Builder builder = new CircleDialog.Builder();
+
+        if (!TextUtils.isEmpty(title)){
+            builder.setTitle(title);
+        }
+        builder.setGravity(Gravity.CENTER);
+        builder.setBodyView(bodyView,listener);
+        if (negativeListner!=null){
+            builder.setNegative(negative,negativeListner);
+        }
+        if (positiveListner!=null){
+            builder.setPositive(positive,positiveListner);
+        }
+
+        builder.setCanceledOnTouchOutside(isCancel);
+        builder.setCancelable(isCancel);
+        return builder.show(fragmentManager);
+    }
 
 
     /**

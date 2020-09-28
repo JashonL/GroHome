@@ -70,23 +70,23 @@ public class GroHomeDevGridAdapter extends BaseMultiItemQuickAdapter<GroDeviceBe
         } else {
             switch (devType) {
                 case DeviceTypeConstant.TYPE_PANELSWITCH:
-                    deviceIcon.setImageResource(DevicePanel.getCloseIcon(1));
+                    deviceIcon.setImageResource(DevicePanel.getCloseIcon(0));
                     break;
                 case DeviceTypeConstant.TYPE_BULB:
-                    deviceIcon.setImageResource(DeviceBulb.getCloseIcon(1));
+                    deviceIcon.setImageResource(DeviceBulb.getCloseIcon(0));
                     break;
 
                 case DeviceTypeConstant.TYPE_AIRCONDITION:
-                    deviceIcon.setImageResource(DeviceAirCon.getCloseIcon(1));
+                    deviceIcon.setImageResource(DeviceAirCon.getCloseIcon(0));
                     break;
                 case DeviceTypeConstant.TYPE_PADDLE:
-                    deviceIcon.setImageResource(DevicePlug.getCloseIcon(1));
+                    deviceIcon.setImageResource(DevicePlug.getCloseIcon(0));
                     break;
                 case DeviceTypeConstant.TYPE_THERMOSTAT:
-                    deviceIcon.setImageResource(DeviceThermostat.getCloseIcon(1));
+                    deviceIcon.setImageResource(DeviceThermostat.getCloseIcon(0));
                     break;
                 case DeviceTypeConstant.TYPE_STRIP_LIGHTS:
-                    deviceIcon.setImageResource(DeviceStripLights.getCloseIcon(1));
+                    deviceIcon.setImageResource(DeviceStripLights.getCloseIcon(0));
                     break;
 
             }

@@ -2,12 +2,18 @@ package com.growatt.grohome.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 
+import com.growatt.grohome.bean.SessionBean;
 import com.growatt.grohome.bean.User;
+import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.LogUtil;
 import com.hjq.toast.ToastUtils;
 import com.mylhyl.circledialog.res.values.CircleColor;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import com.tuya.smart.sdk.api.INeedLoginListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -42,6 +48,15 @@ public class App extends Application {
         TuyaHomeSdk.setDebugMode(true);
         //全局初始化弹框
         initCirclerDialog();
+
+        TuyaHomeSdk.setOnNeedLoginListener(new INeedLoginListener() {
+            @Override
+            public void onNeedLogin(Context context) {
+                TuyaApiUtils.setIsTuyaLogin(false);
+                TuyaApiUtils.setIsHomeInit(false);
+                EventBus.getDefault().post(new SessionBean());
+            }
+        });
 
         LogUtil.setIsLog(true);
 

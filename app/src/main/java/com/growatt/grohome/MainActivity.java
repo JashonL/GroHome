@@ -19,6 +19,7 @@ import com.growatt.grohome.adapter.ArticleAdapter;
 import com.growatt.grohome.app.App;
 import com.growatt.grohome.base.BaseActivity;
 import com.growatt.grohome.bean.Article;
+import com.growatt.grohome.bean.SessionBean;
 import com.growatt.grohome.constants.GlobalConstant;
 import com.growatt.grohome.jpush.ExampleUtil;
 import com.growatt.grohome.jpush.LocalBroadcastManager;
@@ -28,6 +29,10 @@ import com.growatt.grohome.module.personal.PersonalFragment;
 import com.growatt.grohome.module.scenes.ScenesFragment;
 import com.growatt.grohome.module.service.ServiceFragment;
 import com.growatt.grohome.utils.MyToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +126,7 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
     protected void initData() {
         setJpushAliasTag();
         presenter.loginTuya(this);
+        EventBus.getDefault().register(this);
     }
 
 
@@ -158,6 +164,11 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
 
     @Override
     public void showUncollectError(String errorMessage) {
+    }
+
+    @Override
+    public void showTuyaLoginError() {
+        presenter.showLoginError();
     }
 
     @Override
@@ -305,6 +316,18 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
     }
 
 
+    /**
+     * session失效
+     *
+     * @param msg
+     */
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showDeviceStatus(SessionBean msg) {
+        presenter.showSsionExpired();
+    }
+
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -314,6 +337,7 @@ public class MainActivity extends BaseActivity<HomePresenter> implements IMainAc
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 }

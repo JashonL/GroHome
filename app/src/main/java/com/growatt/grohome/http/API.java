@@ -75,7 +75,7 @@ public class API {
 
         @FormUrlEncoded
         @POST
-        Observable<String> login(@Url String url, @Field("userName") String username, @Field("password") String password, @Field("appType") String appType, @Field("phoneSn") String phoneSn,@Field("phoneModel")String phoneModel,@Field("language")String language);
+        Observable<String> login(@Url String url, @Field("userName") String username, @Field("password") String password, @Field("appType") String appType, @Field("phoneSn") String phoneSn, @Field("phoneModel") String phoneModel, @Field("language") String language);
 
 
         //注册
@@ -130,6 +130,11 @@ public class API {
         @POST
         Observable<String> sendResetEmailByAccount(@Url String url, @Field("accountName") String accountName);
 
+
+        //根据国家获取或加码
+        @POST("appService/getCountryCode")
+        Observable<String> getCodeByCountry(@Body RequestBody body);
+
         //---------------------------【   收藏   】----------------------------------
 
         //收藏站内文章
@@ -150,6 +155,10 @@ public class API {
         //---------------------------【   设备   】-----------------------------------
         @POST("tuya/addDevice")
         Observable<String> addDevice(@Body RequestBody body);
+
+
+        @POST("tuya/addDeviceNew")
+        Observable<String> addDeviceNew(@Body RequestBody body);
 
         @POST("tuya/switchInfo")
         Observable<String> getSwitchDetail(@Body RequestBody body);
