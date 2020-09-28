@@ -5,7 +5,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -23,8 +22,8 @@ import java.util.List;
 
 public class GroHomeDevGridAdapter extends BaseMultiItemQuickAdapter<GroDeviceBean, BaseViewHolder> {
 
-    public final static int STATUS_ON = 1;
-    public final static int STATUS_OFF = 0;
+    final static int STATUS_ON = 1;
+    final static int STATUS_OFF = 0;
 
 
     public GroHomeDevGridAdapter(@Nullable List<GroDeviceBean> data) {
