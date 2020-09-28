@@ -191,14 +191,16 @@ public class RoomAddPresenter extends BasePresenter<IRoomAddView> {
      */
 
     public void addRoom(String roomName) {
-        if (TextUtils.isEmpty(imagePath)){
-            MyToastUtils.toast(R.string.m202_add_picture);
-            return;
-        }
         if (TextUtils.isEmpty(roomName)) {
             MyToastUtils.toast(R.string.m203_enter_room_name);
             return;
         }
+
+        if (TextUtils.isEmpty(imagePath)){
+            MyToastUtils.toast(R.string.m202_add_picture);
+            return;
+        }
+
         File imageFile=new File(imagePath);
         RequestBody requestBody =new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("roomName",roomName).
                 addFormDataPart("userId",App.getUserBean().accountName).addFormDataPart("lan", String.valueOf(CommentUtils.getLanguage())).

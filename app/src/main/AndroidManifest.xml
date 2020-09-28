@@ -104,7 +104,9 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTask">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
@@ -310,7 +312,7 @@
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="false"
-            android:theme="@style/MyDialogStyle"/>
+            android:theme="@style/MyDialogStyle" />
 
         <!-- Required SDK核心功能-->
         <activity

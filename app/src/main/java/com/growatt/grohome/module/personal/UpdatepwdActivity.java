@@ -1,6 +1,7 @@
 package com.growatt.grohome.module.personal;
 
 import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.base.BaseActivity;
@@ -56,6 +58,11 @@ public class UpdatepwdActivity extends BaseActivity<UpdatePwdPresenter> implemen
     Button btnOk;
 
 
+    //头部
+    private TextView tvMenuRightText;
+    private MenuItem switchItem;
+
+
     private boolean passwordOn = false;
 
     private boolean registerPassordOn = false;
@@ -81,9 +88,14 @@ public class UpdatepwdActivity extends BaseActivity<UpdatePwdPresenter> implemen
     @Override
     protected void initViews() {
         //头部
-        tvTitle.setText(R.string.m277_my_information);
+        tvTitle.setText(R.string.m21_change_password);
         toolbar.setNavigationIcon(R.drawable.icon_return);
-
+        toolbar.inflateMenu(R.menu.menu_right_text);
+        switchItem = toolbar.getMenu().findItem(R.id.item_save);
+        switchItem.setActionView(R.layout.menu_right_text);
+        tvMenuRightText = switchItem.getActionView().findViewById(R.id.tv_right_text);
+        tvMenuRightText.setText(R.string.m248_save);
+        tvMenuRightText.setTextColor(ContextCompat.getColor(this,R.color.color_theme_green));
     }
 
     @Override
@@ -100,15 +112,25 @@ public class UpdatepwdActivity extends BaseActivity<UpdatePwdPresenter> implemen
                 finish();
             }
         });
+
+
+        tvMenuRightText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    presenter.changePassword();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
 
-    @OnClick({R.id.btn_ok,R.id.ll_old_visible,R.id.ll_new_visible,R.id.ll_repeat_visible})
+    @OnClick({R.id.ll_old_visible,R.id.ll_new_visible,R.id.ll_repeat_visible})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_ok:
-                presenter.changePassword();
-                break;
             case R.id.ll_old_visible:
                 passwordOn = !passwordOn;
                 clickPasswordSwitch(ivPasswordView,etOldPassword,passwordOn);

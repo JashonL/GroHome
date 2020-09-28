@@ -57,6 +57,11 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
     @BindView(R.id.viewImg6)
     View viewImg6;
 
+
+    //头部
+    private TextView tvMenuRightText;
+    private MenuItem switchItem;
+
     @Override
     protected RoomAddPresenter createPresenter() {
         return new RoomAddPresenter(this, this);
@@ -78,8 +83,13 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
     protected void initViews() {
         tvTitle.setText(R.string.m193_add_room);
         toolbar.setNavigationIcon(R.drawable.icon_return);
-        toolbar.inflateMenu(R.menu.menu_grohome);
-        toolbar.setOnMenuItemClickListener(this);
+        toolbar.inflateMenu(R.menu.menu_right_text);
+        switchItem = toolbar.getMenu().findItem(R.id.item_save);
+        switchItem.setActionView(R.layout.menu_right_text);
+        tvMenuRightText = switchItem.getActionView().findViewById(R.id.tv_right_text);
+        tvMenuRightText.setText(R.string.m248_save);
+
+
         String default1 = getString(R.string.m192_default_picture) + "1";
         tvNote1.setText(default1);
         String default2 = getString(R.string.m192_default_picture) + "2";
@@ -105,6 +115,18 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
     protected void initListener() {
         super.initListener();
         toolbar.setNavigationOnClickListener(v -> finish());
+
+        tvMenuRightText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    presenter.addRoom(etNameValue.getText().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
 
@@ -138,8 +160,12 @@ public class RoomAddActivity extends BaseActivity<RoomAddPresenter> implements I
                 CircleDialogUtils.showBulbWhiteMode(bodyView, GrohomeFragment.this.getFragmentManager(), view -> {
 
                 });*/
+                try {
+                    presenter.addRoom(etNameValue.getText().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                presenter.addRoom(etNameValue.getText().toString());
                 break;
         }
         return true;

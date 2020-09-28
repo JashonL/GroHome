@@ -132,7 +132,7 @@ public class API {
 
 
         //根据国家获取或加码
-        @POST(TEST_URL+"appService/getCountryCode")
+        @POST("appService/getCountryCode")
         Observable<String> getCodeByCountry(@Body RequestBody body);
 
         //---------------------------【   收藏   】----------------------------------

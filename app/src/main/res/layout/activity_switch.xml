@@ -58,8 +58,8 @@
 
             <ImageView
                 android:id="@+id/ivTiming"
-                android:layout_width="@dimen/dp_35"
-                android:layout_height="@dimen/dp_35"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
                 android:scaleType="fitXY"
                 android:src="@drawable/wallswitch_timer" />
 
@@ -90,8 +90,8 @@
 
             <ImageView
                 android:id="@+id/ivAllOpen"
-                android:layout_width="@dimen/dp_35"
-                android:layout_height="@dimen/dp_35"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
                 android:src="@drawable/wallswitch_openall"
                 android:scaleType="fitXY"
                 />
@@ -124,8 +124,8 @@
 
             <ImageView
                 android:id="@+id/ivAllClose"
-                android:layout_width="@dimen/dp_35"
-                android:layout_height="@dimen/dp_35"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
                 android:scaleType="fitXY"
                 android:src="@drawable/wallswitch_closeall"
                 />
