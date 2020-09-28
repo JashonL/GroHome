@@ -250,8 +250,7 @@ public class RoomListActivity extends BaseActivity<RoomListPresenter> implements
                 for (int i = 0; i < devList.size(); i++) {
                     GroDeviceBean deviceBean = devList.get(i);
                     presenter.initTuyaDevices(deviceBean.getDevId());
-                    int onOff = presenter.initDevOnOff(deviceBean);
-                    deviceBean.setOnoff(onOff);
+                    presenter.initDevOnOff(deviceBean);
                 }
                 mRoomDevListAdapter.replaceData(devList);
             } else {
@@ -275,6 +274,24 @@ public class RoomListActivity extends BaseActivity<RoomListPresenter> implements
             data.get(homeAllDevice).setOnoff(Integer.parseInt(value));
         }
         mRoomDevListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void upDataOnline(String devId, boolean online) {
+        List<GroDeviceBean> data = mRoomDevListAdapter.getData();
+        GroDeviceBean bean = new GroDeviceBean();
+        bean.setDevId(devId);
+        int homeAllDevice = data.indexOf(bean);
+        if (homeAllDevice != -1) {
+            if (online){
+                data.get(homeAllDevice).setDeviceConfig(true);
+                data.get(homeAllDevice).setOnline(1);
+            }else {
+                data.get(homeAllDevice).setOnline(0);
+            }
+        }
+        mRoomDevListAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -319,10 +336,8 @@ public class RoomListActivity extends BaseActivity<RoomListPresenter> implements
 
     @OnClick({R.id.iv_pic_edit})
     public void onViewClicked(View view) {
-        switch (view.getId()){
-            case R.id.iv_pic_edit:
-                presenter.jumpEditRoom();
-                break;
+        if (view.getId() == R.id.iv_pic_edit) {
+            presenter.jumpEditRoom();
         }
     }
 }

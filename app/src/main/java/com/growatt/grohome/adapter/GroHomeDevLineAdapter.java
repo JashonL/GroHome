@@ -48,6 +48,23 @@ public class GroHomeDevLineAdapter extends BaseMultiItemQuickAdapter<GroDeviceBe
         if (TextUtils.isEmpty(roomName)) roomName = "--";
         helper.setText(R.id.tv_device_room, roomName);
 
+
+        //设备状态
+        boolean deviceConfig = item.isDeviceConfig();
+        int online = item.getOnline();
+        if (deviceConfig){
+            if (1==online){
+                helper.setVisible(R.id.tv_device_status,false);
+            }else {
+                helper.setVisible(R.id.tv_device_status,true);
+                helper.setText(R.id.tv_device_status, mContext.getString(R.string.m336_offline));
+            }
+        }else {//未配网
+            helper.setVisible(R.id.tv_device_status,true);
+            helper.setText(R.id.tv_device_status, mContext.getString(R.string.m335_no_network));
+        }
+
+
         //设备类型设置图标
         ImageView deviceIcon = helper.getView(R.id.iv_device_icon);
         String devType = item.getDevType();

@@ -117,6 +117,9 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
             ((Activity) context).finish();
             return;
         }
+        //设备不在线
+        deviceNotOnline();
+
         try {
             getDetailData();
         } catch (Exception e) {
@@ -168,11 +171,7 @@ public class SwitchPresenter extends BasePresenter<ISwitchView> implements IDevL
                                 panelSwitchBean.setDevId((String) value);
                             } else if ("name".equals(key)) {
                                 panelSwitchBean.setName((String) value);
-                            } else if ("onoff".equals(key)) {
-                                panelSwitchBean.setOnoff((Integer) value);
-                            } else if ("online".equals(key)) {
-                                panelSwitchBean.setOnline((Integer) value);
-                            } else if (key.contains("code")) {
+                            }  else if (key.contains("code")) {
                                 road++;
                             }
                         }

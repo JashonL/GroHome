@@ -9,13 +9,14 @@ public class GroDeviceBean implements MultiItemEntity {
     private String devType;
     private float current;
     private String name;
-    private int online;
+    private int deviceOnline;
     private String power;
     private int roomId;
     private String roomName;
-    private int onoff;
+    private int deviceOnoff;
     private float voltage;
     private String dayEle;
+    private boolean isDeviceConfig;
 
     //thermostat
     private String roomTemp;
@@ -89,11 +90,11 @@ public class GroDeviceBean implements MultiItemEntity {
     }
 
     public int getOnline() {
-        return online;
+        return deviceOnline;
     }
 
     public void setOnline(int online) {
-        this.online = online;
+        this.deviceOnline = online;
     }
 
     public String getPower() {
@@ -121,11 +122,11 @@ public class GroDeviceBean implements MultiItemEntity {
     }
 
     public int getOnoff() {
-        return onoff;
+        return deviceOnoff;
     }
 
     public void setOnoff(int onoff) {
-        this.onoff = onoff;
+        this.deviceOnoff = onoff;
     }
 
     public float getVoltage() {
@@ -309,6 +310,14 @@ public class GroDeviceBean implements MultiItemEntity {
         this.isConfHave = isConfHave;
     }
 
+    public boolean isDeviceConfig() {
+        return isDeviceConfig;
+    }
+
+    public void setDeviceConfig(boolean deviceConfig) {
+        isDeviceConfig = deviceConfig;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -319,6 +328,6 @@ public class GroDeviceBean implements MultiItemEntity {
 
     @Override
     public int getItemType() {
-        return onoff;
+        return deviceOnoff;
     }
 }

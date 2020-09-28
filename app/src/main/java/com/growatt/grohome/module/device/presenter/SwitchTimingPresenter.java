@@ -142,12 +142,6 @@ public class SwitchTimingPresenter extends BasePresenter<ISwitchTimingView> {
                                 case "name":
                                     panelSwitchBean.setName((String) value);
                                     break;
-                                case "onoff":
-                                    panelSwitchBean.setOnoff((Integer) value);
-                                    break;
-                                case "online":
-                                    panelSwitchBean.setOnline((Integer) value);
-                                    break;
                                 case "road":
                                     panelSwitchBean.setRoad((Integer) value);
                                     break;

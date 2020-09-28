@@ -60,6 +60,7 @@
                 android:id="@+id/ivTiming"
                 android:layout_width="@dimen/dp_35"
                 android:layout_height="@dimen/dp_35"
+                android:scaleType="fitXY"
                 android:src="@drawable/wallswitch_timer" />
 
             <TextView
@@ -92,6 +93,7 @@
                 android:layout_width="@dimen/dp_35"
                 android:layout_height="@dimen/dp_35"
                 android:src="@drawable/wallswitch_openall"
+                android:scaleType="fitXY"
                 />
 
             <TextView
@@ -124,6 +126,7 @@
                 android:id="@+id/ivAllClose"
                 android:layout_width="@dimen/dp_35"
                 android:layout_height="@dimen/dp_35"
+                android:scaleType="fitXY"
                 android:src="@drawable/wallswitch_closeall"
                 />
 

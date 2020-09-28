@@ -10,16 +10,19 @@
         layout="@layout/toobar_title" />
 
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+   <!-- <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srl_pull"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerView">
+        app:layout_constraintTop_toBottomOf="@+id/headerView">-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headerView">
+
 
 
             <View
@@ -480,7 +483,7 @@
             </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

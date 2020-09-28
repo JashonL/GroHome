@@ -313,12 +313,13 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
                     if ("true".equals(success)) {
                         verificationCode = jsonObject.optString("msg");
                         MyToastUtils.toast(R.string.m178_verification_send_email);
-                    } else {
+                    }
+                    /*else {
                         String s = jsonObject.optString("msg");
                         if (!TextUtils.isEmpty(s)) {
                             MyToastUtils.toast(s);
                         }
-                    }
+                    }*/
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

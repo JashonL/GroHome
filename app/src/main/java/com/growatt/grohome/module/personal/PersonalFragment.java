@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.growatt.grohome.R;
 import com.growatt.grohome.app.App;
@@ -41,8 +39,8 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
     ImageView ivAvatar;
     @BindView(R.id.tv_username)
     AppCompatTextView tvUsername;
-    @BindView(R.id.srl_pull)
-    SwipeRefreshLayout srlPull;
+ /*   @BindView(R.id.srl_pull)
+    SwipeRefreshLayout srlPull;*/
     @BindView(R.id.tv_message_count)
     TextView tvMessageCount;
 
@@ -74,7 +72,7 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
         String path = App.getInstance().getFilesDir().getPath() + "/" + GlobalConstant.IMAGE_FILE_LOCATION;
         showPicture(path);
 
-        srlPull.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.color_theme_green));
+//        srlPull.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.color_theme_green));
     }
 
     private void showPicture(String path) {
@@ -99,13 +97,13 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
     @Override
     public void initListener() {
         super.initListener();
-        srlPull.setOnRefreshListener(() -> {
+    /*    srlPull.setOnRefreshListener(() -> {
             try {
                 presenter.getLoginRecord();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        });
+        });*/
     }
 
     @OnClick({R.id.iv_avatar, R.id.tv_username,R.id.cl_share_device,R.id.card_view_message,R.id.cl_cache,R.id.cl_about,R.id.cl_google,R.id.cl_alexa})
@@ -164,17 +162,17 @@ public class PersonalFragment extends BaseFragment<PersonalPresenter> implements
     @Override
     public void hideLoading() {
         super.hideLoading();
-        if (srlPull != null && srlPull.isRefreshing()) {
+     /*   if (srlPull != null && srlPull.isRefreshing()) {
             srlPull.setRefreshing(false);
-        }
+        }*/
     }
 
 
     @Override
     public void onError(String msg) {
-        if (srlPull != null && srlPull.isRefreshing()) {
+      /*  if (srlPull != null && srlPull.isRefreshing()) {
             srlPull.setRefreshing(false);
-        }
+        }*/
         requestError(msg);
     }
 

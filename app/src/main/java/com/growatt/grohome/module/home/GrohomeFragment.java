@@ -38,7 +38,6 @@ import com.growatt.grohome.module.home.presenter.GrohomePresenter;
 import com.growatt.grohome.module.home.view.IGrohomeView;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.CommentUtils;
-import com.growatt.grohome.utils.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -219,9 +218,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             if (!TuyaApiUtils.isShowDevice(devType)) continue;
             String devId = deviceBean.getDevId();
             presenter.initTuyaDevices(devId);
-            int onOff = presenter.initDevOnOff(deviceBean);
-            LogUtil.d("获取设备开关状态：   setAllDeviceSuccess" + onOff);
-            deviceBean.setOnoff(onOff);
+            presenter.initDevOnOff(deviceBean);
             deviceList.add(deviceBean);
         }
         mGrohomeGridAdapter.replaceData(deviceList);
@@ -267,6 +264,33 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
     }
 
     @Override
+    public void upDataOnline(String devId, boolean online) {
+        List<GroDeviceBean> data;
+        if (mLayoutType == TYPE_GRID) {
+            data = mGrohomeGridAdapter.getData();
+        } else {
+            data = mGroHomeDevLineAdapter.getData();
+        }
+        GroDeviceBean bean = new GroDeviceBean();
+        bean.setDevId(devId);
+        int homeAllDevice = data.indexOf(bean);
+        if (homeAllDevice != -1) {
+            if (online){
+                data.get(homeAllDevice).setDeviceConfig(true);
+                data.get(homeAllDevice).setOnline(1);
+            }else {
+                data.get(homeAllDevice).setOnline(0);
+            }
+
+        }
+        if (mLayoutType == TYPE_GRID) {
+            mGrohomeGridAdapter.notifyDataSetChanged();
+        } else {
+            mGroHomeDevLineAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     public void setRoomListSuccess(List<HomeRoomBean> roomList) {
         mRoomAdapter.replaceData(roomList);
     }
@@ -300,6 +324,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
             mGroHomeDevLineAdapter.remove(index2);
         }
     }
+
 
 
     @Override
@@ -428,9 +453,7 @@ public class GrohomeFragment extends BaseFragment<GrohomePresenter> implements I
                 GroDeviceBean deviceBean = newList.get(i);
                 String devId = deviceBean.getDevId();
                 presenter.initTuyaDevices(devId);
-                int onOff = presenter.initDevOnOff(deviceBean);
-                deviceBean.setOnoff(onOff);
-                LogUtil.d("获取设备开关状态：   onEventDevTransferBean" + onOff);
+                presenter.initDevOnOff(deviceBean);
             }
             if (mLayoutType == TYPE_LINE) {
                 mGroHomeDevLineAdapter.notifyDataSetChanged();

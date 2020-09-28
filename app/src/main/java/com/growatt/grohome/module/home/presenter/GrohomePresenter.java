@@ -88,7 +88,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
 
 
     public void getAlldevice() throws Exception {
-        String userServerUrl=GlobalConstant.HTTP_PREFIX+App.getUserBean().getUrl();
+        String userServerUrl = GlobalConstant.HTTP_PREFIX + App.getUserBean().getUrl();
         JSONObject requestJson = new JSONObject();
         requestJson.put("userId", App.getUserBean().accountName);
         requestJson.put("cmd", "devList");
@@ -119,13 +119,13 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                         }
 
                         //---------------------------这段代码用来控制相对应的设备是否动态匹配功能点,如果不用动态(注释掉对应的设备类型即可)的就会使用固定的----------------------------------
-                        if (data!=null){
+                        if (data != null) {
                             for (int i = 0; i < data.length(); i++) {
                                 JSONObject device = data.optJSONObject(i);
                                 JSONObject dpdObject = device.optJSONObject("dpd");
-                                String devType = device.optString("devType","");
-                                String deviceId = device.optString("devId","");
-                                if (dpdObject!=null){
+                                String devType = device.optString("devType", "");
+                                String deviceId = device.optString("devId", "");
+                                if (dpdObject != null) {
                                     switch (devType) {
                                         case DeviceTypeConstant.TYPE_BULB:
                                         case DeviceTypeConstant.TYPE_STRIP_LIGHTS: {
@@ -203,7 +203,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                     if (code == 0) {
                         JSONArray dataArray = obj.optJSONArray("data");
                         List<HomeRoomBean> roomList = new ArrayList<>();
-                        if (dataArray!=null){
+                        if (dataArray != null) {
                             for (int i = 0; i < dataArray.length(); i++) {
                                 JSONObject jsonObject = dataArray.getJSONObject(i);
                                 HomeRoomBean roomBean = new Gson().fromJson(jsonObject.toString(), HomeRoomBean.class);
@@ -264,16 +264,20 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
 
 
     /**
-     * 获取设备的开关状态
+     * 获取状态
      *
      * @param device 设备
      */
-    public int initDevOnOff(GroDeviceBean device) {
+    public void initDevOnOff(GroDeviceBean device) {
         String devId = device.getDevId();
         String devType = device.getDevType();
         DeviceBean deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
         String onOff = "false";//设备的开关状态
+        int isOnline = 0;//0不在线  1在线
+        boolean isDeviceConfig=false;
         if (deviceBean != null) {
+            isOnline = deviceBean.getIsOnline() ? 1 : 0;
+            isDeviceConfig=true;
             switch (devType) {
                 case DeviceTypeConstant.TYPE_PADDLE:
                     onOff = String.valueOf(deviceBean.getDps().get(DevicePlug.getPlugOnoff()));
@@ -299,7 +303,10 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                     break;
             }
         }
-        return "true".equals(onOff) ? 1 : 0;
+        int onoffValue = "true".equals(onOff) ? 1 : 0;
+        device.setOnoff(onoffValue);
+        device.setOnline(isOnline);
+        device.setDeviceConfig(isDeviceConfig);
     }
 
 
@@ -393,27 +400,25 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     }
 
 
-
     /**
      * 设备配网
      */
     private void toConfigDeviceByType(String deviceType) {
         String configType;
         Class clazz;
-        if (DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(deviceType)){
-            clazz= DeviceLightStatusActivity.class;
-            configType= DeviceConfigConstant.CONFIG_WIFI_BLUETHOOTH;
+        if (DeviceTypeConstant.TYPE_STRIP_LIGHTS.equals(deviceType)) {
+            clazz = DeviceLightStatusActivity.class;
+            configType = DeviceConfigConstant.CONFIG_WIFI_BLUETHOOTH;
 
-        }else {
-            clazz= WiFiOptionsActivity.class;
-            configType=DeviceConfigConstant.CONFIG_WIFI_SINGLE;
+        } else {
+            clazz = WiFiOptionsActivity.class;
+            configType = DeviceConfigConstant.CONFIG_WIFI_SINGLE;
         }
         Intent intent = new Intent(context, clazz);
-        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE,configType);
+        intent.putExtra(GlobalConstant.DEVICE_CONFIG_TYPE, configType);
         intent.putExtra(GlobalConstant.DEVICE_TYPE, deviceType);
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
-
 
 
     /**
@@ -435,13 +440,12 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     }
 
 
-
-    public void showWarnDialog(String deviceId,String deviceType){
+    public void showWarnDialog(String deviceId, String deviceType) {
         CircleDialogUtils.showCommentDialog((FragmentActivity) context, context.getString(R.string.m208_note), context.getString(R.string.m206_delete), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    deleteDevice(deviceId,deviceType);
+                    deleteDevice(deviceId, deviceType);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -450,8 +454,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     }
 
 
-
-    public void deleteDevice(String deviceId,String deviceType) throws JSONException {
+    public void deleteDevice(String deviceId, String deviceType) throws JSONException {
         JSONObject requestJson = new JSONObject();
         requestJson.put("devId", deviceId);
         requestJson.put("devType", deviceType);
@@ -483,8 +486,6 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     }
 
 
-
-
     @Override
     public void onDpUpdate(String devId, String dpStr) {
         try {
@@ -512,16 +513,16 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
                             }*/
 
 
-                                List<String> switchIds = DevicePanel.getSwitchIds(devId, road);
-                                int count = 0;
-                                deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
-                                if (deviceBean == null) return;
-                                for (int i = 0; i < road; i++) {
-                                    String status = String.valueOf(deviceBean.getDps().get(switchIds.get(i)));
-                                    if ("true".equals(status)) count++;
-                                }
-                                String onOff = count == 0 ? "0" : "1";//有一路开启就是开启
-                                baseView.upDataStatus(devId, onOff);
+                            List<String> switchIds = DevicePanel.getSwitchIds(devId, road);
+                            int count = 0;
+                            deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
+                            if (deviceBean == null) return;
+                            for (int i = 0; i < road; i++) {
+                                String status = String.valueOf(deviceBean.getDps().get(switchIds.get(i)));
+                                if ("true".equals(status)) count++;
+                            }
+                            String onOff = count == 0 ? "0" : "1";//有一路开启就是开启
+                            baseView.upDataStatus(devId, onOff);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -606,6 +607,7 @@ public class GrohomePresenter extends BasePresenter<IGrohomeView> implements IDe
     @Override
     public void onStatusChanged(String devId, boolean online) {
         LogUtil.d("设备在线状态变化：   " + devId + "      是否在线：" + online);
+        baseView.upDataOnline(devId,online);
     }
 
     @Override

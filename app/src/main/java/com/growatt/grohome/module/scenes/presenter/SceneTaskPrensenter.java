@@ -219,11 +219,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                                 panelSwitchBean.setDevId((String) value);
                             } else if ("name".equals(key)) {
                                 panelSwitchBean.setName((String) value);
-                            } else if ("onoff".equals(key)) {
-                                panelSwitchBean.setOnoff((Integer) value);
-                            } else if ("online".equals(key)) {
-                                panelSwitchBean.setOnline((Integer) value);
-                            } else if (key.contains("code")) {
+                            }  else if (key.contains("code")) {
                                 road++;
                             }
                         }

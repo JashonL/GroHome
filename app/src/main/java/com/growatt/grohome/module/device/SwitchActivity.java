@@ -169,6 +169,14 @@ public class SwitchActivity extends BaseActivity<SwitchPresenter> implements ISw
                 openCount++;
             }
         }
+
+        if (openCount == mSwitchAdapter.getData().size()) {
+            setOnoffButton(R.drawable.wallswitch_openall_on, R.drawable.wallswitch_closeall);
+        } else if (openCount == 0) {
+            setOnoffButton(R.drawable.wallswitch_openall, R.drawable.wallswitch_closeall_on);
+        } else {
+            setOnoffButton(R.drawable.wallswitch_openall, R.drawable.wallswitch_closeall);
+        }
     }
 
     private void setOnoffButton(int openRes, int closeRes) {

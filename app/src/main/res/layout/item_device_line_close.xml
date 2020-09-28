@@ -79,10 +79,32 @@
                 app:autoSizeMaxTextSize="@dimen/size_content_sp_12"
                 app:autoSizeMinTextSize="@dimen/size_content_sp_8"
                 app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintBottom_toTopOf="@+id/tv_device_status"
                 app:layout_constraintLeft_toRightOf="@+id/iv_device_icon"
                 app:layout_constraintRight_toLeftOf="@+id/iv_onoff"
                 app:layout_constraintTop_toBottomOf="@+id/tv_device_name" />
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_device_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="@dimen/dp_2"
+                android:textColor="@color/color_app_main"
+                app:autoSizeMaxTextSize="@dimen/size_content_sp_12"
+                app:autoSizeMinTextSize="@dimen/size_content_sp_8"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/iv_device_icon"
+                app:layout_constraintRight_toLeftOf="@+id/iv_onoff"
+                app:layout_constraintTop_toBottomOf="@+id/tv_device_room" />
+
 
 
             <ImageView

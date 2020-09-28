@@ -199,12 +199,16 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
      *
      * @param device 设备
      */
-    public int initDevOnOff(GroDeviceBean device) {
+    public void initDevOnOff(GroDeviceBean device) {
         String devId = device.getDevId();
         String devType = device.getDevType();
         DeviceBean deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
         String onOff = "false";//设备的开关状态
+        int isOnline = 0;//0不在线  1在线
+        boolean isDeviceConfig=false;
         if (deviceBean != null) {
+            isOnline = deviceBean.getIsOnline() ? 1 : 0;
+            isDeviceConfig=true;
             switch (devType) {
                 case DeviceTypeConstant.TYPE_PADDLE:
                     onOff = String.valueOf(deviceBean.getDps().get(DevicePlug.getPlugOnoff()));
@@ -230,7 +234,11 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
                     break;
             }
         }
-        return "true".equals(onOff) ? 1 : 0;
+
+        int onoffValue = "true".equals(onOff) ? 1 : 0;
+        device.setOnoff(onoffValue);
+        device.setOnline(isOnline);
+        device.setDeviceConfig(isDeviceConfig);
     }
 
 
@@ -495,7 +503,7 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
 
     @Override
     public void onStatusChanged(String devId, boolean online) {
-
+        baseView.upDataOnline(devId,online);
     }
 
     @Override

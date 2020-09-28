@@ -394,4 +394,7 @@
 
 
     <string name="m334_information_expired">The login information has expired, please log in again</string>
+    <string name="m335_no_network">No network</string>
+    <string name="m336_offline">offline</string>
+
 </resources>

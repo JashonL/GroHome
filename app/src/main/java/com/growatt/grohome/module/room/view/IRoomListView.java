@@ -16,5 +16,7 @@ public interface IRoomListView extends BaseView {
 
     void upDataStatus(String devId, String value);
 
+    void upDataOnline(String devId, boolean online);
+
     void onError(String onError);
 }
