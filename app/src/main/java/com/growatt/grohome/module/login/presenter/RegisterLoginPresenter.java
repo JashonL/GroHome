@@ -51,7 +51,7 @@ public class RegisterLoginPresenter extends BasePresenter<IRegisterLoginView> {
     public static final int START_FOR_RESULT_COUNTRY = 100;
 
     private static final int MESSAGE_SHOW_TIMING = 102;
-    private final int TOTAL_TIME = 180;
+    private final int TOTAL_TIME = 60;
     private int count = TOTAL_TIME;
     private String registerUrl;
     public String verificationCode;

@@ -38,6 +38,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -241,8 +242,23 @@ public class DeviceTimingSetPresenter extends BasePresenter<IDeviceTimingSetView
 
 
     public void showTimeSelectDialog() {
+        int hour = 0;
+        int min = 0;
+        if (!TextUtils.isEmpty(timeValue) && !"0".equals(timeValue)) {
+            String[] s = timeValue.split("[\\D]");
+            if (s.length >= 2) {
+                int time = Integer.parseInt(s[0])*60*60+Integer.parseInt(s[1])*60;
+                hour = time / (60 * 60);
+                min = (time % (60 * 60)) / (60);
+            }
+        }else {
+            Calendar calendar = Calendar.getInstance();
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            min = calendar.get(Calendar.MINUTE);
+        }
+
         FragmentManager supportFragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
-        dialogFragment = CircleDialogUtils.showWhiteTimeSelect(context, 0, 0, supportFragmentManager,false, new CircleDialogUtils.timeSelectedListener() {
+        dialogFragment = CircleDialogUtils.showWhiteTimeSelect(context, hour, min, supportFragmentManager,false, new CircleDialogUtils.timeSelectedListener() {
             @Override
             public void cancle() {
                 dialogFragment.dismiss();
