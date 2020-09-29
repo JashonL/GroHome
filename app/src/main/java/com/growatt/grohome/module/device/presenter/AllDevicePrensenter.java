@@ -92,6 +92,8 @@ public class AllDevicePrensenter extends BasePresenter<IAllDeviceView> {
                             } else {
                                 if (!isContain) {
                                     canAddList.add(deviceBean);
+                                }else {
+                                    canNotAddList.add(deviceBean);
                                 }
                             }
                         } else {
@@ -102,6 +104,8 @@ public class AllDevicePrensenter extends BasePresenter<IAllDeviceView> {
                             } else {
                                 if (!isContain) {
                                     canAddList.add(deviceBean);
+                                }else {
+                                    canNotAddList.add(deviceBean);
                                 }
                             }
                         }
@@ -165,6 +169,8 @@ public class AllDevicePrensenter extends BasePresenter<IAllDeviceView> {
                                             } else {
                                                 if (!isContain) {
                                                     canAddList.add(deviceBean);
+                                                }else {
+                                                    canNotAddList.add(deviceBean);
                                                 }
                                             }
                                         } else {
@@ -175,6 +181,8 @@ public class AllDevicePrensenter extends BasePresenter<IAllDeviceView> {
                                             } else {
                                                 if (!isContain) {
                                                     canAddList.add(deviceBean);
+                                                }else {
+                                                    canNotAddList.add(deviceBean);
                                                 }
                                             }
                                         }

@@ -140,4 +140,13 @@ public class DeviceUpdataPresenter extends BasePresenter<IDeviceUpdataView> impl
     public void onTimeout(int otaType) {
         MyToastUtils.toast(R.string.m273_time_out);
     }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (iTuyaOta!=null){
+            iTuyaOta.onDestroy();
+        }
+    }
 }

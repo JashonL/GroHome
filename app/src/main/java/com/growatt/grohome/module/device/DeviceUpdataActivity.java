@@ -17,7 +17,7 @@ import com.growatt.grohome.module.device.view.IDeviceUpdataView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class DeviceUpdataActivity extends BaseActivity<DeviceUpdataPresenter>implements IDeviceUpdataView {
+public class DeviceUpdataActivity extends BaseActivity<DeviceUpdataPresenter> implements IDeviceUpdataView {
 
     @BindView(R.id.status_bar_view)
     View statusBarView;
@@ -45,7 +45,7 @@ public class DeviceUpdataActivity extends BaseActivity<DeviceUpdataPresenter>imp
 
     @Override
     protected DeviceUpdataPresenter createPresenter() {
-        return new DeviceUpdataPresenter(this,this);
+        return new DeviceUpdataPresenter(this, this);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class DeviceUpdataActivity extends BaseActivity<DeviceUpdataPresenter>imp
 
     @Override
     public void setName(String name) {
-        if (!TextUtils.isEmpty(name)){
+        if (!TextUtils.isEmpty(name)) {
             tvName.setText(name);
         }
     }
@@ -107,7 +107,7 @@ public class DeviceUpdataActivity extends BaseActivity<DeviceUpdataPresenter>imp
 
     @Override
     public void currentVersion(String curentVersion) {
-         tvCurrent.setText(curentVersion);
+        tvCurrent.setText(curentVersion);
     }
 
     @Override
@@ -115,5 +115,11 @@ public class DeviceUpdataActivity extends BaseActivity<DeviceUpdataPresenter>imp
         tvNewVersion.setText(newVersion);
         tvNewVersion.setTextColor(ContextCompat.getColor(this, R.color.color_text_33));
         btnUpdata.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 }
