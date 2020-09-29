@@ -194,6 +194,7 @@ public class RoomListActivity extends BaseActivity<RoomListPresenter> implements
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         GroDeviceBean bean = (GroDeviceBean) adapter.getData().get(position);
         String deviceType = bean.getDevType();
+        String id = bean.getDevId();
         switch (view.getId()) {
             case R.id.card_item:
                 presenter.jumpTodevice(bean);
@@ -204,6 +205,9 @@ public class RoomListActivity extends BaseActivity<RoomListPresenter> implements
                 } else {
                     presenter.deviceSwitch(bean.getDevId(), bean.getDevType());
                 }
+                break;
+            case R.id.tv_delete:
+                presenter.showWarnDialog(id, deviceType);
                 break;
         }
     }

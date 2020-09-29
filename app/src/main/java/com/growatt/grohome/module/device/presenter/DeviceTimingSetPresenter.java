@@ -278,9 +278,6 @@ public class DeviceTimingSetPresenter extends BasePresenter<IDeviceTimingSetView
 
 
     /**
-     * 设置重复
-     */
-    /**
      * 跳转重复设置
      */
     public void selectRepeat() {

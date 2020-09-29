@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.View;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.gson.Gson;
 import com.growatt.grohome.R;
@@ -14,6 +17,7 @@ import com.growatt.grohome.bean.GroDeviceBean;
 import com.growatt.grohome.bean.HomeRoomBean;
 import com.growatt.grohome.constants.DeviceConfigConstant;
 import com.growatt.grohome.constants.GlobalConstant;
+import com.growatt.grohome.eventbus.DeviceAddOrDelMsg;
 import com.growatt.grohome.module.config.DeviceLightStatusActivity;
 import com.growatt.grohome.module.config.WiFiOptionsActivity;
 import com.growatt.grohome.module.device.BulbActivity;
@@ -31,6 +35,7 @@ import com.growatt.grohome.module.room.view.IRoomListView;
 import com.growatt.grohome.tuya.SendDpListener;
 import com.growatt.grohome.tuya.TuyaApiUtils;
 import com.growatt.grohome.utils.ActivityUtils;
+import com.growatt.grohome.utils.CircleDialogUtils;
 import com.growatt.grohome.utils.CommentUtils;
 import com.growatt.grohome.utils.MyToastUtils;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
@@ -38,7 +43,9 @@ import com.tuya.smart.sdk.api.IDevListener;
 import com.tuya.smart.sdk.api.ITuyaDevice;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -373,6 +380,56 @@ public class RoomListPresenter extends BasePresenter<IRoomListView> implements I
         ActivityUtils.startActivity((Activity) context, intent, ActivityUtils.ANIMATE_FORWARD, false);
     }
 
+
+
+    public void showWarnDialog(String deviceId, String deviceType) {
+        CircleDialogUtils.showCommentDialog((FragmentActivity) context, context.getString(R.string.m208_note), context.getString(R.string.m206_delete), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    deleteDevice(deviceId, deviceType);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    public void deleteDevice(String deviceId, String deviceType) throws JSONException {
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("devId", deviceId);
+        requestJson.put("devType", deviceType);
+        requestJson.put("userId", App.getUserBean().getAccountName());
+        requestJson.put("lan", CommentUtils.getLanguage());
+        String s = requestJson.toString();
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        addDisposable(apiServer.deleteDevice(body), new BaseObserver<String>(baseView, true) {
+            @Override
+            public void onSuccess(String jsonBean) {
+                try {
+                    JSONObject obj = new JSONObject(jsonBean);
+                    int code = obj.getInt("code");
+                    if (code == 0) {
+                        MyToastUtils.toast(R.string.m200_success);
+                        //通知更新
+                        DeviceAddOrDelMsg deviceAddOrDelMsg = new DeviceAddOrDelMsg();
+                        deviceAddOrDelMsg.setType(DeviceAddOrDelMsg.DELETE_DEV);
+                        deviceAddOrDelMsg.setDevType(deviceType);
+                        deviceAddOrDelMsg.setDevId(deviceId);
+                        EventBus.getDefault().post(deviceAddOrDelMsg);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String msg) {
+                baseView.onError(msg);
+            }
+        });
+    }
 
 
     @Override

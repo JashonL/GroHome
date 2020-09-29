@@ -113,5 +113,6 @@ public class RoomDevListAdapter extends BaseMultiItemQuickAdapter<GroDeviceBean,
         }
         helper.addOnClickListener(R.id.card_item);
         helper.addOnClickListener(R.id.iv_onoff);
+        helper.addOnClickListener(R.id.tv_delete);
     }
 }
