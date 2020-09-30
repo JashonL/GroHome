@@ -45,7 +45,7 @@ public class App extends Application {
 
         //初始化涂鸦
         TuyaHomeSdk.init(this);
-        TuyaHomeSdk.setDebugMode(true);
+        TuyaHomeSdk.setDebugMode(false);
         //全局初始化弹框
         initCirclerDialog();
 
@@ -58,11 +58,11 @@ public class App extends Application {
             }
         });
 
-        LogUtil.setIsLog(true);
+        LogUtil.setIsLog(false);
 
 //        initSampleAssets();
 
-        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.setDebugMode(false); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);
     }
 

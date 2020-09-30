@@ -66,6 +66,8 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
     View statusBarView;
     @BindView(R.id.iv_status)
     ImageView ivStatus;
+    @BindView(R.id.card_view_status)
+    CardView cardViewStatuss;
 
     //头部
     private TextView tvMenuRightText;
@@ -149,12 +151,14 @@ public class SceneDetailActivity extends BaseActivity<SceneDetailPresenter> impl
             groupCompose.setVisibility(View.GONE);
             cardEffectPeriod.setVisibility(View.GONE);
             ivConditionAdd.setVisibility(View.GONE);
+            cardViewStatuss.setVisibility(View.GONE);
         } else {
             tvTitle.setText(R.string.m234_smart);
             groupOnkey.setVisibility(View.GONE);
             groupCompose.setVisibility(View.VISIBLE);
             cardEffectPeriod.setVisibility(View.GONE);
             ivConditionAdd.setVisibility(View.VISIBLE);
+            cardViewStatuss.setVisibility(View.VISIBLE);
         }
     }
 

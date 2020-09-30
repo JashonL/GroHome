@@ -61,8 +61,6 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
     CheckBox cbTempUse;
     @BindView(R.id.tv_bulb_temp_value)
     TextView tvBulbTempValue;
-    @BindView(R.id.tv_bulb_time_value)
-    TextView tvBulbTimeValue;
     @BindView(R.id.rv_panel_setting)
     RecyclerView rvPanelSetting;
     @BindView(R.id.layout_switch)
@@ -75,8 +73,7 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
     CheckBox cbModeUse;
     @BindView(R.id.cb_bright_use)
     CheckBox cbBrightUse;
-    @BindView(R.id.cb_time_use)
-    CheckBox cbTimeUse;
+
 
 
     private ScenesPanelConditionAdapter mPanelAdapter;
@@ -229,7 +226,8 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
 
     @Override
     public boolean getTimeChecked() {
-        return cbTimeUse.isChecked();
+//        return cbTimeUse.isChecked();
+        return false;
     }
 
     @Override
@@ -249,7 +247,8 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
 
     @Override
     public String getTimeValue() {
-        return tvBulbTimeValue.getText().toString();
+//        return tvBulbTimeValue.getText().toString();
+        return null;
     }
 
 
@@ -288,13 +287,13 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
 
     @Override
     public void setCountDown(String countDown) {
-        if (!TextUtils.isEmpty(countDown)){
+    /*    if (!TextUtils.isEmpty(countDown)){
             cbTimeUse.setChecked(true);
             tvBulbTimeValue.setText(countDown);
         }else {
             cbTimeUse.setChecked(false);
             tvBulbTimeValue.setText("");
-        }
+        }*/
     }
 
     @Override
@@ -337,7 +336,6 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
     @OnClick({R.id.iv_switch_onoff, R.id.btnNext,
             R.id.tv_bulb_mode_title, R.id.tv_bulb_mode_value, R.id.iv_mode_more,
             R.id.tv_bulb_bright_title, R.id.tv_bulb_bright_value, R.id.iv_bright_more,
-            R.id.tv_bulb_time_title, R.id.tv_bulb_time_value, R.id.iv_time_more,
             R.id.tv_bulb_temp_title, R.id.tv_bulb_temp_value, R.id.iv_temp_more
     })
     public void onViewClicked(View view) {
@@ -357,11 +355,6 @@ public class SceneConditionActivity extends BaseActivity<SceneConditionPresenter
             case R.id.tv_bulb_bright_value:
             case R.id.iv_bright_more:
                 presenter.setBrightValue();
-                break;
-            case R.id.tv_bulb_time_title:
-            case R.id.tv_bulb_time_value:
-            case R.id.iv_time_more:
-                presenter.setTime();
                 break;
             case R.id.tv_bulb_temp_title:
             case R.id.tv_bulb_temp_value:

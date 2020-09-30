@@ -253,6 +253,8 @@ public class RoomListActivity extends BaseActivity<RoomListPresenter> implements
             if (devList != null) {
                 for (int i = 0; i < devList.size(); i++) {
                     GroDeviceBean deviceBean = devList.get(i);
+                    deviceBean.setRoomName(roomBean.getName());
+                    deviceBean.setRoomId(roomBean.getCid());
                     presenter.initTuyaDevices(deviceBean.getDevId());
                     presenter.initDevOnOff(deviceBean);
                 }

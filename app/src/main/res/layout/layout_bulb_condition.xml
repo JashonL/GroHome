@@ -281,7 +281,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/gl_begin"
         app:layout_constraintTop_toBottomOf="@+id/tv_bulb_temp_title" />
 
-    <CheckBox
+  <!--  <CheckBox
         android:id="@+id/cb_time_use"
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
@@ -329,7 +329,7 @@
         android:src="@drawable/icon_more"
         app:layout_constraintBottom_toBottomOf="@+id/tv_bulb_time_title"
         app:layout_constraintRight_toRightOf="@+id/gl_end"
-        app:layout_constraintTop_toTopOf="@+id/tv_bulb_time_title" />
+        app:layout_constraintTop_toTopOf="@+id/tv_bulb_time_title" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

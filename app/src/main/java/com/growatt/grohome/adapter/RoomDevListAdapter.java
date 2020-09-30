@@ -1,7 +1,9 @@
 package com.growatt.grohome.adapter;
 
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -51,15 +53,16 @@ public class RoomDevListAdapter extends BaseMultiItemQuickAdapter<GroDeviceBean,
         //设备状态
         boolean deviceConfig = item.isDeviceConfig();
         int online = item.getOnline();
+        TextView tvStatus = helper.getView(R.id.tv_device_status);
         if (deviceConfig){
             if (1==online){
-                helper.setVisible(R.id.tv_device_status,false);
+                tvStatus.setVisibility(View.GONE);
             }else {
-                helper.setVisible(R.id.tv_device_status,true);
+                tvStatus.setVisibility(View.VISIBLE);
                 helper.setText(R.id.tv_device_status, mContext.getString(R.string.m336_offline));
             }
         }else {//未配网
-            helper.setVisible(R.id.tv_device_status,true);
+            tvStatus.setVisibility(View.VISIBLE);
             helper.setText(R.id.tv_device_status, mContext.getString(R.string.m335_no_network));
         }
 

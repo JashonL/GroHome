@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 
 import com.google.gson.Gson;
 import com.growatt.grohome.R;
@@ -70,7 +69,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
     private String mode;
     private String temp;
     private String bright;
-    private String countdown;
+//    private String countdown;
 
     private DialogFragment dialogFragment;
 
@@ -165,7 +164,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                         }
                     }
                 }
-                countdown = setInfo.getCountdown();
+            /*    countdown = setInfo.getCountdown();
                 if (!TextUtils.isEmpty(countdown)) {
                     String[] s = countdown.split("_");
                     if (s.length >= 3) {
@@ -181,7 +180,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                             e.printStackTrace();
                         }
                     }
-                }
+                }*/
             }
 
         }
@@ -333,7 +332,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                     bright = "0_equal_10";
                 }
 
-                String timeValue = baseView.getTimeValue();
+            /*    String timeValue = baseView.getTimeValue();
                 if (baseView.getTimeChecked()) {
                     if (TextUtils.isEmpty(timeValue)) {
                         MyToastUtils.toast(R.string.m327_value_not_set);
@@ -342,7 +341,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 } else {
                     countdown = "0_equal_0";
 
-                }
+                }*/
 
                 String tempValue = baseView.getTempValue();
                 if (baseView.getTempChecked()) {
@@ -356,7 +355,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 }
                 setInfo.setMode(mode);
                 setInfo.setBright(bright);
-                setInfo.setCountdown(countdown);
+                setInfo.setCountdown("0_equal_0");
                 setInfo.setTemp(temp);
                 bean.setSetInfo(setInfo);
                 break;
@@ -735,7 +734,7 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
     }
 
 
-    public void setTime() {
+   /* public void setTime() {
         View bodyView = LayoutInflater.from(context).inflate(R.layout.layout_dialog_progress, null, false);
         dialogFragment = CircleDialogUtils.showCommentBodyDialog(bodyView, ((FragmentActivity) context).getSupportFragmentManager(), new OnCreateBodyViewListener() {
             @Override
@@ -860,10 +859,10 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 });
             }
         });
-    }
+    }*/
 
 
-    public void showTimeSelect() {
+/*    public void showTimeSelect() {
         int hour = 0;
         int min = 0;
         if (!TextUtils.isEmpty(countdown) && !"0".equals(countdown)) {
@@ -891,6 +890,6 @@ public class SceneConditionPresenter extends BasePresenter<ISceneConditionView> 
                 dialogFragment.dismiss();
             }
         });
-    }
+    }*/
 
 }
