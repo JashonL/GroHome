@@ -229,7 +229,6 @@ public class SceneAddPresenter extends BasePresenter<ISceneAddView> {
                 MyToastUtils.toast(R.string.m242_please_set_task);
                 return;
             }
-            if (condition.size()==1)satisfy=0;
             requestJson.put("satisfy", satisfy);
             JSONArray jsonArray1=new JSONArray();
             if (condition.size()>0) {
