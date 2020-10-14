@@ -730,12 +730,12 @@ public class BulbPresenter extends BasePresenter<IBulbView> implements IDevListe
 
     @Override
     public void sendCommandSucces() {
-        baseView.sendCommandSucces();
+//        baseView.sendCommandSucces();
     }
 
     @Override
     public void sendCommandError(String code, String error) {
-        baseView.sendCommandError(code, error);
+//        baseView.sendCommandError(code, error);
     }
 
     public void destroyTuya() {

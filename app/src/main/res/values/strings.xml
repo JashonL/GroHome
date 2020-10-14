@@ -6,7 +6,7 @@
     <string name="m3_bad_network_msg">Internet problem</string>
     <string name="m4_connect_error_msg">Connection error</string>
     <string name="m5_connect_timeout_msg">Connection timed out</string>
-    <string name="m6_other_msg">unknown mistake</string>
+    <string name="m6_other_msg">Unknown mistake</string>
     <string name="m7_username">Username</string>
     <string name="m8_password">Password</string>
     <string name="m9_registered">Registered</string>
@@ -26,7 +26,7 @@
     <string name="m23_installer_code">Installer code</string>
     <string name="m24_log_out">Log out</string>
     <string name="m25_user_agreement">User Agreement</string>
-    <string name="m26_consumer_hotline">consumer hotline</string>
+    <string name="m26_consumer_hotline">Consumer hotline</string>
     <string name="m27_company_website">Company website</string>
     <string name="m28_forget_password">Forget password</string>
     <string name="m29_user_agreement">Agree to user agreement</string>
@@ -116,7 +116,7 @@
     <!--选择配网方式-->
     <string name="m109_select_config_type">Choose a network distribution method</string>
 
-    <string name="m110_privacy_policy">Privacy policy</string>
+    <string name="m110_privacy_policy">Privacy Policy</string>
     <string name="m111_bluetooth_search">Bluetooth Search</string>
     <string name="m112_search_two_minutes">The search process may take up to two minutes</string>
     <string name="m113_please_do_not_during">Please do not perform any operations during this time</string>
@@ -360,7 +360,7 @@
     <string name="m304_user_does_not_exist">User does not exist</string>
     <string name="m305_transfer_device">Transfer device</string>
     <string name="m306_white">White</string>
-    <string name="m307_colour">colour</string>
+    <string name="m307_colour">Colour</string>
 
     <string name="m308_application_not_installed">Application not installed</string>
     <string name="m309_when_status_changs">When device status changs</string>
@@ -395,6 +395,6 @@
 
     <string name="m334_information_expired">The login information has expired, please log in again</string>
     <string name="m335_no_network">No network</string>
-    <string name="m336_offline">offline</string>
+    <string name="m336_offline">Offline</string>
 
 </resources>

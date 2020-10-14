@@ -136,7 +136,9 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
 
         @Override
         public void onError(String code, String error) {
-            baseView.showTuyaLoginError();
+            if (baseView!=null){
+                baseView.showTuyaLoginError();
+            }
             //登录失败处理
             Log.d("tuyalogin","登录失败");
         }
@@ -166,7 +168,9 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
 
         @Override
         public void onError(String errorCode, String error) {
-            baseView.showTuyaLoginError();
+            if (baseView!=null){
+                baseView.showTuyaLoginError();
+            }
         }
     };
 
@@ -185,7 +189,9 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
 
             @Override
             public void onError(String s, String s1) {
-                baseView.showTuyaLoginError();
+                if (baseView!=null){
+                    baseView.showTuyaLoginError();
+                }
             }
         });
     }
@@ -203,7 +209,9 @@ public class HomePresenter  extends BasePresenter<IMainActivityView> {
 
             @Override
             public void onError(String s, String s1) {
-                baseView.showTuyaLoginError();
+                if (baseView!=null){
+                    baseView.showTuyaLoginError();
+                }
                 Log.d("initHome","家庭初始化失败");
             }
         });

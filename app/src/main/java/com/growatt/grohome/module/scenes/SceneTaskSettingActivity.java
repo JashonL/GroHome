@@ -68,8 +68,8 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
     TextView tvBulbBrightValue;
     @BindView(R.id.tv_bulb_temp_value)
     TextView tvBulbTempValue;
-    @BindView(R.id.tv_bulb_time_value)
-    TextView tvBulbTimeValue;
+/*    @BindView(R.id.tv_bulb_time_value)
+    TextView tvBulbTimeValue;*/
 
     @BindView(R.id.srl_pull)
     SwipeRefreshLayout srlPull;
@@ -266,18 +266,17 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
 
     @Override
     public void setCountDown(String countDown) {
-        if (!TextUtils.isEmpty(countDown)){
+    /*    if (!TextUtils.isEmpty(countDown)){
             tvBulbTimeValue.setText(countDown);
         }else {
             tvBulbTimeValue.setText("");
-        }
+        }*/
     }
 
 
     @OnClick({R.id.iv_bulb_onoff, R.id.btn_next,
             R.id.tv_bulb_mode_title, R.id.tv_bulb_mode_value, R.id.iv_mode_more,
             R.id.tv_bulb_bright_title, R.id.tv_bulb_bright_value, R.id.iv_bright_more,
-            R.id.tv_bulb_time_title, R.id.tv_bulb_time_value, R.id.iv_time_more,
             R.id.tv_bulb_temp_title, R.id.tv_bulb_temp_value, R.id.iv_temp_more
     })
     public void onViewClicked(View view) {
@@ -295,11 +294,11 @@ public class SceneTaskSettingActivity extends BaseActivity<SceneTaskPrensenter> 
             case R.id.iv_bright_more:
                 presenter.setBrightValue();
                 break;
-            case R.id.tv_bulb_time_title:
+      /*      case R.id.tv_bulb_time_title:
             case R.id.tv_bulb_time_value:
             case R.id.iv_time_more:
                 presenter.setTime();
-                break;
+                break;*/
             case R.id.tv_bulb_temp_title:
             case R.id.tv_bulb_temp_value:
             case R.id.iv_temp_more:

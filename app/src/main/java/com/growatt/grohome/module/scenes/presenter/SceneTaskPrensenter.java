@@ -164,7 +164,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                         }
                     }
                 }
-                countdown = setInfo.getCountdown();
+              /*  countdown = setInfo.getCountdown();
                 if (!TextUtils.isEmpty(countdown)) {
                     String[] s = countdown.split("_");
                     if (s.length >= 3) {
@@ -179,7 +179,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                             e.printStackTrace();
                         }
                     }
-                }
+                }*/
             }
 
         }
@@ -627,7 +627,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
     }
 
 
-    public void setTime() {
+  /*  public void setTime() {
         View bodyView = LayoutInflater.from(context).inflate(R.layout.layout_dialog_progress, null, false);
         dialogFragment = CircleDialogUtils.showCommentBodyDialog(bodyView, ((FragmentActivity) context).getSupportFragmentManager(), new OnCreateBodyViewListener() {
             @Override
@@ -725,7 +725,7 @@ public class SceneTaskPrensenter extends BasePresenter<ISceneTaskSettingView> {
                 });
             }
         });
-    }
+    }*/
 
 
     public void showTimeSelect() {
